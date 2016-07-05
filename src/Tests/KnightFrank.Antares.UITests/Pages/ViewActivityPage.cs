@@ -16,14 +16,20 @@
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator viewActivityForm = new ElementLocator(Locator.CssSelector, "activity-view > div");
         private readonly ElementLocator addressElement = new ElementLocator(Locator.XPath, "//card[@id = 'card-property']//span[text()='{0}']");
-        private readonly ElementLocator propertyCard = new ElementLocator(Locator.Id, "card-property");
+        private readonly ElementLocator propertyCard = new ElementLocator(Locator.CssSelector, ".active #card-property");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'goToEdit']");
         private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
-        private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
+        private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
         private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(2)");
         private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(1)");
+        private readonly ElementLocator activityTitle = new ElementLocator(Locator.CssSelector, "#activity-view-well div:nth-of-type(1)");
+        private readonly ElementLocator activityType = new ElementLocator(Locator.Id, "activityType");
+        private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, ".active #activity-vendors-view list-item span");
+        private readonly ElementLocator attendeeOnOverview = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-item");
+        private readonly ElementLocator appraisalDate = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item div[ng-transclude='header']");
+        private readonly ElementLocator appraisalTime = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-info");
         // Attachment locators
         private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
@@ -32,7 +38,7 @@
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
         private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
         // Viewing locators
-        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item card[item='viewing']");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         // Offer locators
@@ -41,9 +47,9 @@
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
         // Negotiators locators
-        private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
+        private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, ".active #card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
-        private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
+        private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, ".active #card-lead-negotiator + editable-date time"); 
         private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] button[ng-click *= 'openEditMode']");
         private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] #next-call-1");
         private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] button[type = 'submit']");
@@ -51,8 +57,22 @@
         private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
         // Departments locators
-        private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
-
+        private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector,"#departments-section card-list-item .card-item .department-name");
+        //Property locators
+        private readonly ElementLocator propertyNumber = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(1) >div:nth-of-type(1) span");
+        private readonly ElementLocator propertyName = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(1) >div:nth-of-type(2) span");
+        private readonly ElementLocator propertyLine2 = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(2) span");
+        private readonly ElementLocator propertyPostCode = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(4) span");
+        private readonly ElementLocator propertyCity = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(5) span");
+        private readonly ElementLocator propertyCounty = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(6) span");
+        //details locators
+        private readonly ElementLocator source = new ElementLocator(Locator.Id, "sourceId");
+        private readonly ElementLocator sourceDescription = new ElementLocator(Locator.Id, "sourceDescriptionId");
+        private readonly ElementLocator sellingReason = new ElementLocator(Locator.Id, "sellingReasonId");
+        private readonly ElementLocator pitchingThreats = new ElementLocator(Locator.Id, "pitchingThreatsId");
+        private readonly ElementLocator keyNumber = new ElementLocator(Locator.Id, "keyNumberId");
+        private readonly ElementLocator accessArangements = new ElementLocator(Locator.Id, "accessArrangementsId");
+     
         private const string Format = "dd-MM-yyyy";
 
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
@@ -65,7 +85,7 @@
 
         public string VendorEstimatedPrice => this.Driver.GetElement(this.vendorEstimatedPrice).Text;
 
-        public string Status => this.Driver.GetElement(this.status).Text;
+        public string Status => this.Driver.GetElement(this.activityStatus).Text;
 
         public PropertyPreviewPage PropertyPreview => new PropertyPreviewPage(this.DriverContext);
 
@@ -123,11 +143,11 @@
             return !this.Driver.IsElementPresent(this.addressElement.Format(propertyDetail), BaseConfiguration.ShortTimeout);
         }
 
-        public EditActivityPage EditActivity()
+        public ViewActivityPage EditActivity()
         {
             this.Driver.Click(this.editButton);
             this.Driver.WaitForAngularToFinish();
-            return new EditActivityPage(this.DriverContext);
+            return this;
         }
 
         public ViewActivityPage OpenAttachFilePanel()
@@ -195,7 +215,8 @@
         public ViewActivityPage EditSecondaryNegotiatorNextCall(string name, int day)
         {
             this.Driver.Click(this.secondaryNegotiatorNextCallEditButton.Format(name));
-            this.Driver.SendKeys(this.secondaryNegotiatorNextCallDateField.Format(name), DateTime.UtcNow.AddDays(day).ToString(Format));
+            this.Driver.SendKeys(this.secondaryNegotiatorNextCallDateField.Format(name),
+                DateTime.UtcNow.AddDays(day).ToString(Format));
             this.Driver.Click(this.secondaryNegotiatorNextCallSaveButton.Format(name));
             return this;
         }
@@ -229,23 +250,86 @@
             this.Driver.Click(this.overviewTab);
             return this;
         }
-    }
 
-    public class Attachment
-    {
-        public string FileName { get; set; }
+        public Dictionary<string, string> GetActivityDetails()
+        {
+            var actualDetails = new Dictionary<string, string>
+            {
+                { "title", this.Driver.GetElement(this.activityTitle).Text },
+                { "status", this.Driver.GetElement(this.activityStatus).Text },
+                { "type", this.Driver.GetElement(this.activityType).Text }
+            };
+            return actualDetails;
+        }
 
-        public string Type { get; set; }
+        public Dictionary<string, string> GetPropertyAddressOnActivityOverviewTab()
+        {
+            var propertyAddress = new Dictionary<string, string>
+            {
+                { "number", this.Driver.GetElement(this.propertyNumber).Text },
+                { "name", this.Driver.GetElement(this.propertyName).Text },
+                { "line2", this.Driver.GetElement(this.propertyLine2).Text },
+                { "postCode", this.Driver.GetElement(this.propertyPostCode).Text },
+                { "city", this.Driver.GetElement(this.propertyCity).Text },
+                { "county", this.Driver.GetElement(this.propertyCounty).Text }
+            };
+            return propertyAddress;
+        }
 
-        public string Size { get; set; }
+        public Dictionary<string, string> GetActivityDetailsOnOverviewTab()
+        {
+            var activityDetails = new Dictionary<string, string>
+            {
+                { "vendor", this.Driver.GetElement(this.vendor).Text },
+                { "negotiator", this.Driver.GetElement(this.leadNegotiator).Text },
+                { "attendee", this.Driver.GetElement(this.attendeeOnOverview).Text }
+            };
+            return activityDetails;
+        }
 
-        public string Date { get; set; }
+        public Dictionary<string, string> GetAppraisalDateAndTime()
+        {
+            var appraisalDateTime = new Dictionary<string, string>
+            {
+                { "date", this.Driver.GetElement(this.appraisalDate).Text },
+                { "time", this.Driver.GetElement(this.appraisalTime).Text },
+            };
+            return appraisalDateTime;
+        }
 
-        public string User { get; set; }
-    }
+        public Dictionary<string, string> GetActivityDetailsOnDetailsTab()
+        {
+            var details = new Dictionary<string, string>
+            {
+                { "vendor", this.Driver.GetElement(this.vendor).Text },
+                { "negotiator", this.Driver.GetElement(this.leadNegotiator).Text },
+                { "department", this.Driver.GetElement(this.departmentName).Text },
+                { "source", this.Driver.GetElement(this.source).Text },
+                { "sourceDescription", this.Driver.GetElement(this.sourceDescription).Text },
+                { "sellingReason", this.Driver.GetElement(this.sellingReason).Text },
+                { "pitchingThreats", this.Driver.GetElement(this.pitchingThreats).Text },
+                { "keyNumber", this.Driver.GetElement(this.keyNumber).Text },
+                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text }
+            };
+            return details;
+        }
 
-    public class Department
-    {
-        public string Name { get; set; }
+        public class Attachment
+        {
+            public string FileName { get; set; }
+
+            public string Type { get; set; }
+
+            public string Size { get; set; }
+
+            public string Date { get; set; }
+
+            public string User { get; set; }
+        }
+
+        public class Department
+        {
+            public string Name { get; set; }
+        }
     }
 }

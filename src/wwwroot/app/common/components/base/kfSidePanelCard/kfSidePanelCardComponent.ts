@@ -10,7 +10,8 @@ module Antares.Common.Component {
         },
         bindings: {
             componentId: '<',
-            isBusy: '<'
+            isBusy: '<',
+            busyLabelKey: '<'
         }
     });
 }

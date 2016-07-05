@@ -16,7 +16,7 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 		And Contacts exists in database
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 	When User retrieves url for <entity> attachment upload for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 
@@ -45,7 +45,7 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
 		And Activity exists in database
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 	When User retrieves url for <entity> attachment download for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 

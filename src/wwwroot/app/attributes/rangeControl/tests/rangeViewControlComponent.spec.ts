@@ -95,7 +95,7 @@ module Antares {
                 expect(displayValue).toBe('-');
             }); 
 
-            it('when min is specified and ', () => {
+            it('when unit is specified then should be displayed', () => {
                 scope['vm'] = { min: 3, max: 4, config: configMock, schema: unitSchemaMock };
                 scope.$apply();
 
