@@ -130,7 +130,7 @@
         public bool IsViewActivityFormPresent()
         {
             this.Driver.WaitForAngularToFinish();
-            return this.Driver.IsElementPresent(this.viewActivityForm, BaseConfiguration.MediumTimeout);
+            return this.Driver.IsElementPresent(this.viewActivityForm, BaseConfiguration.LongTimeout);
         }
 
         public bool IsAddressDetailsVisible(string propertyDetail)

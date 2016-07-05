@@ -21,10 +21,12 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
-        SalutationFormat,
+	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
-    }
+	 	DisposalType,
+	 	Decoration,
+	 }
 
 	
 	public enum EntityType
@@ -144,6 +146,12 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Complete,
 	}
 
+	public enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
 	public enum ActivitySource
 	{
 		KFContactsRegister,
@@ -186,6 +194,21 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		RegularPropertyValueAppraisal,
 		Relocation,
 		Retiring,
-		SurpliceToTequirement,
+		SurpliceToRequirement,
+	}
+
+	public enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	public enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
 	}
 }

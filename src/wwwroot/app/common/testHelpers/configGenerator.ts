@@ -6,9 +6,9 @@ module Antares.TestHelpers {
     import Enums = Common.Models.Enums;
 
     export class ConfigGenerator {
-        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
+        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig {
             var config: Attributes.IOfferOfferDateControlConfig = {
-                offerDate : null
+                offerDate: null
             }
 
             return config;
@@ -137,9 +137,20 @@ module Antares.TestHelpers {
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
                 property: ConfigGenerator.generatePropertyViewControlConfig(),
-                marketAppraisalPrice: {},
-                recommendedPrice: {},
-                vendorEstimatedPrice: {},
+                agreedInitialMarketingPrice: {},
+                serviceChargeAmount: {},
+                shortAgreedInitialMarketingPrice: {},
+                shortKfValuationPrice: {},
+                shortVendorValuationPrice: {},
+                vendorValuationPrice: {},
+                decoration: {},
+                groundRentAmount: {},
+                groundRentNote: {},
+                kfValuationPrice: {},
+                longAgreedInitialMarketingPrice: {},
+                longKfValuationPrice: {},
+                longVendorValuationPrice: {},
+                otherCondition: {},
                 source: {},
                 sourceDescription: {},
                 sellingReason: {},
@@ -148,7 +159,8 @@ module Antares.TestHelpers {
                 accessArrangements: {},
                 appraisalMeetingDate: {},
                 appraisalMeetingAttendees: {},
-                appraisalMeetingInvitation: {}
+                appraisalMeetingInvitation: {},
+                disposalType: {}
             };
 
             return config;

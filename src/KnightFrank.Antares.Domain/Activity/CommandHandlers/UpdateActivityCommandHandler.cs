@@ -76,6 +76,9 @@
 
             this.ValidateMessage(message, activity);
 
+            activity.ActivityTypeId = message.ActivityTypeId;
+            activity.ActivityType = this.activityTypeRepository.GetById(message.ActivityTypeId);
+
             activity = this.activityEntityMapper.MapAllowedValues(message, activity, PageType.Update);
 
             this.contactsMapper.ValidateAndAssign(message, activity);

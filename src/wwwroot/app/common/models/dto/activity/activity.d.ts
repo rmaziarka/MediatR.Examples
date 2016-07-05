@@ -8,9 +8,6 @@ declare module Antares.Common.Models.Dto {
         attachments?: IAttachment[];
         property?: IPreviewProperty;
         createdDate?: Date;
-        marketAppraisalPrice?: number;
-        recommendedPrice?: number;
-        vendorEstimatedPrice?: number;
         viewings?: IViewing[];
         activityUsers: IActivityUser[];
         activityDepartments: IActivityDepartment[];
@@ -25,5 +22,21 @@ declare module Antares.Common.Models.Dto {
         keyNumber: string;
         accessArrangements: string;
         appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        kfValuationPrice?: number;
+        agreedInitialMarketingPrice?: number;
+        vendorValuationPrice?: number;
+        shortKfValuationPrice?: number;
+        shortVendorValuationPrice?: number;
+        shortAgreedInitialMarketingPrice?: number;
+        longKfValuationPrice?: number;
+        longVendorValuationPrice?: number;
+        longAgreedInitialMarketingPrice?: number;
+        disposalTypeId: string;
+        decorationId: string;
+        serviceChargeAmount?: number;
+        serviceChargeNote: string;
+        groundRentAmount?: number;
+        groundRentNote: string;
+        otherCondition: string;
     }
 }

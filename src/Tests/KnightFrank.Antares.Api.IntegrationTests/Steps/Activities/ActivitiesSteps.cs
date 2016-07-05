@@ -218,9 +218,22 @@
                 Id = updateActivityCommand.Id,
                 ActivityStatusId = updateActivityCommand.ActivityStatusId,
                 ActivityTypeId = updateActivityCommand.ActivityTypeId,
-                MarketAppraisalPrice = updateActivityCommand.MarketAppraisalPrice,
-                RecommendedPrice = updateActivityCommand.RecommendedPrice,
-                VendorEstimatedPrice = updateActivityCommand.VendorEstimatedPrice
+                AgreedInitialMarketingPrice = updateActivityCommand.AgreedInitialMarketingPrice,
+                KfValuationPrice = updateActivityCommand.KfValuationPrice,
+                VendorValuationPrice = updateActivityCommand.VendorValuationPrice,
+                ShortAgreedInitialMarketingPrice = updateActivityCommand.ShortAgreedInitialMarketingPrice,
+                ShortKfValuationPrice = updateActivityCommand.ShortKfValuationPrice,
+                ShortVendorValuationPrice = updateActivityCommand.ShortVendorValuationPrice,
+                LongAgreedInitialMarketingPrice = updateActivityCommand.LongAgreedInitialMarketingPrice,
+                LongKfValuationPrice = updateActivityCommand.LongKfValuationPrice,
+                LongVendorValuationPrice = updateActivityCommand.LongVendorValuationPrice,
+                DisposalTypeId =  updateActivityCommand.DisposalTypeId,
+                ServiceChargeAmount = updateActivityCommand.ServiceChargeAmount,
+                ServiceChargeNote = updateActivityCommand.ServiceChargeNote,
+                GroundRentAmount = updateActivityCommand.GroundRentAmount,
+                GroundRentNote = updateActivityCommand.GroundRentNote,
+                OtherCondition = updateActivityCommand.OtherCondition,
+                DecorationId = updateActivityCommand.DecorationId,
             };
 
             this.scenarioContext["Activity"] = activityFromDatabase;

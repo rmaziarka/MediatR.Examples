@@ -41,17 +41,19 @@ module Antares.Activity {
                         });
 
                     },
-                    editConfig: (activity: IActivity, configService: Services.ConfigService) => {
+                    editConfig: (activity: Activity.ActivityEditModel, configService: Services.ConfigService) =>{
+                        var entity = new Antares.Activity.Commands.ActivityEditCommand(activity);
                         return configService.getActivity(PageTypeEnum.Update,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
-                            activity);
+                            entity);
                     },
-                    viewConfig: (activity: IActivity, configService: Services.ConfigService) => {
+                    viewConfig: (activity: Activity.ActivityEditModel, configService: Services.ConfigService) => {
+                        var entity = new Antares.Activity.Commands.ActivityEditCommand(activity);
                         return configService.getActivity(PageTypeEnum.Details,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
-                            activity);
+                            entity);
                     },
                     config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig, activityConfigUtils: ActivityConfigUtils) =>{
                         return activityConfigUtils.merge(editConfig, viewConfig);

@@ -9,12 +9,6 @@
     {
         public Guid ActivityStatusId { get; set; }
 
-        public decimal? MarketAppraisalPrice { get; set; }
-
-        public decimal? RecommendedPrice { get; set; }
-
-        public decimal? VendorEstimatedPrice { get; set; }
-
         public decimal? ShortLetPricePerWeek { get; set; }
 
         public decimal? AskingPrice { get; set; }
@@ -48,5 +42,34 @@
         public string AppraisalMeetingInvitationText { get; set; }
 
         public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
+
+        public decimal? ServiceChargeAmount { get; set; }
+        public string ServiceChargeNote { get; set; }
+        public decimal? GroundRentAmount { get; set; }
+        public string GroundRentNote { get; set; }
+
+        public string OtherCondition { get; set; }
+
+        public Guid? DisposalTypeId { get; set; }
+
+        public Guid? DecorationId { get; set; }
+
+        public decimal? KfValuationPrice { get; set; }
+
+        public decimal? VendorValuationPrice { get; set; }
+
+        public decimal? AgreedInitialMarketingPrice { get; set; }
+
+        public decimal? ShortKfValuationPrice { get; set; }
+
+        public decimal? ShortVendorValuationPrice { get; set; }
+
+        public decimal? ShortAgreedInitialMarketingPrice { get; set; }
+
+        public decimal? LongKfValuationPrice { get; set; }
+
+        public decimal? LongVendorValuationPrice { get; set; }
+
+        public decimal? LongAgreedInitialMarketingPrice { get; set; }
     }
 }

@@ -19,6 +19,8 @@ module Antares.Common.Models.Dto {
         Enquiries = <any>'enquiries',
         SalutationFormat = <any>'salutationFormat',
         ActivitySource = <any>'activitySource',
-        ActivitySellingReason = <any>'activitySellingReason'
+        ActivitySellingReason = <any>'activitySellingReason',
+        DisposalType = <any>'disposalType',
+        Decoration = <any>'decoration'
     }
 }

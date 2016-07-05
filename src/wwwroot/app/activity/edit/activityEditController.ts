@@ -29,25 +29,7 @@ module Antares.Activity {
         private defaultActivityStatusCode: string = 'PreAppraisal';
 
         //controls
-        controlSchemas: any = {
-            marketAppraisalPrice: {
-                formName: "marketAppraisalPriceControlForm",
-                controlId: "market-appraisal-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE",
-                fieldName: "marketAppraisalPrice"
-            },
-            recommendedPrice: {
-                formName: "recommendedPriceControlForm",
-                controlId: "recommended-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE",
-                fieldName: "recommendedPrice"
-            },
-            vendorEstimatedPrice: {
-                formName: "vendorEstimatedPriceControlForm",
-                controlId: "vendor-estimated-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.VENDOR_ESTIMATED_PRICE",
-                fieldName: "vendorEstimatedPrice"
-            },
+        controlSchemas: any = {           
             askingPrice: {
                 formName: "askingPriceControlForm",
                 controlId: "asking-price",
@@ -68,6 +50,14 @@ module Antares.Activity {
             fieldName: 'sourceId',
             formName: 'sourceForm',
             enumTypeCode: Dto.EnumTypeCode.ActivitySource
+        }
+
+        activityDisposalTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'disposalTypeId',
+            translationKey: 'ACTIVITY.COMMON.DISPOSAL_TYPE',
+            fieldName: 'disposalTypeId',
+            formName: 'disposalTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.DisposalType
         }
 
         activityStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
@@ -122,6 +112,131 @@ module Antares.Activity {
             formName: 'invitationTextForm'
         }
 
+        activityDecorationSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'decorationId',
+            translationKey: 'ACTIVITY.COMMON.DECORATION',
+            fieldName: 'decorationId',
+            formName: 'decorationForm',
+            enumTypeCode: Dto.EnumTypeCode.Decoration
+        }
+
+        kfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'kfValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.KF_VALUTATION',
+            formName: 'kfValuationPriceForm',
+            fieldName: 'kfValuationPrice'
+        }
+
+        vendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'vendorValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.VENDOR_VALUATION',
+            formName: 'vendorValuationPriceForm',
+            fieldName: 'vendorValuationPrice'
+        }
+
+        agreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'agreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE',
+            formName: 'agreedInitialMarketingPriceForm',
+            fieldName: 'agreedInitialMarketingPrice'
+        }
+
+
+        shortKfValuationPriceSchema = {
+            controlId: 'shortKfValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
+            formName: 'shortKfValuationPriceForm',
+            fieldName: 'shortKfValuationPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        shortVendorValuationPriceSchema = {
+            controlId: 'shortVendorValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
+            formName: 'shortVendorValuationPriceForm',
+            fieldName: 'shortVendorValuationPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        shortAgreedInitialMarketingPriceSchema = {
+            controlId: 'shortAgreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
+            formName: 'shortAgreedInitialMarketingPriceForm',
+            fieldName: 'shortAgreedInitialMarketingPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        longKfValuationPriceSchema = {
+            controlId: 'longKfValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
+            formName: 'longKfValuationPriceForm',
+            fieldName: 'longKfValuationPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        longVendorValuationPriceSchema = {
+            controlId: 'longVendorValuationPrice',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
+            formName: 'longVendorValuationPriceForm',
+            fieldName: 'longVendorValuationPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        longAgreedInitialMarketingPriceSchema = {
+            controlId: 'longAgreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
+            formName: 'longAgreedInitialMarketingPriceForm',
+            fieldName: 'longAgreedInitialMarketingPrice',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        serviceChargeAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'serviceChargeAmount',
+            translationKey: 'ACTIVITY.COMMON.SERVICE_CHARGE',
+            formName: 'serviceChargeAmountForm',
+            fieldName: 'serviceChargeAmount'
+        }
+
+        serviceChargeNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'serviceChargeNote',
+            translationKey: 'ACTIVITY.COMMON.SERVICE_CHARGE_NOTE',
+            fieldName: 'serviceChargeNote',
+            formName: 'serviceChargeNoteForm'
+        }
+
+        groundRentAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'groundRentAmount',
+            translationKey: 'ACTIVITY.COMMON.GROUND_RENT',
+            formName: 'groundRentAmountForm',
+            fieldName: 'groundRentAmount'
+        }
+
+        groundRentNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'groundRentNote',
+            translationKey: 'ACTIVITY.COMMON.GROUND_RENT_NOTE',
+            fieldName: 'groundRentNote',
+            formName: 'groundRentNoteForm'
+        }
+
+        otherConditionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'otherCondition',
+            translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
+            fieldName: 'otherCondition',
+            formName: 'otherConditionForm'
+        }
+
+        configMocked: any = {
+            attendees: {
+                attendees: {
+                    active: true
+                }
+            }
+        }
+
+        configAppraisalMeetingDateMocked :any = {
+            appraisalMeetingDate:  {start:  { active:  true, required:  true  }, end:  { active:  true, required:  true  }  } 
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -160,7 +275,8 @@ module Antares.Activity {
             this.reloadConfig(this.activity);
         }
 
-        public activityStatusChanged = (activityStatusId: string) => {
+        public activityStatusChanged = (id: string) =>{
+            this.activity.activityStatusId = id;
             this.reloadConfig(this.activity);
         }
 
@@ -270,6 +386,25 @@ module Antares.Activity {
             return users;
         }
 
+        public isOtherSectionVisible = (): Boolean => {
+            return this.config && this.config.decoration != null && this.config.otherCondition != null;
+        }
+
+        public isValuationInfoSectionVisible = (): Boolean => {
+            return this.config && this.config.kfValuationPrice != null && this.config.vendorValuationPrice != null &&
+                this.config.agreedInitialMarketingPrice != null;
+        }
+
+        public isValuationInfoShortLongSectionVisible = (): Boolean => {
+            return this.config && this.config.shortKfValuationPrice != null && this.config.longKfValuationPrice != null &&
+                this.config.shortVendorValuationPrice != null && this.config.longVendorValuationPrice != null &&
+                this.config.shortAgreedInitialMarketingPrice != null && this.config.longAgreedInitialMarketingPrice != null;
+        }
+
+        public isChargesSectionVisible = (): Boolean => {
+            return this.config && this.config.serviceChargeAmount != null && this.config.groundRentAmount != null && this.config.groundRentNote != null;
+        }
+
         private get pageMode(): PageMode {
             return this.activity && this.activity.id ? PageMode.Edit : PageMode.Add;
         }
@@ -365,12 +500,11 @@ module Antares.Activity {
         }
 
         public isValuationPricesSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.marketAppraisalPrice != null || this.config.recommendedPrice != null ||
-                this.config.vendorEstimatedPrice != null || this.config.askingPrice != null || this.config.shortLetPricePerWeek != null);
+            return this.config != null && (this.config.askingPrice != null || this.config.shortLetPricePerWeek != null);
         }
 
         public isBasicInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.property != null || this.config.source != null ||
+            return this.config != null && (this.config.property != null || this.config.disposalType != null || this.config.source != null ||
                 this.config.sourceDescription != null || this.config.sellingReason != null || this.config.pitchingThreats != null);
         }
 

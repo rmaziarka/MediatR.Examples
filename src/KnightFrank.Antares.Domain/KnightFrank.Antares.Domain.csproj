@@ -170,6 +170,7 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\Fields\RequiredExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\TypeExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\RequirementEntityMapper.cs" />
