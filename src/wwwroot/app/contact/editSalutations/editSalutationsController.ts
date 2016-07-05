@@ -22,10 +22,9 @@ module Antares.Contact {
         defaultSalutationFormat: string = "";
 
         constructor(private enumProvider: Providers.EnumProvider) {
-            //todo - move to computed field: (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid
         }
 
-        public $onInit() {
+        public $onInit = () => {
             let salutationFormats: Dto.IEnumItem[] = this.enumProvider.enums[Dto.EnumTypeCode.SalutationFormat];
 
             let defaultSalutationFormat = salutationFormats.filter((format: Dto.IEnumItem) => {
@@ -37,7 +36,7 @@ module Antares.Contact {
             }
         }
         
-        public $onChanges(changesObj: IEditSalutationsChange){
+        public $onChanges = (changesObj: IEditSalutationsChange) => {
             if (this.hasBindingChanged(changesObj.firstName)
                 || this.hasBindingChanged(changesObj.lastName)
                 || this.hasBindingChanged(changesObj.title)) {
@@ -45,14 +44,14 @@ module Antares.Contact {
             }
         }
         
-        private hasBindingChanged(binding: IBindingChange<any>): boolean {
+        private hasBindingChanged = (binding: IBindingChange<any>): boolean => {
             if (!binding) {
                 return false;
             }
             return binding.isFirstChange() === false && (binding.currentValue !== binding.previousValue); 
         }
         
-        private setSalutations() {
+        private setSalutations = () => {
             // TODO: copied from "ContactAddController.setSalutations()" - make common
             if (!this.contact) return; // Note, due to us not being able to bind contact.title at present, this is necessary
 

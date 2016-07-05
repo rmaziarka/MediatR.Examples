@@ -6,7 +6,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-3">
                     <h3 class="page-header" translate="CONTACT.BASIC_INFORMATION"></h3>
                     <fieldset>
-                        <div id="title-section" class="form-group" ng-class="{'has-error': (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid}">
+                        <div id="title-section" class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.title.$dirty) && vm.editContactForm.title.$invalid}">
                             <div class="row">
                                 <div class="col-md-5">
                                     <label class="required" for="title" translate="CONTACT.TITLE"></label>
@@ -20,7 +20,7 @@
                                             initial-value="vm.contact.title"
                                             item-template-url="app/contact/titleComponent/contactTitleSearchTemplate.html"></search>
 
-                                    <div ng-messages="editContactForm.title.$error" ng-show="editContactForm.$submitted || editContactForm.title.$dirty">
+                                    <div ng-messages="vm.editContactForm.title.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.title.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-3">
                     <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
                     <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
-                                      default-salutation-format-id="vm.defaultSalutationFormatId" />
+                                      default-salutation-format-id="vm.defaultSalutationFormatId"/>
                 </div>
             </div>
 
