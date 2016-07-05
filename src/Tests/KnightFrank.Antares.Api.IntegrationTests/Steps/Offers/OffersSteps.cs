@@ -75,7 +75,7 @@
                     break;
             }
 
-            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            if (offerType.EnumCode == nameof(OfferType.ResidentialSale) && status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
             {
                 CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
 

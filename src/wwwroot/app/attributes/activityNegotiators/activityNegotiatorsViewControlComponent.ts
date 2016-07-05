@@ -7,7 +7,9 @@ module Antares.Common.Component {
         controller: 'ActivityNegotiatorsViewControlController',
         bindings: {
             leadNegotiator: '<',
-			secondaryNegotiators: '<',
+            canBeEdited: '<',
+            secondaryNegotiators: '<',
+            hideSecondaryNegotiators: '<',
             propertyDivisionId: '@',
 			config:'<'
         }

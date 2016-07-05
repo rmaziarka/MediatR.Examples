@@ -17,7 +17,7 @@ module Antares {
                 controllerAs: 'appVm',
                 resolve: {
                     'userData': (userService: Services.UserService) => {
-                        return userService.getUserData();
+                        return userService.getCurrentUser();
                     },
                     'lastEntriesPromise': (latestViewsProvider: LatestViewsProvider) => {
                         return latestViewsProvider.refresh();

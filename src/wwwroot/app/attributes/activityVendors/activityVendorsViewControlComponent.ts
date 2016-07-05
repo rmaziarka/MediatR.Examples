@@ -6,7 +6,8 @@ module Antares.Attributes {
             controllerAs: 'vm',
             bindings: {
                 contacts: '<',
-                config:'<'
+                config: '<',
+                hideHeader: '<'
             }
     });
 }

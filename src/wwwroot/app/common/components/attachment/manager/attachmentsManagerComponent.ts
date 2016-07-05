@@ -7,7 +7,9 @@ module Antares.Common.Component.Attachment {
         controller: 'AttachmentsManagerController',
         bindings: {
             data: '<',
-            onSaveAttachmentForEntity: '&'
+            onSaveAttachmentForEntity: '&',
+            header: '@',
+            filesNumberLimit: '<'
         }
     });
 }

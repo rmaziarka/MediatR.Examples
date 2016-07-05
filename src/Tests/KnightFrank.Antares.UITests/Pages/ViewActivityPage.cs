@@ -22,6 +22,8 @@
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
+        private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(2)");
+        private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(1)");
         // Attachment locators
         private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
@@ -42,12 +44,12 @@
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
         private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
-        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] button");
-        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] #next-call-1");
-        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] button[type = 'submit']");
-        private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
-        private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
-        private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
+        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] button[ng-click *= 'openEditMode']");
+        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] #next-call-1");
+        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, ".active editable-date[selected-date *= 'leadNegotiator'] button[type = 'submit']");
+        private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
+        private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
+        private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
         // Departments locators
         private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
 
@@ -214,6 +216,18 @@
                     .ToList();
 
             return evens.Zip(odds, (s, s1) => new Negotiator { Name = s, NextCall = s1 }).ToList();
+        }
+
+        public ViewActivityPage OpenDetailsTab()
+        {
+            this.Driver.Click(this.detailsTab);
+            return this;
+        }
+
+        public ViewActivityPage OpenOverviewTab()
+        {
+            this.Driver.Click(this.overviewTab);
+            return this;
         }
     }
 

@@ -11,6 +11,7 @@ module Antares.Activity.View {
     export class ActivityViewController {
         // bindings
         activity: Business.Activity;
+        public selectedTabIndex: number = 0;
 
         //fields
         isAttachmentsUploadPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -21,40 +22,17 @@ module Antares.Activity.View {
 
         attachmentManagerData: Attachment.IAttachmentsManagerData;
 
-        activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
+        activityAttachmentResource: Common.Models.Resources.
+        IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
 
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;        
-
-        //controls
-        controlSchemas: any = {
-            marketAppraisalPrice: {
-                controlId: "market-appraisal-price",
-                translationKey: "ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"
-            },
-            recommendedPrice: {
-                controlId: "recommended-price",
-                translationKey: "ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"
-            },
-            vendorEstimatedPrice: {
-                controlId: "vendor-estimated-price",
-                translationKey: "ACTIVITY.VIEW.PRICES.VENDOR_ESTIMATED_PRICE"
-            },
-            askingPrice: {
-                controlId: "asking-price",
-                translationKey: "ACTIVITY.VIEW.PRICES.ASKING_PRICE"
-            },
-            shortLetPricePerWeek: {
-                controlId: "short-let-price-per-week",
-                translationKey: "ACTIVITY.VIEW.PRICES.SHORT_LET_PRICE_PER_WEEK"
-            }
-        };
 
         constructor(            
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
             private latestViewsProvider: LatestViewsProvider,
-            private eventAggregator: Core.EventAggregator) {           
+            private eventAggregator: Core.EventAggregator){
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
 
@@ -82,7 +60,8 @@ module Antares.Activity.View {
 
             eventAggregator
                 .with(this)
-                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent,
+                (event: Common.Component.Attachment.AttachmentSavedEvent) =>{
                     this.addSavedAttachmentToList(event.attachmentSaved);
                     this.recreateAttachmentsData();
                 });
@@ -90,7 +69,30 @@ module Antares.Activity.View {
             this.recreateAttachmentsData();
         }
 
-        hidePanels = () => {
+        public setActiveTabIndex = (tabIndex: number) =>{
+            this.selectedTabIndex = tabIndex;
+            this.setInitialState();
+        }
+
+        private setInitialState = () => {
+            this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Untouched;
+            this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isViewingPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isOfferPreviewPanelVisible = Enums.SidePanelState.Untouched;
+
+            this.recreateAttachmentsData();
+        }
+
+        public isOverviewTabSelected = () =>{
+            return this.selectedTabIndex === 0;
+        }
+
+        public isDetailsTabSelected = () =>{
+            return this.selectedTabIndex === 1;
+        }
+        
+        private hidePanels = () => {
             this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Closed;
@@ -132,15 +134,14 @@ module Antares.Activity.View {
             }
         }
 
-        
-
-        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+        addSavedAttachmentToList = (result: Dto.IAttachment) =>{
             var savedAttachment = new Business.Attachment(result);
             this.activity.attachments.push(savedAttachment);
         }
 
-        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
-            return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Activity.Command.ActivityAttachmentSaveCommand(this.activity.id, attachment))
+        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) =>{
+            return this.activityAttachmentResource.save({ id : this.activity.id },
+                    new Antares.Activity.Command.ActivityAttachmentSaveCommand(this.activity.id, attachment))
                 .$promise;
         }
 
@@ -148,8 +149,8 @@ module Antares.Activity.View {
             this.hidePanels();
         }
 
-        goToEdit = () => {
-            this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
+        goToEdit = () =>{
+            this.$state.go('app.activity-edit', { id : this.$state.params['id'] });
         };
     }
 
