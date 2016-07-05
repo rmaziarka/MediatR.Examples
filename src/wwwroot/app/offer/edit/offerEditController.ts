@@ -175,6 +175,14 @@ module Antares.Offer {
                 controlId: "offer-progress-comment",
                 translationKey: "OFFER.EDIT.COMMENT",
                 fieldName: "progressComment"
+            },
+            contractApproved: <Attributes.IRadioButtonsEditControlSchema>{
+                formName: "offerContractApprovedControlForm",
+                fieldName: "offerContractApproved",
+                translationKey: "OFFER.EDIT.SPECIAL_CONDITIONS",
+                radioButtons: [
+                    { value: true, translationKey: "Yes" },
+                    { value: false, translationKey: "No" }]
             }
         };
 

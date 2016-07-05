@@ -77,15 +77,9 @@
                     <enum-item-edit-control ng-model="vm.offer.additionalSurveyStatusId" config="vm.config.offer_AdditionalSurveyStatus" schema="vm.controlSchemas.additionalSurveyStatus" hide-empty-value="true"></enum-item-edit-control>
                     <enum-item-edit-control ng-model="vm.offer.searchStatusId" config="vm.config.offer_SearchStatus" schema="vm.controlSchemas.searchStatus" hide-empty-value="true"></enum-item-edit-control>
                     <enum-item-edit-control ng-model="vm.offer.enquiriesId" config="vm.config.offer_Enquiries" schema="vm.controlSchemas.enquiries" hide-empty-value="true"></enum-item-edit-control>
-                    <div id="contract-approved" class="form-group">
-                        <h5 translate="OFFER.EDIT.CONTRACT_APPROVED"></h5>
-                        <label class="radio-inline">
-                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="true"><span translate="OFFER.EDIT.YES"></span>
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="false"><span translate="OFFER.EDIT.NO"></span>
-                        </label>
-                    </div>
+                    <radio-buttons-edit-control id="contact-approved" config="vm.config.offer_ContractApproved" ng-model="vm.offer.contractApproved"
+                                                schema="vm.controlSchemas.contractApproved">
+                    </radio-buttons-edit-control>
                 </fieldset>
             </section>
 
@@ -164,7 +158,7 @@
                         <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
                     </override-errors>
                 </date-edit-control>
-               
+
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
                     <button id="edit-additional-surveyor" type="button" class="btn btn-default" ng-click="vm.showAdditionalSurveyorSelectPanel()">
