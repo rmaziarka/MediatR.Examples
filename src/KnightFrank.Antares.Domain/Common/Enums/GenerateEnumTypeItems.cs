@@ -21,7 +21,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
-    SalutationFormat,
+	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
 	 	DisposalType,
@@ -146,6 +146,12 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Complete,
 	}
 
+	public enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
 	public enum ActivitySource
 	{
 		KFContactsRegister,
@@ -195,7 +201,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	{
 		PrivateTreaty,
 		FormalTender,
-		AuctionSpecificToResidential,
+		Auction,
 	}
 
 	public enum Decoration
