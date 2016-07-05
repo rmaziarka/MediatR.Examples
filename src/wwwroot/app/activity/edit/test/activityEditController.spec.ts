@@ -50,6 +50,7 @@ module Antares {
             controller.activity = new Activity.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
+            controller.config = TestHelpers.ConfigGenerator.generateActivityEditConfig();
         }));
 
         describe('when departmentIsRelatedWithNegotiator is called', () => {
@@ -361,5 +362,26 @@ module Antares {
             });
 
         });
+
+        describe('when isOtherSectionVisible is called', () =>{
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, true],
+                    [{}, null, false],
+                    [null, {}, false],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where decoration is ${data[0]} and otherCondition is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.decoration = data[0];
+                    controller.config.otherCondition = data[1];
+
+                    // act & assert
+                    expect(controller.isOtherSectionVisible()).toBe(data[2]);
+                });
+        });
     });
 }
+
+

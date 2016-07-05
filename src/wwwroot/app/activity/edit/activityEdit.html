@@ -69,7 +69,7 @@
                     <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
             </section>
-            <section id="other-info" ng-if="vm.config.decoration && vm.config.otherCondition">
+            <section id="other-info" ng-if="vm.isOtherSectionVisible()">
                 <fieldset>
                     <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
                     <enum-item-edit-control ng-model="vm.activity.decorationId" config="vm.config.decoration" schema="vm.activityDecorationSchema"></enum-item-edit-control>
@@ -79,7 +79,7 @@
         </div>
 
         <div class="col-md-6 col-lg-4">
-            <fieldset id="activity-edit-prices" ng-if="vm.config.kfValuationPrice && vm.config.vendorValuationPrice && vm.config.agreedInitialMarketingPrice">
+            <fieldset id="activity-edit-prices" ng-if="vm.isValuationInfoSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                 <div class="row">
                     <div class="col-xs-4">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="activity-edit-short-long-prices" ng-if="vm.config.shortKfValuationPrice && vm.config.longKfValuationPrice && vm.config.shortVendorValuationPrice && vm.config.longVendorValuationPrice && vm.config.shortAgreedInitialMarketingPrice && vm.config.longAgreedInitialMarketingPrice">
+            <fieldset id="activity-edit-short-long-prices" ng-if="vm.isValuationInfoShortLongSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                 <h4 class="page-header" translate="ACTIVITY.COMMON.KF_VALUTATION"></h4>
                 <div class="row">
@@ -124,7 +124,7 @@
 
                 </div>
             </fieldset>
-            <fieldset id="activity-edit-charges" ng-if="vm.config.serviceChargeAmount && vm.config.serviceChargeAmount && vm.config.groundRentAmount && vm.config.groundRentNote">
+            <fieldset id="activity-edit-charges" ng-if="vm.isChargesSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
                 <div class="row">
                     <div class="col-xs-4">
