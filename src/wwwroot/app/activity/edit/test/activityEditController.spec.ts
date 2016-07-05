@@ -204,24 +204,24 @@ module Antares {
         describe('should subscribe to events', () => {
             it('when close side panel event then property view panel should be closed', () => {
                 // arrange
-                controller.isPropertyPreviewPanelVisible = true;
+                controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Opened;
 
                 // act
                 eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
 
                 // assert
-                expect(controller.isPropertyPreviewPanelVisible).toBeFalsy();
+                expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Closed);
             });
 
             it('when open property prewiew panel event then property view panel should be opened', () => {
                 // arrange
-                controller.isPropertyPreviewPanelVisible = false;
+                controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
 
                 // act
                 eventAggregator.publish(new Attributes.OpenPropertyPrewiewPanelEvent());
 
                 // assert
-                expect(controller.isPropertyPreviewPanelVisible).toBeTruthy();
+                expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Opened);
             });
         });
     });

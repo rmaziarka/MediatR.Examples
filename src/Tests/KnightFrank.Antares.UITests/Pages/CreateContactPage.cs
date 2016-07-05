@@ -47,6 +47,7 @@
         public CreateContactPage SetTitle(string text)
         {
             this.Driver.SendKeys(this.title, text);
+            this.Driver.WaitForAngularToFinish();
             this.Driver.WaitForElementToBeDisplayed(this.titleDropdown.Format(text), BaseConfiguration.MediumTimeout);
             this.Driver.Click(this.titleDropdown.Format(text));
             return this;

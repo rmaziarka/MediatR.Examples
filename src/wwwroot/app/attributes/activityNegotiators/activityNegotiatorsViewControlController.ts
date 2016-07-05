@@ -12,6 +12,8 @@ module Antares.Common.Component {
         public propertyDivisionId: string;
         public departments: Business.ActivityDepartment[];
         public leadNegotiator: Business.ActivityUser;
+        public canBeEdited: boolean;
+        public hideSecondaryNegotiators: boolean = false;
         public secondaryNegotiators: Business.ActivityUser[];
 
         public labelTranslationKey: string;

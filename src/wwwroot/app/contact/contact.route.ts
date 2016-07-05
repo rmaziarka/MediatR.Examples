@@ -3,6 +3,8 @@
 module Antares.Contact {
     import Dto = Antares.Common.Models.Dto;
     import Business = Antares.Common.Models.Business;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     var app: ng.IModule = angular.module('app');
 
@@ -19,9 +21,7 @@ module Antares.Contact {
                 url: '/contact/edit/:id',
                 params: {},
                 template: "<contact-edit user-data='appVm.userData' contact='contact'></contact-edit>",
-                controller: ($scope: ng.IScope, contact: Dto.IContact) => {
-                    $scope['contact'] = new Business.Contact(contact);
-                },
+                controller: "ContactRouteController",
                 resolve: {
                     contact: ($stateParams: angular.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
                         var contactId: string = $stateParams['id'];
@@ -32,9 +32,7 @@ module Antares.Contact {
             .state('app.contact-view', {
                 url: '/contact/:id',
                 template: '<contact-view contact="contact"></contact-view>',
-                controller: ($scope: ng.IScope, contact: Dto.IContact) =>{
-                    $scope['contact'] = new Business.Contact(contact);
-                },
+                controller: "ContactRouteController",
                 resolve : {
                     contact : ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
                         var contactId: string = $stateParams['id'];

@@ -1,0 +1,13 @@
+<div ng-if="vm.config">
+    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
+    <card-list-item class="activity-view-offers" ng-repeat="offer in vm.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' | limitTo: 5 track by offer.id + offer.statusId + offer.offerDate">
+        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="vm.showOfferPreview"
+            display-new-control="true" show-context-menu="true">
+            <card-context-menu>
+                <context-menu-item type="details" item="offer" action="vm.navigateToOfferView"></context-menu-item>
+            </card-context-menu>
+        </card>
+    </card-list-item>
+    <offer-preview-panel offer="vm.selectedOffer" is-visible="vm.isPanelVisible">
+    </offer-preview-panel>
+</div>
