@@ -25,7 +25,7 @@ module Antares.Common.Models.Business {
         shortLetPricePerWeek: number = null;
         solicitor: Contact = null;
         solicitorCompany: Company = null;
-        solicitorContactCompany: CompanyContactRelation = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
         sourceId: string = null;
         sellingReasonId: string = null;
         appraisalMeetingStart: string = null;
@@ -75,7 +75,7 @@ module Antares.Common.Models.Business {
                 if (activity.solicitor && activity.solicitorCompany) {
                     this.solicitor = new Contact(activity.solicitor);
                     this.solicitorCompany = new Company(activity.solicitorCompany);
-                    this.solicitorContactCompany = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];

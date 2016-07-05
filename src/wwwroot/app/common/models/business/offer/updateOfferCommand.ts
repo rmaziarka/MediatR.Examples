@@ -62,10 +62,10 @@ module Antares.Common.Models.Business {
             this.additionalSurveyDate = Core.DateTimeUtils.createDateAsUtc(model.additionalSurveyDate);
             this.progressComment = model.progressComment;
 
-            this.vendorSolicitorId = model.activity && model.activity.solicitorContactCompany && model.activity.solicitorContactCompany.contact ? model.activity.solicitorContactCompany.contact.id : null;
-            this.vendorSolicitorCompanyId = model.activity && model.activity.solicitorContactCompany && model.activity.solicitorContactCompany.company ? model.activity.solicitorContactCompany.company.id : null;
-            this.applicantSolicitorId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.contact ? model.requirement.solicitorContactCompany.contact.id : null;
-            this.applicantSolicitorCompanyId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.company ? model.requirement.solicitorContactCompany.company.id : null;
+            this.vendorSolicitorId = model.activity && model.activity.solicitorCompanyContact && model.activity.solicitorCompanyContact.contact ? model.activity.solicitorCompanyContact.contact.id : null;
+            this.vendorSolicitorCompanyId = model.activity && model.activity.solicitorCompanyContact && model.activity.solicitorCompanyContact.company ? model.activity.solicitorCompanyContact.company.id : null;
+            this.applicantSolicitorId = model.requirement && model.requirement.solicitorCompanyContact && model.requirement.solicitorCompanyContact.contact ? model.requirement.solicitorCompanyContact.contact.id : null;
+            this.applicantSolicitorCompanyId = model.requirement && model.requirement.solicitorCompanyContact && model.requirement.solicitorCompanyContact.company ? model.requirement.solicitorCompanyContact.company.id : null;
 
             this.brokerId = model.brokerCompanyContact && model.brokerCompanyContact.contact.id;
             this.brokerCompanyId = model.brokerCompanyContact && model.brokerCompanyContact.company.id;

@@ -19,7 +19,7 @@ module Antares.Common.Models.Business {
         attachments: Attachment[] = [];
         solicitor: Contact = null;
         solicitorCompany: Company = null;
-        solicitorContactCompany: CompanyContactRelation = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -42,7 +42,7 @@ module Antares.Common.Models.Business {
                 if (requirement.solicitor && requirement.solicitorCompany) {
                     this.solicitor = new Contact(requirement.solicitor);
                     this.solicitorCompany = new Company(requirement.solicitorCompany);
-                    this.solicitorContactCompany = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
             }
         }
