@@ -136,7 +136,19 @@ module Antares.TestHelpers {
                 shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
-                property: ConfigGenerator.generatePropertyViewControlConfig()
+                property: ConfigGenerator.generatePropertyViewControlConfig(),
+                marketAppraisalPrice: {},
+                recommendedPrice: {},
+                vendorEstimatedPrice: {},
+                source: {},
+                sourceDescription: {},
+                sellingReason: {},
+                pitchingThreats: {},
+                keyNumber: {},
+                accessArrangements: {},
+                appraisalMeetingDate: {},
+                appraisalMeetingAttendees: {},
+                appraisalMeetingInvitation: {}
             };
 
             return config;
