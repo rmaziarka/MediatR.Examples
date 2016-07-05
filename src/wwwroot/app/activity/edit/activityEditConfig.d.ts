@@ -7,6 +7,20 @@ declare module Antares.Activity {
         activityStatus: Attributes.IActivityStatusEditControlConfig;
         departments: Attributes.IActivityDepartmentsViewControlConfig;
         negotiators: Attributes.IActivityNegotiatorsControlConfig;
-        property: Attributes.IPropertyViewControlConfig
+        property: Attributes.IPropertyViewControlConfig;
+        marketAppraisalPrice: any;
+        recommendedPrice: any;
+        vendorEstimatedPrice: any;
+        askingPrice: any;
+        shortLetPricePerWeek: any;
+        source: any;
+        sourceDescription: any;
+        sellingReason: any;
+        pitchingThreats: any;
+        keyNumber: any;
+        accessArrangements: any;
+        appraisalMeetingDate: any;
+        appraisalMeetingAttendees: any;
+        appraisalMeetingInvitation: any;
     }
 }

@@ -77,14 +77,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityAppraisalMeetingAttendeesMapper.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityContactsMapper.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityDepartmentsMapper.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityUsersMapper.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\IActivityReferenceMapper.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
+    <Compile Include="Activity\Commands\ActivityCommandBase.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityAttendee.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityAppraisalMeeting.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityAttendeeValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartmentValidator.cs" />
@@ -368,6 +377,7 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="User\QueryResults\UserDepartment.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandler.cs" />
     <Compile Include="User\QueryResults\UsersQueryResult.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />

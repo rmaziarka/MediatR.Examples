@@ -44,6 +44,8 @@
                     .Include(a => a.Offers.Select(v => v.Requirement))
                     .Include(a => a.Offers.Select(v => v.Negotiator))
                     .Include(a => a.Offers.Select(v => v.Requirement.Contacts))
+                    .Include(a => a.AppraisalMeetingAttendees.Select(aa => aa.User))
+                    .Include(a => a.AppraisalMeetingAttendees.Select(aa => aa.Contact))
                     .SingleOrDefault(a => a.Id == query.Id);
 
             return result;

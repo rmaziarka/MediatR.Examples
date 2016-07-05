@@ -18,6 +18,8 @@ module Antares.Common.Models.Business {
                     this.callDate = moment(activityUser.callDate).toDate();
                 }
             }
+
+            this.user = this.user || new User();
         }
     }
 }

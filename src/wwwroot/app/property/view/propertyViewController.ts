@@ -11,8 +11,6 @@ module Antares.Property.View {
     import Attachment = Common.Component.Attachment;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-
-        isActivityAddPanelVisible:Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isActivityPreviewPanelVisible:Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isAttachmentsUploadPanelVisible:Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isAttachmentsPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -28,7 +26,7 @@ module Antares.Property.View {
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Dto.ICurrentUser;
         property: Business.PropertyView;
-        config: Activity.IActivityAddPanelConfig;
+
         savePropertyActivityBusy: boolean = false;
         selectedActivity: Common.Models.Business.Activity;
         attachmentManagerData: Attachment.IAttachmentsManagerData;
@@ -72,7 +70,6 @@ module Antares.Property.View {
         }
 
         hideNewPanels = () =>{
-            this.isActivityAddPanelVisible = Enums.SidePanelState.Closed;
             this.isActivityPreviewPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Closed;
@@ -136,9 +133,8 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.ownershipView);
         }
 
-        showActivityAdd = () =>{
-            this.hidePanels();
-            this.isActivityAddPanelVisible = Enums.SidePanelState.Opened;
+        goToActivityAdd = () => {
+            this.$state.go('app.activity-add', { propertyId: this.property.id });
         }
 
         showAreaAdd = () => {

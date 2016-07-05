@@ -3,8 +3,9 @@
 
 module Antares.Services {
     import IActivityConfig = Activity.IActivityConfig;
+    import Attributes = Antares.Attributes;
+    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
     import IRequirementConfig = Requirement.IRequirementConfig;
-    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
     import IOfferConfig = Offer.IOfferConfig;
 
     export class ConfigService {

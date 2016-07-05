@@ -6,7 +6,9 @@
 
     using FluentValidation;
 
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -16,6 +18,8 @@
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using Ninject.Modules;
+
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
 
     public class DomainModule : NinjectModule
     {
@@ -34,6 +38,11 @@
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
             this.Bind<IOfferProgressStatusHelper>().To<OfferProgressStatusHelper>();
+
+            this.Bind<IActivityReferenceMapper<ActivityAttendee>>().To<ActivityAppraisalMeetingAttendeesMapper>();
+            this.Bind<IActivityReferenceMapper<Dal.Model.Contacts.Contact>>().To<ActivityContactsMapper>();
+            this.Bind<IActivityReferenceMapper<ActivityDepartment>>().To<ActivityDepartmentsMapper>();
+            this.Bind<IActivityReferenceMapper<ActivityUser>>().To<ActivityUsersMapper>();
 
             this.ConfigureAttributeConfigurations();
 

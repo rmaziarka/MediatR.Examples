@@ -10,7 +10,7 @@ module Antares.Activity.View {
 
     export class ActivityViewController {
         // bindings
-        activity: Business.Activity;
+        activity: Business.ActivityViewModel;
         public selectedTabIndex: number = 0;
 
         //fields
@@ -27,6 +27,41 @@ module Antares.Activity.View {
 
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;        
+
+        activitySourceSchema: Antares.Attributes.IEnumItemControlSchema = {
+            controlId: 'sourceId',
+            translationKey: 'ACTIVITY.EDIT.SOURCE'
+        }
+
+        activityStatusSchema: Antares.Attributes.IEnumItemControlSchema = {
+            controlId: 'activityStatusId',
+            translationKey: 'ACTIVITY.EDIT.STATUS'
+        }
+
+        activitySellingReasonSchema: Antares.Attributes.IEnumItemControlSchema = {
+            controlId: 'sellingReasonId',
+            translationKey: 'ACTIVITY.EDIT.SELLING_REASON'
+        }
+
+        activitySourceDescriptionSchema: Antares.Attributes.ITextControlSchema = {
+            controlId: 'sourceDescriptionId',
+            translationKey: null
+        }
+
+        activityPitchingThreatsSchema: Antares.Attributes.ITextControlSchema = {
+            controlId: 'pitchingThreatsId',
+            translationKey: 'ACTIVITY.COMMON.PITCHING_THREATS'
+        }
+
+        activityKeyNumberSchema: Antares.Attributes.ITextControlSchema = {
+            controlId: 'keyNumberId',
+            translationKey: 'ACTIVITY.EDIT.KEY_NUMBER'
+        }
+
+        activityAccessArrangementsSchema: Antares.Attributes.ITextControlSchema = {
+            controlId: 'accessArrangementsId',
+            translationKey: 'ACTIVITY.EDIT.ACCESS_ARRANGEMENTS'
+        }
 
         constructor(            
             private $state: ng.ui.IStateService,

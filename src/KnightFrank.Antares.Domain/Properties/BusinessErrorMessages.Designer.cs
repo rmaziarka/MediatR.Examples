@@ -61,11 +61,38 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more attendees are duplicated..
+        /// </summary>
+        internal static string Activity_AppraisalMeetingAttendees_Not_Unique {
+            get {
+                return ResourceManager.GetString("Activity_AppraisalMeetingAttendees_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more contacts are duplicated..
+        /// </summary>
+        internal static string Activity_Contacts_Not_Unique {
+            get {
+                return ResourceManager.GetString("Activity_Contacts_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more departments are duplicated..
         /// </summary>
         internal static string Activity_Departments_Not_Unique {
             get {
                 return ResourceManager.GetString("Activity_Departments_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity lead negotiator is required..
+        /// </summary>
+        internal static string Activity_LeadNegotiator_Is_Required {
+            get {
+                return ResourceManager.GetString("Activity_LeadNegotiator_Is_Required", resourceCulture);
             }
         }
         
@@ -88,11 +115,11 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Activity should hva only one managing department..
+        ///   Looks up a localized string similar to Activity should have exactly one managing department..
         /// </summary>
-        internal static string Activity_Should_Have_Only_One_Managing_Department {
+        internal static string Activity_Should_Have_Exactly_One_Managing_Department {
             get {
-                return ResourceManager.GetString("Activity_Should_Have_Only_One_Managing_Department", resourceCulture);
+                return ResourceManager.GetString("Activity_Should_Have_Exactly_One_Managing_Department", resourceCulture);
             }
         }
         
@@ -205,16 +232,43 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One or more vendors are not exist..
+        ///   Looks up a localized string similar to One or more appraisal meeting attendees do not exist..
         /// </summary>
-        internal static string Missing_Activity_Vendors_Id {
+        internal static string Missing_Activity_Attendees_Id {
             get {
-                return ResourceManager.GetString("Missing_Activity_Vendors_Id", resourceCulture);
+                return ResourceManager.GetString("Missing_Activity_Attendees_Id", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One or more contacts are not exist..
+        ///   Looks up a localized string similar to One or more contacts do not exist..
+        /// </summary>
+        internal static string Missing_Activity_Contacts_Id {
+            get {
+                return ResourceManager.GetString("Missing_Activity_Contacts_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more departments do not exist..
+        /// </summary>
+        internal static string Missing_Activity_Departments_Id {
+            get {
+                return ResourceManager.GetString("Missing_Activity_Departments_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more negotiators do not exist..
+        /// </summary>
+        internal static string Missing_Activity_Negotiators_Id {
+            get {
+                return ResourceManager.GetString("Missing_Activity_Negotiators_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more contacts do not exist..
         /// </summary>
         internal static string Missing_Company_Contacts_Id {
             get {

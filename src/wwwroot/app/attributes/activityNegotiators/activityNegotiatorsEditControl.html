@@ -33,7 +33,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-lg-10 col-lg-offset-2">
-                    <div ng-messages="negotiatorForm.callDate.$error" ng-show="negotiatorForm.$submitted || negotiatorForm.callDate.$dirty">
+                    <div ng-messages="vm.negotiatorsForm.callDate.$error" ng-show="vm.negotiatorsForm.$submitted || vm.negotiatorsForm.callDate.$dirty">
                         <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
@@ -70,7 +70,7 @@
                     </context-menu-item>
                 </card-context-menu>
             </card>
-            <ng-form name="vm.negotiatorsForm">
+            <ng-form name="secondaryNegotiatorsForm">
                 <div class="negotiators-call-date form-inline form-group" show-errors>
                     <div class="row">
                         <div class="col-md-12 col-lg-2">
@@ -88,7 +88,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-lg-10 col-lg-offset-2">
-                            <div ng-messages="negotiatorForm.callDate.$error" ng-show="negotiatorForm.$submitted || negotiatorForm.callDate.$dirty">
+                            <div ng-messages="secondaryNegotiatorsForm.callDate.$error" ng-show="secondaryNegotiatorsForm.$submitted || secondaryNegotiatorsForm.callDate.$dirty">
                                 <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>

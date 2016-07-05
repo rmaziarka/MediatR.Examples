@@ -4,5 +4,6 @@ declare module Antares.Attributes {
     interface ITextEditControlSchema extends ITextControlSchema {
         formName: string;
         fieldName: string;
+        maxLength?: number;
     }
 }

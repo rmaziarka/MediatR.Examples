@@ -55,6 +55,29 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                 .WithMany()
                 .HasForeignKey(p => p.SolicitorCompanyId)
                 .WillCascadeOnDelete(false);
+
+            this.HasOptional(a => a.Source).WithMany().HasForeignKey(s => s.SourceId).WillCascadeOnDelete(false);
+            
+            this.HasOptional(a => a.SellingReason).WithMany().HasForeignKey(s => s.SellingReasonId).WillCascadeOnDelete(false);
+
+            this.Property(a => a.SourceDescription)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.PitchingThreats)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.KeyNumber)
+                .HasMaxLength(128);
+
+            this.Property(a => a.AccessArrangements)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.AppraisalMeetingStart);
+
+            this.Property(a => a.AppraisalMeetingEnd);
+
+            this.Property(a => a.AppraisalMeetingInvitationText)
+                .HasMaxLength(4000);
         }
     }
 }

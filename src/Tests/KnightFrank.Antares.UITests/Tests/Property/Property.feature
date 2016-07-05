@@ -133,8 +133,13 @@ Scenario: Create residential property
 		| Position | ContactName | ContactSurname | Type     | PurchaseDate |
 		| 1        | Eva         | Queen          | Freehold | 15-01-2014   |
 	When User clicks add activites button on view property page	
-		And User selects Open Market Letting activity type on create activity page
+		And User selects Open Market Letting type on create activity page
+		And User selects KF PR from source list on create activity page
+		And User selects John Smith from attendees on create activity page
 		And User clicks save button on create activity page
+	Then View activity page should be displayed
+	When User clicks property details on view activity page
+		And User clicks view property link from property on view activity page
 	Then Activity details are set on view property page
 		| Vendor    | Status        | Type                |
 		| Eva Queen | Pre-appraisal | Open Market Letting |

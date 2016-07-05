@@ -12,6 +12,8 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     public class ViewPropertyPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -59,8 +61,6 @@
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
         }
-
-        public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
         public OwnershipDetailsPage Ownership => new OwnershipDetailsPage(this.DriverContext);
 
@@ -145,10 +145,10 @@
             return this;
         }
 
-        public CreatePropertyPage EditProperty()
+        public ViewPropertyPage EditProperty()
         {
             this.Driver.Click(this.editButton);
-            return new CreatePropertyPage(this.DriverContext);
+            return this;
         }
 
         public ViewPropertyPage SetOwnership()
