@@ -51,7 +51,7 @@ SearchStatus;AppliedFor;en;Applied for
 SearchStatus;Complete;en;Complete
 Enquiries;NotStarted;en;Not started
 Enquiries;Sent;en;Sent
-Enquiries;Complete;en;Complete;en;
+Enquiries;Complete;en;Complete
 SalutationFormat;MrJohnSmith;en;Mr John Smith 
 SalutationFormat;JohnSmithEsq;en;John Smith, Esq
 SalutationFormat;MrJohnSmith;cs;Pan John Smith

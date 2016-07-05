@@ -3,7 +3,6 @@ namespace KnightFrank.Antares.Api
 {
     using System.Web.Http;
 
-    using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.API;
 
     using Ninject.Web.Common.OwinHost;
@@ -26,7 +25,6 @@ namespace KnightFrank.Antares.Api
             AutoMapperConfig.Configure();
             
             app
-                .Use<MockUserMiddleware>(kernel)
                 .UseNinjectMiddleware(() => kernel)
                 .UseNinjectWebApi(server)
                 .UseWebApi(server);
