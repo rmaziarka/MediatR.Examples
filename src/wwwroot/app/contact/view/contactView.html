@@ -42,12 +42,15 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <section>
-                    <contact-negotiators-view-control lead-negotiator="vm.contact.leadNegotiator"
-                                                      secondary-negotiators="vm.contact.secondaryNegotiatorscontact">
-                    </contact-negotiators-view-control>
-                </section>
-            </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-3">
+            <section>
+                <contact-negotiators-view-control lead-negotiator="vm.contact.leadNegotiator"
+                                                  secondary-negotiators="vm.contact.secondaryNegotiators">
+                </contact-negotiators-view-control>
+
+            </section>
         </div>
+    </div>
+        
+        {{vm.contact.secondaryNegotiators}}
