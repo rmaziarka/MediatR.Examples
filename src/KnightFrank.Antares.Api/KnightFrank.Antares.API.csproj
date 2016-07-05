@@ -254,7 +254,6 @@
     <Compile Include="Controllers\TranslationsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Core\MockUserMiddleware.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Core\ValidationExceptionFilterAttribute.cs" />
     <Compile Include="Models\AttachmentUrlParameters.cs" />
