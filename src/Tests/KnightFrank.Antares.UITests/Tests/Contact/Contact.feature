@@ -1,7 +1,7 @@
 ﻿Feature: Contact UI tests
 
 @Contact
-Scenario: Create contact
+Scenario: Create and Edit contact
     Given User navigates to preferences page
 		And User selects Mr John Smith format on preferences page
 	When User saves preferences on preferences page
@@ -11,6 +11,9 @@ Scenario: Create contact
 			| Alan      | Macarthur | Mr    |
 		And User clicks save contact button on create contact page
 	Then View contact page should be displayed
+		And Latest 1 contact should contain following data
+			|LatestData	     |
+			| Alan Macarthur |
 		And Contact details on view contact page are same as the following
 			| FirstName | LastName  | Title |
 			| Alan      | Macarthur | Mr    |
@@ -21,15 +24,18 @@ Scenario: Create contact
 	Then Edit contact page should be displayed
 	    And User edits contact's details on edit contact page
 			| FirstName | LastName  | Title |
-			| Joseph    | MaGregor  | Sir   |
+			| Joseph    | McGregor  | Sir   |
 		And User clicks save button on edit contact page
 	Then View contact page should be displayed
+		And Latest 1 contact should contain following data
+			|LatestData	      |
+			| Joseph McGregor |
 		And Contact details on view contact page are same as the following
 			| FirstName | LastName  | Title |
-			| Joseph    | MaGregor  | Sir   |
+			| Joseph    | McGregor  | Sir   |
 		And Mailings salutations details on view contact page are same as the following
 			| DefaultMailingSalutation | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation |
-			| Semiformal               | Sir MaGregor            | Sir MaGregor                | Joseph                    |                           | Sir Joseph MaGregor       |
+			| Semiformal               | Sir McGregor            | Sir McGregor                | Joseph                    |                           | Sir Joseph McGregor       |
 
 
 @Contact
