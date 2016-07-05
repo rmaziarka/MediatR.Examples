@@ -7,7 +7,9 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
@@ -156,11 +158,23 @@
             }
         }
 
+        [Then(@"Activity details should be displayed on view activity page")]
+        public void CheckActivityOverviewDetails(Table table)
+        {
+            //TODO improve chekcing details
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetails();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.ActivityTitle, actualDetails["title"]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails["status"]),
+                () => Assert.Equal(expectedDetails.Type, actualDetails["type"]));
+        }
+
         [Then(@"Activity details on view activty page are following")]
         public void CheckActivityDetails(Table table)
         {
+            //TODO improve chekcing details
             var details = table.CreateInstance<EditActivityDetails>();
-
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
                 () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N2") + " GBP", this.page.AskingPrice));
@@ -169,8 +183,8 @@
         [Then(@"Attachment should be displayed on view activity page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
-            Attachment actual = this.page.AttachmentDetails;
-            var expected = table.CreateInstance<Attachment>();
+            ViewActivityPage.Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<ViewActivityPage.Attachment>();
             expected.Date = DateTime.UtcNow.ToString(Format);
 
             actual.ShouldBeEquivalentTo(expected);
@@ -179,9 +193,9 @@
         [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            ViewActivityPage.Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
             actual.Date = actual.Date.Split(',')[0];
-            Attachment expected = this.page.AttachmentDetails;
+            ViewActivityPage.Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
@@ -298,12 +312,78 @@
             Assert.Equal(DateTime.UtcNow.AddDays(day).ToString(Format), this.page.LeadNegotiatorNextCall);
         }
 
-        [Then(@"Departments are displayed on view activity page")]
+        [Then(@"Departments should be displayed on view activity page")]
         public void CheckDepartment(Table table)
         {
             List<Department> expectedDepartments = table.CreateSet<Department>().ToList();
-            List<Department> actualDepartments = this.page.Departments;
+            List<ViewActivityPage.Department> actualDepartments = this.page.Departments;
             expectedDepartments.Should().Equal(actualDepartments, (d1, d2) => d1.Name.Equals(d2.Name));
+        }
+
+        [Then(@"Property details should be displayed in overview tab on view activity page")]
+        public void CheckPropertyDetailsInOverviewTab(Table table)
+        {
+            var expectedAddress = table.CreateInstance<Address>();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
+                () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
+                () => Assert.Equal(expectedAddress.Line2, actualResult["line2"]),
+                () => Assert.Equal(expectedAddress.Postcode, actualResult["postCode"]),
+                () => Assert.Equal(expectedAddress.City, actualResult["city"]),
+                () => Assert.Equal(expectedAddress.County, actualResult["county"]));
+        }
+
+        [Then(@"Activity details should be displayed in overview tab on view activity page")]
+        public void CheckActivityDetailsInOverviewTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Attendees, actualDetails["attendee"]));
+        }
+
+        [Then(@"Appraisal meeting date is set to tomorrow date with start time (.*) in overview tab on view activity page")]
+        public void CheckDateAndTime(string time)
+        {
+            string date = DateTime.Today.AddDays(1).ToString("dd-MM-yyyy");
+            Dictionary<string, string> actualDateTime = this.page.GetAppraisalDateAndTime();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(date, actualDateTime["date"]),
+                () => Assert.Equal(time, actualDateTime["time"]));
+        }
+
+        [Then(@"Activity details should be displayed in details tab on view activity page")]
+        public void CheckActivityDetailsInDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Department, actualDetails["department"]),
+                () => Assert.Equal(expectedDetails.Source, actualDetails["source"]),
+                () => Assert.Equal(expectedDetails.SourceDescription, actualDetails["sourceDescription"]),
+                () => Assert.Equal(expectedDetails.SellingReason, actualDetails["sellingReason"]),
+                () => Assert.Equal(expectedDetails.PitchingThreats, actualDetails["pitchingThreats"]),
+                () => Assert.Equal(expectedDetails.KeyNumber, actualDetails["keyNumber"]),
+                () => Assert.Equal(expectedDetails.AccessArangements, actualDetails["accessArangements"]));
+        }
+
+        [Then(@"Property details should be displayed in details tab on view activity page")]
+        public void CheckPropertyDetailsOnDetailsTab(Table table)
+        {
+            var expectedAddress = table.CreateInstance<Address>();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
+                () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
+                () => Assert.Equal(expectedAddress.Line2, actualResult["line2"]),
+                () => Assert.Equal(expectedAddress.Postcode, actualResult["postCode"]),
+                () => Assert.Equal(expectedAddress.City, actualResult["city"]),
+                () => Assert.Equal(expectedAddress.County, actualResult["county"]));
         }
     }
 }

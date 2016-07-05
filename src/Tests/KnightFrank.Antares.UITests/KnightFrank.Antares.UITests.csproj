@@ -119,7 +119,7 @@
     <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
     <Compile Include="Pages\Panels\AttachFilePage.cs" />
     <Compile Include="Pages\Panels\ContactsListPage.cs" />
-    <Compile Include="Pages\Panels\CreateActivityPage.cs" />
+    <Compile Include="Pages\CreateActivityPage.cs" />
     <Compile Include="Pages\CreateCompanyPage.cs" />
     <Compile Include="Pages\CreatePropertyPage.cs" />
     <Compile Include="Pages\CreateContactPage.cs" />
@@ -145,6 +145,7 @@
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CommonSteps.cs" />
+    <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\EditCompanySteps.cs" />
     <Compile Include="Steps\ViewCompanySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
