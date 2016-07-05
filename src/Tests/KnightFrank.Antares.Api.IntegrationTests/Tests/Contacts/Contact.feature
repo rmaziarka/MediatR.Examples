@@ -18,8 +18,6 @@ Scenario: Create contact with all fields
 			| MailingSalutation | MailingSemiformal |
 			| EventSalutation   | EventSemiformal   |
 		And User creates contact using api with max length all fields
-	 		| MailingSalutation | EventSalutation |
-	 		| MailingSemiformal | EventSemiformal |
 	Then User should get OK http status code
 		And Contact details all fields should be the same as already added
 
