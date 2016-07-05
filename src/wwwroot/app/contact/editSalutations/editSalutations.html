@@ -1,4 +1,4 @@
-﻿<fieldset ng-form="salutationsForm">
+﻿<fieldset ng-form="vm.salutationsForm">
     <div class="row">
         <div class="col-md-6">
             <h4 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h4>
@@ -6,38 +6,38 @@
                 <label for="default-mailing-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
                 <enum-select id="default-mailing-salutation-id" name="defaultMailingSalutationId" ng-model="vm.contact.defaultMailingSalutationId" enum-type-code="{{vm.mailingSalutationFormat}}" hide-empty-value="true"></enum-select>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.mailingFormalSalutation.$dirty) && salutationsForm.mailingFormalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.mailingFormalSalutation.$dirty) && vm.salutationsForm.mailingFormalSalutation.$invalid}">
                 <label class="required" for="mailing-formal-salutation" translate="CONTACT.SALUTATION.FORMAL"></label>
                 <input id="mailing-formal-salutation" name="mailingFormalSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingFormalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.mailingFormalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.mailingFormalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.mailingFormalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.mailingFormalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.mailingSemiformalSalutation.$dirty) && salutationsForm.mailingSemiformalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.mailingSemiformalSalutation.$dirty) && vm.salutationsForm.mailingSemiformalSalutation.$invalid}">
                 <label class="required" for="mailing-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
                 <input id="mailing-semiformal-salutation" name="mailingSemiformalSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingSemiformalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.mailingSemiformalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.mailingSemiformalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.mailingSemiformalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.mailingSemiformalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.mailingInformalSalutation.$dirty) && salutationsForm.mailingInformalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.mailingInformalSalutation.$dirty) && vm.salutationsForm.mailingInformalSalutation.$invalid}">
                 <label for="mailing-informal-salutation" translate="CONTACT.SALUTATION.INFORMAL"></label>
                 <input id="mailing-informal-salutation" name="mailingInformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingInformalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.mailingInformalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.mailingInformalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.mailingInformalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.mailingInformalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.mailingPersonalSalutation.$dirty) && salutationsForm.mailingPersonalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.mailingPersonalSalutation.$dirty) && vm.salutationsForm.mailingPersonalSalutation.$invalid}">
                 <label for="mailing-personal-salutation" translate="CONTACT.SALUTATION.PERSONAL"></label>
                 <input id="mailing-personal-salutation" name="mailingPersonalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingPersonalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.mailingPersonalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.mailingPersonalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.mailingPersonalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.mailingPersonalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.mailingEnvelopeSalutation.$dirty) && salutationsForm.mailingEnvelopeSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.mailingEnvelopeSalutation.$dirty) && vm.salutationsForm.mailingEnvelopeSalutation.$invalid}">
                 <label class="required" for="mailing-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
                 <input id="mailing-envelope-salutation" name="mailingEnvelopeSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingEnvelopeSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.mailingEnvelopeSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.mailingEnvelopeSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.mailingEnvelopeSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.mailingEnvelopeSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
@@ -48,38 +48,38 @@
                 <label for="default-event-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
                 <enum-select id="default-event-salutation-id" name="defaultEventSalutationId" ng-model="vm.contact.defaultEventSalutationId" enum-type-code="{{vm.eventSalutationFormat}}" hide-empty-value="true"></enum-select>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.eventInviteSalutation.$dirty) && salutationsForm.eventInviteSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.eventInviteSalutation.$dirty) && vm.salutationsForm.eventInviteSalutation.$invalid}">
                 <label for="event-invite-salutation" translate="CONTACT.SALUTATION.INVITE"></label>
                 <input id="event-invite-salutation" name="eventInviteSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventInviteSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.eventInviteSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.eventInviteSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.eventInviteSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.eventInviteSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.eventSemiformalSalutation.$dirty) && salutationsForm.eventSemiformalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.eventSemiformalSalutation.$dirty) && vm.salutationsForm.eventSemiformalSalutation.$invalid}">
                 <label for="event-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
                 <input id="event-semiformal-salutation" name="eventSemiformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventSemiformalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.eventSemiformalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.eventSemiformalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.eventSemiformalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.eventSemiformalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.eventInformalSalutation.$dirty) && salutationsForm.eventInformalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.eventInformalSalutation.$dirty) && vm.salutationsForm.eventInformalSalutation.$invalid}">
                 <label for="event-informal-salutation" translate="CONTACT.SALUTATION.INFORMAL"></label>
                 <input id="event-informal-salutation" name="eventInformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventInformalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.eventInformalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.eventInformalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.eventInformalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.eventInformalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.eventPersonalSalutation.$dirty) && salutationsForm.eventPersonalSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.eventPersonalSalutation.$dirty) && vm.salutationsForm.eventPersonalSalutation.$invalid}">
                 <label for="event-personal-salutation" translate="CONTACT.SALUTATION.PERSONAL"></label>
                 <input id="event-personal-salutation" name="eventPersonalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventPersonalSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.eventPersonalSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.eventPersonalSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.eventPersonalSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.eventPersonalSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (salutationsForm.$submitted || salutationsForm.eventEnvelopeSalutation.$dirty) && salutationsForm.eventEnvelopeSalutation.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.salutationsForm.$submitted || vm.salutationsForm.eventEnvelopeSalutation.$dirty) && vm.salutationsForm.eventEnvelopeSalutation.$invalid}">
                 <label for="event-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
                 <input id="event-envelope-salutation" name="eventEnvelopeSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventEnvelopeSalutation" autocomplete="off">
-                <div ng-messages="salutationsForm.eventEnvelopeSalutation.$error" ng-show="salutationsForm.$submitted || salutationsForm.eventEnvelopeSalutation.$dirty">
+                <div ng-messages="vm.salutationsForm.eventEnvelopeSalutation.$error" ng-show="vm.salutationsForm.$submitted || vm.salutationsForm.eventEnvelopeSalutation.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>

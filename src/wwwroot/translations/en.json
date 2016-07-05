@@ -105,6 +105,7 @@
     "TITLE": "Title",
     "FIRSTNAME": "First name",
     "LASTNAME": "Last name",
+    "BASIC_INFORMATION": "Basic information",
     "SALUTATION": {
       "TITLE": "Salutation",
       "SALUTATIONS": "Salutations",
@@ -126,7 +127,10 @@
       "EMPTY": "No negotiators added yet",
       "ADD": "Add a negotiator",
       "FIND": "Find a negotiator"
-    }
+    },
+    "EDIT": {
+      "CONTACT_EDIT_SUCCESS": "Contact successfully saved"
+    } 
   },
     "FORM": {
       "FIELD_IS_REQUIRED": "Field is required",

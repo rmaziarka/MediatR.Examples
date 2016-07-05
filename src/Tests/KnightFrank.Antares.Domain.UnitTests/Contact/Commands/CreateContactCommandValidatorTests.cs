@@ -1,14 +1,11 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.Commands
 {
-	using System;
-
-	using FluentValidation.Results;
+    using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Contact.Commands;
 	using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
 	using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
