@@ -77,6 +77,7 @@ Scenario Outline: Get offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
+		And Company exists in database
 		And Requirement of type <requirementType> exists in database
 		And Offer with New status exists in database
 	When User gets offer for latest id
@@ -130,6 +131,7 @@ Scenario Outline: Update offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
+		And Company exists in database
 		And Requirement of type <requirementType> exists in database
 		And Offer with New status exists in database
 	When User updates offer with New status
@@ -186,17 +188,22 @@ Scenario Outline: Update offer with invalid data
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
+		And Company exists in database
 		And Requirement of type <requirementType> exists in database
 		And Offer with New status exists in database
 	When User updates New offer with invalid <data> data
 	Then User should get BadRequest http status code
 
 	Examples: 
-	| data   | requirementType    |
-	| status | ResidentialSale    |
-	| offer  | ResidentialSale    |
-	| status | ResidentialLetting |
-	| offer  | ResidentialLetting |
+	| data                      | requirementType    |
+	| status                    | ResidentialSale    |
+	| offer                     | ResidentialSale    |
+	| status                    | ResidentialLetting |
+	| offer                     | ResidentialLetting |
+	| vendorSolicitor           | ResidentialSale    |
+	| applicantSolicitor        | ResidentialSale    |
+	| vendorSolicitorCompany    | ResidentialSale    |
+	| applicantSolicitorCompany | ResidentialSale    |
 
 @Offers
 Scenario Outline: Update accepted offer with invalid data
