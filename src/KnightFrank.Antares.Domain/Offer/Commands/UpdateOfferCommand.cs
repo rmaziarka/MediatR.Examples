@@ -10,7 +10,9 @@
 
         public Guid StatusId { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
+
+        public decimal? PricePerWeek { get; set; }
 
         public DateTime OfferDate { get; set; }
 

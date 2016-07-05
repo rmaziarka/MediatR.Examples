@@ -9,6 +9,6 @@
         entityType: IEnumItem[];
         offerStatus: IEnumItem[];
         ownershipType: IEnumItem[];
-      salutationFormat: IEnumItem[];
+        salutationFormat: IEnumItem[];
     }
 }

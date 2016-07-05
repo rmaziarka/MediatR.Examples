@@ -10,7 +10,7 @@
     {
         public static Field<TEntity, string> Length<TEntity>(this Field<TEntity, string> field, int maxLength)
         {
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).Length(maxLength)));
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).Length(0, maxLength)));
             return field;
         }
 
@@ -24,7 +24,7 @@
         {
             foreach (Field<TEntity, string> field in fields)
             {
-                field.Length(maxLength);
+                field.Length(0, maxLength);
             }
 
             return fields;

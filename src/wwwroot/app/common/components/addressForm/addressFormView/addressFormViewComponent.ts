@@ -8,7 +8,8 @@ module Antares.Common.Component {
         bindings: {
             address: '<',
             templateUrl: '<',
-            addressType: '@'
+            addressType: '@',
+            config: '<'
         }
     });
 }

@@ -105,8 +105,8 @@
                 PropertyId = propertyId,
                 ActivityTypeId = activityTypeId,
                 ActivityStatusId = activityStatusId,
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now,
+                CreatedDate = this.date,
+                LastModifiedDate = this.date,
                 Contacts = new List<Contact>(),
                 Attachments = new List<Attachment>(),
                 ActivityUsers = activityNegotiatorList,
@@ -322,7 +322,8 @@
                 .Excluding(o => o.Activity)
                 .Excluding(o => o.Requirement)
                 .Excluding(o => o.Negotiator)
-                .Excluding(o => o.Status));
+                .Excluding(o => o.Status)
+                .Excluding(o => o.OfferType));
         }
 
         [Then(@"Retrieved activities should be the same as in database")]

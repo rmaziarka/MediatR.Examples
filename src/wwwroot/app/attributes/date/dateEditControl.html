@@ -18,6 +18,7 @@
                     </span>
                 </div>
                 <div ng-messages="vm[vm.schema.formName].date.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].date.$dirty">
+                    <ng-transclude ng-transclude-slot="overrideErrors"></ng-transclude>
                     <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
                     <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>

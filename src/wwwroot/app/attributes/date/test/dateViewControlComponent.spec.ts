@@ -5,8 +5,7 @@ module Antares {
 
     describe('Given date view control', () => {
         var scope: ng.IScope,
-            element: ng.IAugmentedJQuery,
-            assertValidator: TestHelpers.AssertValidators;
+            element: ng.IAugmentedJQuery;
 
         var format = (date: any) => moment(date).format('DD-MM-YYYY');
         var dateToTest = new Date(2016, 1, 1);
@@ -32,8 +31,6 @@ module Antares {
                 scope['vm'] = { ngModel: dateToTest, config: configMock, schema: schemaMock };
                 element = $compile('<date-view-control date="vm.ngModel" config="vm.config" schema="vm.schema"></date-view-control>')(scope);
                 scope.$apply();
-
-                assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 
             it('then control is displayed', () => {

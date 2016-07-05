@@ -3,32 +3,15 @@
         [index: string]: any;
 
         id: string;
+        requirementTypeId: string;
 
         contacts: IContact[];
         address: IAddress;
         createDate: Date;
         requirementNotes: IRequirementNote[];
 
-        minPrice?: number;
-        maxPrice?: number;
-
-        minBedrooms?: number;
-        maxBedrooms?: number;
-
-        minReceptionRooms?: number;
-        maxReceptionRooms?: number;
-
-        minBathrooms?: number;
-        maxBathrooms?: number;
-
-        minParkingSpaces?: number;
-        maxParkingSpaces?: number;
-
-        minArea?: number;
-        maxArea?: number;
-
-        minLandArea?: number;
-        maxLandArea?: number;
+        rentMin?: number;
+        rentMax?: number;
 
         description?: string;
 

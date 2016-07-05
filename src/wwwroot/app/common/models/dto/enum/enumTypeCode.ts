@@ -9,6 +9,7 @@ module Antares.Common.Models.Dto {
         ActivityDepartmentType = <any>'activityDepartmentType',
         PropertyDocumentType = <any>'propertyDocumentType',
         RequirementDocumentType = <any>'requirementDocumentType',
+        RequirementType = <any>'requirementType',
         OfferStatus = <any>'offerStatus',
         MortgageStatus = <any>'mortgageStatus',
         MortgageSurveyStatus = <any>'mortgageSurveyStatus',
