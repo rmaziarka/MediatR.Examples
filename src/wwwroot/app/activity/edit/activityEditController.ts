@@ -147,7 +147,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortKfValuationPriceForm',
             fieldName: 'shortKfValuationPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         shortVendorValuationPriceSchema = {
@@ -155,7 +155,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortVendorValuationPriceForm',
             fieldName: 'shortVendorValuationPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         shortAgreedInitialMarketingPriceSchema = {
@@ -163,7 +163,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortAgreedInitialMarketingPriceForm',
             fieldName: 'shortAgreedInitialMarketingPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         longKfValuationPriceSchema = {
@@ -171,7 +171,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longKfValuationPriceForm',
             fieldName: 'longKfValuationPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         longVendorValuationPriceSchema = {
@@ -179,7 +179,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longVendorValuationPriceForm',
             fieldName: 'longVendorValuationPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         longAgreedInitialMarketingPriceSchema = {
@@ -187,7 +187,7 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longAgreedInitialMarketingPriceForm',
             fieldName: 'longAgreedInitialMarketingPrice',
-            suffix: 'ACTIVITY.COMMON.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         serviceChargeAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
@@ -301,7 +301,7 @@ module Antares.Activity {
 
             this.$q.all([addEditConfig, detailsConfig])
                 .then((configs: IActivityConfig[]) => {
-                    this.config = this.activityConfigUtils.merge(configs[0], configs[1]);
+                    this.config = <IActivityEditConfig>this.activityConfigUtils.merge(configs[0], configs[1]);
                 });
         }
 
@@ -387,22 +387,22 @@ module Antares.Activity {
         }
 
         public isOtherSectionVisible = (): Boolean => {
-            return this.config.decoration != null && this.config.otherCondition != null;
+            return this.config && this.config.decoration != null && this.config.otherCondition != null;
         }
 
         public isValuationInfoSectionVisible = (): Boolean => {
-            return this.config.kfValuationPrice != null && this.config.vendorValuationPrice != null &&
+            return this.config && this.config.kfValuationPrice != null && this.config.vendorValuationPrice != null &&
                 this.config.agreedInitialMarketingPrice != null;
         }
 
         public isValuationInfoShortLongSectionVisible = (): Boolean => {
-            return this.config.shortKfValuationPrice != null && this.config.longKfValuationPrice != null &&
+            return this.config && this.config.shortKfValuationPrice != null && this.config.longKfValuationPrice != null &&
                 this.config.shortVendorValuationPrice != null && this.config.longVendorValuationPrice != null &&
                 this.config.shortAgreedInitialMarketingPrice != null && this.config.longAgreedInitialMarketingPrice != null;
         }
 
         public isChargesSectionVisible = (): Boolean => {
-            return this.config.serviceChargeAmount != null && this.config.groundRentAmount != null && this.config.groundRentNote != null;
+            return this.config && this.config.serviceChargeAmount != null && this.config.groundRentAmount != null && this.config.groundRentNote != null;
         }
 
         private get pageMode(): PageMode {

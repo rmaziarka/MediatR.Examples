@@ -71,55 +71,52 @@
         shortKfValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'shortKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         shortVendorValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'shortVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         shortAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'shortAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         agreedInitialMarketingPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'agreedInitialMarketingPrice',
-            translationKey: 'ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE',
-            suffix: ''
+            translationKey: 'ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE'
         }
 
         longKfValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'longKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         kfValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'kfValuationPrice',
-            translationKey: 'ACTIVITY.VIEW.PRICES.KF_ESTIMATED_PRICE',
-            suffix: ''
+            translationKey: 'ACTIVITY.VIEW.PRICES.KF_ESTIMATED_PRICE'
         }
 
         vendorValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'vendorValuationPrice',
-            translationKey: 'ACTIVITY.VIEW.PRICES.VENDOR_ESTIMATED_PRICE',
-            suffix: ''
+            translationKey: 'ACTIVITY.VIEW.PRICES.VENDOR_ESTIMATED_PRICE'
         }
 
         longVendorValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'longVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         longAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'longAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
-            suffix: ''
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
         serviceChargeAmountSchema: Antares.Attributes.IPriceControlSchema = {

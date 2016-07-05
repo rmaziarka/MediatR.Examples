@@ -6,9 +6,9 @@ module Antares.TestHelpers {
     import Enums = Common.Models.Enums;
 
     export class ConfigGenerator {
-        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
+        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig {
             var config: Attributes.IOfferOfferDateControlConfig = {
-                offerDate : null
+                offerDate: null
             }
 
             return config;
@@ -73,8 +73,8 @@ module Antares.TestHelpers {
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-				askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-				shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
+                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
             };
 
             return config;
@@ -90,7 +90,21 @@ module Antares.TestHelpers {
                 shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
-                property: ConfigGenerator.generatePropertyViewControlConfig()
+                property: ConfigGenerator.generatePropertyViewControlConfig(),
+                agreedInitialMarketingPrice: {},
+                serviceChargeAmount: {},
+                shortAgreedInitialMarketingPrice: {},
+                shortKfValuationPrice: {},
+                shortVendorValuationPrice: {},
+                vendorValuationPrice: {},
+                decoration: {},
+                groundRentAmount: {},
+                groundRentNote: {},
+                kfValuationPrice: {},
+                longAgreedInitialMarketingPrice: {},
+                longKfValuationPrice: {},
+                longVendorValuationPrice: {},
+                otherCondition: {}
             };
 
             return config;
@@ -104,7 +118,7 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
+        public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
             var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
                 shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };

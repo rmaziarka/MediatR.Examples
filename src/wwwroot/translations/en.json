@@ -212,7 +212,7 @@
       "SERVICE_CHARGE": "Service charge",
       "SERVICE_CHARGE_NOTE": "Service charge note",
       "SHORT_LET": "Short let",
-      "SUFFIX": "GBP / week",
+      "GBP_PER_WEEK": "GBP / week",
       "VALUATION_INFORMATION": "Valuation information",
       "VENDOR_VALUATION": "Vendor Valuation",
       "SOURCE": "Source",
