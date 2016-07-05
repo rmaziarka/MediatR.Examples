@@ -34,9 +34,6 @@ module Antares.Common.Component {
         public change = () => {
             if(this.onChangeValue)
                 this.onChangeValue(this.selectedItem);
-
-            if (this.options.nullOnSelect)
-                this.selectedItem = null;
         }
 
         public cancel = () => {
