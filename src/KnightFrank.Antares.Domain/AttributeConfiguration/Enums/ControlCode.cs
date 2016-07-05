@@ -29,7 +29,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         AppraisalMeeting,
         AppraisalMeetingDate,
         AppraisalMeetingAttendees,
-        AppraisalMeetingInvitation
+        AppraisalMeetingInvitation,
 
         #region Requirement
 
