@@ -107,7 +107,7 @@ ActivitySellingReason;Retiring;en;Retiring
 ActivitySellingReason;SurpliceToRequirement;en;Surplice to requirement
 DisposalType;PrivateTreaty;en;Private Treaty
 DisposalType;FormalTender;en;Formal Tender
-DisposalType;AuctionSpecificToResidential;en;Auction specific to residential sales activities
+DisposalType;Auction;en;Auction
 Decoration;Unmodernised;en;Unmodernised
 Decoration;Fair;en;Fair
 Decoration;Good;en;Good

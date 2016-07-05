@@ -93,7 +93,7 @@ ActivitySellingReason;Retiring
 ActivitySellingReason;SurpliceToRequirement
 DisposalType;PrivateTreaty
 DisposalType;FormalTender
-DisposalType;AuctionSpecificToResidential
+DisposalType;Auction
 Decoration;Unmodernised
 Decoration;Fair
 Decoration;Good
