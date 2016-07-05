@@ -273,7 +273,7 @@ module Antares.Activity {
         }
 
         public activityStatusChanged = (id: string) =>{
-            
+            this.activity.activityStatusId = id;
             this.reloadConfig(this.activity);
         }
 
