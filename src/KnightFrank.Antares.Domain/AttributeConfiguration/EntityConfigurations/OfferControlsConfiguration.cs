@@ -220,7 +220,9 @@
                     ControlCode.Offer_Vendor_Solicitor,
                     ControlCode.Offer_Applicant_Solicitor
                 },
-                this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Update, PageType.Details));
+                this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Update))
+                .HiddenWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted)
+                .ReadonlyWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted);
 
             this.Use(
                 new List<ControlCode>
@@ -238,11 +240,12 @@
                     ControlCode.Offer_MortgageLoanToValue,
                     ControlCode.Offer_MortgageSurveyDate,
                     ControlCode.Offer_AdditionalSurveyDate,
-                    ControlCode.Offer_ProgressComment
+                    ControlCode.Offer_ProgressComment,
+                    ControlCode.Offer_Vendor_Solicitor,
+                    ControlCode.Offer_Applicant_Solicitor
                 },
-                this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Update, PageType.Details))
-                .HiddenWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted)
-                .ReadonlyWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted);
+                this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Details))
+                .HiddenWhen<Offer>(x => x.MortgageStatusId == null);
 
             this.Use(
                 new List<ControlCode>
