@@ -14,7 +14,8 @@ module Antares.TestHelpers {
                 division: EnumDictionaryGenerator.generateEnums(Enums.Division),
                 entityType: EnumDictionaryGenerator.generateEnums(Enums.EntityType),
                 offerStatus: EnumDictionaryGenerator.generateEnums(Enums.OfferStatus),
-                ownershipType: EnumDictionaryGenerator.generateEnums(Enums.OwnershipType)
+                ownershipType: EnumDictionaryGenerator.generateEnums(Enums.OwnershipType),
+                salutationFormat: EnumDictionaryGenerator.generateEnums(Enums.SalutationFormat)
             }
             return enumDictionary;
         }

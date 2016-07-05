@@ -8,6 +8,8 @@ Scenario Outline: Create activity with invalid data
 			| <activityStatusId>     | PreAppraisal     |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
+			| ActivitySource         | DirectEmail      |
+			| ActivitySellingReason  | Relocation       |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
@@ -18,7 +20,6 @@ Scenario Outline: Create activity with invalid data
 	| propertyId                           | activityStatusId                     | activityTypeCode | statusCode |
 	| 00000000-0000-0000-0000-000000000002 | ActivityStatus                       | Freehold Sale    | BadRequest |
 	| latest                               | 00000000-0000-0000-0000-000000000001 | Freehold Sale    | BadRequest |
-	| latest                               | ActivityStatus                       | Assignment       | BadRequest |
 	| latest                               | ActivityStatus                       | invalid          | BadRequest |
 
 @Activity
@@ -29,6 +30,8 @@ Scenario: Create Activity
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
+			| ActivitySource         | DirectEmail      |
+			| ActivitySellingReason  | Relocation       |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |

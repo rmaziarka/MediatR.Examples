@@ -17,5 +17,13 @@ declare module Antares.Common.Models.Dto {
         offers?: IOffer[];
 		askingPrice?: number;
         shortLetPricePerWeek?: number;
+        sourceId: string;
+        sellingReasonId: string;
+        appraisalMeetingStart: string;
+        appraisalMeetingEnd: string;
+        appraisalMeetingInvitationText: string;
+        keyNumber: string;
+        accessArrangements: string;
+        appraisalMeetingAttendees: Dto.IActivityAttendee[];
     }
 }

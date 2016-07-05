@@ -11,6 +11,8 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     public class ViewRequirementPage : ProjectPageBase
     {
         private readonly ElementLocator viewRequirementForm = new ElementLocator(Locator.CssSelector, "requirement-view > div");

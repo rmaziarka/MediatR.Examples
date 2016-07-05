@@ -4,5 +4,6 @@ declare module Antares.Common.Models.Dto {
         propertyTypeId: string;
         address: Dto.IAddress;
         divisionId: string
+        ownerships: Dto.IOwnership[];
     }
 }

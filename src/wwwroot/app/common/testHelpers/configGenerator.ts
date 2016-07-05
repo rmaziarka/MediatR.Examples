@@ -8,7 +8,6 @@ module Antares.TestHelpers {
     export class ConfigGenerator {
         public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
             var config: Attributes.IOfferOfferDateControlConfig = {
-                active : true,
                 offerDate : null
             }
 
@@ -17,7 +16,6 @@ module Antares.TestHelpers {
 
         public static generateOfferExchangeDateConfig(): Attributes.IOfferExchangeDateControlConfig {
             var config: Attributes.IOfferExchangeDateControlConfig = {
-                active: true,
                 exchangeDate: null
             }
 
@@ -26,7 +24,6 @@ module Antares.TestHelpers {
 
         public static generateOfferCompletionDateConfig(): Attributes.IOfferCompletionDateControlConfig {
             var config: Attributes.IOfferCompletionDateControlConfig = {
-                active: true,
                 completionDate: null
             }
 
@@ -35,7 +32,6 @@ module Antares.TestHelpers {
 
         public static generateOfferStatusIdConfig(): Attributes.IOfferStatusControlConfig {
             var config: Attributes.IOfferStatusControlConfig = {
-                active: true,
                 statusId: null
             }
 
@@ -44,7 +40,6 @@ module Antares.TestHelpers {
 
         public static generateOfferPriceConfig(): Attributes.IOfferPriceControlConfig {
             var config: Attributes.IOfferPriceControlConfig = {
-                active: true,
                 price: null
             }
 
@@ -53,7 +48,6 @@ module Antares.TestHelpers {
 
         public static generateOfferPricePerWeekConfig(): Attributes.IOfferPricePerWeekControlConfig {
             var config: Attributes.IOfferPricePerWeekControlConfig = {
-                active: true,
                 pricePerWeek: null
             }
 
@@ -62,7 +56,6 @@ module Antares.TestHelpers {
 
         public static generateOfferSpecialConditionsConfig(): Attributes.IOfferSpecialConditionsControlConfig {
             var config: Attributes.IOfferSpecialConditionsControlConfig = {
-                active: true,
                 specialConditions: null
             }
 
@@ -85,7 +78,6 @@ module Antares.TestHelpers {
 
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
-                active: true,
                 activityStatusId: {
                     active: true,
                     required: true,
@@ -98,7 +90,6 @@ module Antares.TestHelpers {
 
         public static generateActivityTypeEditConfig(): Attributes.IActivityTypeEditControlConfig {
             var config: Attributes.IActivityTypeEditControlConfig = {
-                active: true,
                 type: null
             };
 
@@ -107,7 +98,6 @@ module Antares.TestHelpers {
 
         public static generateActivityVendorsConfig(): Attributes.IActivityVendorsControlConfig {
             var config: Attributes.IActivityVendorsControlConfig = {
-                active: true,
                 contactIds: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -117,7 +107,6 @@ module Antares.TestHelpers {
 
         public static generateActivityLandlordsConfig(): Attributes.IActivityLandlordsControlConfig {
             var config: Attributes.IActivityLandlordsControlConfig = {
-                active: true,
                 landlords: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -147,7 +136,19 @@ module Antares.TestHelpers {
                 shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
-                property: ConfigGenerator.generatePropertyViewControlConfig()
+                property: ConfigGenerator.generatePropertyViewControlConfig(),
+                marketAppraisalPrice: {},
+                recommendedPrice: {},
+                vendorEstimatedPrice: {},
+                source: {},
+                sourceDescription: {},
+                sellingReason: {},
+                pitchingThreats: {},
+                keyNumber: {},
+                accessArrangements: {},
+                appraisalMeetingDate: {},
+                appraisalMeetingAttendees: {},
+                appraisalMeetingInvitation: {}
             };
 
             return config;
@@ -155,7 +156,6 @@ module Antares.TestHelpers {
 
         public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
             var config: Attributes.IActivityAskingPriceControlConfig = {
-                active: true,
                 askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -164,7 +164,6 @@ module Antares.TestHelpers {
 
         public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
             var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
-                active: true,
                 shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -173,7 +172,6 @@ module Antares.TestHelpers {
 
         public static generateDepartmentViewControlConfig(): Attributes.IActivityDepartmentsViewControlConfig {
             var config: Attributes.IActivityDepartmentsViewControlConfig = {
-                active: true,
                 activityDepartments: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -182,7 +180,6 @@ module Antares.TestHelpers {
 
         public static generateNegotiatorsViewControlConfig(): Attributes.IActivityNegotiatorsControlConfig {
             var config: Attributes.IActivityNegotiatorsControlConfig = {
-                active: true,
                 contactIds: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -191,7 +188,6 @@ module Antares.TestHelpers {
 
         public static generatePropertyViewControlConfig(): Attributes.IPropertyViewControlConfig {
             var config: Attributes.IPropertyViewControlConfig = {
-                active: true,
                 propertyId: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
@@ -215,7 +211,6 @@ module Antares.TestHelpers {
 
             var config: Attributes.IRequirementDescriptionEditControlConfig = {
                 description: fieldConfig,
-                active: true
             }
 
             return config;
@@ -241,7 +236,6 @@ module Antares.TestHelpers {
 
         public static generateRequirementTypeEditConfig(): Attributes.IRequirementTypeEditControlConfig {
             var config: Attributes.IRequirementTypeEditControlConfig = {
-                active: true,
                 requirementTypeId: {
                     required: true,
                     active: true

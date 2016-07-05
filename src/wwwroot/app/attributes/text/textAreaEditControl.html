@@ -5,7 +5,6 @@
                 <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
                 <span class="pull-right character-limit">{{vm[vm.schema.formName].text.$viewValue.length || 0}}/4000</span>
                 <textarea ng-model="vm.ngModel"
-                          ng-maxlength="4000"
                           rows="{{vm.rows}}"
                           kf-max-count="4000"
                           id="{{vm.schema.controlId}}"

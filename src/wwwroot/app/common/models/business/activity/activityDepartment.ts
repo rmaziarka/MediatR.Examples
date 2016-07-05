@@ -13,6 +13,9 @@ module Antares.Common.Models.Business {
             if (activityDepartment) {
                 angular.extend(this, activityDepartment);
             }
+
+            this.department = this.department || new Department();
+            this.departmentType = this.departmentType || new EnumTypeItem();
         }
 
         public isManaging(): boolean {

@@ -20,6 +20,16 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offers,
         Viewings,
         Attachments,
+        Source,
+        SourceDescription,
+        SellingReason,
+        PitchingThreats,
+        KeyNumber,
+        AccessArrangements,
+        AppraisalMeeting,
+        AppraisalMeetingDate,
+        AppraisalMeetingAttendees,
+        AppraisalMeetingInvitation,
 
         #region Requirement
 

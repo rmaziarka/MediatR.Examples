@@ -190,7 +190,18 @@
                                     e.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
                                     e.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
                     }
-                }
+                },
+                SourceId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySource)) &&
+                    e.Code.Equals(nameof(ActivitySource.KnightfrankGlobalSearch))).Id,
+                SellingReasonId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                    e.Code.Equals(nameof(ActivitySellingReason.Divorce))).Id,
+                AppraisalMeetingAttendees =
+                    new List<ActivityAttendee>
+                    {
+                        new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
+                    }
             };
 
             this.dataContext.Activities.Add(activity);
@@ -280,7 +291,18 @@
                                     e.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
                                     e.Code.Equals(nameof(ActivityDepartmentType.Standard))).Id
                     }
-                }
+                },
+                SourceId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySource)) &&
+                    e.Code.Equals(nameof(ActivitySource.KnightfrankGlobalSearch))).Id,
+                SellingReasonId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                    e.Code.Equals(nameof(ActivitySellingReason.Divorce))).Id,
+                AppraisalMeetingAttendees =
+                    new List<ActivityAttendee>
+                    {
+                        new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
+                    }
             };
 
             this.dataContext.Activities.Add(activity);
