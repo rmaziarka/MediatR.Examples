@@ -243,10 +243,26 @@ module Antares {
                     expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
                     expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
                     expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
-
                     expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
                     expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
+
+                    expect(requestData.kfValuationPrice).toEqual(activity.kfValuationPrice);
+                    expect(requestData.agreedInitialMarketingPrice).toEqual(activity.agreedInitialMarketingPrice);
+                    expect(requestData.vendorValuationPrice).toEqual(activity.vendorValuationPrice);
+                    expect(requestData.shortKfValuationPrice).toEqual(activity.shortKfValuationPrice);
+                    expect(requestData.shortVendorValuationPrice).toEqual(activity.shortVendorValuationPrice);
+                    expect(requestData.shortAgreedInitialMarketingPrice).toEqual(activity.shortAgreedInitialMarketingPrice);
+                    expect(requestData.longKfValuationPrice).toEqual(activity.longKfValuationPrice);
+                    expect(requestData.longVendorValuationPrice).toEqual(activity.longVendorValuationPrice);
+                    expect(requestData.longAgreedInitialMarketingPrice).toEqual(activity.longAgreedInitialMarketingPrice);
+                    expect(requestData.disposalTypeId).toEqual(activity.disposalTypeId);
+                    expect(requestData.decorationId).toEqual(activity.decorationId);
+                    expect(requestData.serviceChargeAmount).toEqual(activity.serviceChargeAmount);
+                    expect(requestData.serviceChargeNote).toEqual(activity.serviceChargeNote);
+                    expect(requestData.groundRentAmount).toEqual(activity.groundRentAmount);
+                    expect(requestData.groundRentNote).toEqual(activity.groundRentNote);
+                    expect(requestData.otherCondition).toEqual(activity.otherCondition);
                 }
             });
         });
