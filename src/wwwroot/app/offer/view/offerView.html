@@ -126,13 +126,7 @@
             <h3 class="page-header" translate="OFFER.VIEW.MORTGAGE_DETAILS"></h3>
             <div class="section-details">
                 <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE"></div>
-                    <div ng-if="vm.offer.mortgageLoanToValue !== null">
-                        <div class="col-xs-8 mortgage-loan-to-value">{{::vm.offer.mortgageLoanToValue}}%</div>
-                    </div>
-                    <div ng-if="vm.offer.mortgageLoanToValue === null">
-                        <div class="col-xs-8 mortgage-loan-to-value">-</div>
-                    </div>
+                    <percent-number-view-control value="vm.offer.mortgageLoanToValue" config="vm.config.offer_MortgageLoanToValue" schema="vm.controlSchemas.mortgageLoanToValue"></percent-number-view-control>
                 </div>
             </div>
             <div class="section-details">

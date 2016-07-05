@@ -126,6 +126,12 @@ module Antares.Offer {
                 translationKey : "OFFER.EDIT.SPECIAL_CONDITIONS",
                 fieldName : "specialConditions"
             },
+            mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
+                formName : "mortgageLoanToValueControlForm",
+                controlId : "mortgage-loan-to-value",
+                translationKey: "OFFER.EDIT.MORTGAGE_LOAN_TO_VALUE",
+                fieldName : "mortgageLoanToValue"
+            },
             mortgageStatus: <Attributes.IEnumItemEditControlSchema>{
                 formName: "mortgageStatusControlForm",
                 controlId: "offer-mortgage-status",

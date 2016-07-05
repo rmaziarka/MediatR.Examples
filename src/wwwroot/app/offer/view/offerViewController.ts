@@ -5,17 +5,31 @@ module Antares.Component {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 	import Dto = Common.Models.Dto;
+    import OfferViewConfig = Offer.IOfferViewConfig;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
-		public offer: Business.Offer;
+        // bindings
+        offer: Business.Offer;
+        config: OfferViewConfig;
+
         private offerStatuses: Common.Models.Dto.IEnumItem[];
-		
+
+        // controls
+        controlSchemas: any = {
+            mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
+                formName: "mortgageLoanToValueControlForm",
+                controlId: "mortgage-loan-to-value",
+                translationKey: "OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE",
+                fieldName: "mortgageLoanToValue"
+            }
+        };
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
             private latestViewsProvider: LatestViewsProvider,
-			private enumService: Services.EnumService) {
+            private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
 			this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }

@@ -14,16 +14,20 @@ module Antares.Offer {
             .state('app.offer-view', {
                 url : '/offer/:id',
                 params : {},
-                template : '<offer-view offer="offer"></offer-view>',
-                controller : ($scope: ng.IScope, offer: Dto.IOffer) =>{
+                template: '<offer-view offer="offer" config="config"></offer-view>',
+                controller: ($scope: ng.IScope, offer: Dto.IOffer, config: IOfferViewConfig) =>{
                     var offerViewModel = new Business.Offer(<Dto.IOffer>offer);
 
                     $scope['offer'] = offerViewModel;
+                    $scope['config'] = config;
                 },
                 resolve : {
-                    offer : ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) =>{
+                    offer : ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) =>{
                         var offerId: string = $stateParams['id'];
                         return dataAccessService.getOfferResource().get({ id : offerId }).$promise;
+                    },
+                    config: (offer: Dto.IOffer, configService: Services.ConfigService) => {
+                        return configService.getOffer(Enums.PageTypeEnum.Details, offer.requirement.requirementTypeId, offer.offerTypeId, offer);
                     }
                 }
             })
@@ -42,7 +46,7 @@ module Antares.Offer {
                         return dataAccessService.getOfferResource().get({ id: offerId }).$promise;
                     },
                     config: (offer: Dto.IOffer, configService: Services.ConfigService) =>{
-                        return configService.getOffer(Enums.PageTypeEnum.Details, offer.requirement.requirementTypeId, offer.offerTypeId, offer);
+                        return configService.getOffer(Enums.PageTypeEnum.Update, offer.requirement.requirementTypeId, offer.offerTypeId, offer);
                     }
                 }
             });
