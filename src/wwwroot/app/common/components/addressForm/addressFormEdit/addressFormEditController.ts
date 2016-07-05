@@ -35,6 +35,9 @@ module Antares.Common.Component {
                     if (isNewAddressMode) {
                         this.setDefaultCountry();
                     }
+
+                    //TODO: webAPI should accept countryId instead of isoCode
+                    this.getAddressFormTemplete(this.entityTypeCode, this.getSelectedCountryCode());
                 })
                 .finally(() => {
                     this.isLoading = false;
