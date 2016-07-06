@@ -16,12 +16,12 @@ module Antares.Component {
 
         // controls
         controlSchemas: any = {
-            vendorSolicitor: <Attributes.ICompanyContactViewControlSchema>{
+            activitySolicitor: <Attributes.ICompanyContactViewControlSchema>{
                 controlId: 'vendorSolicitor',
                 translationKey: 'OFFER.VIEW.SOLICITOR',
                 emptyTranslationKey: 'OFFER.VIEW.NO_SOLICITOR'
             },
-            applicantSolicitor: <Attributes.ICompanyContactViewControlSchema>{
+            requirementSolicitor: <Attributes.ICompanyContactViewControlSchema>{
                 controlId: 'applicantSolicitor',
                 translationKey: 'OFFER.VIEW.SOLICITOR',
                 emptyTranslationKey: 'OFFER.VIEW.NO_SOLICITOR'

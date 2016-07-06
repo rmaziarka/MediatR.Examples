@@ -11,7 +11,6 @@ module Antares.Offer {
     import OpenCompanyContactEditPanelEvent = Antares.Attributes.OpenCompanyContactEditPanelEvent;
     import CompanyContactType = Antares.Common.Models.Enums.CompanyContactType;
     import ICompanyContactEditControlSchema = Antares.Attributes.ICompanyContactEditControlSchema;
-    import CompanyContactConnection = Antares.Common.Models.Business.CompanyContactRelation;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         // bindings
@@ -49,20 +48,20 @@ module Antares.Offer {
         isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isAdditionalSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
-        isVendorSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
-        isApplicantSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isActivitySolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isRequirementSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         contactToSelect: string = '';
 
         // controls
         controlSchemas: any = {
-            vendorSolicitor: <ICompanyContactEditControlSchema>{
+            activitySolicitor: <ICompanyContactEditControlSchema>{
                 formName: 'vendorSolicitorForm',
                 controlId: 'vendorSolicitor',
                 translationKey: 'OFFER.EDIT.SOLICITOR',
                 emptyTranslationKey: 'OFFER.EDIT.NO_SOLICITOR'
             },
-            applicantSolicitor: <ICompanyContactEditControlSchema>{
+            requirementSolicitor: <ICompanyContactEditControlSchema>{
                 formName: 'applicantSolicitorForm',
                 controlId: 'applicantSolicitor',
                 translationKey: 'OFFER.EDIT.SOLICITOR',
@@ -260,8 +259,8 @@ module Antares.Offer {
             this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
             this.isSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
             this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
-            this.isVendorSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
-            this.isApplicantSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isActivitySolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isRequirementSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
         }
 
         isOtherDetailsSectionVisible = () => {
@@ -291,11 +290,11 @@ module Antares.Offer {
                 case CompanyContactType.AdditionalSurveyor:
                     this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
-                case CompanyContactType.VendorSolicitor:
-                    this.isVendorSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
+                case CompanyContactType.ActivitySolicitor:
+                    this.isActivitySolicitorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
-                case CompanyContactType.ApplicantSolicitor:
-                    this.isApplicantSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
+                case CompanyContactType.RequirementSolicitor:
+                    this.isRequirementSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
             }
         }

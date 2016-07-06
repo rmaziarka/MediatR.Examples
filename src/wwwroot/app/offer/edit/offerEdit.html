@@ -5,7 +5,8 @@
     <form ng-submit="vm.editOfferForm.isFormValid() && vm.save()" name="vm.editOfferForm" id="editOfferForm" method="post" novalidate>
         <div class="col-md-4">
             <section id="section-vendor">
-                <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
+                <h3 class="page-header" translate="OFFER.VIEW.VENDOR" ng-if="vm.config.offer_Vendor"></h3>
+                <h3 class="page-header" translate="OFFER.VIEW.LANDLORD" ng-if="vm.config.offer_Landlord"></h3>
 
                 <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
                 <card-list-item class="requirement-view-offers" id="offer-edit-activity-details">
@@ -16,11 +17,11 @@
                         </card-context-menu>
                     </card>
                 </card-list-item>
-                <company-contact-edit-control schema="vm.controlSchemas.vendorSolicitor"
-                                              config="vm.config.offer_Vendor_Solicitor"
-                                              type="vm.companyContactType.VendorSolicitor"
+                <company-contact-edit-control schema="vm.controlSchemas.activitySolicitor"
+                                              config="vm.config.offer_Activity_Solicitor"
+                                              type="vm.companyContactType.ActivitySolicitor"
                                               company-contact="vm.offer.activity.solicitorCompanyContact"
-                                              is-panel-visible="vm.isVendorSolicitorEditPanelVisible">
+                                              is-panel-visible="vm.isActivitySolicitorEditPanelVisible">
                 </company-contact-edit-control>
             </section>
             <section id="section-applicant">
@@ -35,11 +36,11 @@
                         </card-context-menu>
                     </card>
                 </card-list-item>
-                <company-contact-edit-control schema="vm.controlSchemas.applicantSolicitor"
-                                              config="vm.config.offer_Applicant_Solicitor"
-                                              type="vm.companyContactType.ApplicantSolicitor"
+                <company-contact-edit-control schema="vm.controlSchemas.requirementSolicitor"
+                                              config="vm.config.offer_Requirement_Solicitor"
+                                              type="vm.companyContactType.RequirementSolicitor"
                                               company-contact="vm.offer.requirement.solicitorCompanyContact"
-                                              is-panel-visible="vm.isApplicantSolicitorEditPanelVisible">
+                                              is-panel-visible="vm.isRequirementSolicitorEditPanelVisible">
                 </company-contact-edit-control>
             </section>
         </div>

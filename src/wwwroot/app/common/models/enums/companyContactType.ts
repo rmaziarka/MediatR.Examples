@@ -4,7 +4,7 @@ module Antares.Common.Models.Enums {
         Lender = <any>'Lender',
         Surveyor = <any>'Surveyor',
         AdditionalSurveyor = <any>'AdditionalSurveyor',
-        VendorSolicitor = <any>'VendorSolicitor',
-        ApplicantSolicitor = <any>'ApplicantSolicitor',
+        ActivitySolicitor = <any>'ActivitySolicitor',
+        RequirementSolicitor = <any>'RequirementSolicitor',
     }
 }

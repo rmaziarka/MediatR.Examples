@@ -73,8 +73,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_ProgressComment,
         Offer_CreatedDate,
         Offer_LastModifiedDate,
-        Offer_Vendor_Solicitor,
-        Offer_Applicant_Solicitor
+        Offer_Activity_Solicitor,
+        Offer_Requirement_Solicitor,
+        Offer_Vendor,
+        Offer_Landlord
         #endregion
     }
 }
