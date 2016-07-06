@@ -1,6 +1,6 @@
 ﻿<div class="row section-row" ng-if="vm.config">
     <div class="col-xs-6 section-title" translate="{{vm.schema.translationKey}}"></div>
-    <fieldset>
+    <fieldset id="{{vm.schema.controlId}}">
         <div ng-if="vm.value !== null">
             <div>{{vm.value}}%</div>
         </div>

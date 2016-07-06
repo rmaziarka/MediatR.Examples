@@ -86,8 +86,8 @@ module Antares.Offer {
             }
         }
 
-        navigateToActivity = (activity: Dto.IActivity) => {
-            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: activity.id }, { absolute: false });
+        navigateToActivity = (offer: Dto.IOffer) => {
+            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: offer.activity.id }, { absolute: false });
             this.$window.open(activityViewUrl, '_blank');
         }
 
