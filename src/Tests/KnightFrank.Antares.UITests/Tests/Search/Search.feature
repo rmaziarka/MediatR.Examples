@@ -1,6 +1,7 @@
 ﻿Feature: Search UI tests
 
 @Property
+@Ignore
 Scenario: Property search
 	Given Contacts are created in database
 		| Title | FirstName | Surname |

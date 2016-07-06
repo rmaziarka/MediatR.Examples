@@ -28,7 +28,23 @@ module Antares.TestHelpers {
                 appraisalMeetingEnd: moment().toDate().toDateString(),
                 appraisalMeetingStart: moment().toDate().toDateString(),
                 appraisalMeetingInvitationText: StringGenerator.generate(),
-                appraisalMeetingAttendees: []
+                appraisalMeetingAttendees: [],
+                kfValuationPrice: 21,
+                agreedInitialMarketingPrice: 21,
+                vendorValuationPrice: 21,
+                shortKfValuationPrice: 23,
+                shortAgreedInitialMarketingPrice: 24,
+                shortVendorValuationPrice: 25,
+                longKfValuationPrice: 26,
+                longAgreedInitialMarketingPrice: 27,
+                longVendorValuationPrice: 28,
+                disposalTypeId: StringGenerator.generate(),
+                decorationId: StringGenerator.generate(),
+                serviceChargeAmount: 29,
+                serviceChargeNote: StringGenerator.generate(),
+                groundRentAmount: 30,
+                groundRentNote: StringGenerator.generate(),
+                otherCondition: StringGenerator.generate()
             }
 
             return angular.extend(activity, specificData || {});

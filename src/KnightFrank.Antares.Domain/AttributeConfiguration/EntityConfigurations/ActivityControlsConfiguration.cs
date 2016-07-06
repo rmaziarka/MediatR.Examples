@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;
@@ -13,11 +16,15 @@
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
+    using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
     public class ActivityControlsConfiguration : ControlsConfigurationPerTwoTypes<PropertyType, ActivityType>
     {
-        public ActivityControlsConfiguration()
+        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
+
+        public ActivityControlsConfiguration(IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
+            this.enumTypeItemRepository = enumTypeItemRepository;
             this.Init();
         }
 
@@ -66,6 +73,23 @@
                     Field<Activity>.Create(x => x.AppraisalMeetingAttendees),
                     Field<Activity>.Create(x => x.AppraisalMeetingInvitationText)
                 });
+            this.AddControl(PageType.Details, ControlCode.ServiceChargeAmount, Field<Activity>.Create(x=>x.ServiceChargeAmount));
+            this.AddControl(PageType.Details, ControlCode.ServiceChargeNote, Field<Activity>.Create(x=>x.ServiceChargeNote));
+            this.AddControl(PageType.Details, ControlCode.GroundRentAmount, Field<Activity>.Create(x=>x.GroundRentAmount));
+            this.AddControl(PageType.Details, ControlCode.GroundRentNote, Field<Activity>.Create(x=>x.GroundRentNote));
+            this.AddControl(PageType.Details, ControlCode.OtherCondition, Field<Activity>.Create(x=>x.OtherCondition));
+            this.AddControl(PageType.Details, ControlCode.DisposalType, Field<Activity>.Create(x=>x.DisposalTypeId, x=>x.DisposalType));
+            this.AddControl(PageType.Details, ControlCode.Decoration, Field<Activity>.Create(x => x.DecorationId, x => x.Decoration));
+            this.AddControl(PageType.Details, ControlCode.KfValuationPrice, Field<Activity>.Create(x => x.KfValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.VendorValuationPrice, Field<Activity>.Create(x => x.VendorValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.AgreedInitialMarketingPrice, Field<Activity>.Create(x => x.AgreedInitialMarketingPrice));
+            this.AddControl(PageType.Details, ControlCode.ShortKfValuationPrice, Field<Activity>.Create(x => x.ShortKfValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.ShortVendorValuationPrice, Field<Activity>.Create(x => x.ShortVendorValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.ShortAgreedInitialMarketingPrice, Field<Activity>.Create(x => x.ShortAgreedInitialMarketingPrice));
+            this.AddControl(PageType.Details, ControlCode.LongKfValuationPrice, Field<Activity>.Create(x => x.LongKfValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.LongVendorValuationPrice, Field<Activity>.Create(x => x.LongVendorValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.LongAgreedInitialMarketingPrice, Field<Activity>.Create(x => x.LongAgreedInitialMarketingPrice));
+
         }
 
         private void DefineControlsForCreateAndEdit()
@@ -99,11 +123,33 @@
                     });
                 this.AddControl(pageType, ControlCode.AppraisalMeetingAttendees, Field<ActivityCommandBase>.Create(x => x.AppraisalMeetingAttendeesList).ExternalCollectionValidator(new UpdateActivityAttendeeValidator()));
                 this.AddControl(pageType, ControlCode.AppraisalMeetingInvitation, Field<ActivityCommandBase>.Create(x => x.AppraisalMeetingInvitationText));
+                this.AddControl(pageType, ControlCode.ServiceChargeAmount, Field<ActivityCommandBase>.Create(x => x.ServiceChargeAmount));
+                this.AddControl(pageType, ControlCode.ServiceChargeNote, Field<ActivityCommandBase>.Create(x => x.ServiceChargeNote));
+                this.AddControl(pageType, ControlCode.GroundRentAmount, Field<ActivityCommandBase>.Create(x => x.GroundRentAmount));
+                this.AddControl(pageType, ControlCode.GroundRentNote, Field<ActivityCommandBase>.Create(x => x.GroundRentNote));
+                this.AddControl(pageType, ControlCode.OtherCondition, Field<ActivityCommandBase>.Create(x => x.OtherCondition));
+                this.AddControl(pageType, ControlCode.DisposalType, Field<ActivityCommandBase>.Create(x => x.DisposalTypeId).Required());
+                this.AddControl(pageType, ControlCode.Decoration, Field<ActivityCommandBase>.Create(x => x.DecorationId));
+                this.AddControl(pageType, ControlCode.KfValuationPrice, Field<ActivityCommandBase>.Create(x => x.KfValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.VendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.VendorValuationPrice));
+                this.AddControl(pageType, ControlCode.AgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.AgreedInitialMarketingPrice));
+                this.AddControl(pageType, ControlCode.ShortKfValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortKfValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.ShortVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortVendorValuationPrice));
+                this.AddControl(pageType, ControlCode.ShortAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.ShortAgreedInitialMarketingPrice));
+                this.AddControl(pageType, ControlCode.LongKfValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongKfValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.LongVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongVendorValuationPrice));
+                this.AddControl(pageType, ControlCode.LongAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.LongAgreedInitialMarketingPrice));
             }
         }
 
         public override void DefineMappings()
         {
+            Guid activityStatusMarketAppraisal =
+                this.enumTypeItemRepository
+                .FindBy(x => x.EnumType.Code == EnumType.ActivityStatus.ToString() && x.Code == ActivityStatus.MarketAppraisal.ToString())
+                .Select(x => x.Id)
+                .Single();
+            
             List<Tuple<PropertyType, ActivityType>> openMarketLetting =
                 new[]
                 {
@@ -165,6 +211,105 @@
                     ControlCode.AppraisalMeetingDate, ControlCode.AppraisalMeetingInvitation, ControlCode.AppraisalMeetingAttendees
                 },
                 this.When(allResidentials, PageType.Create, PageType.Update));
+
+            this.Use(new List<ControlCode> { ControlCode.DisposalType },
+                this.When(residentialSale, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(new List<ControlCode> { ControlCode.DisposalType },
+               this.When(residentialSale, PageType.Details))
+               .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.ServiceChargeAmount,
+                    ControlCode.ServiceChargeNote,
+                    ControlCode.GroundRentAmount,
+                    ControlCode.GroundRentNote
+                },
+                this.When(longLeaseholdSale, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.ServiceChargeAmount,
+                    ControlCode.ServiceChargeNote,
+                    ControlCode.GroundRentAmount,
+                    ControlCode.GroundRentNote
+                },
+                this.When(longLeaseholdSale, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.OtherCondition,
+                    ControlCode.Decoration
+                },
+                this.When(allResidentials, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.OtherCondition,
+                    ControlCode.Decoration
+                },
+                this.When(allResidentials, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.KfValuationPrice,
+                                ControlCode.VendorValuationPrice,
+                                ControlCode.AgreedInitialMarketingPrice
+                },
+                this.When(residentialSale, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.KfValuationPrice,
+                                ControlCode.VendorValuationPrice,
+                                ControlCode.AgreedInitialMarketingPrice
+                },
+                this.When(residentialSale, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.ShortKfValuationPrice,
+                                ControlCode.ShortVendorValuationPrice,
+                                ControlCode.ShortAgreedInitialMarketingPrice,
+                                ControlCode.LongKfValuationPrice,
+                                ControlCode.LongVendorValuationPrice,
+                                ControlCode.LongAgreedInitialMarketingPrice
+                },
+                this.When(openMarketLetting, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.ShortKfValuationPrice,
+                                ControlCode.ShortVendorValuationPrice,
+                                ControlCode.ShortAgreedInitialMarketingPrice,
+                                ControlCode.LongKfValuationPrice,
+                                ControlCode.LongVendorValuationPrice,
+                                ControlCode.LongAgreedInitialMarketingPrice
+                },
+                this.When(openMarketLetting, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
         }
     }
 }

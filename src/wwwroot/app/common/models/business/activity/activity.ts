@@ -11,9 +11,6 @@ module Antares.Common.Models.Business {
         attachments: Attachment[] = [];
         property: PreviewProperty = null;
         createdDate: Date = null;
-        marketAppraisalPrice: number = null;
-        recommendedPrice: number = null;
-        vendorEstimatedPrice: number = null;
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
         leadNegotiator: ActivityUser = null;
@@ -34,6 +31,22 @@ module Antares.Common.Models.Business {
         keyNumber: string = null;
         accessArrangements: string = null;
         appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        kfValuationPrice: number = null;
+        agreedInitialMarketingPrice: number = null;
+        vendorValuationPrice: number = null;
+        shortKfValuationPrice: number;
+        shortVendorValuationPrice: number;
+        shortAgreedInitialMarketingPrice: number;
+        longKfValuationPrice: number;
+        longVendorValuationPrice: number;
+        longAgreedInitialMarketingPrice: number;  
+        disposalTypeId: string = '';
+        decorationId: string = '';
+        serviceChargeAmount: number = null;
+        serviceChargeNote: string = '';
+        groundRentAmount: number = null;
+        groundRentNote: string = '';
+        otherCondition: string = '';      
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

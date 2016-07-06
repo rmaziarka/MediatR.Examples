@@ -44,7 +44,7 @@
 
         public ViewingDetailsPage ClickViewLink()
         {
-            this.Driver.Click(this.viewLink);
+            this.Driver.ClickWithJs(this.viewLink);
             return this;
         }
     }

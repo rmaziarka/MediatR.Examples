@@ -144,7 +144,7 @@
 
         public CreateActivityPage SelectAtendee(string attendee)
         {
-            this.Driver.GetElement(this.attendeeToSelect.Format(attendee)).Click();
+            this.Driver.GetElement(this.attendeeToSelect.Format(attendee)).JavaScriptClick();
             return this;
         }
 

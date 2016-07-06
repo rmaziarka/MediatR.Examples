@@ -1,7 +1,7 @@
 <ng-form name='vm.{{vm.schema.formName}}' ng-if="vm.config" id="price-edit-control">
     <div class="form-group" show-errors>
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <label for="{{vm.schema.controlId}}" translate="{{vm.schema.translationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
                 <div class="input-group">
                     <input ng-model="vm.ngModel"

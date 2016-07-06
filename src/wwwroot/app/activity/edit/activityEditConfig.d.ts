@@ -5,12 +5,23 @@ declare module Antares.Activity {
 
     interface IActivityEditConfig extends IActivityConfig {
         activityStatus: Attributes.IActivityStatusEditControlConfig;
+        agreedInitialMarketingPrice: any;
+        decoration: any;
         departments: Attributes.IActivityDepartmentsViewControlConfig;
+        groundRentAmount: any;
+        groundRentNote: any;
+        kfValuationPrice: any;
+        longAgreedInitialMarketingPrice: any;
+        longKfValuationPrice: any;
+        longVendorValuationPrice: any;
         negotiators: Attributes.IActivityNegotiatorsControlConfig;
+        otherCondition: any;
         property: Attributes.IPropertyViewControlConfig;
-        marketAppraisalPrice: any;
-        recommendedPrice: any;
-        vendorEstimatedPrice: any;
+        serviceChargeAmount: any;
+        shortAgreedInitialMarketingPrice: any;
+        shortKfValuationPrice: any;
+        shortVendorValuationPrice: any;
+        vendorValuationPrice: any;
         askingPrice: any;
         shortLetPricePerWeek: any;
         source: any;
@@ -22,5 +33,6 @@ declare module Antares.Activity {
         appraisalMeetingDate: any;
         appraisalMeetingAttendees: any;
         appraisalMeetingInvitation: any;
+        disposalType: any;
     }
 }

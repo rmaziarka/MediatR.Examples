@@ -115,7 +115,7 @@
         public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
         {
             IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = 
-                controlFields.Where(x => x.Item2.Any(f => f.InnerField.ContainerType == typeof(TEntity)));
+                controlFields.Where(x => x.Item2.Any(f => typeof(TEntity).IsSameOrSubclassOf(f.InnerField.ContainerType)));
 
             foreach (Tuple<Control, IList<IField>> tuple in controlsForCurrentType)
             {
@@ -128,7 +128,7 @@
         public static IList<Tuple<Control, IList<IField>>> HiddenWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression)
         {
             IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType =
-                controlFields.Where(x => x.Item2.Any(f => f.InnerField.ContainerType == typeof(TEntity)));
+                controlFields.Where(x => x.Item2.Any(f => typeof(TEntity).IsSameOrSubclassOf(f.InnerField.ContainerType)));
 
             foreach (Tuple<Control, IList<IField>> tuple in controlsForCurrentType)
             {
