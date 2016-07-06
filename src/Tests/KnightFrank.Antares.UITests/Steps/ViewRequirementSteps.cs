@@ -367,7 +367,7 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetDetails()),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
@@ -389,7 +389,7 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetDetails()),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", this.page.OfferPreview.OfferPerWeek),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
@@ -409,7 +409,7 @@
         public void CheckOfferActivity(Table table)
         {
             var details = table.CreateInstance<OfferData>();
-            Assert.Equal(details.Details, this.page.Offer.Details);
+            Assert.Equal(details.Details, this.page.Offer.GetDetails());
         }
 
         [Then(@"New offer should be created and displayed on view requirement page")]

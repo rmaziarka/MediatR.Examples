@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -9,7 +12,7 @@
 
     public class CreateOfferPage : ProjectPageBase
     {
-        private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, ".slide-in #activity-details");
+        private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in address-form-view .ng-binding");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
@@ -23,8 +26,6 @@
         public CreateOfferPage(DriverContext driverContext) : base(driverContext)
         {
         }
-
-        public string Details => this.Driver.GetElement(this.activityDetails).Text;
 
         public CreateOfferPage SelectStatus(string text)
         {
@@ -79,6 +80,13 @@
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             return this;
+        }
+
+        public string GetDetails()
+        {
+            List<string> list =
+                this.Driver.GetElements(this.details, element => element.Enabled).Select(el => el.GetTextContent()).ToList();
+            return string.Join(" ", list).Trim();
         }
     }
 

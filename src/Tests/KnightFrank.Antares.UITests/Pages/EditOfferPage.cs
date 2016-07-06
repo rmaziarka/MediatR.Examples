@@ -15,37 +15,41 @@
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator save = new ElementLocator(Locator.Id, "offer-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#offer-status select");
+        private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
+        // Vendor
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
+        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.Id, "vendorSolicitor-edit");
+        // Applicant
+        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.Id, "applicantSolicitor-edit");
         // Basic information
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-date");
-        private readonly ElementLocator specialConditions = new ElementLocator(Locator.Name, "specialConditions");
-        private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-proposed-exchange-date");
-        private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "proposed-completion-date");
+        private readonly ElementLocator specialConditions = new ElementLocator(Locator.Id, "offer-special-conditions");
+        private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-exchange-date");
+        private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "offer-completion-date");
         // Progress summary
-        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.CssSelector, "#offer-mortgage-status select");
-        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.CssSelector, "#mortgage-survey-status select");
-        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.CssSelector, "#additional-survey-status select");
-        private readonly ElementLocator searchStatus = new ElementLocator(Locator.CssSelector, "#search-status select");
-        private readonly ElementLocator enquiries = new ElementLocator(Locator.CssSelector, "#enquiries select");
-        private readonly ElementLocator contractApproved = new ElementLocator(Locator.CssSelector, "#contract-approved [ng-value = 'true']");
-        private readonly ElementLocator contractNotApproved = new ElementLocator(Locator.CssSelector, "#contract-approved [ng-value = 'false']");
+        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.Id, "offer-mortgage-status");
+        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.Id, "offer-mortgage-survey-status");
+        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.Id, "offer-additional-survey-status");
+        private readonly ElementLocator searchStatus = new ElementLocator(Locator.Id, "offer-search-status");
+        private readonly ElementLocator enquiries = new ElementLocator(Locator.Id, "offer-enquiries");
+        private readonly ElementLocator contractApproved = new ElementLocator(Locator.CssSelector, "#contact-approved [value = 'true']");
+        private readonly ElementLocator contractNotApproved = new ElementLocator(Locator.CssSelector, "#contact-approved [value = 'false']");
         // Mortgage details
         private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.Id, "mortgage-loan-to-value");
-        private readonly ElementLocator editBroker = new ElementLocator(Locator.Id, "edit-broker");
+        private readonly ElementLocator editBroker = new ElementLocator(Locator.Id, "broker-edit");
         private readonly ElementLocator broker = new ElementLocator(Locator.CssSelector, "#broker .ng-binding");
-        private readonly ElementLocator editLender = new ElementLocator(Locator.Id, "edit-lender");
+        private readonly ElementLocator editLender = new ElementLocator(Locator.Id, "lender-edit");
         private readonly ElementLocator lender = new ElementLocator(Locator.CssSelector, "#lender .ng-binding");
-        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, "mortgage-survey-date");
-        private readonly ElementLocator mortgageEditSurveyor = new ElementLocator(Locator.Id, "edit-surveyor");
+        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, "offer-mortgage-survey-date");
+        private readonly ElementLocator mortgageEditSurveyor = new ElementLocator(Locator.Id, "surveyor-edit");
         private readonly ElementLocator mortgageSurveyor = new ElementLocator(Locator.CssSelector, "#surveyor .ng-binding");
         // Additional survey
-        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, "additional-survey-date");
-        private readonly ElementLocator editAdditionalSurveyor = new ElementLocator(Locator.Id, "edit-additional-surveyor");
-        private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additional-surveyor .ng-binding");
+        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, "offer-additional-survey-date");
+        private readonly ElementLocator editAdditionalSurveyor = new ElementLocator(Locator.Id, "additionalSurveyor-edit");
+        private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additionalSurveyor .ng-binding");
         // Other details
-        private readonly ElementLocator comment = new ElementLocator(Locator.Id, "comment");
+        private readonly ElementLocator comment = new ElementLocator(Locator.Id, "offer-progress-comment");
 
         public EditOfferPage(DriverContext driverContext) : base(driverContext)
         {
@@ -69,6 +73,7 @@
 
         public EditOfferPage SelectStatus(string offerStatus)
         {
+            this.Driver.WaitForAngularToFinish();
             this.Driver.GetElement<Select>(this.status).SelectByText(offerStatus);
             return this;
         }
@@ -229,6 +234,18 @@
         public EditOfferPage SetComment(string text)
         {
             this.Driver.SendKeys(this.comment, text);
+            return this;
+        }
+
+        public EditOfferPage EditVendorSolicitor()
+        {
+            this.Driver.Click(this.vendorSolicitor);
+            return this;
+        }
+
+        public EditOfferPage EditApplicantSolicitor()
+        {
+            this.Driver.Click(this.applicantSolicitor);
             return this;
         }
     }

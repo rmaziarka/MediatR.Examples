@@ -26,9 +26,9 @@ Scenario: Create residential letting offer on requirement
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-	Then Activity details on view requirement page are same as the following
-		| Details                         |
-		| Lori Petty’s house, 8 George St |
+	#Then Activity details on view requirement page are same as the following
+	#	| Details                         |
+	#	| Lori Petty’s house, 8 George St |
 	When User fills in letting offer details on view requirement page
 		| Status | OfferPerWeek | SpecialConditions |
 		| New    | 1000         | Text              |
@@ -39,11 +39,12 @@ Scenario: Create residential letting offer on requirement
 			| 8 Lori Petty’s house George St NN16 0AW Kettering Northamptonshire | 1000         | NEW    |
 	When User clicks 1 offer details on view requirement page
 	Then Letting offer details on view requirement page are same as the following
-		| Details                         | Status | OfferPerWeek | SpecialConditions | Negotiator |
-		| Lori Petty’s house, 8 George St | New    | 1000         | Text              | John Smith |
-	When User clicks view activity from offer on view requirement page
-	Then View activity page should be displayed
-		And Offer should be displayed on view activity page
+		| Details                                                            | Status | OfferPerWeek | SpecialConditions | Negotiator |
+		| 8 Lori Petty’s house George St NN16 0AW Kettering Northamptonshire | New    | 1000         | Text              | John Smith |
+	#   -------TODO when view on activity is done-------
+	#When User clicks view activity from offer on view requirement page
+	#Then View activity page should be displayed
+	#	And Offer should be displayed on view activity page
 	#	And Offer details on 1 position on view activity page are same as the following
 	#		| Details                                  | OfferPerWeek | Status |
 	#		| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    |
@@ -80,16 +81,16 @@ Scenario: Update residential letting offer on requirement
 	When User navigates to view requirement page with id
 		And User clicks edit offer button for 1 offer on view requirement page
 	Then Activity details on view requirement page are same as the following
-		| Details                       |
-		| Vivien Leigh, 1 Crutchley Ave |
+		| Details                                                     |
+		| 1 Vivien Leigh Crutchley Ave B78 3JT Tamworth Staffordshire |
 	When User fills in letting offer details on view requirement page
 		| Status   | OfferPerWeek | SpecialConditions  |
 		| Accepted | 2000         | Special conditions |
 		And User clicks save offer button on view requirement page
 		And User clicks 1 offer details on view requirement page
 	Then Letting offer details on view requirement page are same as the following
-		| Details                       | Status   | OfferPerWeek | SpecialConditions  | Negotiator |
-		| Vivien Leigh, 1 Crutchley Ave | Accepted | 2000         | Special conditions | John Smith |
+		| Details                                                     | Status   | OfferPerWeek | SpecialConditions  | Negotiator |
+		| 1 Vivien Leigh Crutchley Ave B78 3JT Tamworth Staffordshire | Accepted | 2000         | Special conditions | John Smith |
 
 @Requirement
 @Offer
@@ -117,9 +118,9 @@ Scenario: Create residential sale offer on requirement
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-	Then Activity details on view requirement page are same as the following
-		| Details                                     |
-		| John Soane’s house, 13 Lincoln’s Inn Fields |
+	#Then Activity details on view requirement page are same as the following
+	#	| Details                                                                  |
+	#	| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county |
 	When User fills in sale offer details on view requirement page
 		| Status | Offer  | SpecialConditions |
 		| New    | 100000 | Text              |
@@ -130,15 +131,16 @@ Scenario: Create residential sale offer on requirement
 			| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county | 100000 | NEW    |
 	When User clicks 1 offer details on view requirement page
 	Then Sale offer details on view requirement page are same as the following
-		| Details                                     | Status | Offer  | SpecialConditions | Negotiator |
-		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 | Text              | John Smith |
-	When User clicks view activity from offer on view requirement page
-	Then View activity page should be displayed
-		And Offer should be displayed on view activity page
-		And Offer details on 1 position on view activity page are same as the following
-			| Details                                    | Offer  | Status |
-			| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    |
-	When User clicks 1 offer details on view activity page
+		| Details                                                                  | Status | Offer  | SpecialConditions | Negotiator |
+		| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county | New    | 100000 | Text              | John Smith |
+	#   -------TODO when view on activity is done-------
+	#When User clicks view activity from offer on view requirement page
+	#Then View activity page should be displayed
+	#	And Offer should be displayed on view activity page
+	#	And Offer details on 1 position on view activity page are same as the following
+	#		| Details                                    | Offer  | Status |
+	#		| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    |
+	#When User clicks 1 offer details on view activity page
 	#Then Offer details on view activity page are same as the following
 	#	| Details                                    | Status | Offer  | SpecialConditions | Negotiator |
 	#	| John Soane, Robert McAlpine, Edward Graham | New    | 100000 | Text              | John Smith |
@@ -155,8 +157,8 @@ Scenario: Update residential sale offer on requirement
 			| 1           | 3           | 1             | 1             | 1            | 2            | 1000    | 3000    | 1400        | 5000        | 1                   | 2                   |
 		And Property characteristics are defined
 		And Property in GB is created in database
-			| PropertyNumber | PropertyName | Line2     | Postcode | City  | County         |
-			| 22             | House        | Eltham Dr | LS6 2TU  | Leeds | West Yorkshire |
+			| PropertyNumber | PropertyName | Line2     | Line3 | Postcode | City  | County         |
+			| 22             | House        | Eltham Dr |       | LS6 2TU  | Leeds | West Yorkshire |
 		And Property ownership is defined
 			| PurchaseDate | BuyPrice |
 			| 10-12-2013   | 10000000 |
@@ -171,17 +173,18 @@ Scenario: Update residential sale offer on requirement
 	When User navigates to view requirement page with id
 		And User clicks edit offer button for 1 offer on view requirement page
 	Then Activity details on view requirement page are same as the following
-		| Details             |
-		| House, 22 Eltham Dr |
+		| Details                                         |
+		| 22 House Eltham Dr LS6 2TU Leeds West Yorkshire |
 	When User fills in sale offer details on view requirement page
 		| Status   | Offer | SpecialConditions  |
 		| Accepted | 2000  | Special conditions |
 		And User clicks save offer button on view requirement page
 		And User clicks 1 offer details on view requirement page
 	Then Sale offer details on view requirement page are same as the following
-		| Details             | Status   | Offer | SpecialConditions  | Negotiator |
-		| House, 22 Eltham Dr | Accepted | 2000  | Special conditions | John Smith |
+		| Details                                         | Status   | Offer | SpecialConditions  | Negotiator |
+		| 22 House Eltham Dr LS6 2TU Leeds West Yorkshire | Accepted | 2000  | Special conditions | John Smith |
 
+#SAME TEST FOR LETTING OFFER
 @Offer
 Scenario: View residential sale offer details page
 	Given Contacts are created in database
@@ -194,8 +197,8 @@ Scenario: View residential sale offer details page
 			| 4           | 5           | 2             | 4             | 1            | 2            | 2000    | 2500    | 3000        | 5000        | 1                   | 1                   |
 		And Property characteristics are defined
 		And Property in GB is created in database
-			| PropertyNumber | PropertyName    | Line2   | Postcode | City      | County     |
-			| 34             | Greciet’s house | Bixteth | L3 9BA   | Liverpool | Merseyside |
+			| PropertyNumber | PropertyName    | Line2   | Line3 | Postcode | City      | County     |
+			| 34             | Greciet’s house | Bixteth |       | L3 9BA   | Liverpool | Merseyside |
 		And Property ownership is defined
 			| PurchaseDate | BuyPrice |
 			| 10-01-2015   | 100000   |
@@ -218,14 +221,14 @@ Scenario: View residential sale offer details page
 			| Details                        | Status    |
 			| Judith Greciet, Julius Chaloff | Withdrawn |
 		And Offer activity details on view offer page are same as the following
-			| Details                     |
-			| Greciet’s house, 34 Bixteth |
+			| Details                                                |
+			| 34 Greciet’s house Bixteth L3 9BA Liverpool Merseyside |
 		And Offer requirement details on view offer page are same as the following
 			| Details                        |
 			| Judith Greciet, Julius Chaloff |
 		And Offer details on view offer page are same as the following
-			| Status    | Offer     | SpecialConditions     | Negotiator |
-			| Withdrawn | 95,000.00 | My special conditions | John Smith |
+			| Status    | Offer | SpecialConditions     | Negotiator |
+			| Withdrawn | 95000 | My special conditions | John Smith |
 	When User clicks activity details on view offer page
 	Then Activity details on view offer page are same as the following 
 		| Status        | Negotiator | Vendor                        | Type          |
@@ -239,6 +242,13 @@ Scenario: View residential sale offer details page
 #SAME TEST FOR LETTING OFFER?
 @Offer
 Scenario: Update new residential sale offer
+	Given Contacts are created in database	
+		| Title | FirstName | Surname |
+		| Sir   | John      | Adams   |
+		| Lady  | Sarah     | Adams   |
+		And Company is created in database
+			| Name    | WebsiteUrl             | ClientCarePageUrl      |
+			| Testing | https://www.google.com | https://www.google.com |
 	Given Contacts are created in database
 		| Title | FirstName | Surname      |
 		| Lady  | Sarah     | McCorquodale |
@@ -248,8 +258,8 @@ Scenario: Update new residential sale offer
 			| 4           | 6           | 2             | 3             | 3            | 5            | 10000   | 31000   | 14000       | 51000       | 3                   | 4                   |
 		And Property characteristics are defined
 		And Property in GB is created in database
-			| PropertyNumber | PropertyName       | Line2        | Postcode | City     | County  |
-			| 84             | Sarah McCorquodale | Granville Rd | CA2 7BA  | Carlisle | Cumbria |
+			| PropertyNumber | PropertyName       | Line2        | Line3 | Postcode | City     | County  |
+			| 84             | Sarah McCorquodale | Granville Rd |       | CA2 7BA  | Carlisle | Cumbria |
 		And Property ownership is defined
 			| PurchaseDate | BuyPrice  |
 			| 10-12-2000   | 100000000 |
@@ -266,20 +276,26 @@ Scenario: Update new residential sale offer
 		And User fills in offer details on edit offer page
 			| Status | Offer  | SpecialConditions     |
 			| New    | 450000 | My special conditions |
+		And User selects solicitors on edit offer page
+			| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
+			| John Adams | Testing       | Sarah Adams | Testing          |
 		And User clicks save offer on edit offer page
 	Then Offer updated success message should be displayed
 		And Offer details on view offer page are same as the following
-			| Status | Offer      | SpecialConditions     | Negotiator |
-			| New    | 450,000.00 | My special conditions | John Smith |
+			| Status | Offer  | SpecialConditions     | Negotiator |
+			| New    | 450000 | My special conditions | John Smith |
 		And Offer header details on view offer page are same as the following
 			| Details            | Status |
 			| Sarah McCorquodale | New    |
 		And Offer activity details on view offer page are same as the following
-			| Details                             |
-			| Sarah McCorquodale, 84 Granville Rd |
+			| Details                                                     |
+			| 84 Sarah McCorquodale Granville Rd CA2 7BA Carlisle Cumbria |
 		And Offer requirement details on view offer page are same as the following
 			| Details            |
 			| Sarah McCorquodale |
+		And Offer solicitors details on view offer page are same as the following
+			| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
+			| John Adams | Testing       | Sarah Adams | Testing          |
 
 @Offer
 Scenario: Create and update accepted residential sale offer
@@ -342,8 +358,8 @@ Scenario: Create and update accepted residential sale offer
 	When User clicks save offer on edit offer page
 	Then Offer updated success message should be displayed
 		And Offer details on view offer page are same as the following
-			| Status   | Offer      | SpecialConditions | Negotiator |
-			| Accepted | 120,000.00 | Text              | John Smith |
+			| Status   | Offer  | SpecialConditions | Negotiator |
+			| Accepted | 120000 | Text              | John Smith |
 		And Offer progress summary details on view offer page are same as the following
 			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
 			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |

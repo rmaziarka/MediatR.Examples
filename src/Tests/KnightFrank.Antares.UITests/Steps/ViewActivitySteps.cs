@@ -296,7 +296,7 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetDetails()),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
