@@ -118,7 +118,10 @@
                         new[] { PageType.Update },
                         new[] { OfferType.ResidentialSale },
                         new[] { RequirementType.ResidentialSale },
-                        residentialSaleControlCodes.Concat(updateNotRequiredControlCodes)));
+                        residentialSaleControlCodes.Concat(updateNotRequiredControlCodes).Concat(new []
+                            {
+                                ControlCode.Offer_Activity_Solicitor, ControlCode.Offer_Requirement_Solicitor
+                            })));
 
             return data;
         }
@@ -137,7 +140,10 @@
                         new[] { PageType.Details },
                         new[] { OfferType.ResidentialSale },
                         new[] { RequirementType.ResidentialSale },
-                        residentialSaleControlCodes.Concat(detailsControlCodes)));
+                        residentialSaleControlCodes.Concat(detailsControlCodes).Concat(new[]
+                            {
+                                ControlCode.Offer_Activity_Solicitor, ControlCode.Offer_Requirement_Solicitor
+                            })));
 
             return data;
         }

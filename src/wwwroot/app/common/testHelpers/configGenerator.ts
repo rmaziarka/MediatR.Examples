@@ -1,10 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
-    import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
-    import Enums = Common.Models.Enums;
-
     export class ConfigGenerator {
         public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig {
             var config: Attributes.IOfferOfferDateControlConfig = {
@@ -25,6 +21,22 @@ module Antares.TestHelpers {
         public static generateOfferCompletionDateConfig(): Attributes.IOfferCompletionDateControlConfig {
             var config: Attributes.IOfferCompletionDateControlConfig = {
                 completionDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferAdditionalSurveyDateConfig(): Attributes.IOfferAdditionalSurveyDateControlConfig {
+            var config: Attributes.IOfferAdditionalSurveyDateControlConfig = {
+                additionalSurveyDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageSurveyDateConfig(): Attributes.IOfferMortgageSurveyDateControlConfig {
+            var config: Attributes.IOfferMortgageSurveyDateControlConfig = {
+                mortgageSurveyDate: null
             }
 
             return config;
@@ -61,16 +73,141 @@ module Antares.TestHelpers {
 
             return config;
         }
-        
+
+        public static generateOfferCommentConfig(): Attributes.IOfferProgressCommentControlConfig {
+            var config: Attributes.IOfferProgressCommentControlConfig = {
+                progressComment: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferBrokerConfig(): Attributes.IOfferBrokerControlConfig {
+            var config: Attributes.IOfferBrokerControlConfig = {
+                brokerId: null
+            }
+
+            return config;
+        }
+        public static generateOfferAdditionalSurveyorConfig(): Attributes.IOfferAdditionalSurveyorControlConfig {
+            var config: Attributes.IOfferAdditionalSurveyorControlConfig = {
+                additionalSurveyorId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferLenderConfig(): Attributes.IOfferLenderControlConfig {
+            var config: Attributes.IOfferLenderControlConfig = {
+                lenderId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSurveyorConfig(): Attributes.IOfferSurveyorControlConfig {
+            var config: Attributes.IOfferSurveyorControlConfig = {
+                surveyorId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferContractApprovedConfig(): Attributes.IOfferContractApprovedControlConfig {
+            var config: Attributes.IOfferContractApprovedControlConfig = {
+                contractApproved: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferEnquiriesConfig(): Attributes.IOfferEnquiriesControlConfig {
+            var config: Attributes.IOfferEnquiriesControlConfig = {
+                enquiriesId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageStatusConfig(): Attributes.IOfferMortgageStatusControlConfig {
+            var config: Attributes.IOfferMortgageStatusControlConfig = {
+                mortgageStatusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageSurveyStatusConfig(): Attributes.IOfferMortgageSurveyStatusControlConfig {
+            var config: Attributes.IOfferMortgageSurveyStatusControlConfig = {
+                mortgageSurveyStatusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSearchStatusConfig(): Attributes.IOfferSearchStatusControlConfig {
+            var config: Attributes.IOfferSearchStatusControlConfig = {
+                searchStatusId: null
+            }
+
+            return config;
+        }
         public static generateOfferAddPanelConfig(): Offer.IOfferAddPanelConfig{
             var config: Offer.IOfferAddPanelConfig = {
-                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
-                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
-                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
-                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
-                price: ConfigGenerator.generateOfferPriceConfig(),
-                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
-                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+                offer_StatusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                offer_CompletionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                offer_ExchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offer_OfferDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                offer_Price: ConfigGenerator.generateOfferPriceConfig(),
+                offer_PricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                offer_SpecialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+            };
+
+            return config;
+        }
+
+        public static generateOfferEditConfig(): Offer.IOfferEditConfig{
+            var addPanelConfig: Offer.IOfferAddPanelConfig = ConfigGenerator.generateOfferAddPanelConfig();
+            var config = <Offer.IOfferEditConfig>{};
+            angular.extend(config, addPanelConfig, <Offer.IOfferEditConfig> {
+                offer_AdditionalSurveyDate : ConfigGenerator.generateOfferAdditionalSurveyDateConfig(),
+                offer_MortgageSurveyDate : ConfigGenerator.generateOfferMortgageSurveyDateConfig(),
+                offer_Broker: ConfigGenerator.generateOfferBrokerConfig(),
+                offer_AdditionalSurveyor: ConfigGenerator.generateOfferAdditionalSurveyorConfig(),
+                offer_ContractApproved: ConfigGenerator.generateOfferContractApprovedConfig(),
+                offer_Enquiries: ConfigGenerator.generateOfferEnquiriesConfig(),
+                offer_Lender: ConfigGenerator.generateOfferLenderConfig(),
+                offer_MortgageStatus: ConfigGenerator.generateOfferMortgageStatusConfig(),
+                offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
+                offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
+                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig(),
+                offer_ProgressComment: ConfigGenerator.generateOfferCommentConfig()
+            });
+
+            return config;
+        }
+
+        public static generateOfferViewConfig(): Offer.IOfferViewConfig {
+            var config = <Offer.IOfferViewConfig> {
+                offer_StatusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                offer_CompletionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                offer_ExchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offer_OfferDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                offer_Price: ConfigGenerator.generateOfferPriceConfig(),
+                offer_PricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                offer_SpecialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig(),
+                offer_AdditionalSurveyDate: ConfigGenerator.generateOfferAdditionalSurveyDateConfig(),
+                offer_MortgageSurveyDate: ConfigGenerator.generateOfferMortgageSurveyDateConfig(),
+                offer_Broker: ConfigGenerator.generateOfferBrokerConfig(),
+                offer_AdditionalSurveyor: ConfigGenerator.generateOfferAdditionalSurveyorConfig(),
+                offer_ContractApproved: ConfigGenerator.generateOfferContractApprovedConfig(),
+                offer_Enquiries: ConfigGenerator.generateOfferEnquiriesConfig(),
+                offer_Lender: ConfigGenerator.generateOfferLenderConfig(),
+                offer_MortgageStatus: ConfigGenerator.generateOfferMortgageStatusConfig(),
+                offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
+                offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
+                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig(),
+                offer_ProgressComment: ConfigGenerator.generateOfferCommentConfig()
             };
 
             return config;

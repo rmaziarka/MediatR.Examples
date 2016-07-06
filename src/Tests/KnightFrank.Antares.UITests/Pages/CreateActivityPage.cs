@@ -17,7 +17,6 @@
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatusId");
         private readonly ElementLocator type = new ElementLocator(Locator.Id, "type");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-vendors-edit span.ng-binding");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-add-panel .busy");
         // negotiators & departments locators
         private readonly ElementLocator negotiator = new ElementLocator(Locator.Id, "negotiator-");
         private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, ".well > div:nth-of-type(1)");

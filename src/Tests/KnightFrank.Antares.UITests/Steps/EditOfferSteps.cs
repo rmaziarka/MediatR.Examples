@@ -168,6 +168,26 @@
             this.scenarioContext.Set(details, "OfferAdditional");
         }
 
+        [When(@"User selects solicitors on edit offer page")]
+        public void SelectVendorSolicitor(Table table)
+        {
+            var details = table.CreateInstance<SolicitorsData>();
+
+            this.page.EditVendorSolicitor()
+                .WaitForSidePanelToShow()
+                .ContactsList.WaitForContactsListToLoad()
+                .SelectContact(details.Vendor, details.VendorCompany)
+                .ApplyContact();
+            this.page.WaitForSidePanelToHide();
+
+            this.page.EditApplicantSolicitor()
+                .WaitForSidePanelToShow()
+                .ContactsList.WaitForContactsListToLoad()
+                .SelectContact(details.Applicant, details.ApplicantCompany)
+                .ApplyContact();
+            this.page.WaitForSidePanelToHide();
+        }
+
         [Then(@"Following company contacts should be displayed on edit offer page")]
         public void CheckContacts(Table table)
         {

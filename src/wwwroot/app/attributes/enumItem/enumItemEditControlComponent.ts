@@ -9,7 +9,8 @@ module Antares.Attribues {
             config: '<',
             ngModel: '=',
             onSelectedItemChanged: '&?',
-            schema: '<'
+            schema: '<',
+            hideEmptyValue: '<'
         }
     });
 }

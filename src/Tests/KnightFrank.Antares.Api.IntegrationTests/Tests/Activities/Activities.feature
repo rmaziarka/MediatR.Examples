@@ -125,6 +125,7 @@ Scenario: Get Activity with viewing and offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
+		And Company exists in database
 		And Requirement of type ResidentialSale exists in database
 		And Viewing exists in database
 		And Offer with New status exists in database

@@ -18,6 +18,8 @@ module Antares.TestHelpers {
                 property: PropertyGenerator.generateDto(),
                 propertyId: StringGenerator.generate(),
                 activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)],
+                solicitor: <Dto.IContact>{},
+                solicitorCompany: <Dto.ICompany>{},
                 activityDepartments: [],
                 sellingReasonId: StringGenerator.generate(),
                 sourceId: StringGenerator.generate(),
@@ -62,6 +64,6 @@ module Antares.TestHelpers {
 
         public static generateActivityEdit(specificData?: any): Activity.ActivityEditModel {
             return new Activity.ActivityEditModel(ActivityGenerator.generateDto(specificData));
-        }
+    }
     }
 }

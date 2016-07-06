@@ -13,7 +13,15 @@
         </div>
 
         <div class="section-details">
-            <activity-card activity="vm.offer.activity"></activity-card>
+            <h5 translate="COMMON.ACTIVITY"></h5>
+            <card-list-item class="offer-preview-activity">
+                <card show-context-menu="true" display-new-control="true"
+                      card-template-url="'app/offer/view/offerActivityCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
         </div>
 
         <div class="section-details">

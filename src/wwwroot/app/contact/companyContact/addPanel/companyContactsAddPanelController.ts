@@ -36,13 +36,6 @@ module Antares.Ownership {
                     this.isBusy = false;
                 });
         }
-
-        public $onChanges(changesObj: any) {
-            super.$onChanges(changesObj);
-            if (changesObj.initialySelectedCompanyContacts && changesObj.initialySelectedCompanyContacts.currentValue && changesObj.initialySelectedCompanyContacts.currentValue !== changesObj.initialySelectedCompanyContacts.previousValue) {
-                this.loadCompanyContacts();
-            }
-        }
     }
 
     angular.module('app').controller('CompanyContactsAddPanelController', CompanyContactsAddPanelController);

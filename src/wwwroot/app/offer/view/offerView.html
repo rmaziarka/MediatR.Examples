@@ -11,23 +11,28 @@
     </div>
     <div class="col-md-4">
         <section id="section-vendor">
-            <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
+            <h3 class="page-header" translate="OFFER.VIEW.VENDOR" ng-if="vm.config.offer_Vendor"></h3>
+            <h3 class="page-header" translate="OFFER.VIEW.LANDLORD" ng-if="vm.config.offer_Landlord"></h3>
 
             <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
-            <card-list-item class="requirement-view-offers">
+            <card-list-item class="offer-view-activity">
                 <card show-context-menu="true" show-item-details="vm.showActivityPreview" display-new-control="true"
-                      card-template-url="'app/offer/view/offerVendorCard.html'" item="vm.offer">
+                      card-template-url="'app/offer/view/offerActivityCard.html'" item="vm.offer">
                     <card-context-menu>
                         <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
                     </card-context-menu>
                 </card>
             </card-list-item>
+            <company-contact-view-control schema="vm.controlSchemas.activitySolicitor"
+                                          config="vm.config.offer_Activity_Solicitor"
+                                          company-contact="vm.offer.activity.solicitorCompanyContact">
+            </company-contact-view-control>
         </section>
         <section id="section-applicant">
             <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
 
             <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
-            <card-list-item class="requirement-view-offers">
+            <card-list-item class="offer-view-requirement">
                 <card show-context-menu="true" display-new-control="true"
                       card-template-url="'app/offer/view/offerRequirementCard.html'" item="vm.offer">
                     <card-context-menu>
@@ -35,6 +40,10 @@
                     </card-context-menu>
                 </card>
             </card-list-item>
+            <company-contact-view-control schema="vm.controlSchemas.requirementSolicitor"
+                                          config="vm.config.offer_Requirement_Solicitor"
+                                          company-contact="vm.offer.requirement.solicitorCompanyContact">
+            </company-contact-view-control>
         </section>
     </div>
     <div class="col-md-4">
@@ -42,38 +51,17 @@
             <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
 
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="section-title col-xs-4">Status</div>
-                    <div class="col-xs-8">{{vm.offer.statusId | dynamicTranslate}}</div>
-                </div>
-                <div class="section-row row">
-                    <div class="section-title col-xs-4">Offer</div>
-                    <div class="col-xs-8">{{vm.offer.price | number : 2 }} GBP</div>
-                </div>
-                <div class="section-row row">
-                    <div class="section-title col-xs-4">Offer date</div>
-                    <div class="col-xs-8"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
-                </div>
+                <enum-item-view-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status"></enum-item-view-control>
+                <price-view-control price="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-view-control>
+                <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
+                <date-view-control date="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate"></date-view-control>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="section-title col-xs-12">
-                        <h5>Special conditions</h5>
-                    </div>
-                    <div class="col-xs-12">
-                        <p>{{vm.offer.specialConditions}}</p>
-                    </div>
-                </div>
+                <textarea-view-control text="vm.offer.specialConditions" config="vm.config.offer_SpecialConditions" schema="vm.controlSchemas.specialConditions"></textarea-view-control>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="section-title col-xs-4" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
-                    <div class="col-xs-8"><time>{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
-                </div>
-                <div class="section-row row">
-                    <div class="section-title col-xs-4" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
-                    <div class="col-xs-8"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
-                </div>
+                <date-view-control date="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate"></date-view-control>
+                <date-view-control date="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate"></date-view-control>
             </div>
             <div class="section-details">
                 <div class="section-row row">
@@ -91,142 +79,66 @@
             </div>
         </section>
     </div>
-    <div class="col-md-4" id="offer-progress-section" ng-if="!vm.isOfferNew()">
+    <div class="col-md-4" id="offer-progress-section" ng-if="vm.isProgressAndMortgageSectionVisible()">
         <section>
-            <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY"></h3>
+            <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY" ng-if="vm.isProgressSummarySectionVisible()"></h3>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_STATUS"></div>
-                    <div class="col-xs-8"><span id="offer-mortgage-status" class="status status-{{::vm.offer.mortgageStatusId | enumClass}}">{{::vm.offer.mortgageStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span id="mortgage-survey-status" class="status status-{{::vm.offer.mortgageSurveyStatusId | enumClass}}">{{::vm.offer.mortgageSurveyStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ADDITIONAL_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span id="additional-survey-status" class="status status-{{::vm.offer.additionalSurveyStatusId | enumClass}}">{{::vm.offer.additionalSurveyStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.SEARCH_STATUS"></div>
-                    <div class="col-xs-8"><span id="search-status" class="status status-{{::vm.offer.searchStatusId | enumClass}}">{{::vm.offer.searchStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ENQUIRIES"></div>
-                    <div class="col-xs-8"><span id="enquiries" class="status status-{{::vm.offer.enquiriesId | enumClass}}">{{::vm.offer.enquiriesId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.CONTRACT_APPROVED"></div>
-                    <div class="col-xs-8"><span id="contract-approved" class="status" ng-class="{'status-no': !vm.offer.contractApproved, 'status-yes': vm.offer.contractApproved}"></span></div>
-                </div>
+                <enum-item-view-control ng-model="vm.offer.mortgageStatusId" show-status-icon="true" config="vm.config.offer_MortgageStatus" schema="vm.controlSchemas.mortgageStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.mortgageSurveyStatusId" show-status-icon="true" config="vm.config.offer_MortgageSurveyStatus" schema="vm.controlSchemas.mortgageSurveyStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.additionalSurveyStatusId" show-status-icon="true" config="vm.config.offer_AdditionalSurveyStatus" schema="vm.controlSchemas.additionalSurveyStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.searchStatusId" show-status-icon="true" config="vm.config.offer_SearchStatus" schema="vm.controlSchemas.searchStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.enquiriesId" show-status-icon="true" config="vm.config.offer_Enquiries" schema="vm.controlSchemas.enquiries"></enum-item-view-control>
+                <radio-buttons-view-control id="contact-approved" config="vm.config.offer_ContractApproved" ng-model="vm.offer.contractApproved"
+                                            schema="vm.controlSchemas.contractApproved">
+                </radio-buttons-view-control>
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isMortgageDetailsSectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.MORTGAGE_DETAILS"></h3>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE"></div>
-                    <div ng-if="vm.offer.mortgageLoanToValue !== null">
-                        <div class="col-xs-8 mortgage-loan-to-value">{{::vm.offer.mortgageLoanToValue}}%</div>
-                    </div>
-                    <div ng-if="vm.offer.mortgageLoanToValue === null">
-                        <div class="col-xs-8 mortgage-loan-to-value">-</div>
-                    </div>
-                </div>
+                <percent-number-view-control value="vm.offer.mortgageLoanToValue" config="vm.config.offer_MortgageLoanToValue" schema="vm.controlSchemas.mortgageLoanToValue"></percent-number-view-control>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.BROKER"></h5>
-                        <p ng-if="!vm.offer.broker" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_BROKER"></p>
-                        <card-list-item class="offer-broker" ng-if="!!vm.offer.broker">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.broker">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.broker"
+                                              config="vm.config.offer_Broker"
+                                              company-contact="vm.offer.brokerCompanyContact">
+                </company-contact-view-control>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.LENDER"></h5>
-                        <p ng-if="!vm.offer.lender" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_LENDER"></p>
-                        <card-list-item class="offer-lender" ng-if="!!vm.offer.lender">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.lender">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.lender"
+                                              config="vm.config.offer_Lender"
+                                              company-contact="vm.offer.lenderCompanyContact">
+                </company-contact-view-control>
+            </div>
+
+
+            <div class="section-details">
+                <date-view-control date="vm.offer.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate"></date-view-control> 
             </div>
 
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_DATE"></div>
-                    <div ng-if="vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8 mortgage-survey-date"><time>{{::vm.offer.mortgageSurveyDate | date : 'dd-MM-yyyy'}}</time></div>
-                    </div>
-                    <div ng-if="!vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8 mortgage-survey-date">-</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
-                        <p ng-if="!vm.offer.surveyor" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                        <card-list-item class="offer-surveyor" ng-if="!!vm.offer.surveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.surveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.surveyor"
+                                              config="vm.config.offer_Surveyor"
+                                              company-contact="vm.offer.surveyorCompanyContact">
+                </company-contact-view-control>
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isAdditionalSurveySectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.ADDITIONAL_SURVEY"></h3>
+            <date-view-control date="vm.offer.additionalSurveyDate" config="vm.config.offer_AdditionalSurveyDate" schema="vm.controlSchemas.additionalSurveyDate"></date-view-control> 
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.DATE"></div>
-                    <div ng-if="vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8 additional-survey-date">
-                            <time>{{::vm.offer.additionalSurveyDate | date : 'dd-MM-yyyy'}}</time>
-                        </div>
-                    </div>
-                    <div ng-if="!vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8 additional-survey-date">-</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
-                        <p ng-if="!vm.offer.additionalSurveyor" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                        <card-list-item class="offer-additional-surveyor" ng-if="!!vm.offer.additionalSurveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.additionalSurveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.additionalSurveyor"
+                                              config="vm.config.offer_AdditionalSurveyor"
+                                              company-contact="vm.offer.additionalSurveyorCompanyContact">
+                </company-contact-view-control>
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isOtherDetailsSectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.OTHER_DETAILS"></h3>
-            <div id="comment" class="section-details">
-                <h5 translate="OFFER.VIEW.COMMENT"></h5>
-                <div ng-if="vm.offer.progressComment">
-                    <p>{{::vm.offer.progressComment}}</p>
-                </div>
-                <div ng-if="!vm.offer.progressComment">
-                    <p>-</p>
-                </div>
-            </div>
+            <textarea-view-control text="vm.offer.progressComment" config="vm.config.offer_ProgressComment" schema="vm.controlSchemas.progressComment"></textarea-view-control>
         </section>
     </div>
 </div>

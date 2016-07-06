@@ -20,6 +20,9 @@ module Antares.Common.Models.Business {
         offers: Offer[];
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
         sourceId: string = null;
         sellingReasonId: string = null;
         appraisalMeetingStart: string = null;
@@ -81,10 +84,16 @@ module Antares.Common.Models.Business {
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
-            }
+
+                if (activity.solicitor && activity.solicitorCompany) {
+                    this.solicitor = new Contact(activity.solicitor);
+                    this.solicitorCompany = new Company(activity.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
+                }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];
             this.leadNegotiator = this.leadNegotiator || new ActivityUser();
+            }
         }
 
         groupViewings(viewings: Viewing[]) {

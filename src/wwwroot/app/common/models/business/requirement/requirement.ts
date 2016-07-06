@@ -17,6 +17,9 @@ module Antares.Common.Models.Business {
         viewings: Viewing[];
         offers: Offer[];
         attachments: Attachment[] = [];
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -34,6 +37,12 @@ module Antares.Common.Models.Business {
                 }
                 if (requirement.attachments) {
                     this.attachments = requirement.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
+                }
+
+                if (requirement.solicitor && requirement.solicitorCompany) {
+                    this.solicitor = new Contact(requirement.solicitor);
+                    this.solicitorCompany = new Company(requirement.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
             }
         }

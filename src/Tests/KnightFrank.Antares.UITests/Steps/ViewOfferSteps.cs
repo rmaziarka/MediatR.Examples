@@ -92,7 +92,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Status, details[0]),
-                () => Assert.Equal(expectedDetails.Offer + " GBP", details[1]),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", details[1]),
                 () => Assert.Equal(expectedDetails.OfferDate, details[2]),
                 () => Assert.Equal(expectedDetails.SpecialConditions, details[3]),
                 () => Assert.Equal(expectedDetails.ExchangeDate, details[4]),
@@ -117,7 +117,7 @@
             var expectedDetails = table.CreateInstance<OfferData>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.ActivityDetails));
+                () => Assert.Equal(expectedDetails.Details, this.page.GetActivityDetails()));
         }
 
         [Then(@"Offer requirement details on view offer page are same as the following")]
@@ -196,6 +196,18 @@
                 () => Assert.Equal(details.AdditionalSurveyor, this.page.AdditionalSurveyor.First()),
                 () => Assert.Equal(details.AdditionalSurveyorCompany, this.page.AdditionalSurveyor.Last()),
                 () => Assert.Equal(details.Comment, this.page.Comment));
+        }
+
+        [Then(@"Offer solicitors details on view offer page are same as the following")]
+        public void CheckSolicitors(Table table)
+        {
+            var details = table.CreateInstance<SolicitorsData>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, this.page.VendorSolicitor.First()),
+                () => Assert.Equal(details.VendorCompany, this.page.VendorSolicitor.Last()),
+                () => Assert.Equal(details.Applicant, this.page.ApplicantSolicitor.First()),
+                () => Assert.Equal(details.ApplicantCompany, this.page.ApplicantSolicitor.Last()));
         }
     }
 }

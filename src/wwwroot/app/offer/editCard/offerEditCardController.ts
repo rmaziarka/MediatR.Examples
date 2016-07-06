@@ -18,6 +18,12 @@ module Antares.Offer {
         originalOffer: Dto.IOffer;
         today: Date = new Date();
 
+        constructor(
+            private $state: ng.ui.IStateService,
+            private appConfig: Common.Models.IAppConfig,
+            private $window: ng.IWindowService){
+        }
+
         // controls
         controlSchemas: any = {
             status: <Attributes.IEnumItemEditControlSchema>{
@@ -78,6 +84,11 @@ module Antares.Offer {
                 this.offer = new Business.Offer(obj.offer.currentValue);
                 this.originalOffer = new Business.Offer(obj.offer.currentValue);
             }
+        }
+
+        navigateToActivity = (offer: Dto.IOffer) => {
+            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: offer.activity.id }, { absolute: false });
+            this.$window.open(activityViewUrl, '_blank');
         }
 
         private resetCardData = () => {

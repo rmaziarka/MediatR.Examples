@@ -43,8 +43,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         LongKfValuationPrice,
         LongVendorValuationPrice,
         LongAgreedInitialMarketingPrice,
+        #endregion
 
-        #region Requirement
+        #region Requirement ControlCode
 
         Requirement_RequirementType,
         Requirement_Description,
@@ -55,8 +56,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Requirement_Viewings,
         Requirement_Attachments,
         Requirement_CreationDate,
-
-        #endregion
 
         #endregion
 
@@ -71,13 +70,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_Activity,
         Offer_Negotiator,
         Offer_Broker,
-        Offer_BrokerCompany,
         Offer_Lender,
-        Offer_LenderCompany,
         Offer_Surveyor,
-        Offer_SurveyorCompany,
         Offer_AdditionalSurveyor,
-        Offer_AdditionalSurveyorCompany,
         Offer_ContractApproved,
         Offer_MortgageLoanToValue,
         Offer_Price,
@@ -91,6 +86,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_ProgressComment,
         Offer_CreatedDate,
         Offer_LastModifiedDate,
+        Offer_Activity_Solicitor,
+        Offer_Requirement_Solicitor,
+        Offer_Vendor,
+        Offer_Landlord
         #endregion
     }
 }

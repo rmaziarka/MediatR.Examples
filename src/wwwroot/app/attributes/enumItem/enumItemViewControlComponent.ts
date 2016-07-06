@@ -8,7 +8,8 @@ module Antares.Attributes {
         bindings: {
             schema: '<',
             config: '<',
-            ngModel: '='
+            ngModel: '=',
+            showStatusIcon: '<'
         }
     });
 }

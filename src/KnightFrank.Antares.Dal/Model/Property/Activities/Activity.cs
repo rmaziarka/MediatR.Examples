@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Attachment;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Configuration.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
@@ -44,6 +45,14 @@
         public virtual ICollection<ActivityDepartment> ActivityDepartments { get; set; } = new List<ActivityDepartment>();
 
         public virtual ICollection<Offer> Offers { get; set; } = new List<Offer>();
+
+        public Guid? SolicitorId { get; set; }
+
+        public virtual Contact Solicitor { get; set; }
+
+        public Guid? SolicitorCompanyId { get; set; }
+
+        public virtual Company SolicitorCompany { get; set; }
 
         public Guid? SourceId { get; set; }
 
