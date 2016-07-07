@@ -1,6 +1,6 @@
 <section>
     <card-list id="card-list-attachments" show-item-add="vm.showAttachmentAdd" is-item-add-disabled="vm.isAttachmentUploadPanelBusy">
-        <card-list-header>
+        <card-list-header ng-if="vm.header">
             <h3 class="page-header">{{vm.header | translate}}</h3>
         </card-list-header>
         <card-list-no-items ng-show="vm.data.attachments.length === 0">

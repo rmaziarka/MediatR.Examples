@@ -303,7 +303,6 @@
         "LONG_LET_PRICE": "Long let",
         "SHORT_LET_PRICE": "Short let"
       },
-      "RECENT_FILES": "Recent files",
       "VIEWING_DETAILS": "Viewing details",
       "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
       "NO_VIEWINGS": "No viewings",
@@ -311,7 +310,8 @@
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
-      "VIEWINGS": "Viewings"
+      "VIEWINGS": "Viewings",
+      "ATTACHMENTS": "Attachments"
     }
   },
   "NEGOTIATORS": {
