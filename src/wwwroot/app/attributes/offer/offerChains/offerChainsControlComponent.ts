@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
-module Antares.Common.Component.Attachment {
+module Antares.Attributes.Offer {
     angular.module('app').component('offerChainsControl', {
-        templateUrl: 'app/attributes/offer/attachment/offerChains/offerChainsControl.html',
+        templateUrl: 'app/attributes/offer/offerChains/offerChainsControl.html',
         controllerAs: 'vm',
         controller: 'OfferChainsControlController',
         bindings: {
