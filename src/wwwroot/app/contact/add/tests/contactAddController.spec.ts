@@ -34,7 +34,8 @@ module Antares {
             $compile: ng.ICompileService,
             contactTitleService: ContactTitleService,
             $q: ng.IQService,
-            $httpBackend: ng.IHttpBackendService) => {
+            $httpBackend: ng.IHttpBackendService,
+            enumProvider: Providers.EnumProvider) => {
 
             $http = $httpBackend;
             q = $q;
@@ -56,13 +57,15 @@ module Antares {
             scope = $rootScope.$new();
             scope["enumService"] = enumService;
             scope["userData"] = <Dto.ICurrentUser>{
-                id : '1234',
+                id: '1234',
                 firstName: 'Test',
                 lastName: 'User',
                 division: <Dto.IEnumTypeItem>{ id: 'enumId', code: 'code' },
                 salutationFormatId: '1',
                 locale: <Dto.ILocale>{ id: '', isoCode: 'en' }
             };
+
+            enumProvider.enums = TestHelpers.Contacts.salutationFormatsDictionary;
 
             element = $compile("<contact-add user-data='userData' contact='contact'></contact-add>")(scope);
             scope.$apply();
@@ -100,11 +103,11 @@ module Antares {
             expect(result.length).toBe(1);
         });
 
-        it('when get contact titles is called with specified string then matched locale specific titles returned ordered alpabetically', () =>{
+        it('when get contact titles is called with specified string then matched locale specific titles returned ordered alpabetically', () => {
             var typedValue = 'a';
             var result = controller.getContactTitles(typedValue);
 
-            var filteredTitles = returnedValue.data.filter((items) => { return items.title.toLowerCase().indexOf(typedValue.toLowerCase()) > -1;  });
+            var filteredTitles = returnedValue.data.filter((items) => { return items.title.toLowerCase().indexOf(typedValue.toLowerCase()) > -1; });
             var sortedTitles = _.sortBy(filteredTitles, (item) => item.title).map((items) => items.title);
 
             expect(result).toEqual(sortedTitles);
@@ -115,7 +118,7 @@ module Antares {
 
             var filteredTitles = returnedValue.data.filter((items) => { return items.locale.isoCode === 'en' });
             var sortedTitles = _.sortBy(filteredTitles, (item) => [item.priority || Number.POSITIVE_INFINITY, item.title]).map((items) => items.title);
-            
+
             expect(result).toEqual(sortedTitles);
         });
 
