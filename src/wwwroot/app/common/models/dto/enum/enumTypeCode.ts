@@ -9,6 +9,7 @@ module Antares.Common.Models.Dto {
         ActivityDepartmentType = <any>'activityDepartmentType',
         PropertyDocumentType = <any>'propertyDocumentType',
         RequirementDocumentType = <any>'requirementDocumentType',
+        RequirementType = <any>'requirementType',
         OfferStatus = <any>'offerStatus',
         MortgageStatus = <any>'mortgageStatus',
         MortgageSurveyStatus = <any>'mortgageSurveyStatus',
@@ -19,5 +20,9 @@ module Antares.Common.Models.Dto {
         SalutationFormat = <any>'salutationFormat',
         MailingSalutation = <any>'mailingSalutation',
         EventSalutation = <any>'eventSalutation',
+        ActivitySource = <any>'activitySource',
+        ActivitySellingReason = <any>'activitySellingReason',
+        DisposalType = <any>'disposalType',
+        Decoration = <any>'decoration'
     }
 }

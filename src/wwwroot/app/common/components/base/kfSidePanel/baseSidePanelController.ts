@@ -6,6 +6,7 @@ module Antares.Common.Component {
                 
         isBusy: boolean;
         isVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        busyLabelKey: string;
 
         protected panelShown = () => {
         };
@@ -26,7 +27,12 @@ module Antares.Common.Component {
                     this.panelHidden();
                 }
             }
+
+            this.onChanges(changesObj);
         }
+
+        protected onChanges = (obj: any) =>{
+        };
     }
 
     interface IBaseSidePanelChange {

@@ -27,10 +27,10 @@
             if (!innerFieldStates.Any())
             {
                 throw new NotSupportedException(
-                    $"There is no attribute {pageType} configuration for the followign pair: {key}");
+                    $"There is no attribute {pageType} configuration for the following pair: {key}");
             }
 
-            foreach (InnerFieldState innerFieldState in innerFieldStates.Where(x => !x.Hidden || !x.Readonly))
+            foreach (InnerFieldState innerFieldState in innerFieldStates.Where(x => !x.Hidden && !x.Readonly))
             {
                 foreach (IValidator validator in innerFieldState.Validators)
                 {

@@ -38,7 +38,11 @@
 
             var jsonSerializerSettings = new JsonSerializerSettings
                                              {
-                                                 Converters = new List<JsonConverter> { new NullToDefaultValueConverter<Guid>() }
+                                                 Converters = new List<JsonConverter>
+                                                 {
+                                                     new NullToDefaultValueConverter<Guid>(),
+                                                     new NullToDefaultValueConverter<DateTime>()
+                                                 }
                                              };
 
             var pageType = (PageType)actionContext.ActionArguments["pageType"];

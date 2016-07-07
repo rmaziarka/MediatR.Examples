@@ -6,6 +6,9 @@ Scenario: Display latest viewed properties
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2       | Postcode | City          | County          |
 			| 70             | Condo        | Longford St | TS1 4RN  | Middlesbrough | North Yorkshire |
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Michael   | Johnson | Sir   |
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
 		And User clicks property details on view activity page
@@ -29,11 +32,11 @@ Scenario: Display latest viewed properties
 			| 10             | Tulketh Community Sports College | Tag Ln | PR2 3TX  | Preston | Lancashire |
 		And User clicks save property button on create property page
 	Then View property page should be displayed
-	And Latest 3 properties should contain following data
-		| LatestData                                  |
-		| Tulketh Community Sports College, 10 Tag Ln |
-		| Copier King, 203 Sherwood Rd                |
-		| Condo, 70 Longford St                       |
+		And Latest 3 properties should contain following data
+			| LatestData                                  |
+			| Tulketh Community Sports College, 10 Tag Ln |
+			| Copier King, 203 Sherwood Rd                |
+			| Condo, 70 Longford St                       |
 	When User navigates to view property page with id
 	Then View property page should be displayed
 		And Latest 3 properties should contain following data
@@ -71,15 +74,24 @@ Scenario: Display latest viewed activities
 			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-		And User selects Freehold Sale activity type on create activity page
+		And User selects Freehold Sale type on create activity page
+		And User selects Direct phone call from source list on create activity page
+		And User selects Divorce from selling reason list on create activity page
+		And User selects John Smith from attendees on create activity page
 		And User clicks save button on create activity page
 	Then Latest 1 activity should contain following data
 		| LatestData                                |
 		| The Alternative Tuck Shop, 24 Holywell St |
+	When User clicks property details on view activity page
+		And User clicks view property link from property on view activity page
+	Then View property page should be displayed
 	When Property with Residential division and Flat type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
 			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Michael   | Johnson | Sir   |
 		And Property Long Leasehold Sale activity is defined
 	When User navigates to edit activity page with id
 	Then Latest 2 activities should contain following data
@@ -96,6 +108,9 @@ Scenario: Display latest viewed activities
 		| Title | FirstName | LastName  |
 		| Lady  | Joanna    | Thornhill |
 		And Property with Residential division and House type is defined
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Tom       | Johnson | Dr    |
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2      | Postcode | City     | County |
 			| 237            | Duke Flat    | Margate Rd | CT12 6TA | Ramsgate | Kent   |
@@ -104,12 +119,12 @@ Scenario: Display latest viewed activities
 			| 10-01-2015   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice |
-			| 100000   | 500000   |
+			| Type             | Description |
+			| Residential Sale | Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
-			| Status |
-			| New    |
+			| Type             | Status |
+			| Residential Sale | New    |
 	When User navigates to view offer page with id
 		And User clicks activity details on view offer page
 	Then Latest 3 activities should contain following data
@@ -143,6 +158,9 @@ Scenario: Display latest viewed requirements
 		And User selects contacts on create requirement page
 			| FirstName | LastName |
 			| Triss     | Merigold |
+		And User fills in sale requirement details on create requirement page
+			| Type             | Description |
+			| Residential Sale | Description |
 		And User fills in location details on create requirement page
 			| Country        | Line2    | Postcode | City   |
 			| United Kingdom | Gower St | WC1E 6BT | London |
@@ -156,8 +174,8 @@ Scenario: Display latest viewed requirements
 		| Dr    | Van       | Wilder   |
 		| Sir   | Van       | Wilder   |
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+			| Type                | Description |
+			| Residential Letting | Description |
 	When User navigates to view requirement page with id
 	Then Latest 2 requirements should contain following data
 		| LatestData             |

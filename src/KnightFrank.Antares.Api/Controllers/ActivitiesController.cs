@@ -48,10 +48,6 @@
         [DataShaping]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
-            // User id is mocked.
-            // TODO Set correct user id from header.
-            command.LeadNegotiatorId = this.userRepository.FindBy(u => true).First().Id;
-
             Guid activityId = this.mediator.Send(command);
 
             return this.GetActivity(activityId);
@@ -83,9 +79,11 @@
         /// <returns>Activity entity collection</returns>
         [HttpGet]
         [Route("")]
-        public IEnumerable<ActivitiesQueryResult> GetActivities()
+        public IEnumerable<ActivitiesQueryResult> GetActivities([FromUri(Name = "")]ActivitiesFilterQuery query)
         {
-            return this.mediator.Send(new ActivitiesQuery());
+            if(query == null)
+                query = new ActivitiesFilterQuery();
+            return this.mediator.Send(query);
         }
 
         /// <summary>

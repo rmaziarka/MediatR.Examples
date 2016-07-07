@@ -6,7 +6,8 @@ module Antares.Component {
         controllerAs: 'vm',
         templateUrl: 'app/offer/view/offerView.html',
         bindings: {
-            offer: '<'
+            offer: '<',
+            config: '<'
         }
     });
 }

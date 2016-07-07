@@ -28,6 +28,23 @@
         /// </value>
         private IEntityMapper<Activity> activityEntityMapper;
 
+
+        /// <summary>
+        /// Gets or sets the requirement entity mapper.
+        /// </summary>
+        /// <value>
+        /// The requirement entity mapper.
+        /// </value>
+        private IEntityMapper<Requirement> requirementEntityMapper;
+
+        /// <summary>
+        /// Gets or sets the offer entity mapper.
+        /// </summary>
+        /// <value>
+        /// The offer entity mapper.
+        /// </value>
+        private IEntityMapper<Offer> offerEntityMapper;
+
         private readonly INinjectInstanceResolver ninjectInstanceResolver;
 
         private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
@@ -42,13 +59,18 @@
             {
                 { typeof(Activity), this.ShapeActivity },
                 { typeof(Offer), this.ShapeOffer },
-                { typeof(Property), this.ShapeProperty }
+                { typeof(Property), this.ShapeProperty },
+                { typeof(Requirement), this.ShapeRequirement },
+                { typeof(RequirementNote), this.ShapeRequirementNote },
+                { typeof(Viewing), this.ShapeViewing }
             };
         }
 
         private void InitDependencies()
         {
             this.activityEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Activity>>();
+            this.offerEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Offer>>();
+            this.requirementEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Requirement>>();
         }
 
         /// <summary>
@@ -83,12 +105,23 @@
         {
             var activity = (Activity)objectContent.Value;
             this.activityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
+            if (activity.Offers != null)
+            {
+                foreach (Offer offer in activity.Offers)
+                {
+                    // think of global solution
+                    // don't shape activity & requirement associated with offer, because it is not fetched from DB
+                    this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                }
+            }
         }
 
         private void ShapeOffer(ObjectContent objectContent)
         {
             var offer = (Offer)objectContent.Value;
+            this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
             this.activityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
+            this.requirementEntityMapper.NullifyDisallowedValues(offer.Requirement, PageType.Details);
         }
 
         private void ShapeProperty(ObjectContent objectContent)
@@ -101,6 +134,32 @@
                     this.activityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
                 }
             }
+        }
+
+        private void ShapeRequirement(ObjectContent objectContent)
+        {
+            var requirement = (Requirement)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(requirement, PageType.Details);
+
+            if (requirement.Offers != null)
+            {
+                foreach (Offer offer in requirement.Offers)
+                {
+                    this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                }
+            }
+        }
+
+        private void ShapeRequirementNote(ObjectContent objectContent)
+        {
+            var requirementNote = (RequirementNote)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(requirementNote.Requirement, PageType.Details);
+        }
+
+        private void ShapeViewing(ObjectContent objectContent)
+        {
+            var viewing = (Viewing)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(viewing.Requirement, PageType.Details);
         }
     }
 }

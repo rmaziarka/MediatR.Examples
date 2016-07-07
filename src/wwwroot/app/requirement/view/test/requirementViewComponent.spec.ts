@@ -3,16 +3,22 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
-    import OfferAddEditController = Component.OfferAddEditController;
-    import SidePanelController = Common.Component.SidePanelController;
+    import SidePanelState = Common.Models.Enums.SidePanelState;
     declare var moment: any;
+    type Dictionary = { [id: string]: string };
 
     describe('Given view requirement page is loaded', () => {
         beforeEach(() => {
             angular.mock.module(($provide: any) => {
                 $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+                $provide.factory('addressFormViewDirective', () =>{ return {}; });
             });
         });
+
+        var setupOfferStatuses = (enumProvider: Providers.EnumProvider) => {
+            var enumsDictionary = TestHelpers.EnumDictionaryGenerator.generateDictionary();
+            enumProvider.enums = enumsDictionary;
+        };
 
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -39,10 +45,6 @@ module Antares {
             },
             offers:
             {
-                saveButton: '#offer-save-btn',
-                cancelButton: '#offer-cancel-btn',
-                sidePanel: '#add-offer-panel',
-                makeOfferAction: 'context-menu-item[type=makeoffer]',
                 list: '.requirement-view-offers',
                 offerStatus:'.offer-status',
                 statusText:
@@ -54,6 +56,7 @@ module Antares {
                 }
             }
         }
+        var configMock: Requirement.IRequirementAddConfig = TestHelpers.ConfigGenerator.generateRequirementAddConfig();
 
         describe('and proper requirement id is provided', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
@@ -104,31 +107,31 @@ module Antares {
                     }
                 ],
                 offers: [
-                    {
+                    TestHelpers.OfferGenerator.generate({
                         id: "1",
                         statusId: "1",
                         createdDate: new Date(2016, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "2",
                         statusId: "2",
                         createdDate: new Date(2014, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "3",
                         statusId: "3",
                         createdDate: new Date(2015, 1, 1)
-                    },
-                    {
-                        id: "4",
-                        statusId: "3",
-                        createdDate: new Date(2011, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
+                        id : "4",
+                        statusId : "3",
+                        createdDate : new Date(2011, 1, 1)
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "5",
                         statusId: "4",
                         createdDate: new Date(2012, 1, 1)
-                    }
+                    })
                 ]
             });
 
@@ -149,7 +152,7 @@ module Antares {
 
             
             beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
-                $provide.service('enumService', Antares.Mock.EnumServiceMock);
+                $provide.service('enumService', Mock.EnumServiceMock);
                 $provide.constant('appConfig', appConfigMock);
             }));
 
@@ -163,7 +166,7 @@ module Antares {
                 filter = $filter;
                 $http = $httpBackend;
 
-                type Dictionary = { [id: string]: string };
+                setupOfferStatuses(enumProvider);
                 var offerStatusToCodeDict: Dictionary = {
                     '1': 'New',
                     '2': 'Withdrawn',
@@ -171,13 +174,14 @@ module Antares {
                     '4': 'Accepted'
                 };
 
-                enumProvider.getEnumCodeById = (statusId: string) =>{
+                enumProvider.getEnumCodeById = (statusId: string) => {
                     return offerStatusToCodeDict[statusId];
                 };
 
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
-                element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope['config'] = configMock;
+                element = $compile('<requirement-view config="config" requirement="requirement"></requirement-view>')(scope);
 
                 scope.$apply();
 
@@ -234,31 +238,6 @@ module Antares {
                 // TODO: after address view component is implemented
             });
 
-            it('basic property requirements are displayed in proper order and with correct values', () => {
-                var expectedBasicDetailsResults = [
-                    { label: 'REQUIREMENT.VIEW.PRICE', min: 'vm.requirement.minPrice', max: 'vm.requirement.maxPrice', suffix: "'GBP'" },
-                    { label: 'REQUIREMENT.VIEW.BEDROOMS', min: 'vm.requirement.minBedrooms', max: 'vm.requirement.maxBedrooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.RECEPTIONROOMS', min: 'vm.requirement.minReceptionRooms', max: 'vm.requirement.maxReceptionRooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.BATHROOMS', min: 'vm.requirement.minBathrooms', max: 'vm.requirement.maxBathrooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.PARKINGSPACES', min: 'vm.requirement.minParkingSpaces', max: 'vm.requirement.maxParkingSpaces', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.AREA', min: 'vm.requirement.minArea', max: 'vm.requirement.maxArea', suffix: "'sq ft'" },
-                    { label: 'REQUIREMENT.VIEW.LANDAREA', min: 'vm.requirement.minLandArea', max: 'vm.requirement.maxLandArea', suffix: "'sq ft'" }
-                ];
-
-                var rangeViewElements = element.find('range-view');
-
-                expect(rangeViewElements.length).toBe(expectedBasicDetailsResults.length);
-                for (var i = 0; i < rangeViewElements.length; i++) {
-                    var rangeView = rangeViewElements[i];
-                    var expected = expectedBasicDetailsResults[i];
-                    expect(rangeView.getAttribute('label')).toBe(expected.label);
-                    expect(rangeView.getAttribute('min')).toBe(expected.min);
-                    expect(rangeView.getAttribute('max')).toBe(expected.max);
-                    expect(rangeView.getAttribute('suffix')).toBe(expected.suffix);
-                };
-
-            });
-
             it('applicant list is displayed', () => {
                 var applicantList = element.find('#applicant-list');
                 var applicants = applicantList.find('.applicant');
@@ -282,65 +261,19 @@ module Antares {
 
             describe('when make new offer action is called', () => {
                 var
-                    newOfferController: OfferAddEditController,
-                    newOfferPanelController: SidePanelController,
                     chosenViewing: Business.Viewing;
 
                 beforeEach(() => {
-                    newOfferController = controller.components.offerAdd();
-                    newOfferPanelController = controller.components.panels.offerAdd();
-
-                    spyOn(newOfferController, 'reset');
-
                     chosenViewing = requirementMock.viewings[0];
                     controller.showAddOfferPanel(chosenViewing);
                 });
 
-                it('new offer side panel is shown', () => {
-                    var sidePanel = element.find(pageObjectSelectors.offers.sidePanel);
-                    expect(sidePanel.length).toBe(1, 'Side panel not found');
-                    expect(newOfferPanelController.visible).toBeTruthy('Side panel not visible');
+                it('new offer side panel is shown', () =>{
+                    expect(controller.isOfferAddPanelVisible).toBe(SidePanelState.Opened, 'Side panel not visible');
                 });
 
-                it('new offer form is reset', () => {
-                    expect(newOfferController.reset).toHaveBeenCalledTimes(1);
-                });
-
-                it('activity on offer is set', () => {
-                    expect(newOfferController.activity).toBeDefined();
-                    expect(newOfferController.activity.id).toEqual(chosenViewing.activity.id);
-                });
-
-                it('when cancel action is called side panel is hidden', () => {
-                    controller.cancelSaveOffer();
-
-                    expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
-                });
-
-                xdescribe('when save action is called', () => {
-                    var
-                        offerMock: Business.Offer;
-
-                    beforeEach(inject((
-                        $q: ng.IQService) => {
-
-                        offerMock = TestHelpers.OfferGenerator.generate();
-                        var deferred = $q.defer();
-                        spyOn(newOfferController, 'saveOffer').and.returnValue(deferred.promise);
-
-                        controller.saveOffer();
-                        deferred.resolve(offerMock);
-
-                        scope.$apply();
-                    }));
-
-                    it('side panel is hidden', () => {
-                        expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
-                    });
-
-                    it('offer has been added to offers list', () => {
-                        expect(controller.requirement.offers).toContain(offerMock);
-                    });
+                it('viewing is selected', () =>{
+                    expect(controller.selectedViewing).toBe(chosenViewing);
                 });
             });
         });
@@ -355,13 +288,15 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) => {
+                $filter: ng.IFilterService,
+                enumProvider: Providers.EnumProvider) => {
 
                 filter = $filter;
                 $http = $httpBackend;
                 compile = $compile;
 
                 scope = $rootScope.$new();
+                setupOfferStatuses(enumProvider);
             }));
 
             it('then note list is displayed', () => {

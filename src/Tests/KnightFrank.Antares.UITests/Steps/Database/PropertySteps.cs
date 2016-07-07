@@ -56,7 +56,10 @@
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
             address.Line1 = string.Empty;
-            address.Line3 = StringExtension.GenerateMaxAlphanumericString(20);
+            if (address.Line3 == null)
+            {
+                address.Line3 = StringExtension.GenerateMaxAlphanumericString(20);
+            }
 
             var property = new Property
             {
@@ -187,7 +190,18 @@
                                     e.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
                                     e.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
                     }
-                }
+                },
+                SourceId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySource)) &&
+                    e.Code.Equals(nameof(ActivitySource.KnightfrankGlobalSearch))).Id,
+                SellingReasonId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                    e.Code.Equals(nameof(ActivitySellingReason.Divorce))).Id,
+                AppraisalMeetingAttendees =
+                    new List<ActivityAttendee>
+                    {
+                        new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
+                    }
             };
 
             this.dataContext.Activities.Add(activity);
@@ -277,7 +291,18 @@
                                     e.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
                                     e.Code.Equals(nameof(ActivityDepartmentType.Standard))).Id
                     }
-                }
+                },
+                SourceId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySource)) &&
+                    e.Code.Equals(nameof(ActivitySource.KnightfrankGlobalSearch))).Id,
+                SellingReasonId = this.dataContext.EnumTypeItems.Single(e =>
+                    e.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                    e.Code.Equals(nameof(ActivitySellingReason.Divorce))).Id,
+                AppraisalMeetingAttendees =
+                    new List<ActivityAttendee>
+                    {
+                        new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
+                    }
             };
 
             this.dataContext.Activities.Add(activity);

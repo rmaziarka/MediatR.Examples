@@ -19,6 +19,8 @@
 
     using TechTalk.SpecFlow;
 
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
+
     [Binding]
     public class OffersSteps
     {
@@ -40,31 +42,47 @@
         [Given(@"Offer with (.*) status exists in database")]
         public void CreateOfferUsingInDatabase(string status)
         {
-            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+            var activity = this.scenarioContext.Get<Activity>("Activity");
             Guid statusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
+            Dal.Model.Offer.OfferType offerType =
+                this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals(requirement.RequirementType.EnumCode));
 
             var offer = new Offer
             {
-                ActivityId = activityId,
+                Activity = activity,
                 CompletionDate = this.date,
                 ExchangeDate = this.date,
                 NegotiatorId = this.fixture.DataContext.Users.First().Id,
                 OfferDate = this.date,
-                Price = 1000,
-                RequirementId = requirementId,
+                Requirement = requirement,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 StatusId = statusId,
                 CreatedDate = this.date,
-                LastModifiedDate = this.date
+                LastModifiedDate = this.date,
+                OfferTypeId = offerType.Id
             };
 
-            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+            
+            switch (offerType.EnumCode)
             {
-                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+                case nameof(OfferType.ResidentialLetting):
+                    offer.PricePerWeek = 1000;
+                    break;
+                case nameof(OfferType.ResidentialSale):
+                    offer.Price = 1000;
+                    offer.Requirement.SolicitorId = companyContact.ContactId;
+                    offer.Requirement.SolicitorCompanyId = companyContact.CompanyId;
+                    offer.Activity.SolicitorId = companyContact.ContactId;
+                    offer.Activity.SolicitorCompanyId = companyContact.CompanyId;
+                    break;
+            }
 
+            if (offerType.EnumCode == nameof(OfferType.ResidentialSale) && status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
                 offer.MortgageStatusId =
                     this.fixture.DataContext.EnumTypeItems.Single(
                         e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Unknown))).Id;
@@ -125,19 +143,30 @@
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+            Dal.Model.Offer.OfferType offerType =
+                this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals(requirement.RequirementType.EnumCode));
 
             var details = new CreateOfferCommand
             {
                 ActivityId = activityId,
-                RequirementId = requirementId,
+                RequirementId = requirement.Id,
                 StatusId = statusId,
-                Price = 10,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(400),
                 OfferDate = this.date,
                 CompletionDate = this.date,
                 ExchangeDate = this.date
             };
+
+            switch (offerType.EnumCode)
+            {
+                case nameof(OfferType.ResidentialLetting):
+                    details.PricePerWeek = 1000;
+                    break;
+                case nameof(OfferType.ResidentialSale):
+                    details.Price = 1000;
+                    break;
+            }
 
             this.CreateOffer(details);
         }
@@ -149,16 +178,27 @@
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+            Dal.Model.Offer.OfferType offerType =
+                this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals(requirement.RequirementType.EnumCode));
 
             var details = new CreateOfferCommand
             {
                 ActivityId = activityId,
-                RequirementId = requirementId,
+                RequirementId = requirement.Id,
                 StatusId = statusId,
-                Price = 10,
                 OfferDate = this.date
             };
+
+            switch (offerType.EnumCode)
+            {
+                case nameof(OfferType.ResidentialLetting):
+                    details.PricePerWeek = 1000;
+                    break;
+                case nameof(OfferType.ResidentialSale):
+                    details.Price = 1000;
+                    break;
+            }
 
             this.CreateOffer(details);
         }
@@ -204,23 +244,40 @@
         public void UpdateOffer(string status)
         {
             var offer = this.scenarioContext.Get<Offer>("Offer");
+            Requirement requirement = offer.Requirement;
+            Dal.Model.Offer.OfferType offerType =
+                this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals(requirement.RequirementType.EnumCode));
+
             var details = new UpdateOfferCommand
             {
                 Id = offer.Id,
                 StatusId =
                     this.fixture.DataContext.EnumTypeItems.Single(
                         e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
-                Price = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = this.date.AddDays(2),
                 ExchangeDate = this.date.AddDays(2),
                 OfferDate = this.date.AddMinutes(-1)
             };
 
+            CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+
+            switch (offerType.EnumCode)
+            {
+                case nameof(OfferType.ResidentialLetting):
+                    details.PricePerWeek = 2000;
+                    break;
+                case nameof(OfferType.ResidentialSale):
+                    details.Price = 2000;
+                    details.VendorSolicitorId = companyContact.ContactId;
+                    details.VendorSolicitorCompanyId = companyContact.CompanyId;
+                    details.ApplicantSolicitorId = companyContact.ContactId;
+                    details.ApplicantSolicitorCompanyId = companyContact.CompanyId;
+                    break;
+            }
+
             if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
             {
-                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
-
                 details.MortgageStatusId =
                     this.fixture.DataContext.EnumTypeItems.Single(
                         e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Agreed))).Id;
@@ -317,6 +374,11 @@
                 details.EnquiriesId = data.Equals("enquiries") ? Guid.NewGuid() : offer.EnquiriesId;
             }
 
+            details.VendorSolicitorId = data.Equals("vendorSolicitor") ? Guid.NewGuid() : offer.Activity.SolicitorId;
+            details.VendorSolicitorCompanyId = data.Equals("vendorSolicitorCompany") ? Guid.NewGuid() : offer.Activity.SolicitorCompanyId;
+            details.ApplicantSolicitorId = data.Equals("applicantSolicitor") ? Guid.NewGuid() : offer.Requirement.SolicitorId;
+            details.ApplicantSolicitorCompanyId = data.Equals("applicantSolicitorCompany") ? Guid.NewGuid() : offer.Requirement.SolicitorCompanyId;
+
             this.UpdateOffer(details);
         }
 
@@ -329,9 +391,9 @@
 
             expectedOffer.ShouldBeEquivalentTo(offer, opt => opt
                 .Excluding(o => o.Negotiator)
-                .Excluding(o => o.Status)
                 .Excluding(o => o.Requirement)
                 .Excluding(o => o.Activity)
+                .Excluding(o => o.Status)
                 .Excluding(o => o.MortgageStatus)
                 .Excluding(o => o.SearchStatus)
                 .Excluding(o => o.MortgageSurveyStatus)
@@ -344,9 +406,14 @@
                 .Excluding(o => o.Surveyor)
                 .Excluding(o => o.SurveyorCompany)
                 .Excluding(o => o.AdditionalSurveyor)
-                .Excluding(o => o.AdditionalSurveyorCompany));
+                .Excluding(o => o.AdditionalSurveyorCompany)
+                .Excluding(o => o.OfferType));
 
             expectedOffer.NegotiatorId.Should().NotBeEmpty();
+            expectedOffer.Requirement.SolicitorId.Should().Be(offer.Requirement.SolicitorId);
+            expectedOffer.Requirement.SolicitorCompanyId.Should().Be(offer.Requirement.SolicitorCompanyId);
+            expectedOffer.Activity.SolicitorId.Should().Be(offer.Activity.SolicitorId);
+            expectedOffer.Activity.SolicitorCompanyId.Should().Be(offer.Activity.SolicitorCompanyId);
         }
 
         [Then(@"Offer details in requirement should be the same as added")]
@@ -359,7 +426,8 @@
                 opt => opt.Excluding(o => o.Activity)
                           .Excluding(o => o.Negotiator)
                           .Excluding(o => o.Requirement)
-                          .Excluding(o => o.Status));
+                          .Excluding(o => o.Status)
+                          .Excluding(o => o.OfferType));
         }
 
         private void CreateOffer(CreateOfferCommand command)

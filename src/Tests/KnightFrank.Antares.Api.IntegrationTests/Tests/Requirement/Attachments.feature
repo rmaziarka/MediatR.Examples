@@ -1,11 +1,11 @@
 ﻿Feature: Attachments
 
 @Requirements
-Scenario: Upload attachment
+Scenario Outline: Upload attachment
 	Given Contacts exists in database
 		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type <type> exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |
@@ -14,12 +14,17 @@ Scenario: Upload attachment
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
 	Then User should get OK http status code
 
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
+
 @Requirements
 Scenario Outline: Upload attachment with invalid data
 	Given Contacts exists in database
 		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |
@@ -36,11 +41,11 @@ Scenario Outline: Upload attachment with invalid data
 	| TermsOfBusiness |                                      | NotFound   |
 
 @Requirements
-Scenario: Get requirement with attachment
+Scenario Outline: Get requirement with attachment
 	Given Contacts exists in database
 		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type <type> exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |
@@ -49,4 +54,9 @@ Scenario: Get requirement with attachment
 			| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
-		And Retrieved requirement should have expected attachments 
+		And Retrieved requirement should have expected attachments
+
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |

@@ -76,7 +76,7 @@ module Antares {
                     cardListNoItemsElementContent = cardListNoItemsElement.find('[translate="ACTIVITY.LIST.NO_ITEMS"]');
 
                 expect(cardListElement.length).toBe(1);
-                expect(cardListElement[0].getAttribute('show-item-add')).toBe("vm.showActivityAdd");
+                expect(cardListElement[0].getAttribute('show-item-add')).toBe("vm.goToActivityAdd");
                 expect(cardListHeaderElement.length).toBe(1);
                 expect(cardListHeaderElementContent.length).toBe(1);
                 expect(cardListNoItemsElement.length).toBe(1);

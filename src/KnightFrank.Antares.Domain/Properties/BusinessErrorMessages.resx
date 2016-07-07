@@ -144,11 +144,11 @@
   <data name="Inconsistent_Dynamic_Configuration" xml:space="preserve">
     <value>{0} configuration is inconsistent.</value>
   </data>
-  <data name="Missing_Activity_Vendors_Id" xml:space="preserve">
-    <value>One or more vendors are not exist.</value>
+  <data name="Missing_Activity_Contacts_Id" xml:space="preserve">
+    <value>One or more contacts do not exist.</value>
   </data>
   <data name="Missing_Company_Contacts_Id" xml:space="preserve">
-    <value>One or more contacts are not exist.</value>
+    <value>One or more contacts do not exist.</value>
   </data>
   <data name="Missing_Requirement_Applicants_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
@@ -201,8 +201,26 @@
   <data name="Activity_Departments_Not_Unique" xml:space="preserve">
     <value>One or more departments are duplicated.</value>
   </data>
-  <data name="Activity_Should_Have_Only_One_Managing_Department" xml:space="preserve">
-    <value>Activity should hva only one managing department.</value>
+  <data name="Activity_AppraisalMeetingAttendees_Not_Unique" xml:space="preserve">
+    <value>One or more attendees are duplicated.</value>
+  </data>
+  <data name="Activity_Contacts_Not_Unique" xml:space="preserve">
+    <value>One or more contacts are duplicated.</value>
+  </data>
+  <data name="Activity_LeadNegotiator_Is_Required" xml:space="preserve">
+    <value>Activity lead negotiator is required.</value>
+  </data>
+  <data name="Activity_Should_Have_Exactly_One_Managing_Department" xml:space="preserve">
+    <value>Activity should have exactly one managing department.</value>
+  </data>
+  <data name="Missing_Activity_Attendees_Id" xml:space="preserve">
+    <value>One or more appraisal meeting attendees do not exist.</value>
+  </data>
+  <data name="Missing_Activity_Departments_Id" xml:space="preserve">
+    <value>One or more departments do not exist.</value>
+  </data>
+  <data name="Missing_Activity_Negotiators_Id" xml:space="preserve">
+    <value>One or more negotiators do not exist.</value>
   </data>
   <data name="Negotiators_Not_Unique" xml:space="preserve">
     <value>One or more negotiators are duplicated.</value>

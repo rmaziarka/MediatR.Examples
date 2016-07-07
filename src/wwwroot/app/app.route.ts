@@ -32,6 +32,10 @@ module Antares {
                         return addressFormsProvider.loadDefinitions();
                     }
                 }
+            })
+            .state('app.default', {
+                url: '/contact/add',
+                template: '<contact-add></contact-add>'
             });
 
         $urlRouterProvider.otherwise('/app/contact/add');

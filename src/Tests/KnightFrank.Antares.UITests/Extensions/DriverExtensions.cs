@@ -71,5 +71,11 @@
         {
             return webDriver.GetElement(locator).GetAttribute("value");
         }
+
+        public static void ClickWithJs(this IWebDriver driver, ElementLocator locator)
+        {
+            driver.ScrollIntoMiddle(locator);
+            driver.GetElement(locator).JavaScriptClick();
+        }
     }
 }

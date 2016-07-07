@@ -2,7 +2,7 @@
 
 module Antares {
     import KfMessageService = Services.KfMessageService;
-    describe('Given company contact add panel component', () =>{
+    xdescribe('Given company contact add panel component', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             state: ng.ui.IStateService,

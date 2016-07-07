@@ -31,7 +31,7 @@
             // Arrange
             User expectedUser =
                 fixture.Build<User>().With(u => u.Id, searchByUserId).Create();
-            userRepository.Setup(r => r.Get()).Returns(new[] { expectedUser }.AsQueryable());
+            userRepository.Setup(r => r.GetWithInclude(x => x.Department)).Returns(new[] { expectedUser }.AsQueryable());
 
             var query = new UserQuery() { Id = searchByUserId };
 
@@ -52,7 +52,7 @@
           [Frozen] Mock<IReadGenericRepository<User>> userRepository)
         {
             // Arrange
-            userRepository.Setup(r => r.Get()).Returns(new User[] { }.AsQueryable());
+            userRepository.Setup(r => r.GetWithInclude(x => x.Department)).Returns(new User[] { }.AsQueryable());
 
             query.Id = userId;
 

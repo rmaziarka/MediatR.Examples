@@ -14,7 +14,13 @@ module Antares {
             $state: ng.ui.IStateService,
             eventAggregator: Antares.Core.EventAggregator,
             assertValidator: TestHelpers.AssertValidators,
-            controller: ActivityEditController;
+            controller: ActivityEditController,
+            $q: ng.IQService,
+            $scope: ng.IScope,
+            activityService: Activity.ActivityService,
+            enumProvider: Providers.EnumProvider,
+            latestViewsProvider: Providers.LatestViewsProvider,
+            obj = 'an object';
 
         var leadNegotiatorMock = TestHelpers.ActivityUserGenerator.generate(Enums.NegotiatorTypeEnum.LeadNegotiator);
         var secondaryNegotiatorsMock = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
@@ -24,18 +30,28 @@ module Antares {
             $rootScope: ng.IRootScopeService,
             $controller: ng.IControllerService,
             _$state_: ng.ui.IStateService,
-            $httpBackend: ng.IHttpBackendService) => {
+            $httpBackend: ng.IHttpBackendService,
+            _enumProvider_: Providers.EnumProvider,
+            _$q_: ng.IQService,
+            _activityService_: Activity.ActivityService,
+            _latestViewsProvider_: Providers.LatestViewsProvider) => {
 
             // init
             eventAggregator = _eventAggregator_;
-            scope = $rootScope.$new();
+            $scope = $rootScope.$new();
             $http = $httpBackend;
             $state = _$state_;
+            activityService = _activityService_;
+            $q = _$q_;
+            latestViewsProvider = _latestViewsProvider_;
+            enumProvider = _enumProvider_;
 
-            controller = <ActivityEditController>$controller('ActivityEditController');
-            controller.activity = new Business.Activity();
+            $scope = $rootScope.$new();
+            controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
+            controller.activity = new Activity.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
+            controller.config = TestHelpers.ConfigGenerator.generateActivityEditConfig();
         }));
 
         describe('when departmentIsRelatedWithNegotiator is called', () => {
@@ -105,7 +121,7 @@ module Antares {
                         return false;
                     });
                     spyOn(controller.kfMessageService, 'showErrorByCode');
-                    
+
                     // act
                     controller.save();
 
@@ -115,52 +131,140 @@ module Antares {
             });
 
             describe('with valid data', () => {
-                it('then correct data is sent to API', () => {
-                    // arrange
+                beforeEach(() => {
                     spyOn(controller, 'departmentIsRelatedWithNegotiator').and.returnValue(false);
-
-                    var activity: Business.Activity = TestHelpers.ActivityGenerator.generate();
-                    var requestData: Dto.IUpdateActivityResource;
-
-                    controller.activity = activity;
                     spyOn($state, 'go').and.callFake(() => { });
 
-                    $http.expectPUT(/\/api\/activities/, (data: string) => {
-                        requestData = JSON.parse(data);
-                        return true;
-                    }).respond(201, {});
+                });
 
-                    // act
-                    controller.save();
-                    $http.flush();
+                describe('for edit mode', () => {
+                    var deferred: ng.IDeferred<any>;
+                    var activityFromService: Dto.IActivity;
+                    var requestData: Antares.Activity.Commands.IActivityEditCommand;
+                    var activity: Activity.ActivityEditModel;
 
-                    // assert
-                    expect(requestData.id).toEqual(activity.id);
+                    beforeEach(() => {
+                        // arrange
+                        deferred = $q.defer();
+                        activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+                        controller.activity = activity;
+
+                        activityFromService = TestHelpers.ActivityGenerator.generateDto();
+
+                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityEditCommand) => {
+                            requestData = activityCommand;
+                            return deferred.promise;
+                        });
+                    });
+
+                    it('then correct data is sent to API', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect(requestData.id).toEqual(activity.id);
+                        expectCorrectRequest(requestData, activity);
+                    });
+
+                    it('then user is redirected to activity view page', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromService.id });
+                    });
+                });
+
+                describe('for add mode', () => {
+                    var deferred: ng.IDeferred<any>;
+                    var activityFromService: Dto.IActivity;
+                    var requestData: Antares.Activity.Commands.IActivityAddCommand;
+                    var activity: Activity.ActivityEditModel;
+
+                    beforeEach(() => {
+                        // arrange
+                        deferred = $q.defer();
+                        activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+                        activity.id = null;
+                        controller.activity = activity;
+
+                        activityFromService = TestHelpers.ActivityGenerator.generateDto();
+
+                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityAddCommand) => {
+                            requestData = activityCommand;
+                            return deferred.promise;
+                        });
+
+                        spyOn(latestViewsProvider, 'addView').and.callFake(() => { });
+                    });
+
+                    it('then correct data is sent to API', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expectCorrectRequest(requestData, activity);
+                    });
+
+                    it('then user is redirected to activity view page', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromService.id });
+                    });
+
+                    it('then activity should be addded to latest view', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect(latestViewsProvider.addView).toHaveBeenCalled();
+                    });
+                });
+
+                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Activity.ActivityEditModel) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
-                    expect(requestData.marketAppraisalPrice).toEqual(activity.marketAppraisalPrice);
-                    expect(requestData.recommendedPrice).toEqual(activity.recommendedPrice);
-                    expect(requestData.vendorEstimatedPrice).toEqual(activity.vendorEstimatedPrice);
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
+                    expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
+                    expect(requestData.sourceId).toEqual(activity.sourceId);
+                    expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
+                    expect(requestData.keyNumber).toEqual(activity.accessDetails.keyNumber);
+                    expect(requestData.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
+                    expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
+                    expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
+                    expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
-                });
 
-                it('then user is redirected to activity view page', () => {
-                    // arrange
-                    var activityFromServerMock: Dto.IActivity = TestHelpers.ActivityGenerator.generateDto();
-
-                    spyOn($state, 'go').and.callFake(() => { });
-
-                    $http.expectPUT(/\/api\/activities/, (data: string) => {
-                        return true;
-                    }).respond(201, activityFromServerMock);
-
-                    // act
-                    controller.save();
-                    $http.flush();
-
-                    // assert
-                    expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromServerMock.id });
-                });
+                    expect(requestData.kfValuationPrice).toEqual(activity.kfValuationPrice);
+                    expect(requestData.agreedInitialMarketingPrice).toEqual(activity.agreedInitialMarketingPrice);
+                    expect(requestData.vendorValuationPrice).toEqual(activity.vendorValuationPrice);
+                    expect(requestData.shortKfValuationPrice).toEqual(activity.shortKfValuationPrice);
+                    expect(requestData.shortVendorValuationPrice).toEqual(activity.shortVendorValuationPrice);
+                    expect(requestData.shortAgreedInitialMarketingPrice).toEqual(activity.shortAgreedInitialMarketingPrice);
+                    expect(requestData.longKfValuationPrice).toEqual(activity.longKfValuationPrice);
+                    expect(requestData.longVendorValuationPrice).toEqual(activity.longVendorValuationPrice);
+                    expect(requestData.longAgreedInitialMarketingPrice).toEqual(activity.longAgreedInitialMarketingPrice);
+                    expect(requestData.disposalTypeId).toEqual(activity.disposalTypeId);
+                    expect(requestData.decorationId).toEqual(activity.decorationId);
+                    expect(requestData.serviceChargeAmount).toEqual(activity.serviceChargeAmount);
+                    expect(requestData.serviceChargeNote).toEqual(activity.serviceChargeNote);
+                    expect(requestData.groundRentAmount).toEqual(activity.groundRentAmount);
+                    expect(requestData.groundRentNote).toEqual(activity.groundRentNote);
+                    expect(requestData.otherCondition).toEqual(activity.otherCondition);
+                }
             });
         });
 
@@ -191,14 +295,68 @@ module Antares {
 
                 // assert
                 expect(controller.activity.activityDepartments.length).toBe(2);
-
                 var addedActivityDepartment = controller.activity.activityDepartments[1];
-
                 expect(addedActivityDepartment.departmentId).toBe(user.department.id);
                 expect(addedActivityDepartment.activityId).toBe(controller.activity.id);
                 expect(addedActivityDepartment.departmentType).toBe(controller.standardDepartmentType);
                 expect(addedActivityDepartment.departmentTypeId).toBe(controller.standardDepartmentType.id);
             });
+        });
+
+        describe('when negotiator list has changed', () => {
+            type TestCase = [Common.Models.Enums.NegotiatorTypeEnum]; //[NegotiatorTypeEnum]
+            runDescribe('and new ')
+                .data<TestCase>([
+                    [Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator],
+                    [Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator]
+                ])
+                .dataIt((data: TestCase) =>
+                    `${data[0]} is added then they should be added to available attendees user list`)
+                .run((data: TestCase) => {
+                    // arrange
+                    var activityUser: Business.ActivityUser = TestHelpers.ActivityUserGenerator.generate(data[0]);
+
+                    controller.activity.activityDepartments = [TestHelpers.ActivityDepartmentGenerator.generate()];
+                    controller.standardDepartmentType = TestHelpers.EnumTypeItemGenerator.generateDto();
+
+                    // act
+                    if (data[0] === Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator) {
+                        controller.activity.secondaryNegotiator.push(activityUser);
+                    }
+                    else if (data[0] === Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator) {
+                        controller.activity.leadNegotiator = activityUser;
+                    }
+                    controller.onNegotiatorAdded(activityUser.user);
+
+                    // assert
+                    var addedUser = _.find(controller.availableAttendeeUsers, (attendee: Business.User) => { return attendee.id === activityUser.user.id });
+
+                    expect(addedUser).toBeTruthy();
+                });
+
+            runDescribe('and existing ')
+                .data<TestCase>([
+                    [Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator],
+                    [Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator]
+                ])
+                .dataIt((data: TestCase) =>
+                    `${data[0]} is removed then they should be removed from available attendees user list`)
+                .run((data: TestCase) => {
+                    // arrange
+                    var activityUser: Business.ActivityUser = TestHelpers.ActivityUserGenerator.generate(data[0]);
+
+                    controller.activity.activityDepartments = [TestHelpers.ActivityDepartmentGenerator.generate()];
+                    controller.standardDepartmentType = TestHelpers.EnumTypeItemGenerator.generateDto();
+                    controller.availableAttendeeUsers = [activityUser.user];
+
+                    // act
+                    controller.onNegotiatorRemoved();
+
+                    // assert
+                    var addedUser = _.find(controller.availableAttendeeUsers, (attendee: Business.User) => { return attendee.id === activityUser.user.id });
+
+                    expect(addedUser).toBeFalsy();
+                });
         });
 
         describe('should subscribe to events', () => {
@@ -224,5 +382,278 @@ module Antares {
                 expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Opened);
             });
         });
+
+        describe('when in edit mode', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Activity.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+                controller.activity = activity;
+                controller.userData = userData;
+
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    activityDepartmentType: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing] }
+                    ]
+                };
+            });
+
+            describe('when initializing', () => {
+                it('then correct lead negotiator should be set', () => {
+                    // act
+                    controller.$onInit();
+
+                    expect(controller.activity.leadNegotiator).not.toBeNull();
+                    expect(controller.activity.leadNegotiator.user.firstName).toBe(activity.leadNegotiator.user.firstName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(activity.leadNegotiator.user.lastName);
+                    expect(controller.activity.leadNegotiator.user.id).toBe(activity.leadNegotiator.user.id);
+                    expect(controller.activity.leadNegotiator.user.departmentId).toBe(activity.leadNegotiator.user.departmentId);
+                });
+
+                it('then correct call date should be set', () => {
+                    // act
+                    controller.$onInit();
+
+                    var callDate = moment(controller.activity.leadNegotiator.callDate);
+                    var expectedCallDate = moment(activity.leadNegotiator.callDate);
+
+                    expect(callDate.day).toBe(expectedCallDate.day);
+                    expect(callDate.month).toBe(expectedCallDate.month);
+                    expect(callDate.year).toBe(expectedCallDate.year);
+                });
+            });
+
+        });
+
+        describe('when in add mode', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Activity.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                userData = TestHelpers.UserGenerator.generateUserDataDto();
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+
+                activity.id = null;
+                controller.activity = activity;
+                controller.userData = userData;
+
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    activityDepartmentType: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing] }
+                    ]
+                };
+            });
+
+            describe('when initializing', () => {
+                it('then current user should be set as lead negotiator', () => {
+                    // act
+                    controller.$onInit();
+
+                    expect(controller.activity.leadNegotiator).not.toBeNull();
+                    expect(controller.activity.leadNegotiator.user.firstName).toBe(userData.firstName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(userData.lastName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(userData.lastName);
+                    expect(controller.activity.leadNegotiator.user.id).toBe(userData.id);
+                    expect(controller.activity.leadNegotiator.user.departmentId).toBe(userData.department.id);
+                });
+
+                it('then call date for lead negotiator should be set 2 weeks from today', () => {
+                    // act
+                    controller.$onInit();
+
+                    var twoWeeksFromToday = moment().add(2, 'week');
+                    var callDate = moment(controller.activity.leadNegotiator.callDate);
+
+                    expect(callDate.day).toBe(twoWeeksFromToday.day);
+                    expect(callDate.month).toBe(twoWeeksFromToday.month);
+                    expect(callDate.year).toBe(twoWeeksFromToday.year);
+                });
+            });
+        });
+
+        describe('when isValuationPricesSectionVisible is called', () => {
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, true],
+                    [null, {}, true],
+                    [{}, null, true],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where askingPrice is ${data[0]} and shortLetPricePerWeek is ${data[1]} then isValuationPricesSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.askingPrice = data[0];
+                    controller.config.shortLetPricePerWeek = data[1];
+
+                    // act & assert
+                    expect(controller.isValuationPricesSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isBasicInformationSectionVisible is called', () => {
+            type TestCase = [any, any, any, any, any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, {}, {}, {}, {}, true],
+                    [null, {}, {}, {}, {}, {}, true],
+                    [{}, null, {}, {}, {}, {}, true],
+                    [{}, {}, null, {}, {}, {}, true],
+                    [{}, {}, {}, null, {}, {}, true],
+                    [{}, {}, {}, {}, null, {}, true],
+                    [{}, {}, {}, {}, {}, null, true],
+                    [null, null, null, null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where property is ${data[0]} and source is ${data[1]} and sourceDescription is ${data[2]} and sellingReason is ${data[3]} and pitchingThreats is ${data[4]} and disposalType is ${data[5]} then isBasicInformationSectionVisible must return ${data[6]}`)
+                .run((data: TestCase) => {
+                    controller.config.property = data[0];
+                    controller.config.source = data[1];
+                    controller.config.sourceDescription = data[2];
+                    controller.config.sellingReason = data[3];
+                    controller.config.pitchingThreats = data[4];
+                    controller.config.disposalType = data[5];
+                    
+                    // act & assert
+                    expect(controller.isBasicInformationSectionVisible()).toBe(data[6]);
+                });
+        });
+
+        describe('when isAdditionalInformationSectionVisible is called', () => {
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, true],
+                    [null, {}, true],
+                    [{}, null, true],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where keyNumber is ${data[0]} and accessArrangements is ${data[1]} then isAdditionalInformationSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.keyNumber = data[0];
+                    controller.config.accessArrangements = data[1];
+
+                    // act & assert
+                    expect(controller.isAdditionalInformationSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isAppraisalMeetingSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, {}, true],
+                    [null, {}, {}, true],
+                    [{}, null, {}, true],
+                    [{}, {}, null, true],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where appraisalMeetingDate is ${data[0]} and appraisalMeetingAttendees is ${data[1]} and appraisalMeetingInvitation is ${data[2]} then isAppraisalMeetingSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.appraisalMeetingDate = data[0];
+                    controller.config.appraisalMeetingAttendees = data[1];
+                    controller.config.appraisalMeetingInvitation = data[2];
+
+                    // act & assert
+                    expect(controller.isAppraisalMeetingSectionVisible()).toBe(data[3]);
+                });
+        });
+
+        describe('when isOtherSectionVisible is called', () => {
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, true],
+                    [obj, null, false],
+                    [null, obj, false],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.decoration = data[0];
+                    controller.config.otherCondition = data[1];
+
+                    // act & assert
+                    expect(controller.isOtherSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isValuationInfoSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, true],
+                    [null, obj, obj, false],
+                    [obj, null, obj, false],
+                    [obj, obj, null, false],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isValuationInfoSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.kfValuationPrice = data[0];
+                    controller.config.vendorValuationPrice = data[1];
+                    controller.config.agreedInitialMarketingPrice = data[2];
+
+                    // act & assert
+                    expect(controller.isValuationInfoSectionVisible()).toBe(data[3]);
+                });
+        });
+
+        describe('when isValuationInfoShortLongSectionVisible is called', () => {
+            type TestCase = [any, any, any, any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, obj, obj, obj, true],
+                    [null, obj, obj, obj, obj, obj, false],
+                    [obj, null, obj, obj, obj, obj, false],
+                    [obj, obj, null, obj, obj, obj, false],
+                    [obj, obj, obj, null, obj, obj, false],
+                    [obj, obj, obj, obj, null, obj, false],
+                    [obj, obj, obj, obj, obj, null, false],
+                    [null, null, null, null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} and 4th is ${data[3]} and 5th is ${data[4]} and 6th is ${data[5]} then isValuationInfoShortLongSectionVisible must return ${data[6]}`)
+                .run((data: TestCase) => {
+                    controller.config.shortKfValuationPrice = data[0];
+                    controller.config.longKfValuationPrice = data[1];
+                    controller.config.shortVendorValuationPrice = data[2];
+                    controller.config.longVendorValuationPrice = data[3];
+                    controller.config.shortAgreedInitialMarketingPrice = data[4];
+                    controller.config.longAgreedInitialMarketingPrice = data[5];
+
+                    // act & assert
+                    expect(controller.isValuationInfoShortLongSectionVisible()).toBe(data[6]);
+                });
+        });
+
+        describe('when isChargesSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, true],
+                    [null, obj, obj, false],
+                    [obj, null, obj, false],
+                    [obj, obj, null, false],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isChargesSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.serviceChargeAmount = data[0];
+                    controller.config.groundRentAmount = data[1];
+                    controller.config.groundRentNote = data[2];
+
+                    // act & assert
+                    expect(controller.isChargesSectionVisible()).toBe(data[3]);
+                });
+        });
     });
 }
+
+

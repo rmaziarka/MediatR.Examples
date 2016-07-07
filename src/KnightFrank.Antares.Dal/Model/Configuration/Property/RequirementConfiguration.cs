@@ -22,12 +22,6 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
             this.Property(r => r.Description)
                 .HasMaxLength(4000);
 
-            this.Property(r => r.MinPrice)
-                .IsMoney();
-
-            this.Property(r => r.MaxPrice)
-                .IsMoney();
-
             this.HasMany(p => p.Attachments)
                 .WithMany()
                 .Map(cs =>
@@ -35,6 +29,18 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                     cs.MapLeftKey("RequirementId");
                     cs.MapRightKey("AttachmentId");
                 });
+
+            this.HasRequired(x => x.RequirementType);
+            
+            this.HasOptional(p => p.Solicitor)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.SolicitorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorCompanyId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -8,7 +8,7 @@ Scenario: Update residential property
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.1     | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000 | 4000 | 6000     | 10000     | 3                   | 5                   |
 		And Property characteristics are defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2        | Postcode | City   | County           |
@@ -24,7 +24,7 @@ Scenario: Update residential property
 		And User selects Residential property and House type on edit property page
 		And User fills in property details on edit property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 2           | 1             | 2             | 3            | 4            | 1000    | 3000.12 | 5000.13     | 9000.1      | 2                   | 3                   |
+			| 1           | 2           | 1             | 2             | 3            | 4            | 1000    | 3000 | 5000     | 9000      | 2                   | 3                   |
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W2U 8AN  |      |        |
@@ -43,7 +43,7 @@ Scenario: Update residential property
 			| -          |
 		And Property should be updated with House property type and following attributes
 			| Bedrooms | Receptions | Bathrooms | LandArea                  | PropertyArea            | CarParkingSpaces |
-			| 1 - 2    | 1 - 2      | 3 - 4     | 5,000.13 - 9,000.1 sq. ft | 1,000 - 3,000.12 sq. ft | 2 - 3            |
+			| 1 - 2    | 1 - 2      | 3 - 4     | 5,000 - 9,000 sq. ft | 1,000 - 3,000 sq. ft | 2 - 3            |
 		And Characteristics are displayed on view property page
 			| Name                   | Comment  |
 			| Detached               | Detached |
@@ -93,7 +93,7 @@ Scenario: Create residential property
 		And User selects Residential property and Flat type on create property page
 		And User fills in property details on create property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.1     | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000 | 4000 | 6000     | 10000     | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
@@ -114,7 +114,7 @@ Scenario: Create residential property
 			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
 		And New property should be created with Flat property type and following attributes
 			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
-			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
+			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000 - 4,000 sq. ft | 6,000 - 10,000 sq. ft | 3 - 5            |
 		And Characteristics are displayed on view property page
 			| Name          | Comment              |
 			| Conservatory  | Size about 20 sq. ft |
@@ -133,8 +133,16 @@ Scenario: Create residential property
 		| Position | ContactName | ContactLastName | Type     | PurchaseDate |
 		| 1        | Eva         | Queen           | Freehold | 15-01-2014   |
 	When User clicks add activites button on view property page	
-		And User selects Open Market Letting activity type on create activity page
+		And User selects Open Market Letting type on create activity page
+		And User edits activity details on edit activity page
+			| ActivityStatus |
+			| Pre-appraisal  |                         
+		And User selects KF PR from source list on create activity page
+		And User selects John Smith from attendees on create activity page
 		And User clicks save button on create activity page
+	Then View activity page should be displayed
+	When User clicks property details on view activity page
+		And User clicks view property link from property on view activity page
 	Then Activity details are set on view property page
 		| Vendor    | Status        | Type                |
 		| Eva Queen | Pre-appraisal | Open Market Letting |
@@ -147,8 +155,8 @@ Scenario: Create residential property
 		And User adds PDF document.pdf file with Brochure type on view activity page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | ShortLetPricePerWeek |
-			| Market appraisal | 3000                 |
+			| ActivityStatus   | ShortLetPricePerWeek | KfValuationPricePerWeek |
+			| Market appraisal | 3000                 | 100                     |
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 	When User clicks property details on view activity page

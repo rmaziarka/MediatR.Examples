@@ -30,9 +30,9 @@
         {
             string contactDetails = firstName + " " + lastName;
 
-            if (!this.Driver.GetElements(this.contact.Format(contactDetails)).First().Selected)
+            if (!this.Driver.GetElements(this.contact.Format(contactDetails)).Last().Selected)
             {
-                this.Driver.GetElements(this.contact.Format(contactDetails)).First().Click();
+                this.Driver.GetElements(this.contact.Format(contactDetails)).Last().Click();
             }
             return this;
         }

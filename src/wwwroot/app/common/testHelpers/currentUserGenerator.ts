@@ -18,6 +18,7 @@ module Antares.TestHelpers {
                 salutationFormatId: null,
                 country: null,
                 division: null,
+                department: <Dto.IDepartment>null,
                 roles: [],
                 locale: LocaleGenerator.generateDto('en')
             };

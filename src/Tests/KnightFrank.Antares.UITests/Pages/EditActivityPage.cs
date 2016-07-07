@@ -14,10 +14,15 @@
     public class EditActivityPage : ProjectPageBase
     {
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "activity-status-control #status");
+        private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatusId");
         // Valuation prices
         private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator shortLetPricePerWeek = new ElementLocator(Locator.Id, "short-let-price-per-week");
+        private readonly ElementLocator kfValuation = new ElementLocator(Locator.CssSelector, "#kfValuationPrice");
+        private readonly ElementLocator dispsalType = new ElementLocator(Locator.Id, "disposalTypeId");
+
+        private readonly ElementLocator shortKfValuationPrice = new ElementLocator(Locator.Id, "shortKfValuationPrice");
+        private readonly ElementLocator longKfValuationPrice = new ElementLocator(Locator.Id, "longKfValuationPrice");
         // Locators for negotiators
         private readonly ElementLocator editLeadNegotiator = new ElementLocator(Locator.Id, "lead-edit-btn");
         private readonly ElementLocator searchLeadNegotator = new ElementLocator(Locator.CssSelector, "#lead-search input");
@@ -27,6 +32,7 @@
         private readonly ElementLocator secondaryNegotiatorActions = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'deleteSecondaryNegotiator']");
         private readonly ElementLocator setSecondaryNegotiatorAsLead = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'switchToLeadNegotiator']");
+
         private readonly ElementLocator negotiator = new ElementLocator(Locator.XPath, "//section[@id = 'activity-edit-negotiators']//span[contains(., '{0}')]");
         private readonly ElementLocator leadNegotiatorNextCall = new ElementLocator(Locator.Id, "lead-call-date");
         private readonly ElementLocator secondaryNegotiatorNextCall = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item{0} input");
@@ -68,11 +74,24 @@
             return this;
         }
 
+        public EditActivityPage SetKfValuationPricePerWeek(string price)
+        {
+            this.Driver.SendKeys(this.shortKfValuationPrice, price);
+            this.Driver.SendKeys(this.longKfValuationPrice, price);
+            return this;
+        }
+
         public ViewActivityPage SaveActivity()
         {
             this.Driver.Click(this.saveButton);
             this.Driver.WaitForAngularToFinish();
             return new ViewActivityPage(this.DriverContext);
+        }
+
+        internal EditActivityPage SelectDisposalType(string disposalType)
+        {
+            this.Driver.GetElement<Select>(this.dispsalType).SelectByText(disposalType);
+            return this;
         }
 
         public EditActivityPage SetLeadNegotiator(string leadNegotiator)
@@ -83,6 +102,13 @@
             this.Driver.Click(this.negotiator.Format(leadNegotiator));
             return this;
         }
+
+        public EditActivityPage FillKfValuation(string kfValuation)
+        {
+            this.Driver.SendKeys(this.kfValuation, kfValuation);
+            return this;
+        }
+
 
         public EditActivityPage SetSecondaryNegotiator(Negotiator secondaryNegotiator)
         {
@@ -144,6 +170,8 @@
         public string AskingPrice { get; set; }
 
         public string ShortLetPricePerWeek { get; set; }
+
+        public string KfValuationPricePerWeek { get; set; }
     }
 
     public class Negotiator

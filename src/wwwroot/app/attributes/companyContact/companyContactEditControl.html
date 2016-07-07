@@ -1,0 +1,22 @@
+<ng-form name='vm.{{vm.schema.formName}}' ng-if="vm.config" id="{{vm.schema.controlId}}-section" class="form-group">
+    <h5>{{vm.schema.translationKey | translate}}</h5>
+    <div class="form-group">
+        <button id="{{vm.schema.controlId}}-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+        <div ng-if="!vm.companyContact">
+            <p class="help-block" id="no-contacts-help-block" ng-show="vm[vm.schema.formName].$submitted === false">{{vm.schema.emptyTranslationKey | translate}}</p>
+        </div>
+    </div>
+    <div id="{{vm.schema.controlId}}" class="row" ng-if="vm.companyContact">
+        <div class="col-md-6">
+            <card-list-item>
+                <card show-context-menu="false" card-template-url="'app/attributes/companyContact/companyContactCard.html'" item="vm.companyContact">
+                </card>
+            </card-list-item>
+        </div>
+    </div>
+    <company-contacts-add-panel is-visible="vm.isPanelVisible" on-save="vm.onContactSelected" allow-multiple-select="false"
+                                initialy-selected-company-contacts="vm.selectedCompanyContacts">
+    </company-contacts-add-panel>
+</ng-form>

@@ -15,13 +15,13 @@ module Antares {
         var pageObjectSelectors = {
             vendorSection: '#section-vendor',
             applicantSection: '#section-applicant',
-            cardItem: '.card-item',
             pageHeader: '#view-offer-header',
             pageHeaderTitle: '.offer-title',
             sectionBasicInformation: '#section-basic-information',
-            applicant: '.applicant',
             panelBody: '.panel-body',
-			progressSection: '#offer-progress-section'
+            progressSection: '#offer-progress-section',
+            activityCard: '.offer-view-activity',
+            requirementCard: '.offer-view-requirement'
         }
 
 		var offerStatuses: Common.Models.Dto.IEnumItem[] = [
@@ -31,6 +31,12 @@ module Antares {
         ];
 
 		var offerMock = TestHelpers.OfferGenerator.generate();
+
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.factory('addressFormViewDirective', () => { return {}; });
+            });
+        });
 
         beforeEach(inject(($rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
@@ -43,10 +49,11 @@ module Antares {
 			state = $state;
             scope = $rootScope.$new();
             scope["offer"] = offerMock;
+            scope["config"] = TestHelpers.ConfigGenerator.generateOfferViewConfig();
 
             enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
 
-            element = compile('<offer-view offer="offer"></offer-view>')(scope);
+            element = compile('<offer-view offer="offer" config="config"></offer-view>')(scope);
             scope.$apply();
 			
 			controller = element.controller('offerView');
@@ -67,45 +74,14 @@ module Antares {
                 expect(currentHeaderNames).toEqual(expectedHeaderNamesText);
             });
 
-            it('vendor address is displayed within vendor card', () => {
-                offerMock.activity.property.address.propertyNumber = "test property number";
-                offerMock.activity.property.address.propertyName = "test property name";
-                offerMock.activity.property.address.line2 = "test line2 address";
-
-                scope['offer'] = offerMock;
-				element = compile('<offer-view offer="offer"></offer-view>')(scope);
-                scope.$apply();
-
-                var expectedAddressText = offerMock.activity.property.address.getAddressText();
-                var currentVendorAddressText = element.find(pageObjectSelectors.vendorSection).find(pageObjectSelectors.cardItem).text();
-
-                expect(currentVendorAddressText).toEqual(expectedAddressText);
+            it('activity card is displayed', () =>{
+                var offerCard = element.find(pageObjectSelectors.activityCard);
+                expect(offerCard.length).toBe(1);
             });
 
-            it('applicant names are displayed within applicant card seppareted by comma', () => {
-                //Add two contacts
-                offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
-                offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
-
-                scope['offer'] = offerMock;
-				element = compile('<offer-view offer="offer"></offer-view>')(scope);
-                scope.$apply();
-
-                var expectedApplicantNamesText = offerMock.requirement.getContactNames();
-                var currentApplicantNamesText = element.find(pageObjectSelectors.applicantSection).find(pageObjectSelectors.cardItem).text();
-
-                expect(currentApplicantNamesText).toEqual(expectedApplicantNamesText);
-            });
-            
-            it('negotiator name is displayed within negotiator card', () => {
-                var expectedNegotiatorFullNameText = offerMock.negotiator.getName();
-                var currentNegotiatorFullName = element
-                    .find(pageObjectSelectors.sectionBasicInformation)
-                    .find(pageObjectSelectors.applicant)
-                    .find(pageObjectSelectors.panelBody)
-                    .text();
-
-                expect(currentNegotiatorFullName).toEqual(expectedNegotiatorFullNameText);
+            it('requirement card is displayed', () => {
+                var requirementCard = element.find(pageObjectSelectors.requirementCard);
+                expect(requirementCard.length).toBe(1);
             });
         });        
 
@@ -157,31 +133,5 @@ module Antares {
                 expect($http.flush).not.toThrow();
             });
         });
-
-		describe('when offer status is other than New', () =>{
-            beforeEach(() =>{
-				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "Accepted").id;
-                scope['offer'] = offerMock;
-                scope.$apply();
-            });
-
-            it('then progress section is rendered', () => {
-                var progressSection = element.find(pageObjectSelectors.progressSection);
-                expect(progressSection.length).toBe(1);
-            });
-		});
-
-		describe('when offer status is New', () =>{
-            beforeEach(() =>{
-				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "New").id;
-                scope['offer'] = offerMock;
-                scope.$apply();
-            });
-
-            it('then progress section is not rendered', () => {
-                var progressSection = element.find(pageObjectSelectors.progressSection);
-                expect(progressSection.length).toBe(0);
-            });
-		});
     });
 }

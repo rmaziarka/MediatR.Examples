@@ -6,6 +6,11 @@
     {
         public OfferConfiguration()
         {
+            this.HasRequired(x => x.OfferType)
+                .WithMany()
+                .HasForeignKey(x => x.OfferTypeId)
+                .WillCascadeOnDelete(false);
+
             this.HasRequired(x => x.Status)
                 .WithMany()
                 .HasForeignKey(x => x.StatusId)
@@ -56,9 +61,19 @@
                 .HasForeignKey(p => p.BrokerId)
                 .WillCascadeOnDelete(false);
 
+            this.HasOptional(p => p.BrokerCompany)
+                .WithMany()
+                .HasForeignKey(p => p.BrokerCompanyId)
+                .WillCascadeOnDelete(false);
+
             this.HasOptional(p => p.Lender)
                 .WithMany()
                 .HasForeignKey(p => p.LenderId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.LenderCompany)
+                .WithMany()
+                .HasForeignKey(p => p.LenderCompanyId)
                 .WillCascadeOnDelete(false);
 
             this.HasOptional(p => p.Surveyor)
@@ -66,9 +81,19 @@
                 .HasForeignKey(p => p.SurveyorId)
                 .WillCascadeOnDelete(false);
 
+            this.HasOptional(p => p.SurveyorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SurveyorCompanyId)
+                .WillCascadeOnDelete(false);
+
             this.HasOptional(p => p.AdditionalSurveyor)
                 .WithMany()
                 .HasForeignKey(p => p.AdditionalSurveyorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.AdditionalSurveyorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.AdditionalSurveyorCompanyId)
                 .WillCascadeOnDelete(false);
 
             this.Property(x => x.SpecialConditions).HasMaxLength(4000);
@@ -81,7 +106,11 @@
 
             this.Property(o => o.Price)
                 .IsMoney()
-                .IsRequired();
+                .IsOptional();
+
+            this.Property(o => o.PricePerWeek)
+                .IsMoney()
+                .IsOptional();
 
             this.Property(x => x.OfferDate)
                 .IsRequired();

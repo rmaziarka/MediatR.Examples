@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class Activity implements Dto.IActivity{
+    export class Activity implements Dto.IActivity {
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
@@ -11,9 +11,6 @@ module Antares.Common.Models.Business {
         attachments: Attachment[] = [];
         property: PreviewProperty = null;
         createdDate: Date = null;
-        marketAppraisalPrice: number = null;
-        recommendedPrice: number = null;
-        vendorEstimatedPrice: number = null;
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
         leadNegotiator: ActivityUser = null;
@@ -23,13 +20,40 @@ module Antares.Common.Models.Business {
         offers: Offer[];
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
+        sourceId: string = null;
+        sellingReasonId: string = null;
+        appraisalMeetingStart: string = null;
+        appraisalMeetingEnd: string = null;
+        appraisalMeetingInvitationText: string = null;
+        keyNumber: string = null;
+        accessArrangements: string = null;
+        appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        kfValuationPrice: number = null;
+        agreedInitialMarketingPrice: number = null;
+        vendorValuationPrice: number = null;
+        shortKfValuationPrice: number;
+        shortVendorValuationPrice: number;
+        shortAgreedInitialMarketingPrice: number;
+        longKfValuationPrice: number;
+        longVendorValuationPrice: number;
+        longAgreedInitialMarketingPrice: number;  
+        disposalTypeId: string = '';
+        decorationId: string = '';
+        serviceChargeAmount: number = null;
+        serviceChargeNote: string = '';
+        groundRentAmount: number = null;
+        groundRentNote: string = '';
+        otherCondition: string = '';      
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
                 if (activity.contacts) {
-                    this.contacts = activity.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
+                    this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
                 }
                 this.property = new PreviewProperty(activity.property);
 
@@ -60,6 +84,15 @@ module Antares.Common.Models.Business {
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
+
+                if (activity.solicitor && activity.solicitorCompany) {
+                    this.solicitor = new Contact(activity.solicitor);
+                    this.solicitorCompany = new Company(activity.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
+                }
+
+            this.secondaryNegotiator = this.secondaryNegotiator || [];
+            this.leadNegotiator = this.leadNegotiator || new ActivityUser();
             }
         }
 

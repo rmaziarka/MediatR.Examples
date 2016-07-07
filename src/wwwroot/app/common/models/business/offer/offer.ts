@@ -4,11 +4,14 @@ module Antares.Common.Models.Business {
     declare var moment: any;
 
     export class Offer implements Dto.IOffer {
+        [index: string]: any;
         id: string = null;
         statusId: string = null;
         activityId: string = null;
         requirementId: string = null;
+        offerTypeId: string = null;
         price: number;
+        pricePerWeek: number;
         exchangeDate: Date;
         completionDate: Date;
         specialConditions: string;
@@ -32,19 +35,23 @@ module Antares.Common.Models.Business {
         broker: Business.Contact = null;
         brokerId: string = null;
         brokerCompany: Business.Company = null;
+        brokerCompanyContact: Business.CompanyContactRelation = null;
         brokerCompanyId: string = null;
 		lender: Business.Contact = null;
         lenderId: string = null;
         lenderCompany: Business.Company = null;
+        lenderCompanyContact: Business.CompanyContactRelation = null;
         lenderCompanyId: string = null;
         mortgageSurveyDate: Date | string = null;
         surveyor: Business.Contact = null;
         surveyorId: string = null;
         surveyorCompany: Business.Company = null;
+        surveyorCompanyContact: Business.CompanyContactRelation = null;
         surveyorCompanyId: string = null;
 		additionalSurveyor: Business.Contact = null;
         additionalSurveyorId: string = null;
         additionalSurveyorCompany: Business.Company = null;
+        additionalSurveyorCompanyContact: Business.CompanyContactRelation = null;
         additionalSurveyorCompanyId: string = null;
 		additionalSurveyStatus: Business.EnumTypeItem = null;
         additionalSurveyStatusId: string = null;
@@ -68,36 +75,28 @@ module Antares.Common.Models.Business {
                     this.exchangeDate = moment(offer.exchangeDate).toDate();
                 }
 
-                if (offer.broker) {
+                if (offer.broker && offer.brokerCompany) {
                     this.broker = new Contact(offer.broker, offer.brokerCompany);
-                }
-
-                if (offer.lender) {
-                    this.lender = new Contact(offer.lender, offer.lenderCompany);
-                }
-                
-                if (offer.surveyor) {
-                    this.surveyor = new Contact(offer.surveyor, offer.surveyorCompany);
-                }
-
-                if (offer.additionalSurveyor) {
-                    this.additionalSurveyor = new Contact(offer.additionalSurveyor, offer.additionalSurveyorCompany);
-                }
-
-                if (offer.brokerCompany) {
                     this.brokerCompany = new Company(offer.brokerCompany);
+                    this.brokerCompanyContact = new CompanyContactRelation(this.broker, this.brokerCompany);
                 }
 
-                if (offer.lenderCompany) {
+                if (offer.lender && offer.lenderCompany) {
+                    this.lender = new Contact(offer.lender, offer.lenderCompany);
                     this.lenderCompany = new Company(offer.lenderCompany);
+                    this.lenderCompanyContact = new CompanyContactRelation(this.lender, this.lenderCompany);
                 }
 
-                if (offer.surveyorCompany) {
+                if (offer.surveyor && offer.surveyorCompany) {
+                    this.surveyor = new Contact(offer.surveyor, offer.surveyorCompany);
                     this.surveyorCompany = new Company(offer.surveyorCompany);
+                    this.surveyorCompanyContact = new CompanyContactRelation(this.surveyor, this.surveyorCompany);
                 }
 
-                if (offer.additionalSurveyorCompany) {
+                if (offer.additionalSurveyor && offer.additionalSurveyorCompany) {
+                    this.additionalSurveyor = new Contact(offer.additionalSurveyor, offer.additionalSurveyorCompany);
                     this.additionalSurveyorCompany = new Company(offer.additionalSurveyorCompany);
+                    this.additionalSurveyorCompanyContact = new CompanyContactRelation(this.additionalSurveyor, this.additionalSurveyorCompany);
                 }
 
                 if (offer.mortgageSurveyDate) {

@@ -22,8 +22,12 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         SearchStatus,
         Enquiries,
         SalutationFormat,
-		MailingSalutation,
-		EventSalutation
+        MailingSalutation,
+        EventSalutation,
+        ActivitySource,
+        ActivitySellingReason,
+        DisposalType,
+        Decoration,
     }
 
 
@@ -87,14 +91,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
     public enum RequirementDocumentType
     {
         TermsOfBusiness,
-        MarketingSignOff,
-        CDDDocument,
-        Photograph,
-        FloorPlan,
-        Brochure,
-        VideoTour,
-        EPC,
-        GasCertificate,
     }
 
     public enum PropertyDocumentType
@@ -114,6 +110,13 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         InProgress,
         Agreed,
     }
+
+	public enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
+	}
 
     public enum MortgageSurveyStatus
     {
@@ -144,4 +147,70 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         Sent,
         Complete,
     }
+
+	public enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
+	public enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	public enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToRequirement,
+	}
+
+	public enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	public enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
 }

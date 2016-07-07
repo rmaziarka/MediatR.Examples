@@ -4,11 +4,11 @@
         activityDepartmentType: IEnumItem[];
         activityDocumentType: IEnumItem[];
         activityStatus: IEnumItem[];
-        activityUserType: IEnumItem[];
+        userType: IEnumItem[];
         division: IEnumItem[];
         entityType: IEnumItem[];
         offerStatus: IEnumItem[];
         ownershipType: IEnumItem[];
-      salutationFormat: IEnumItem[];
+        salutationFormat: IEnumItem[];
     }
 }

@@ -18,6 +18,8 @@
     "FILEISUPLOADING": "File is uploading ...",
     "REQUIREMENT": "Requirement",
     "ACTIVITY": "Activity",
+    "YES": "Yes",
+    "NO": "No",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",
@@ -153,8 +155,8 @@
       "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
       "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
       "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
-      "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier then create date",
-      "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater then create date"
+      "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
+      "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater than create date"
     },
     "PROPERTY": {
       "AREA": "Property area",
@@ -225,6 +227,32 @@
       }
     },
     "ACTIVITY": {
+    "COMMON": {
+      "ACCESS_DETAILS": "Access details",
+      "ADDITIONAL_INFORMATION": "Additional information",
+      "AGREED_INITIAL_MARKETING_PRICE": "Agreed Initial Marketing Price",
+      "CHARGES": "Charges",
+      "DECORATION": "Decoration",
+      "DISPOSAL_TYPE": "Disposal type",
+      "GROUND_RENT": "Ground rent",
+      "GROUND_RENT_NOTE": "Ground rent note",
+      "KF_VALUTATION": "KF Valuation",
+      "LONG_LET": "Long let",
+      "OTHER": "Other",
+      "OTHER_CONDITIONS": "Other conditions",
+      "PITCHING_THREATS": "Pitching threats",
+      "SERVICE_CHARGE": "Service charge",
+      "SERVICE_CHARGE_NOTE": "Service charge note",
+      "SHORT_LET": "Short let",
+      "GBP_PER_WEEK": "GBP / week",
+      "VALUATION_INFORMATION": "Valuation information",
+      "VENDOR_VALUATION": "Vendor Valuation",
+      "SOURCE": "Source",
+      "SOURCE_DESCRIPTION": "Source - description",
+      "SELLING_REASON": "Selling reason",
+      "KEY_NUMBER": "Key number",
+      "ACCESS_ARRANGEMENTS": "Access arrangements"
+    },
       "LIST": {
         "ACTIVITIES": "Activities",
         "NO_ITEMS": "No activities yet"
@@ -238,8 +266,14 @@
         "SAVING_ACTIVITY_IN_PROGRESS": "Saving activity ..."
       },
       "EDIT": {
+        "ACTIVITY_TITLE": "Activity title",
         "EDIT_ACTIVITY": "Edit activity",
         "BASIC_INFORMATION": "Basic information",
+        "ADDITIONAL_INFORMATION": {
+          "ADDITIONAL_INFORMATION": "Additional information",
+          "ACCESS_DETAILS": "Access details"
+        },
+      "DISPOSAL_TYPE": "Disposal type",
         "STATUS": "Status",
         "PROPERTY": "Property",
         "VENDORS": "Vendors",
@@ -252,6 +286,20 @@
           "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
           "ASKING_PRICE": "Asking price",
           "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
+      },
+      "SOURCE": "Source",
+      "SOURCE_DESCRIPTION": "Source - description",
+      "SELLING_REASON": "Selling reason",
+      "KEY_NUMBER": "Key number",
+      "PITCHING_THREATS": "Pitching threats",
+      "ACCESS_ARRANGEMENTS": "Access arrangements",
+      "APPRAISAL_MEETING": {
+        "DATE": "Date",
+        "START": "Start time:",
+        "END": "End time:",
+        "APPRAISAL_MEETING": "Appraisal meeting",
+        "INVITATION_TEXT": "Invitation text",
+        "ATTENDEES": "Attendees"
         }
       },
       "PREVIEW": {
@@ -268,6 +316,7 @@
       "BASIC_INFORMATION": "Basic information",
       "DETAILS": "Details",
         "VIEW_ACTIVITY": "View activity",
+        "APPRAISAL_MEETING": "Appraisal meeting",
         "PROPERTY": "Property",
         "VENDORS": "Vendors",
         "NO_VENDORS": "No vendors defined",
@@ -278,10 +327,12 @@
           "MARKET_APPRAISAL_PRICE": "Market appraisal price",
           "RECOMMENDED_PRICE": "Recommended price",
           "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
+          "KF_ESTIMATED_PRICE": "Kf estimated price",
           "ASKING_PRICE": "Asking price",
-          "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
+          "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week",
+          "LONG_LET_PRICE": "Long let",
+          "SHORT_LET_PRICE": "Short let"
         },
-
       "RECENT_FILES": "Recent files",
         "VIEWING_DETAILS": "Viewing details",
       "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
@@ -327,7 +378,11 @@
         "PARKINGSPACES": "Parking spaces",
         "AREA": "Area",
         "LANDAREA": "Land area",
-        "DESCRIPTION": "Description"
+        "DESCRIPTION": "Requirement description",
+        "TYPE": "Requirement type",
+        "BASIC_INFORMATION": "Basic information",
+        "RENT_REQUIREMENTS": "Rent requirements",
+        "RENT_WEEKLY":  "Rent (weekly)"
       },
       "VIEW": {
         "REQUIREMENT_DETAILS": "Requirement details",
@@ -353,7 +408,12 @@
         "SELECTACTIVITY": "Select activity",
         "OFFERPREVIEW": "Offer preview",
         "OFFERDETAILS": "Offer details",
-        "NEWOFFER": "New offer"
+      "NEWOFFER": "New offer",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)",
+      "OFFER_PER_WEEK": "GBP / week"
       }
     },
     "NOTES": {
@@ -406,9 +466,12 @@
         "EXCHANGE_DATE": "Proposed exchange date",
         "COMPLETION_DATE": "Proposed completion date",
         "VIEW": "View",
-        "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
+        "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+        "NEW_OFFER": "New offer",
+        "OFFER_PER_WEEK": "GBP / week"
       },
       "PREVIEW": {
+        "PREVIEW": "Offer preview",
         "ACTIVITY": "Activity",
         "STATUS": "Status",
         "OFFER": "Offer",
@@ -416,13 +479,23 @@
         "SPECIAL_CONDITIONS": "Special conditions",
         "NEGOTIATOR": "Negotiator",
         "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date"
+        "COMPLETION_DATE": "Proposed completion date",
+        "OFFER_PER_WEEK": "GBP / week"
       },
       "VIEW": {
         "VIEW_OFFER": "View offer",
         "VENDOR": "Vendor",
+        "LANDLORD": "Landlord",
         "APPLICANT": "Applicant",
         "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
         "PROGRESS_SUMMARY": "Progress summary",
         "MORTGAGE_STATUS": "Mortgage status",
         "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
@@ -432,6 +505,7 @@
         "CONTRACT_APPROVED": "Contract approved",
         "MORTGAGE_DETAILS": "Mortgage details",
         "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+        "SOLICITOR": "Solicitor",
         "BROKER": "Broker",
         "LENDER": "Lender",
         "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
@@ -440,47 +514,52 @@
         "ADDITIONAL_SURVEY_DATE": "Additional survey date",
         "OTHER_DETAILS": "Other details",
         "COMMENT": "Comment",
-        "DATE": "Date"
+        "DATE": "Date",
+        "NO_SOLICITOR": "Solicitor contact not specified"
       },
-      "EDIT": {
-        "EDIT_OFFER": "Edit offer",
-        "VENDOR": "Vendor",
-        "APPLICANT": "Applicant",
-        "BASIC_INFORMATION": "Basic information",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "OFFER_EDIT_SUCCESS": "Offer successfully saved",
-        "PROGRESS_SUMMARY": "Progress summary",
-        "MORTGAGE_STATUS": "Mortgage status",
-        "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-        "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-        "SEARCH_STATUS": "Search status",
-        "ENQUIRIES": "Enquiries",
-        "CONTRACT_APPROVED": "Contract approved",
-        "MORTGAGE_DETAILS": "Mortgage details",
-        "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-        "BROKER": "Broker",
-        "LENDER": "Lender",
-        "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-        "SURVEYOR": "Surveyor",
-        "ADDITIONAL_SURVEY": "Additional survey",
-        "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-        "OTHER_DETAILS": "Other details",
-        "COMMENT": "Comment",
-        "YES": "Yes",
-        "NO": "No",
-        "NO_BROKER": "Broker contact not specified yet",
-        "NO_LENDER": "Lender contact not specified yet",
-        "NO_SURVEYOR": "Surveyor contact not specified yet",
-        "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-        "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
-        "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
-      }
+  "EDIT": {
+    "EDIT_OFFER": "Edit offer",
+    "VENDOR": "Vendor",
+    "LANDLORD": "Landlord",
+    "APPLICANT": "Applicant",
+    "BASIC_INFORMATION": "Basic information",
+    "STATUS": "Status",
+    "OFFER": "Offer",
+    "OFFER_PER_WEEK": "GBP / week",
+    "OFFER_DATE": "Offer date",
+    "SPECIAL_CONDITIONS": "Special conditions",
+    "NEGOTIATOR": "Negotiator",
+    "EXCHANGE_DATE": "Proposed exchange date",
+    "COMPLETION_DATE": "Proposed completion date",
+    "OFFER_EDIT_SUCCESS": "Offer successfully saved",
+    "PROGRESS_SUMMARY": "Progress summary",
+    "MORTGAGE_STATUS": "Mortgage status",
+    "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+    "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+    "SEARCH_STATUS": "Search status",
+    "ENQUIRIES": "Enquiries",
+    "CONTRACT_APPROVED": "Contract approved",
+    "MORTGAGE_DETAILS": "Mortgage details",
+    "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+    "SOLICITOR": "Solicitor",
+    "BROKER": "Broker",
+    "LENDER": "Lender",
+    "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+    "SURVEYOR": "Surveyor",
+    "ADDITIONAL_SURVEY": "Additional survey",
+    "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+    "OTHER_DETAILS": "Other details",
+    "COMMENT": "Comment",
+    "YES": "Yes",
+    "NO": "No",
+    "NO_BROKER": "Broker contact not specified yet",
+    "NO_LENDER": "Lender contact not specified yet",
+    "NO_SURVEYOR": "Surveyor contact not specified yet",
+    "NO_SOLICITOR": "Solicitor contact not specified yet",
+    "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+    "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+    "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+  }
     },
     "DEPARTMENTS": {
       "COMMON": {

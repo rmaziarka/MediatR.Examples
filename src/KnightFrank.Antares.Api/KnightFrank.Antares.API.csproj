@@ -220,6 +220,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ModelBinders\ConfigurableRequirementModelBinder.cs" />
+    <Compile Include="ModelBinders\ConfigurableOfferModelBinder.cs" />
     <Compile Include="Core\NullToDefaultValueConverter.cs" />
     <Compile Include="Services\AzureStorage\IDocumentStorageProvider.cs" />
     <Compile Include="Controllers\CompanyContactsController.cs" />
@@ -254,7 +256,6 @@
     <Compile Include="Controllers\TranslationsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Core\MockUserMiddleware.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Core\ValidationExceptionFilterAttribute.cs" />
     <Compile Include="Models\AttachmentUrlParameters.cs" />

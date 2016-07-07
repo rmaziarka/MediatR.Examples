@@ -13,11 +13,11 @@ namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConf
         public PageType PageType;
         public PropertyType PropertyType;
         public ActivityType ActivityType;
-        public Expression<Func<CreateActivityCommand, object>> ControlReadonlyExpression;
-        public Expression<Func<CreateActivityCommand, object>> ControlHiddenExpression;
+        public Expression<Func<ActivityCommandBase, bool>> ControlReadonlyExpression;
+        public Expression<Func<ActivityCommandBase, bool>> ControlHiddenExpression;
         public bool IsRequired;
 
-        public ActivityControlsConfigurationItem(ControlCode controlCode, PageType pageType, PropertyType propertyType, ActivityType activityType, bool isRequired, Expression<Func<CreateActivityCommand, object>> controlReadonlyExpression = null, Expression<Func<CreateActivityCommand, object>> controlHiddenExpression = null)
+        public ActivityControlsConfigurationItem(ControlCode controlCode, PageType pageType, PropertyType propertyType, ActivityType activityType, bool isRequired, Expression<Func<ActivityCommandBase, bool>> controlReadonlyExpression = null, Expression<Func<ActivityCommandBase, bool>> controlHiddenExpression = null)
         {
             this.ControlCode = controlCode;
             this.PageType = pageType;

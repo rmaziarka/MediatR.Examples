@@ -26,6 +26,7 @@
                     .Include(req => req.Contacts)
                     .Include(req => req.Address)
                     .Include(req => req.RequirementNotes)
+                    .Include(req => req.RequirementType)
                     .Include(req => req.Viewings)
                     .Include(req => req.Viewings.Select(v => v.Attendees))
                     .Include(req => req.Viewings.Select(v => v.Negotiator))

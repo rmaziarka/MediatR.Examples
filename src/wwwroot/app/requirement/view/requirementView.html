@@ -1,6 +1,5 @@
 ﻿<div class="row">
     <div class="col-md-12">
-
         <!-- Property details -->
         <h2 class="page-header" translate="REQUIREMENT.VIEW.REQUIREMENT_DETAILS"></h2>
         <div class="well requirement-details-header">
@@ -16,28 +15,27 @@
 
         <div class="row">
             <div class="col-md-4">
+                <h3 class="page-header" translate="REQUIREMENT.VIEW.BASIC_INFORMATION"></h3>
                 <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
-                    <address-form-view address="vm.requirement.address"
+                    <requirement-type-preview-control type-id="vm.requirement.requirementTypeId" config="vm.config.requirement_RequirementType" />
+                </section>
+
+                <section>
+                    <requirement-description-preview-control description="vm.requirement.description" config="vm.config.requirement_Description"/>
+                </section>
+
+                <section>
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.RENT_REQUIREMENTS" ng-if="vm.config.requirement_RentRange"></h3>
+                    <range-view-control min="vm.requirement.rentMin" max="vm.requirement.rentMax" config="vm.config.requirement_RentRange" schema="vm.controlSchemas.rentRange">
+                </section>
+
+                <section>
+                    <h3 ng-if="vm.config.requirement_LocationRequirements" class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
+                    <address-form-view address="vm.requirement.address" config="vm.config.requirement_LocationRequirements"
                                        address-type="requirement"
                                        template-url="'app/common/components/addressForm/addressFormView/templates/requirementAddressForm.html'"></address-form-view>
                 </section>
 
-                <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.BASIC_REQUIREMENTS"></h3>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.PRICE' | translate }}" min="vm.requirement.minPrice" max="vm.requirement.maxPrice" suffix="'GBP'"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.BEDROOMS' | translate }}" min="vm.requirement.minBedrooms" max="vm.requirement.maxBedrooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.RECEPTIONROOMS' | translate }}" min="vm.requirement.minReceptionRooms" max="vm.requirement.maxReceptionRooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.BATHROOMS' | translate }}" min="vm.requirement.minBathrooms" max="vm.requirement.maxBathrooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.PARKINGSPACES' | translate }}" min="vm.requirement.minParkingSpaces" max="vm.requirement.maxParkingSpaces"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.AREA' | translate }}" min="vm.requirement.minArea" max="vm.requirement.maxArea" suffix="'sq ft'"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
-                </section>
-
-                <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.DESCRIPTION"></h3>
-                    <p>{{ vm.requirement.description}}</p>
-                </section>
             </div>
             <div class="col-md-4" id="applicant-list">
                 <section>
@@ -74,16 +72,16 @@
                         </card-list-item>
                     </card-list>
                 </section>
-                <attachments-manager title="{{'ATTACHMENT.LIST.ATTACHMENTS' | translate}}" data="vm.attachmentManagerData" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
+                <attachments-manager header="ATTACHMENT.LIST.ATTACHMENTS" data="vm.attachmentManagerData" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
                     <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
-                        <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
+                        <card show-context-menu="true" show-item-details="vm.showOfferPreviewPanel" display-new-control="true"
                               card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
                             <card-context-menu>
-                                <context-menu-item type="edit" item="offer" action="vm.showEditOfferPanel"></context-menu-item>
+                                <context-menu-item type="edit" item="offer" action="vm.showOfferEditPanel"></context-menu-item>
                                 <context-menu-item type="details" item="offer" action="vm.showOfferDetailsView"></context-menu-item>
                             </card-context-menu>
                         </card>
@@ -93,51 +91,6 @@
         </div>
     </div>
 </div>
-
-<side-panel component-id="vm.componentIds.offerPreviewSidePanelId" is-busy="vm.addEditOfferBusy">
-    <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.OFFERPREVIEW" ng-show="vm.offerPreviewPanelVisible"></h3>
-        <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS" ng-show="!vm.offerPreviewPanelVisible"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-preview component-id="vm.componentIds.offerPreviewId" offer="vm.selectedOffer" ng-show="vm.offerPreviewPanelVisible">
-            <offer-preview-custom-item>
-                <activity-card activity="vm.selectedOffer.activity" />
-            </offer-preview-custom-item>
-        </offer-preview>
-        <offer-details-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-details-edit>
-        <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button type="button" class="btn btn-default pull-left" ng-click="vm.showEditOfferPreviewPanel()" ng-show="vm.offerPreviewPanelVisible">
-            <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
-        </button>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEditPreview()" ng-show="!vm.offerPreviewPanelVisible">
-            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-show="!vm.offerPreviewPanelVisible" ng-click="vm.saveEditPreviewOffer()">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
-
-<side-panel component-id="vm.componentIds.offerEditSidePanelId" is-busy="vm.addEditOfferBusy">
-    <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-details-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-details-edit>
-        <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEdit()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveEditOffer()">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
 
 <side-panel component-id="vm.componentIds.configureViewingsSidePanelId" is-busy="vm.saveViewingBusy">
     <side-panel-header>
@@ -206,20 +159,5 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.offerSidePanelId" id="add-offer-panel" is-busy="vm.addEditOfferBusy">
-    <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-add component-id="vm.componentIds.offerAddId" requirement="vm.requirement" mode="add"></offer-add>
-        <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelSaveOffer()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOffer()">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
+<offer-add-panel is-visible="vm.isOfferAddPanelVisible" activity="vm.selectedViewing.activity" requirement="vm.requirement"></offer-add-panel>
+<offer-edit-preview-panel is-visible="vm.isOfferEditPreviewPanelVisible" mode="vm.offerPanelMode" offer="vm.selectedOffer" requirement="vm.requirement"></offer-edit-preview-panel>

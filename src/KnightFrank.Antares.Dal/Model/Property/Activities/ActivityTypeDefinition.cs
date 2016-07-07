@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Property.Activities
 {
     using System;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Resource;
 
@@ -16,5 +17,7 @@
         public virtual ActivityType ActivityType { get; set; }
 
         public short Order { get; set; }
+
+        public virtual ICollection<RequirementType> RequirementTypes { get; set; }
     }
 }

@@ -32,7 +32,7 @@
             ActivitiesQueryHandler handler)
         {
             // Arrange
-            var query = new ActivitiesQuery();
+            var query = new ActivitiesFilterQuery();
             IQueryable<Activity> activities = new[]
             {
                 new Activity

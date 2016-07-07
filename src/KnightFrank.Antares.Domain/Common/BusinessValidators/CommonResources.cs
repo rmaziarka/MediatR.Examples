@@ -57,22 +57,16 @@
         Inconsistent_Dynamic_Configuration,
 
         /// <summary>
-        /// Key value : One or more vendors are not exist.
+        /// Key value : One or more contacts do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Missing_Activity_Vendors_Id,
+        Missing_Activity_Contacts_Id,
 
         /// <summary>
-        /// Key value : One or more contacts are not exist.
+        /// Key value : One or more contacts do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Missing_Company_Contacts_Id,
-
-        /// <summary>
-        /// Key value : Company does not exist.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        Missing_Company_Id,
 
         /// <summary>
         /// Key value : One or more attendees are not on the applicant list.
@@ -171,16 +165,46 @@
         Activity_Departments_Not_Unique,
 
         /// <summary>
-        /// Key value : Activity should hva only one managing department.
+        /// Key value : One or more attendees are duplicated.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Activity_Should_Have_Only_One_Managing_Department,
+        Activity_AppraisalMeetingAttendees_Not_Unique,
 
         /// <summary>
         /// Key value : Enum value not passed.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Enum_Value_Not_Passed,
+        /// <summary>
+        /// Key value : One or more contacts are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Contacts_Not_Unique,
+        /// <summary>
+        /// Key value : Activity lead negotiator is required.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_LeadNegotiator_Is_Required,
+        /// <summary>
+        /// Key value : Activity should have exactly one managing department.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Should_Have_Exactly_One_Managing_Department,
+        /// <summary>
+        /// Key value : One or more appraisal meeting attendees do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Attendees_Id,
+        /// <summary>
+        /// Key value : One or more departments do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Departments_Id,
+        /// <summary>
+        /// Key value : One or more negotiators do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Negotiators_Id,
 
          /// <summary>
          /// Key value : One or more negotiators are duplicated.
