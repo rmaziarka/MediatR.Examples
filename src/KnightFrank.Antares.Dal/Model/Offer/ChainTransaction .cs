@@ -6,6 +6,7 @@
     using Enum;
     using Contacts;
 
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using Property;
@@ -42,7 +43,7 @@
 
         public Guid? AgentCompanyId { get; set; }
 
-        public virtual Contact AgentCompany { get; set; }
+        public virtual Company AgentCompany { get; set; }
 
         public Guid? SolicitorContactId { get; set; }
 
@@ -50,7 +51,7 @@
 
         public Guid? SolicitorCompanyId { get; set; }
 
-        public virtual Contact SolicitorCompany { get; set; }
+        public virtual Company SolicitorCompany { get; set; }
 
         public Guid MortgageId { get; set; }
 
