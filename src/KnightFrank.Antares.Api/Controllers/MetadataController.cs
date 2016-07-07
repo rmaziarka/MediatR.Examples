@@ -15,6 +15,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
+    using KnightFrank.Antares.Domain.Tenancy.Commands;
 
     using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
     using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
@@ -29,6 +30,8 @@
         private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
         private readonly IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration;
         private readonly IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration;
+        private readonly IControlsConfiguration<Tuple<RequirementType>> tenancyConfiguration;
+
         private readonly IEnumParser enumParser;
 
         /// <summary>
@@ -37,17 +40,20 @@
         /// <param name="activityConfiguration">The activity configuration.</param>
         /// <param name="requirementConfiguration">The requirement configuration.</param>
         /// <param name="offerConfiguration">The offer configuration.</param>
+        /// <param name="tenancyConfiguration">The tenancy configuration.</param>
         /// <param name="enumParser">The enum parser.</param>
         public MetadataController(
             IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
             IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration,
             IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration,
-            IEnumParser enumParser)
+            IEnumParser enumParser, 
+            IControlsConfiguration<Tuple<RequirementType>> tenancyConfiguration)
         {
             this.activityConfiguration = activityConfiguration;
             this.requirementConfiguration = requirementConfiguration;
             this.offerConfiguration = offerConfiguration;
             this.enumParser = enumParser;
+            this.tenancyConfiguration = tenancyConfiguration;
         }
 
         /// <summary>
@@ -102,7 +108,7 @@
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/offer")]
-        public dynamic GetOfferConfiguration<T>(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateOfferCommand, UpdateOfferCommand, Offer>))]object entity)
+        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateOfferCommand, UpdateOfferCommand, Offer>))]object entity)
         {
             if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
                 return null;
@@ -111,6 +117,28 @@
             RequirementType requirementType = this.enumParser.Parse<Dal.Model.Property.RequirementType, RequirementType>(requirementTypeId);
 
             IList<InnerFieldState> fieldStates = this.offerConfiguration.GetInnerFieldsState(pageType, new Tuple<OfferType, RequirementType>(offerType, requirementType), entity);
+            return fieldStates.MapToResponse();
+        }
+
+        /// <summary>
+        /// Gets the tenancy configuration.
+        /// </summary>
+        /// <param name="pageType">Type of the page.</param>
+        /// <param name="requirementTypeId">Type of the requirement.</param>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("attributes/tenancy")]
+        public dynamic GetTenancyConfiguration(PageType pageType, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateTenancyCommand, UpdateTenancyCommand, UpdateTenancyCommand>))]object entity)
+        {
+            if (requirementTypeId == Guid.Empty)
+            {
+                return null;
+            }
+
+            RequirementType requirementType = this.enumParser.Parse<Dal.Model.Property.RequirementType, RequirementType>(requirementTypeId);
+
+            IList<InnerFieldState> fieldStates = this.tenancyConfiguration.GetInnerFieldsState(pageType, new Tuple<RequirementType>(requirementType), entity);
             return fieldStates.MapToResponse();
         }
     }

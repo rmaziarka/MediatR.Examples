@@ -175,6 +175,7 @@
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\RequirementEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\OfferEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\TenancyControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
@@ -309,6 +310,8 @@
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
     <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
+    <Compile Include="Tenancy\Commands\UpdateTenancyCommand.cs" />
+    <Compile Include="Tenancy\Commands\CreateTenancyCommand.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
     <Compile Include="User\Commands\UserCommandProfile.cs" />
     <Compile Include="User\Commands\UpdateUserCommand.cs" />
