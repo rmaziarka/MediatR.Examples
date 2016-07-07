@@ -9,18 +9,15 @@ module Antares.Contact {
     export class ContactEditController {
   
         // bindings
-		public contact:Business.Contact;
-        userData: Dto.ICurrentUser; //todo is required?
-
+        public contact: Business.Contact;
+        userData: Dto.ICurrentUser;
 
         // fields
         public editContactForm: ng.IFormController | any; // injected from the view
         public defaultSalutationFormatId: string = "";
-
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128 });
 
         private contactTitles: IContactTitle[];
-
         private selectedTitle: string;
 
         constructor(
@@ -30,7 +27,7 @@ module Antares.Contact {
             private contactTitleService: Services.ContactTitleService) {
         }
 
-        $onInit() {
+        $onInit = () => {
             this.defaultSalutationFormatId = this.userData.salutationFormatId;
             this.contactTitleService.get().then((contactTitles) => {
                 this.contactTitles = contactTitles.data;
@@ -87,16 +84,16 @@ module Antares.Contact {
             this.selectedTitle = contactTitle;
         }
         
-        public cancelEdit(){
+        public cancelEdit = () => {
             this.redirectToView();
         }
      
-        public save(){
+        public save = () => {
             const editedContact: Dto.IContact = angular.copy(this.contact);
             editedContact.title = this.selectedTitle;
 
             const contactResource = this.dataAccessService.getContactResource();
-			
+            
             return contactResource
                 .update(editedContact)
                 .$promise

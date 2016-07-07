@@ -175,7 +175,7 @@ module Antares {
                     `"${data[0]}" is "${data[1]}" then input should be valid and no validation message should be displayed`
                 )
                 .run((data: TestCaseForValidator) => {
-                    assertValidator.assertValidAndNoMessages(data[1], data[2]);
+                    assertValidator.assertValidWithoutMessages(data[1], data[2]);
                 });
 
             it('special conditions text length is too long then validation message should be displayed', () => {

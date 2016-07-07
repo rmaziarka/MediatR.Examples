@@ -12,9 +12,7 @@ module Antares.TestHelpers {
                 code: Enums.NegotiatorTypeEnum[userType],
                 enumTypeId: ContactUserGenerator.makeRandom('enumTypeId')
             };
-
-         
-
+            
             var activityUser: Dto.IContactUser = {
                 id: ContactUserGenerator.makeRandom('id'),
                 user: UserGenerator.generateDto(),
@@ -34,7 +32,7 @@ module Antares.TestHelpers {
             return _.map<Dto.IContactUser, Business.ContactUser>(ContactUserGenerator.generateManyDtos(n, userType), (user: Dto.IContactUser) => { return new Business.ContactUser(user); });
         }
 
-    public static generate(userType: Common.Models.Enums.NegotiatorTypeEnum): Business.ContactUser {
+        public static generate(userType: Common.Models.Enums.NegotiatorTypeEnum): Business.ContactUser {
             return new Business.ContactUser(ContactUserGenerator.generateDto(userType));
         }
 
