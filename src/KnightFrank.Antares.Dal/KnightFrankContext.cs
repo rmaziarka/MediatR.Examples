@@ -18,6 +18,7 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Dal.Model.Tenancy;
     using KnightFrank.Antares.Dal.Model.User;
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
@@ -91,6 +92,8 @@
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
         public DbSet<LatestView> LatestView { get; set; }
         public DbSet<CompanyContact> CompanyContacts { get; set; }
+        public DbSet<Tenancy> Tenancies { get; set; }
+        public DbSet<TenancyTerm> Terms { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
