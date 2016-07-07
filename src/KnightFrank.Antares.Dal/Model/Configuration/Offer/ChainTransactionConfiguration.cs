@@ -6,6 +6,20 @@
     {
         public ChainTransactionConfiguration()
         {
+            this.HasOptional(x => x.Parent)
+                .WithMany()
+                .HasForeignKey(x => x.ParentId)
+                .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Activity)
+                .WithMany()
+                .HasForeignKey(x => x.ActivityId)
+                .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Requirement)
+                .WithMany()
+                .HasForeignKey(x => x.RequirementId)
+                .WillCascadeOnDelete(false);
 
             this.HasRequired(x => x.Property)
                 .WithMany()
@@ -57,14 +71,14 @@
                 .HasForeignKey(x => x.SearchesId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.Enqueries)
+            this.HasRequired(x => x.Enquiries)
                 .WithMany()
-                .HasForeignKey(x => x.EnqueriesId)
+                .HasForeignKey(x => x.EnquiriesId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.ContactAgreed)
+            this.HasRequired(x => x.ContractAgreed)
                 .WithMany()
-                .HasForeignKey(x => x.ContactAgreedId)
+                .HasForeignKey(x => x.ContractAgreedId)
                 .WillCascadeOnDelete(false);
 
             this.Property(x => x.Vendor)
@@ -72,6 +86,12 @@
 
             this.Property(x => x.SurveyDate)
                 .IsOptional();
+
+            this.Property(x => x.CreatedDate)
+                .IsRequired();
+
+            this.Property(x => x.LastModifiedDate)
+                .IsRequired();
         }
     }
 }

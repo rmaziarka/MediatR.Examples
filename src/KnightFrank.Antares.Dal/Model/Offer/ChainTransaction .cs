@@ -5,16 +5,26 @@
     using Common;
     using Enum;
     using Contacts;
+
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using Property;
 
     public class ChainTransaction : BaseEntity, IAuditableEntity
     {
-        public Guid? ParentId;
+        public Guid? ActivityId { get; set; }
 
-        public ChainTransaction Parent;
+        public virtual Activity Activity { get; set; }
 
-        public bool EndOfChain { get; set; }
+        public Guid? RequirementId { get; set; }
+
+        public virtual Requirement Requirement { get; set; }
+
+        public Guid? ParentId { get; set; }
+
+        public ChainTransaction Parent { get; set; }
+
+        public bool IsEnd { get; set; }
 
         public Guid PropertyId { get; set; }
 
@@ -42,25 +52,25 @@
 
         public virtual Contact SolicitorCompany { get; set; }
 
-        public Guid? MortgageId { get; set; }
+        public Guid MortgageId { get; set; }
 
-        public EnumTypeItem Mortgage { get; set; }
+        public virtual EnumTypeItem Mortgage { get; set; }
 
-        public Guid? SurveyId { get; set; }
+        public Guid SurveyId { get; set; }
 
-        public EnumTypeItem Survey { get; set; }
+        public virtual EnumTypeItem Survey { get; set; }
 
-        public Guid? SearchesId { get; set; }
+        public Guid SearchesId { get; set; }
 
-        public EnumTypeItem Searches { get; set; }
+        public virtual EnumTypeItem Searches { get; set; }
 
-        public Guid? EnqueriesId { get; set; }
+        public Guid EnquiriesId { get; set; }
 
-        public EnumTypeItem Enqueries { get; set; }
+        public virtual EnumTypeItem Enquiries { get; set; }
 
-        public Guid? ContactAgreedId { get; set; }
+        public Guid ContractAgreedId { get; set; }
 
-        public EnumTypeItem ContactAgreed { get; set; }
+        public virtual EnumTypeItem ContractAgreed { get; set; }
 
         public DateTime? SurveyDate { get; set; }
 
