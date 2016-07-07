@@ -1,7 +1,10 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -16,7 +19,7 @@
     public class ViewContactSteps
     {
         private readonly DriverContext driverContext;
-        private readonly ViewContactPage page;
+        private ViewContactPage page;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
 
@@ -34,6 +37,24 @@
             {
                 this.page = new ViewContactPage(this.driverContext);
             }
+        }
+
+        [When(@"User navigates to view contact page with id")]
+        public void OpenViewContactPage()
+        {
+            List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("ContactsList").Select(c => c.Id).ToList();
+
+            foreach (Guid element in contactsIds)
+            {
+                this.page = new ViewContactPage(this.driverContext).OpenViewContactPageWithId(element.ToString());
+                this.page.IsViewContactFormPresent();
+            }
+        }
+
+        [When(@"User clicks edit button on view contact page")]
+        public void OpenEditContactPage()
+        {
+            this.page.OpenEditContactPage();
         }
 
         [Then(@"Contact details on view contact page are same as the following")]
@@ -63,12 +84,6 @@
         public void CheckViewContactPage()
         {
             Assert.True(this.page.IsViewContactFormPresent());
-        }
-
-        [When(@"User navigates to Edit Contact page")]
-        public void OpenEditContactPage()
-        {
-            this.page.OpenEditContactPage();
         }
     }
 }

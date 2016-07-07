@@ -37,11 +37,11 @@ Scenario: Create residential letting requirement
 		| Dr    | Alan      | Harper  |
 	When User navigates to create requirement page
 		And User selects contacts on create requirement page
-			| FirstName | Surname |
-			| Alan      | Harper  |
+			| FirstName | LastName |
+			| Alan      | Harper   |
 	Then List of applicants should contain following contacts
-		| FirstName | Surname |
-		| Alan      | Harper  |
+		| FirstName | LastName |
+		| Alan      | Harper   |
 	When User fills in letting requirement details on create requirement page
 		| Type                | Description | RentMin | RentMax |
 		| Residential Letting | Description | 1000    | 2000    |
@@ -57,13 +57,13 @@ Scenario: Create residential letting requirement
 			| Type                | Description | RentMin | RentMax |
 			| Residential Letting | Description | 1000    | 2000    |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname |
-			| Alan      | Harper  |
+			| FirstName | LastName |
+			| Alan      | Harper   |
 
 @Requirement
 Scenario: Create note on residential letting requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
+		| Title | FirstName | LastName |
 		| Miss  | Anna      | Wilder   |
 		And Requirement for GB is created in database
 			| Type                | Description |

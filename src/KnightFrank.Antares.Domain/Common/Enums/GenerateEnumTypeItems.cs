@@ -69,6 +69,19 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         GasCertificate,
     }
 
+	public enum RequirementDocumentType
+	{
+		TermsOfBusiness,
+	}
+
+	public enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+	}
+
     public enum OfferStatus
     {
         New,
@@ -88,19 +101,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         Managing,
         Standard,
     }
-    public enum RequirementDocumentType
-    {
-        TermsOfBusiness,
-    }
-
-    public enum PropertyDocumentType
-    {
-        Photograph,
-        FloorPlan,
-        Brochure,
-        VideoTour,
-    }
-
 
     public enum MortgageStatus
     {
@@ -152,6 +152,22 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
+	}
+
+	public enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	public enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 
 	public enum ActivitySource

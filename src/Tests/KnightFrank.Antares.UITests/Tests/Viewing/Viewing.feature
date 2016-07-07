@@ -102,10 +102,10 @@ Scenario: Update viewing on residential sale requirement
 @Viewing
 Scenario: Create viewing on residential letting requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname   |
-		| Lady  | Maggie    | Smith     |
-		| Lady  | Judi      | Dench     |
-		| Lady  | Cate      | Blanchett |
+		| Title | FirstName | LastName   |
+		| Lady  | Maggie    | Smith      |
+		| Lady  | Judi      | Dench      |
+		| Lady  | Cate      | Blanchett  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -158,10 +158,10 @@ Scenario: Create viewing on residential letting requirement
 @Viewing
 Scenario: Update viewing on residential letting requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
-		| Lady  | Audrey    | Hepburn  |
-		| Lady  | Diane     | Keaton   |
-		| Dr    | Michelle  | Pfeiffer |
+		| Title | FirstName | LastName  |
+		| Lady  | Audrey    | Hepburn   |
+		| Lady  | Diane     | Keaton    |
+		| Dr    | Michelle  | Pfeiffer  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |

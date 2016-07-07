@@ -3,7 +3,7 @@
         <h2 class="page-header" translate="CONTACT.EDIT_CONTACT"></h2>
         <form ng-submit="vm.editContactForm.$valid && vm.save()" name="vm.editContactForm" id="editContactForm" method="post" novalidate>
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-4">
                     <h3 class="page-header" translate="CONTACT.BASIC_INFORMATION"></h3>
                     <fieldset>
                         <div id="title-section" class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.title.$dirty) && vm.editContactForm.title.$invalid}">
@@ -49,13 +49,15 @@
                             </div>
                         </div>
                     </fieldset>
+                    <section>
+                        <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
+                        <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
+                                        default-salutation-format-id="vm.defaultSalutationFormatId"/>
+                    </section>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
-                    <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
-                                      default-salutation-format-id="vm.defaultSalutationFormatId"/>
+                <div class="col-sm-6 col-md-6 col-lg-4">
                 </div>
-                 <div class="col-sm-6 col-md-6 col-lg-3">
+                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <section id="contact-edit-negotiators">
                         <contact-negotiators-edit-control contact-id="vm.contact.id"
                                                           lead-negotiator="vm.contact.leadNegotiator"
@@ -65,13 +67,16 @@
                     </section>
                 </div>
             </div>
-           
 
-            <div class="form-group">
-                <button class="btn btn-default" type="button" ng-click="vm.cancelEdit()" id="cancelBtn">
-                    <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-                </button>
-                <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button class="btn btn-default" type="button" ng-click="vm.cancelEdit()" id="cancelBtn">
+                            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

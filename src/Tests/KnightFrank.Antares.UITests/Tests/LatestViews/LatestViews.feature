@@ -7,7 +7,7 @@ Scenario: Display latest viewed properties
 			| PropertyNumber | PropertyName | Line2       | Postcode | City          | County          |
 			| 70             | Condo        | Longford St | TS1 4RN  | Middlesbrough | North Yorkshire |
 		And Contacts are created in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Michael   | Johnson | Sir   |
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
@@ -90,8 +90,8 @@ Scenario: Display latest viewed activities
 			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
 			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
 		And Contacts are created in database
-			| FirstName | Surname | Title |
-			| Michael   | Johnson | Sir   |
+			| FirstName | LastName | Title |
+			| Michael   | Johnson  | Sir   |
 		And Property Long Leasehold Sale activity is defined
 	When User navigates to edit activity page with id
 	Then Latest 2 activities should contain following data
@@ -109,8 +109,8 @@ Scenario: Display latest viewed activities
 		| Lady  | Joanna    | Thornhill |
 		And Property with Residential division and House type is defined
 		And Contacts are created in database
-			| FirstName | Surname | Title |
-			| Tom       | Johnson | Dr    |
+			| FirstName | LastName | Title |
+			| Tom       | Johnson  | Dr    |
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2      | Postcode | City     | County |
 			| 237            | Duke Flat    | Margate Rd | CT12 6TA | Ramsgate | Kent   |
@@ -231,3 +231,43 @@ Scenario: Display latest viewed companies
 			| LatestData  |
 			| Hoffman Inc |
 			| Hanks Inc   |
+
+@LatestViews
+Scenario: Display latest viewed contacts
+	Given Contacts are created in database
+		| FirstName | LastName   | Title |
+		| Mig       | Jagger     | Dr    |
+		| David     | Hasselhoff | Guard |
+	When User navigates to view contact page with id
+	Then Latest 2 contacts should contain following data
+	     | LatestData       |
+         | David Hasselhoff |
+         | Mig Jagger	    |
+	When User navigates to create contact page
+		And User fills in contact details on create contact page
+			| FirstName | LastName  | Title |
+			| Erick     | Ban		| Mr    |
+	And User clicks save contact button on create contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData       |
+			| Erick Ban        |
+			| David Hasselhoff |
+			| Mig Jagger       |
+	When User clicks latest contact on 2 position in drawer menu
+	Then Latest 3 contacts should contain following data
+		| LatestData       |
+		| David Hasselhoff |
+		| Erick Ban		   |
+		| Mig Jagger	   |
+	When User clicks edit button on view contact page
+		And User fills in contact details on edit contact page
+			| FirstName | LastName | Title |
+			| Mark      | Twain    | Sir   |
+		And User clicks save button on edit contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData |
+			| Mark Twain |
+			| Erick Ban  |
+			| Mig Jagger |
