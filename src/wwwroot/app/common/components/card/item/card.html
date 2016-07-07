@@ -10,6 +10,31 @@
     </div>
 </div>
 
+<!-- Cards with header
+
+<div class="card card-with-header" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selectable': cvm.allowSelection, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl" ng-click="cvm.clicked()">
+    <div class="card-body">
+        <div class="card-header">
+            <div class="card-header-content" ng-click="cvm.showItemDetails(cvm.item)">
+                <div class="card-item">
+                    <span class="offer-status offer-status-accepted">Accepted</span>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias laudantium, vero sed eveniet corporis! Rerum optio blanditiis commodi debitis rem, hic ipsa voluptates, minima, laudantium minus saepe cum earum ducimus.</span>
+                </div>
+            </div>
+            <div class="card-action" tabindex="-1" ng-if="cvm.showContextMenu" uib-dropdown uib-dropdown-toggle>
+                <a href="" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                <ul class="card-menu dropdown-menu" ng-transclude="contextMenu" uib-dropdown-menu role="menu">
+                </ul>
+            </div>
+        </div>
+        <div class="card-content" ng-click="cvm.showItemDetails(cvm.item)">
+            <div ng-include src="cvm.cardTemplateUrl"></div>
+        </div>
+    </div>
+</div>
+
+-->
+
 <div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selectable': cvm.allowSelection, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl" ng-click="cvm.clicked()">
     <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
         <div ng-include src="cvm.cardTemplateUrl" ng-if="cvm.cardTemplateUrl"></div>

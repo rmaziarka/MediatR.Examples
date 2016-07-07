@@ -1,5 +1,5 @@
 <div ng-if="vm.config">
-    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
+    <h3 class="page-header"><span translate="ACTIVITY.VIEW.OFFERS"></span> <span class="badge">5</span></h3>
     <card-list-item class="activity-view-offers" ng-repeat="offer in vm.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' | limitTo: 5 track by offer.id + offer.statusId + offer.offerDate">
         <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="vm.showOfferPreview"
             display-new-control="true" show-context-menu="true">

@@ -1,5 +1,5 @@
 <div ng-if="vm.config">
-    <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
+    <h3 class="page-header"><span translate="ACTIVITY.VIEW.VIEWINGS"></span> <span class="badge">4</span></h3>
     <card-list id="viewings-list">
         <card-list-no-items ng-show="vm.viewings.length === 0">
             <p class="help-block" translate="ACTIVITY.VIEW.NO_VIEWINGS"></p>
@@ -12,10 +12,10 @@
                     </h5>
                 </card-list-group-header>
                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                    <card class="viewing-item" 
-                        card-template-url="'app/activity/view/activityViewingsCard.html'" 
-                        item="viewing" 
-                        show-item-details="vm.showViewingPreview" 
+                    <card class="viewing-item"
+                        card-template-url="'app/activity/view/activityViewingsCard.html'"
+                        item="viewing"
+                        show-item-details="vm.showViewingPreview"
                         display-new-control="true">
                     </card>
                 </card-list-group-item>
