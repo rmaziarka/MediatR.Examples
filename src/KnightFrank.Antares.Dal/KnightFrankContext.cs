@@ -91,6 +91,7 @@
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
         public DbSet<LatestView> LatestView { get; set; }
         public DbSet<CompanyContact> CompanyContacts { get; set; }
+        public DbSet<ChainTransaction> ChainTransactions { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
