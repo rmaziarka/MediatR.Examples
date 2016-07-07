@@ -98,3 +98,16 @@ Decoration;Unmodernised
 Decoration;Fair
 Decoration;Good
 Decoration;VeryGood
+ActivityPriceType;AskingPrice
+ActivityPriceType;PriceOnApplication
+ActivityPriceType;GuidePrice
+ActivityPriceType;OffersInRegionOf
+ActivityPriceType;OffersInExcessOf
+ActivityPriceType;FixedPrice
+ActivityPriceType;PriceReducedTo
+ActivityMatchFlexPrice;MinimumPrice
+ActivityMatchFlexPrice;Percentage
+ActivityMatchFlexRent;MinimumRent
+ActivityMatchFlexRent;Percentage
+RentPaymentPeriod;Weekly
+RentPaymentPeriod;Monthly

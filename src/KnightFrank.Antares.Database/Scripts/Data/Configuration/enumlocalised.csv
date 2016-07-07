@@ -112,3 +112,16 @@ Decoration;Unmodernised;en;Unmodernised
 Decoration;Fair;en;Fair
 Decoration;Good;en;Good
 Decoration;VeryGood;en;Very Good
+ActivityPriceType;AskingPrice;en;Asking price
+ActivityPriceType;PriceOnApplication;en;Price on application
+ActivityPriceType;GuidePrice;en;Guide price
+ActivityPriceType;OffersInRegionOf;en;Offers in the region of
+ActivityPriceType;OffersInExcessOf;en;Offers in excess of
+ActivityPriceType;FixedPrice;en;Fixed price
+ActivityPriceType;PriceReducedTo;en;Price reduced to
+ActivityMatchFlexPrice;MinimumPrice;en;Minimum price
+ActivityMatchFlexPrice;Percentage;en;Percentage
+ActivityMatchFlexRent;MinimumRent;en;Minimum rent
+ActivityMatchFlexRent;Percentage;en;Percentage
+RentPaymentPeriod;Weekly;en;Weekly
+RentPaymentPeriod;Monthly;en;Monthly

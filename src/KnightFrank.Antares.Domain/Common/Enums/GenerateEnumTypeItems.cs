@@ -26,6 +26,10 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	ActivityPriceType,
+	 	ActivityMatchFlexPrice,
+	 	ActivityMatchFlexRent,
+	 	RentPaymentPeriod,
 	 }
 
 	
@@ -210,5 +214,34 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	public enum ActivityPriceType
+	{
+		AskingPrice,
+		PriceOnApplication,
+		GuidePrice,
+		OffersInTheRegionOf,
+		OffersInExcessOf,
+		FixedPrice,
+		PriceReducedTo,
+	}
+
+	public enum ActivityMatchFlexPrice
+	{
+		MinimumPrice,
+		Percentage,
+	}
+
+	public enum ActivityMatchFlexRent
+	{
+		MinimumRent,
+		Percentage,
+	}
+
+	public enum RentPaymentPeriod
+	{
+		Weekly,
+		Monthly,
 	}
 }
