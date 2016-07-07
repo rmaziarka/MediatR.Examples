@@ -8,7 +8,6 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -47,6 +46,23 @@
             this.page = new CreateRequirementPage(this.driverContext).OpenCreateRequirementPage();
         }
 
+        [When(@"User fills in sale requirement details on create requirement page")]
+        public void FillInSaleRequirementData(Table table)
+        {
+            var details = table.CreateInstance<RequirementData>();
+            this.page.SelectRequirementType(details.Type).SetRequirementDescription(details.Description);
+        }
+
+        [When(@"User fills in letting requirement details on create requirement page")]
+        public void FillInLettingequirementData(Table table)
+        {
+            var details = table.CreateInstance<RequirementData>();
+            this.page.SelectRequirementType(details.Type)
+                .SetRequirementDescription(details.Description)
+                .SetRentWeeklyMin(details.RentMin)
+                .SetRentWeeklyMax(details.RentMax);
+        }
+
         [When(@"User fills in location details on create requirement page")]
         public void SetLocationRequirementDetails(Table table)
         {
@@ -56,28 +72,6 @@
                 .SetPropertyCity(details.City)
                 .SetPropertyAddressLine2(details.Line2)
                 .SetPropertyPostCode(details.Postcode);
-        }
-
-        [When(@"User fills in property details on create requirement page")]
-        public void SetPropertyRequirementDetails(Table table)
-        {
-            var details = table.CreateInstance<Requirement>();
-
-            this.page.SetPropertyMinPrice(details.MinPrice.ToString())
-                .SetPropertyMaxPrice(details.MaxPrice.ToString())
-                .SetPropertyBedroomsMin(details.MinBedrooms.ToString())
-                .SetPropertyBedroomMax(details.MaxBedrooms.ToString())
-                .SetPropertyReceptionRoomsMin(details.MinReceptionRooms.ToString())
-                .SetPropertyReceptionRoomsMax(details.MaxReceptionRooms.ToString())
-                .SetPropertyBathroomsMin(details.MinBathrooms.ToString())
-                .SetPropertyBathroomsMax(details.MaxBathrooms.ToString())
-                .SetPropertyParkingSpacesMin(details.MinParkingSpaces.ToString())
-                .SetPropertyParkingSpacesMax(details.MaxParkingSpaces.ToString())
-                .SetPropertyAreaMin(details.MinArea.ToString())
-                .SetPropertyAreaMax(details.MaxArea.ToString())
-                .SetPropertyLandAreaMin(details.MinLandArea.ToString())
-                .SetPropertyLandAreaMax(details.MaxLandArea.ToString())
-                .SetPropertyRequirementsNote(details.Description);
         }
 
         [When(@"User selects contacts on create requirement page")]
@@ -115,7 +109,7 @@
         }
 
         [Then(@"Requirement form on create requirement page should be displayed")]
-        public void CheckINewAppliactionButtonIsDisplayed()
+        public void CheckIfRequirementFormPresent()
         {
             Assert.True(new CreateRequirementPage(this.driverContext).IsRequirementFormPresent());
         }

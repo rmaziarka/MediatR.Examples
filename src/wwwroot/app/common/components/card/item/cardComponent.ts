@@ -13,7 +13,10 @@ module Antares.Common.Component {
             cardTemplateUrl: '<',
             showItemDetails: '<',
             showContextMenu: '<',
-            displayNewControl: '<'
+            displayNewControl: '<',
+            allowSelection: '<',
+            cardSelected: '<',
+            selected: '<'
         }
     });
 }

@@ -7,6 +7,7 @@ module Antares.Core {
         components: any;
         componentIds: any;
         currentPanel: any;
+        onOldPanelsHidden: Function = () => {};
 
         constructor(
             protected componentRegistry: Core.Service.ComponentRegistry,
@@ -22,7 +23,7 @@ module Antares.Core {
             });
         }
 
-        protected hidePanels(hideCurrent: boolean = true) {
+        protected hidePanels = (hideCurrent: boolean = true) => {
             for (var panel in this.components.panels) {
                 if (this.components.panels.hasOwnProperty(panel)) {
                     if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
@@ -31,6 +32,8 @@ module Antares.Core {
                     this.components.panels[panel]().hide();
                 }
             }
+
+            this.onOldPanelsHidden();
         }
 
         protected showPanel(panel: any) {

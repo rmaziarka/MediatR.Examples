@@ -5,42 +5,314 @@ module Antares.Offer {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import PubSub = Core.PubSub;
+    import CloseSidePanelEvent = Common.Component.CloseSidePanelEvent;
+    import Enums = Common.Models.Enums;
+    import OpenCompanyContactEditPanelEvent = Antares.Attributes.OpenCompanyContactEditPanelEvent;
+    import CompanyContactType = Antares.Common.Models.Enums.CompanyContactType;
+    import ICompanyContactEditControlSchema = Antares.Attributes.ICompanyContactEditControlSchema;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
-        public offer: Business.Offer;
+        // bindings
+        offer: Business.Offer;
+        config: IOfferEditConfig;
 
-        selectedStatus: any;
-        statuses: any;
+        public offerOriginal: Business.Offer;
+
+        public enumTypeMortgageStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageStatus;
+        public enumTypeMortgageSurveyStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageSurveyStatus;
+        public enumTypeAdditionalSurveyStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.AdditionalSurveyStatus;
+        public enumTypeSearchStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.SearchStatus;
+        public enumTypeEnquiriesStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.Enquiries;
+        public enumTypeOfferStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.OfferStatus;
+        public companyContactType = Antares.Common.Models.Enums.CompanyContactType;
+
+        sidePanelSelectedCompanyContacts: Business.CompanyContact[];
+
+        offerStatuses: any;
+        mortgageStatuses: any;
+        mortgageSurveyStatuses: any;
+        additionalSurveyStatuses: any;
+        searchStatuses: any;
+        enquiriesStatuses: any;
+
         editOfferForm: any;
 
-        offerDateOpen: boolean = false;
+        mortgageSurveyDateOpen: boolean = false;
+        additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
 
+        isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isAdditionalSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isActivitySolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isRequirementSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+
+        contactToSelect: string = '';
+
+        // controls
+        controlSchemas: any = {
+            activitySolicitor: <ICompanyContactEditControlSchema>{
+                formName: 'vendorSolicitorForm',
+                controlId: 'vendorSolicitor',
+                translationKey: 'OFFER.EDIT.SOLICITOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SOLICITOR'
+            },
+            requirementSolicitor: <ICompanyContactEditControlSchema>{
+                formName: 'applicantSolicitorForm',
+                controlId: 'applicantSolicitor',
+                translationKey: 'OFFER.EDIT.SOLICITOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SOLICITOR'
+            },
+            broker: <ICompanyContactEditControlSchema>{
+                formName: 'brokerForm',
+                controlId: 'broker',
+                translationKey: 'OFFER.EDIT.BROKER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
+            },
+            lender: <ICompanyContactEditControlSchema>{
+                formName: 'lenderForm',
+                controlId: 'lender',
+                translationKey: 'OFFER.EDIT.LENDER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER'
+            },
+            surveyor: <ICompanyContactEditControlSchema>{
+                formName: 'surveyorForm',
+                controlId: 'surveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+            },
+            additionalSurveyor: <ICompanyContactEditControlSchema>{
+                formName: 'additionalSurveyorForm',
+                controlId: 'additionalSurveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+            },
+            status : <Attributes.IEnumItemEditControlSchema>{
+                formName : "offerStatusControlForm",
+                controlId : "offer-status",
+                translationKey : "OFFER.EDIT.STATUS",
+                fieldName : "statusId",
+                enumTypeCode : Dto.EnumTypeCode.OfferStatus
+            },
+            price : <Attributes.IPriceEditControlSchema>{
+                formName : "offerPriceControlForm",
+                controlId : "offer-price",
+                translationKey : "OFFER.EDIT.OFFER",
+                fieldName : "price"
+            },
+            pricePerWeek : <Attributes.IPriceEditControlSchema>{
+                formName : "offerPricePerWeekControlForm",
+                controlId : "offer-price-per-week",
+                translationKey : "OFFER.EDIT.OFFER",
+                fieldName : "pricePerWeek",
+                suffix : "OFFER.EDIT.OFFER_PER_WEEK"
+            },
+            offerDate : <Attributes.IDateEditControlSchema>{
+                formName : "offerDateControlForm",
+                controlId : "offer-date",
+                translationKey : "OFFER.EDIT.OFFER_DATE",
+                fieldName : "offerDate"
+            },
+            exchangeDate : <Attributes.IDateEditControlSchema>{
+                formName : "exchangeDateControlForm",
+                controlId : "offer-exchange-date",
+                translationKey : "OFFER.EDIT.EXCHANGE_DATE",
+                fieldName : "exchangeDate"
+            },
+            completionDate : <Attributes.IDateEditControlSchema>{
+                formName : "completionDateControlForm",
+                controlId : "offer-completion-date",
+                translationKey : "OFFER.EDIT.COMPLETION_DATE",
+                fieldName : "completionDate"
+            },
+            specialConditions : <Attributes.ITextEditControlSchema>{
+                formName : "specialConfitionsControlForm",
+                controlId : "offer-special-conditions",
+                translationKey : "OFFER.EDIT.SPECIAL_CONDITIONS",
+                fieldName : "specialConditions"
+            },
+            mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
+                formName : "mortgageLoanToValueControlForm",
+                controlId : "mortgage-loan-to-value",
+                translationKey: "OFFER.EDIT.MORTGAGE_LOAN_TO_VALUE",
+                fieldName : "mortgageLoanToValue"
+            },
+            mortgageStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "mortgageStatusControlForm",
+                controlId: "offer-mortgage-status",
+                translationKey: "OFFER.EDIT.MORTGAGE_STATUS",
+                fieldName: "mortgageStatusId",
+                enumTypeCode: Dto.EnumTypeCode.MortgageStatus
+            },
+            mortgageSurveyStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "mortgageSurveyStatusControlForm",
+                controlId: "offer-mortgage-survey-status",
+                translationKey: "OFFER.EDIT.MORTGAGE_SURVEY_STATUS",
+                fieldName: "mortgageSurveyStatusId",
+                enumTypeCode: Dto.EnumTypeCode.MortgageSurveyStatus
+            },
+            additionalSurveyStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "additionalSurveyStatusControlForm",
+                controlId: "offer-additional-survey-status",
+                translationKey: "OFFER.EDIT.ADDITIONAL_SURVEY_STATUS",
+                fieldName: "additionalSurveyStatusId",
+                enumTypeCode: Dto.EnumTypeCode.AdditionalSurveyStatus
+            },
+            searchStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "searchStatusControlForm",
+                controlId: "offer-search-status",
+                translationKey: "OFFER.EDIT.SEARCH_STATUS",
+                fieldName: "searchStatusId",
+                enumTypeCode: Dto.EnumTypeCode.SearchStatus
+            },
+            enquiries: <Attributes.IEnumItemEditControlSchema>{
+                formName: "enquiriesControlForm",
+                controlId: "offer-enquiries",
+                translationKey: "OFFER.EDIT.ENQUIRIES",
+                fieldName: "enquiriesId",
+                enumTypeCode: Dto.EnumTypeCode.Enquiries
+            },
+            mortgageSurveyDate: <Attributes.IDateEditControlSchema>{
+                formName: "mortgageSurveyDateControlForm",
+                controlId: "offer-mortgage-survey-date",
+                translationKey: "OFFER.EDIT.MORTGAGE_SURVEY_DATE",
+                fieldName: "mortgageSurveyDate"
+            },
+            additionalSurveyDate: <Attributes.IDateEditControlSchema>{
+                formName: "additionalSurveyDateControlForm",
+                controlId: "offer-additional-survey-date",
+                translationKey: "OFFER.EDIT.ADDITIONAL_SURVEY_DATE",
+                fieldName: "additionalSurveyDate"
+            },
+            progressComment: <Attributes.ITextEditControlSchema>{
+                formName: "progressCommentControlForm",
+                controlId: "offer-progress-comment",
+                translationKey: "OFFER.EDIT.COMMENT",
+                fieldName: "progressComment"
+            },
+            contractApproved: <Attributes.IRadioButtonsEditControlSchema>{
+                formName: "offerContractApprovedControlForm",
+                fieldName: "offerContractApproved",
+                translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
+                radioButtons: [
+                    { value: true, translationKey: "COMMON.YES" },
+                    { value: false, translationKey: "COMMON.NO" }]
+            }
+        };
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
-            private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService,
             private $state: ng.ui.IStateService,
             private $window: ng.IWindowService,
             private $q: ng.IQService,
             private $scope: ng.IScope,
             private kfMessageService: Services.KfMessageService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private pubSub: PubSub,
+            private eventAggregator: Core.EventAggregator,
+            private appConfig: Common.Models.IAppConfig,
+            private configService: Services.ConfigService,
+            private offerService: Services.OfferService) {
+
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+            eventAggregator.with(this).subscribe(CloseSidePanelEvent, () =>{
+                this.hidePanels();
+            });
+            eventAggregator.with(this).subscribe(OpenCompanyContactEditPanelEvent, this.openCompanyContactEditPanel);
+
+            this.offerOriginal = angular.copy(this.offer);
         }
 
-        navigateToActivity = (ativity: Business.Activity) => {
-            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');
+        isMortgageDetailsSectionVisible = () => {
+            return this.config.offer_Broker
+                || this.config.offer_Lender
+                || this.config.offer_MortgageSurveyDate
+                || this.config.offer_Surveyor;
+        }
+
+        isProgressSummarySectionVisible = () => {
+            return this.config.offer_MortgageStatus
+                || this.config.offer_MortgageSurveyStatus
+                || this.config.offer_SearchStatus
+                || this.config.offer_Enquiries
+                || this.config.offer_ContractApproved;
+        }
+
+        isAdditionalSurveySectionVisible = () => {
+            return this.config.offer_AdditionalSurveyor
+                || this.config.offer_AdditionalSurveyDate;
+        }
+        
+        onOldPanelsHidden = () =>{
+            this.hideNewPanels();
+        }
+
+        hideNewPanels = () => {
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
+            this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isActivitySolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isRequirementSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+        }
+
+        isOtherDetailsSectionVisible = () => {
+            return this.config.offer_ProgressComment;
+        }
+
+        isProgressAndMortgageSectionVisible = () =>{
+            return this.isMortgageDetailsSectionVisible() ||
+                this.isAdditionalSurveySectionVisible() ||
+                this.isProgressSummarySectionVisible() ||
+                this.isOtherDetailsSectionVisible();
+        }
+
+        openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
+            this.hidePanels();
+
+            switch (event.type) {
+                case CompanyContactType.Broker:
+                    this.isBrokerEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.Lender:
+                    this.isLenderEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.Surveyor:
+                    this.isSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.AdditionalSurveyor:
+                    this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.ActivitySolicitor:
+                    this.isActivitySolicitorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.RequirementSolicitor:
+                    this.isRequirementSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+            }
+        }
+        
+        navigateToActivity = (activity: Business.Activity) => {
+            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: activity.id }, { absolute: false });
+            this.$window.open(activityViewUrl, '_blank');
         }
 
         navigateToRequirement = (requirement: Business.Requirement) => {
-            this.$window.open(this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: true }), '_blank');
+            var requirementViewUrl = this.appConfig.appRootUrl + this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: false });
+            this.$window.open(requirementViewUrl, '_blank');
         }
 
-        showActivityPreview = (offer: Common.Models.Business.Offer) => {
-            this.showPanel(this.components.activityPreview);
+        // TODO: refactor activity preview panel to new one
+        showActivityPreview = (offer: Common.Models.Business.Offer) =>{
+            this.hidePanels();
+            this.showPanel(this.components.panels.activityPreviewPanel);
 
             this.latestViewsProvider.addView({
                 entityId: offer.activity.id,
@@ -48,8 +320,12 @@ module Antares.Offer {
             });
         }
 
-        openOfferDate() {
-            this.offerDateOpen = true;
+        openMortgageSurveyDate() {
+            this.mortgageSurveyDateOpen = true;
+        }
+
+        openAdditionalSurveyDate() {
+            this.additionalSurveyDateOpen = true;
         }
 
         openExchangeDate() {
@@ -67,25 +343,55 @@ module Antares.Offer {
         }
 
         onEnumLoaded = (result: any) => {
-            this.statuses = result[Dto.EnumTypeCode.OfferStatus];
-            this.setSelectedStatus();
+            this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
+            this.mortgageStatuses = result[Dto.EnumTypeCode.MortgageStatus];
+            this.mortgageSurveyStatuses = result[Dto.EnumTypeCode.MortgageSurveyStatus];
+            this.additionalSurveyStatuses = result[Dto.EnumTypeCode.AdditionalSurveyStatus];
+            this.searchStatuses = result[Dto.EnumTypeCode.SearchStatus];
+            this.enquiriesStatuses = result[Dto.EnumTypeCode.Enquiries];
+            this.setDefaultStatuses();
         }
 
-        setSelectedStatus = () => {
-            this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
+        offerAccepted = (): boolean => {
+            var selectedOfferStatus: any = _.find(this.offerStatuses, (status: any) => status.id === this.offer.statusId);
+            if (selectedOfferStatus) {
+                return selectedOfferStatus.code === Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.Accepted];
+            }
+
+            return false;
+        }
+
+        setDefaultStatuses = () => {
+            var defaultMortgageStatus: any = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.mortgageStatusId && defaultMortgageStatus) {
+                this.offer.mortgageStatusId = defaultMortgageStatus.id;
+            }
+
+            var defaultMortgageSurveyStatus: any = _.find(this.mortgageSurveyStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.mortgageSurveyStatusId && defaultMortgageSurveyStatus) {
+                this.offer.mortgageSurveyStatusId = defaultMortgageSurveyStatus.id;
+            }
+
+            var defaultAdditionalSurveyStatus: any = _.find(this.additionalSurveyStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.additionalSurveyStatusId && defaultAdditionalSurveyStatus) {
+                this.offer.additionalSurveyStatusId = defaultAdditionalSurveyStatus.id;
+            }
+
+            var defaultSearchStatus: any = _.find(this.searchStatuses, (status: any) => status.code === "NotStarted");
+            if (!this.offer.searchStatusId && defaultSearchStatus) {
+                this.offer.searchStatusId = defaultSearchStatus.id;
+            }
+
+            var defaultEnquiriesStatus: any = _.find(this.enquiriesStatuses, (status: any) => status.code === "NotStarted");
+            if (!this.offer.enquiriesId && defaultEnquiriesStatus) {
+                this.offer.enquiriesId = defaultEnquiriesStatus.id;
+            }
         }
 
         save() {
-            if (!this.isDataValid()) {
-                return this.$q.reject();
-            }
+            var updateofferCommand = new Business.UpdateOfferCommand(this.offer);
 
-            var offerResource = this.dataAccessService.getOfferResource();
-            this.offer.statusId = this.selectedStatus.id;
-            var updateOffer: Dto.IOffer = angular.copy(this.offer);
-            return offerResource
-                .update(updateOffer)
-                .$promise
+            this.offerService.updateOffer(updateofferCommand)
                 .then((offer: Dto.IOffer) => {
                     this.$state
                         .go('app.offer-view', offer)
@@ -105,10 +411,25 @@ module Antares.Offer {
             };
         }
 
+        // TODO: refactor activity preview panel to new one
         defineComponents() {
             this.components = {
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
+                panels: {
+                    activityPreviewPanel: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId) }
+                }
             };
+        }
+
+        offerStatusChanged = (id: string) =>{
+            this.offer.statusId = id;
+            this.reloadConfig();
+        }
+
+        reloadConfig = () => {
+            this.configService.getOffer(Enums.PageTypeEnum.Update, this.offer.requirement.requirementTypeId, this.offer.offerTypeId, this.offer)
+                .then((newConfig: IOfferEditConfig) => {
+                    this.config = newConfig;
+                });
         }
     }
 

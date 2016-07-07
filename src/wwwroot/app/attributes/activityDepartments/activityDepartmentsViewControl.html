@@ -1,0 +1,9 @@
+<card-list ng-if="vm.config">
+    <card-list-header>
+        <h5 translate="DEPARTMENTS.COMMON.HEADER"></h5>
+    </card-list-header>
+    <card-list-item ng-repeat="activityDepartment in vm.activityDepartments | orderBy: 'department.name' | enumSorter: 'ActivityDepartmentType':'departmentTypeId'">
+        <card card-template-url="'app/activity/templates/departmentCard.html'" display-new-control="true" item="activityDepartment">
+        </card>
+    </card-list-item>
+</card-list>

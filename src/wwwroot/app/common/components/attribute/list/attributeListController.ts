@@ -8,7 +8,7 @@ module Antares.Common.Component {
         private componentId: string;
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private property: Business.Property;
-        private userData: Dto.IUserData;
+        private userData: Dto.ICurrentUser;
         private attributes: Business.Attribute[];
         private mode: string;
         

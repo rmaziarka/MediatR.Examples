@@ -5,16 +5,20 @@ module Antares.TestHelpers {
     import Business = Common.Models.Business;
 
     export class RequirementGenerator {
-        public static generateDto(specificData?: any): Dto.IRequirement {
+        public static generateDto(specificData?: any): Dto.IRequirement{
             var requirement: Dto.IRequirement = {
                 id: RequirementGenerator.makeRandom('id'),
-                contacts: [],
-                address: null,
-                createDate: new Date(),
-                requirementNotes: [],
-                viewings: [],
-                offers: []
-            }
+                requirementTypeId: RequirementGenerator.makeRandom('requirementTypeid'),
+                contacts : [],
+                address : null,
+                createDate : new Date(),
+                requirementNotes : [],
+                viewings : [],
+                offers : [],
+                attachments: [],
+                solicitor: <Dto.IContact>{},
+                solicitorCompany: <Dto.ICompany>{}
+        }
 
             return angular.extend(requirement, specificData || {});
         }

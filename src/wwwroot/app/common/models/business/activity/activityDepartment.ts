@@ -7,12 +7,15 @@ module Antares.Common.Models.Business {
         departmentId: string = "";
         department: Department = null;
         departmentTypeId: string;
-        departmentType: Dto.IEnumTypeItem;
+        departmentType: Dto.IEnumItem;
 
         constructor(activityDepartment?: Dto.IActivityDepartment) {
             if (activityDepartment) {
                 angular.extend(this, activityDepartment);
             }
+
+            this.department = this.department || new Department();
+            this.departmentType = this.departmentType || new EnumTypeItem();
         }
 
         public isManaging(): boolean {

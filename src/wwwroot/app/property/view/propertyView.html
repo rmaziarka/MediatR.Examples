@@ -3,7 +3,9 @@
         <h2 class="page-header" translate="PROPERTY.VIEW.VIEW_PROPERTY"></h2>
         <div class="well">
             <button type="button" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
-            <address-form-view address="vm.property.address"></address-form-view>
+            <address-form-view address="vm.property.address"
+                               address-type="property"
+                               template-url="'app/common/components/addressForm/addressFormView/templates/propertyAddressForm.html'"></address-form-view>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -33,8 +35,8 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true"
-                                          card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
+                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true" card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'"
+                                        item="propertyAreaBreakdown">
                                         <card-context-menu>
                                             <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
                                         </card-context-menu>
@@ -48,7 +50,8 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="PROPERTY.VIEW.CHARACTERISTICS"></h3>
-                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId" characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
+                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId"
+                        characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
                 </section>
             </div>
             <div class="col-md-4">
@@ -61,23 +64,13 @@
                             <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
-                            <!-- example on how to use new version of component -->
-                            <!--<card show-context-menu="true" show-item-details="vm.showOwnershipView" display-new-control="true"
-                                      card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
-
-                                <card-context-menu>
-                                    <context-menu-item type="edit" item="ownership" action="vm.showContactList"></context-menu-item>
-                                    <context-menu-item type="delete" item="ownership" action="vm.showContactList"></context-menu-item>
-                                </card-context-menu>
-
-                            </card>-->
                             <card show-item-details="vm.showOwnershipView" card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
                             </card>
                         </card-list-item>
                     </card-list>
                 </section>
                 <section>
-                    <card-list id="card-list-activities" show-item-add="vm.showActivityAdd" is-item-add-disabled="vm.savePropertyActivityBusy">
+                    <card-list id="card-list-activities" show-item-add="vm.goToActivityAdd" is-item-add-disabled="vm.savePropertyActivityBusy">
                         <card-list-header>
                             <h3 class="page-header" translate="ACTIVITY.LIST.ACTIVITIES"></h3>
                         </card-list-header>
@@ -91,91 +84,12 @@
                         </card-list-item>
                     </card-list>
                 </section>
+
+                <attachments-manager header="ATTACHMENT.LIST.ATTACHMENTS" data="vm.attachmentManagerData" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
             </div>
         </div>
     </div>
 </div>
-
-<side-panel>
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.ATTACHMENTPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <div class="row section-row">
-            <div class="col-xs-5">Name</div>
-            <div class="col-xs-7 text-truncate">
-                <i class="fa fa-download pull-right" aria-hidden="true"></i>
-                <a href="#">Lorem ipsum file.docx</a>
-            </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Type</div>
-            <div class="col-xs-7">Floor plan</div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Size</div>
-            <div class="col-xs-7">2MB</div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Added</div>
-            <div class="col-xs-7"><time>19-03-2016</time></div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">By</div>
-            <div class="col-xs-7">John Smith</div>
-        </div>
-    </side-panel-content>
-</side-panel>
-
-<side-panel>
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.ATTACHFILE"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <form>
-            <div class="form-group has-error">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="file">File:</label>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="button" class="close close-side-panel" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <div class="text-truncate">Lorem ipsum file.docx</div>
-                    </div>
-                    <div ng-hide="true" class="col-md-12">
-                        <span class="btn btn-default btn-file">
-                            Browse <input id="file" type="file">
-                        </span>
-                        <p class="help-block">Please select file to upload</p>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-9">
-                        <label class="required" for="type-file">Type</label>
-                        <select id="type-file" class="form-control">
-                            <option>- select -</option>
-                            <option>File type</option>
-                            <option>File type</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <busy is-busy="true" label="{{'COMMON.FILEUPLOADING' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>
@@ -207,24 +121,6 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activityAddSidePanelId" is-busy="vm.savePropertyActivityBusy">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities" property-type-id="vm.property.propertyTypeId"></activity-add>
-        <busy is-busy="vm.savePropertyActivityBusy" label="{{'ACTIVITY.ADD.SAVING_ACTIVITY_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled="" id="activity-add-button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
-
 <side-panel component-id="vm.componentIds.ownershipViewSidePanelId" id="ownership-panel">
     <side-panel-header>
         <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>
@@ -232,16 +128,6 @@
     <side-panel-content>
         <ownership-view component-id="vm.componentIds.ownershipViewId">
         </ownership-view>
-    </side-panel-content>
-</side-panel>
-
-<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-preview component-id="vm.componentIds.activityPreviewId">
-        </activity-preview>
     </side-panel-content>
 </side-panel>
 
@@ -278,3 +164,8 @@
         </button>
     </side-panel-footer>
 </side-panel>
+
+<activity-preview-panel is-visible="vm.isActivityPreviewPanelVisible" 
+                        property-type-id="vm.property.propertyTypeId" 
+                        activity='vm.selectedActivity'>
+</activity-preview-panel>

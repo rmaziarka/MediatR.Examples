@@ -7,8 +7,13 @@
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
+
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
 
     [Binding]
     public class OfferSteps
@@ -29,19 +34,23 @@
 
         [Given(@"Offer for requirement is defined")]
         [When(@"Offer for requirement is defined")]
-        public void CreateViewing()
+        public void CreateOffer(Table table)
         {
+            var details = table.CreateInstance<OfferData>();
+            OfferType offerType = details.Type.Equals("Residential Sale") ? OfferType.ResidentialSale : OfferType.ResidentialLetting;
+
+            Guid offerTypeId = this.dataContext.OfferTypes.First(ot => ot.EnumCode.Equals(offerType.ToString())).Id;
             Guid statusId =
-                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OfferStatus") && i.Code.Equals("New")).Id;
+                this.dataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(OfferStatus)) && i.Code.Equals(details.Status)).Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
 
             var offer = new Offer
             {
-                ActivityId = activityId,
                 //TODO improve selecting negotiator
                 NegotiatorId = this.dataContext.Users.First().Id,
-                Price = 1000,
+                ActivityId = activityId,
                 CompletionDate = DateTime.UtcNow,
                 ExchangeDate = DateTime.UtcNow,
                 OfferDate = DateTime.UtcNow,
@@ -49,8 +58,18 @@
                 LastModifiedDate = DateTime.UtcNow,
                 RequirementId = requirementId,
                 SpecialConditions = "Text",
-                StatusId = statusId
+                StatusId = statusId,
+                OfferTypeId = offerTypeId
             };
+
+            if (offerType.Equals(OfferType.ResidentialSale))
+            {
+                offer.Price = 1000;
+            }
+            else
+            {
+                offer.PricePerWeek = 1000;
+            }
 
             this.dataContext.Offer.Add(offer);
             this.dataContext.SaveChanges();

@@ -10,9 +10,20 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	RequirementDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
+	 	MortgageStatus,
+	 	ClientCareStatus,
+	 	MortgageSurveyStatus,
+	 	AdditionalSurveyStatus,
+	 	SearchStatus,
+	 	Enquiries,
+	 	SalutationFormat,
+	 	ActivitySource,
+	 	ActivitySellingReason,
 	 }
 
 	
@@ -54,6 +65,19 @@ module Antares.Common.Models.Enums
 		GasCertificate,
 	}
 
+	export enum RequirementDocumentType
+	{
+		TermsOfBusiness,
+	}
+
+	export enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+	}
+
 	export enum OfferStatus
 	{
 		New,
@@ -72,5 +96,102 @@ module Antares.Common.Models.Enums
 	{
 		Managing,
 		Standard,
+	}
+
+	export enum MortgageStatus
+	{
+		Unknown,
+		NotRequiredCashFromSale,
+		NotRequiredCashInBank,
+		InProgress,
+		Agreed,
+	}
+
+	export enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
+	}
+
+	export enum MortgageSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		Complete,
+		Outstanding,
+	}
+
+	export enum AdditionalSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		InProgress,
+		Complete,
+	}
+
+	export enum SearchStatus
+	{
+		NotStarted,
+		AppliedFor,
+		Complete,
+	}
+
+	export enum Enquiries
+	{
+		NotStarted,
+		Sent,
+		Complete,
+	}
+
+	export enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
+	export enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	export enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToRequirement,
 	}
 }

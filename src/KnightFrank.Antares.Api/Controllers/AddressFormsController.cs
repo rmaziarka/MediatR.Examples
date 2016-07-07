@@ -1,12 +1,16 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
+    using KnightFrank.Antares.Domain.Country.Queries;
 
     using MediatR;
 
@@ -56,6 +60,32 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the address form for all countries.
+        /// </summary>
+        /// <param name="entityType">Entity type parameter.</param>
+        /// <returns>List of address forms.</returns>
+        [HttpGet]
+        [Route("list")]
+        public Dictionary<Guid, AddressFormQueryResult> GetAddressFormForAllCountries(string entityType)
+        {
+            var queryResult = new Dictionary<Guid, AddressFormQueryResult>();
+            List<Country> countries = this.mediator.Send(new CountriesQuery()).ToList();
+            
+            countries.ForEach(
+                x =>
+                    {
+                        AddressFormQueryResult addressFormQueryResult = this.GetAddressFormQueryResult(new AddressFormQuery { CountryCode = x.IsoCode, EntityType = entityType });
+
+                        if (addressFormQueryResult != null)
+                        {
+                            queryResult.Add(x.Id, addressFormQueryResult);
+                        }
+                    });
+
+            return queryResult;
         }
     }
 }

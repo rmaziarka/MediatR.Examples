@@ -5,7 +5,7 @@ declare module Antares.Common.Models.Dto {
         documentTypeId: string;
         size: number;
         externalDocumentId: string;
-        createdDate?: Date;
+        createdDate?: Date | string;
         user?: IUser;
     }
 }

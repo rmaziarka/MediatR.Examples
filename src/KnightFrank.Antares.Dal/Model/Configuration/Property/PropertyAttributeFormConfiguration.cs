@@ -3,7 +3,6 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Infrastructure.Annotations;
 
-    using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Property;
 
     internal class PropertyAttributeFormConfiguration : BaseEntityConfiguration<PropertyAttributeForm>

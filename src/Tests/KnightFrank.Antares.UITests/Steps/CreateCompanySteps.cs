@@ -6,7 +6,6 @@
 
     using FluentAssertions;
 
-    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -21,6 +20,7 @@
     public class CreateCompanySteps
     {
         private readonly DriverContext driverContext;
+
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private CreateCompanyPage page;
@@ -47,23 +47,29 @@
             this.page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
         }
 
+        [Then(@"Company form on create company page should be diaplyed")]
+        public void CheckIfCreateContactIsDisplayed()
+        {
+            Assert.True(this.page.IsAddCompanyFormPresent());
+        }
+
         [When(@"User fills in company details on create company page")]
         public void FillInCompanyData(Table table)
         {
-            var details = table.CreateInstance<Company>();
-            this.page.SetCompanyName(details.Name);
-        }
+            var details = table.CreateInstance<ViewCompanyPage.CompanyDetails>();
 
-        [When(@"User clicks save company button on create company page")]
-        public void SaveCompany()
-        {
-            this.page.SaveCompany();
+            this.scenarioContext.Set(details.WebsiteUrl, "Url");
+
+            this.page.SetCompanyName(details.Name);
+            this.page.SetWebsite(details.WebsiteUrl);
+            this.page.SetClientCarePage(details.ClientCarePageUrl);
+            this.page.SelectClientCareStatus(details.ClientCareStatus);
         }
 
         [When(@"User selects contacts on create company page")]
         public void SelectContactsForCompany(Table table)
         {
-            this.page.SelectContact().WaitForSidePanelToShow();
+            this.page.AddContactToCompany().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -75,7 +81,7 @@
             this.page.WaitForSidePanelToHide();
         }
 
-        [Then(@"List of company contacts should contain following contacts")]
+        [Then(@"List of company contacts should contain following contacts on create company page")]
         public void CheckContactsList(Table table)
         {
             List<string> contacts =
@@ -87,16 +93,24 @@
             contacts.ShouldBeEquivalentTo(selectedContacts);
         }
 
-        [Then(@"Company form on create company page should be diaplyed")]
-        public void CheckIfCreateContactIsDisplayed()
+        [When(@"User clicks on website url icon")]
+        public void WhenUserClicksOnWebsiteUrlIcon()
         {
-            Assert.True(this.page.IsCompanyFormPresent());
+            this.page.ClickOnWebsiteLink();
         }
 
-        [Then(@"New company should be created")]
-        public void CheckIfCompanyCreated()
+        [Then(@"url opens in new tab")]
+        public void ThenUrlOpensInNewTab()
         {
-            //TODO implement check if contact was created
+            var scenarioUrl = this.scenarioContext.Get<string>("Url");
+
+            Assert.True(this.page.CheckNewTab(scenarioUrl));
+        }
+
+        [When(@"User clicks save company button on create company page")]
+        public void SaveCompany()
+        {
+            this.page.SaveCompany();
         }
     }
 }

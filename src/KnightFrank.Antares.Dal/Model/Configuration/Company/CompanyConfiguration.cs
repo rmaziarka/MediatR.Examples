@@ -8,13 +8,18 @@
         {
             this.Property(p => p.Name).HasMaxLength(128).IsRequired();
 
-            this.HasMany(p => p.Contacts)
+            this.Property(p => p.WebsiteUrl)
+                .HasMaxLength(2500)
+                .IsOptional();
+
+            this.Property(p => p.ClientCarePageUrl)
+                .HasMaxLength(2500)
+                .IsOptional();
+
+            this.HasOptional(x => x.ClientCareStatus)
                 .WithMany()
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("CompanyId");
-                    cs.MapRightKey("ContactId");
-                });
+                .HasForeignKey(x => x.ClientCareStatusId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

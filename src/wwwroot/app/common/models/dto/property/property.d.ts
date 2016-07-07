@@ -6,6 +6,7 @@ declare module Antares.Common.Models.Dto {
         address: Dto.IAddress;
         ownerships: Dto.IOwnership[];
         activities: Dto.IActivity[];
+        attachments?: IAttachment[];
         division: Dto.IEnumTypeItem;
         attributeValues: any;
         propertyCharacteristics: IPropertyCharacteristic[];

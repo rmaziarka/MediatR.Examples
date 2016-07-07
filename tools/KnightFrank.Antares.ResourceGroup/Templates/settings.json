@@ -6,11 +6,13 @@
     "password": "",
     "sql": [
       {
-        "statement": "select * from dbo.Contact"
+        "statement": "select * from dbo.ElasticSearchContact"
+      },
+      {
+        "statement": "select * from dbo.ElasticSearchProperty"
       }
     ],
     "index": "",
-    "type": "contact",
     "detect_json": "true",
     "schedule": "",
     "elasticsearch.host": "localhost",

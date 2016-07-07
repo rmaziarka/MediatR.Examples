@@ -10,6 +10,8 @@
     using Objectivity.Test.Automation.Common.Helpers;
     using Objectivity.Test.Automation.Common.Types;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     public class AttachmentPreviewPage : ProjectPageBase
     {
         private readonly ElementLocator addedTime = new ElementLocator(Locator.Id, "attachment-preview-created-date");

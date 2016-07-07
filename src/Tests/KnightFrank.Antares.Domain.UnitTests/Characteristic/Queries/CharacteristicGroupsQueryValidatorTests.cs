@@ -5,6 +5,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Characteristic.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
@@ -28,7 +29,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_CorrectCharacteristicGroupsQuery_When_Validating_Then_NoValidationErrors(
             CharacteristicGroupsQueryValidator validator)
         {
@@ -40,7 +41,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_IncorrectPropertyAttributesQueryWithNoCountryCode_When_Validating_Then_ValidationErrors(
            CharacteristicGroupsQueryValidator validator)
         {
@@ -50,7 +51,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_IncorrectPropertyAttributesQueryWithNoPropertyTypeId_When_Validating_Then_ValidationErrors(
            CharacteristicGroupsQueryValidator validator)
         {

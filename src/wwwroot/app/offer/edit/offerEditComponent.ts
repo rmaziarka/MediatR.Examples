@@ -6,7 +6,8 @@ module Antares.Offer {
         controllerAs : 'vm',
         controller: 'OfferEditController',
         bindings: {
-            offer: '='
+            offer: '=',
+            config: '<'
         }
     });
 }

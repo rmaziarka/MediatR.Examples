@@ -14,7 +14,7 @@
 // ReSharper disable InconsistentNaming
 namespace KnightFrank.Antares.Domain.Common.Enums
 {
-	public enum PropertType {
+	public enum PropertyType {
 	<#
 	string fileName = this.Host.ResolvePath("..\\..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\PropertyType.csv");
 	List<string> propertyTypeEnumCodeList = new List<string>();

@@ -12,11 +12,14 @@ module Antares.Common.Models.Business {
         constructor(activityUser?: Dto.IActivityUser) {
             if(activityUser) {
                 angular.extend(this, activityUser);
+                this.user = new User(activityUser.user);
 
                 if (activityUser.callDate) {
                     this.callDate = moment(activityUser.callDate).toDate();
                 }
             }
+
+            this.user = this.user || new User();
         }
     }
 }

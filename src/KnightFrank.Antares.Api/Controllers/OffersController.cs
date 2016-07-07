@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -11,6 +12,7 @@
 
     using KnightFrank.Antares.Domain.Offer.Commands;
     using KnightFrank.Antares.Domain.Offer.Queries;
+    using KnightFrank.Antares.Domain.Offer.QueryResults;
 
     /// <summary>
     /// Offers controller.
@@ -36,6 +38,7 @@
         /// <returns>Offer.</returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Offer CreateOffer(CreateOfferCommand command)
         {
             Guid offerId = this.mediator.Send(command);
@@ -49,6 +52,7 @@
         /// <returns></returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Offer UpdateOffer(UpdateOfferCommand command)
         {
             Guid offerId = this.mediator.Send(command);
@@ -62,6 +66,7 @@
         /// <returns>Offer.</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Offer GetOffer(Guid id)
         {
             Offer offer = this.mediator.Send(new OfferQuery { Id = id });
@@ -71,6 +76,19 @@
             }
 
             return offer;
+        }
+
+        /// <summary>
+        /// Gets the offer types.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("types")]
+        public IList<OfferTypeQueryResult> GetOfferTypes([FromUri] OfferTypeQuery query)
+        {
+            query = query ?? new OfferTypeQuery();
+            return this.mediator.Send(query);
         }
     }
 }

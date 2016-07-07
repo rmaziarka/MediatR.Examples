@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Newtonsoft.Json;
 
@@ -21,8 +22,8 @@
     public class NegotiatorsSteps
     {
         private const string ApiUrl = "/api/activities";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         private Activity activity;
@@ -49,7 +50,11 @@
         public void GivenLeadNegotiatorWithActiveDirectoryLoginExistsInDatabase(string activeDirectoryLogin, double noOfDays)
         {
             User user = this.fixture.DataContext.Users.SingleOrDefault(x => x.ActiveDirectoryLogin.Equals(activeDirectoryLogin));
-            Guid departmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"];
+            Guid departmentTypeId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i =>
+                        i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
+                        i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id;
             this.updateActivityUser = new UpdateActivityUser
             {
                 UserId = user?.Id ?? Guid.NewGuid(),
@@ -76,7 +81,11 @@
 
             this.secondaryNegotiatorsList = this.secondaryNegotiatorUsersList.Select(x => x.Id).ToList();
 
-            Guid departmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Standard"];
+            Guid departmentTypeId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i =>
+                        i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
+                        i.Code.Equals(nameof(ActivityDepartmentType.Standard))).Id;
 
             foreach (User secondaryNegotiator in this.secondaryNegotiatorUsersList)
             {
@@ -101,11 +110,15 @@
                 Id = this.activity.Id,
                 ActivityTypeId = this.activity.ActivityTypeId,
                 ActivityStatusId = this.activity.ActivityStatusId,
+                SourceId = this.activity.SourceId,
+                SellingReasonId = this.activity.SellingReasonId,
                 LeadNegotiator = this.updateActivityUser,
                 SecondaryNegotiators =
                     this.secondaryNegotiatorsList.Select(
                         n => new UpdateActivityUser { UserId = n, CallDate = this.date.AddDays(10) }).ToList(),
-                Departments = this.updateActivityDepartments
+                Departments = this.updateActivityDepartments,
+                AppraisalMeetingStart = this.activity.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
+                AppraisalMeetingEnd = this.activity.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);

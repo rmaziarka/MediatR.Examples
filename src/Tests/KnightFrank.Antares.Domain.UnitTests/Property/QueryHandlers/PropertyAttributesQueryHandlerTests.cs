@@ -6,11 +6,11 @@
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Property.Queries;
     using KnightFrank.Antares.Domain.Property.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

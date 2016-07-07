@@ -1,109 +1,92 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.CommandHandlers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
+    using PropertyType = KnightFrank.Antares.Domain.Common.Enums.PropertyType;
 
     public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand, Guid>
     {
-        private const int NextCallDateDays = 14;
         private readonly IGenericRepository<Activity> activityRepository;
-
+        private readonly IGenericRepository<Dal.Model.Property.Activities.ActivityType> activityTypeRepository;
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
-
-        private readonly ICollectionValidator collectionValidator;
-
-        private readonly IGenericRepository<Contact> contactRepository;
-
+        private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
         private readonly IEntityValidator entityValidator;
-
-        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
-
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
-
         private readonly IGenericRepository<Property> propertyRepository;
-
-        private readonly IGenericRepository<User> userRepository;
+        private readonly IEntityMapper<Activity> activityEntityMapper;
+        private readonly IActivityReferenceMapper<Contact> contactsMapper;
+        private readonly IActivityReferenceMapper<ActivityUser> usersMapper;
+        private readonly IActivityReferenceMapper<ActivityDepartment> departmentsMapper;
+        private readonly IActivityReferenceMapper<ActivityAttendee> attendeesMapper;
 
         public CreateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
-            IGenericRepository<Contact> contactRepository,
-            IGenericRepository<User> userRepository,
+            IGenericRepository<Dal.Model.Property.Activities.ActivityType> activityTypeRepository,
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
-            ICollectionValidator collectionValidator,
             IGenericRepository<Property> propertyRepository,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
-            IActivityTypeDefinitionValidator activityTypeDefinitionValidator)
+            IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
+            IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator,
+            IEntityMapper<Activity> activityEntityMapper,
+            IActivityReferenceMapper<Contact> contactsMapper,
+            IActivityReferenceMapper<ActivityUser> usersMapper,
+            IActivityReferenceMapper<ActivityDepartment> departmentsMapper,
+            IActivityReferenceMapper<ActivityAttendee> attendeesMapper
+            )
         {
             this.activityRepository = activityRepository;
-            this.contactRepository = contactRepository;
-            this.userRepository = userRepository;
+            this.activityTypeRepository = activityTypeRepository;
             this.entityValidator = entityValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
-            this.collectionValidator = collectionValidator;
             this.propertyRepository = propertyRepository;
-            this.enumTypeItemRepository = enumTypeItemRepository;
             this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
+            this.attributeValidator = attributeValidator;
+            this.activityEntityMapper = activityEntityMapper;
+            this.contactsMapper = contactsMapper;
+            this.usersMapper = usersMapper;
+            this.departmentsMapper = departmentsMapper;
+            this.attendeesMapper = attendeesMapper;
         }
 
         public Guid Handle(CreateActivityCommand message)
         {
-            this.entityValidator.EntityExists<Dal.Model.Property.Activities.ActivityType>(message.ActivityTypeId);
-            this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
+            Property property = this.propertyRepository.GetWithInclude(
+                x => x.Id == message.PropertyId,
+                x => x.Address,
+                x => x.PropertyType).SingleOrDefault();
 
-            Property property = this.propertyRepository.GetById(message.PropertyId);
             this.entityValidator.EntityExists(property, message.PropertyId);
 
-            this.activityTypeDefinitionValidator.Validate(
-                message.ActivityTypeId,
-                property.Address.CountryId,
-                property.PropertyTypeId);
+            this.ValidateMessage(message, property);
 
-            var activity = Mapper.Map<Activity>(message);
+            var activity = new Activity
+            {
+                PropertyId = message.PropertyId,
+                ActivityTypeId = message.ActivityTypeId
+            };
 
-            List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
-            this.collectionValidator.CollectionContainsAll(
-                vendors.Select(c => c.Id),
-                message.ContactIds,
-                ErrorMessage.Missing_Activity_Vendors_Id);
+            activity = this.activityEntityMapper.MapAllowedValues(message, activity, PageType.Create);
 
-            activity.Contacts = vendors;
-
-            User negotiator =
-                this.userRepository.GetWithInclude(x => message.LeadNegotiatorId == x.Id, x => x.Department).SingleOrDefault();
-            this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
-
-            activity.ActivityUsers.Add(
-                new ActivityUser
-                {
-                    User = negotiator,
-                    UserType = this.GetLeadNegotiatorUserType(),
-                    CallDate = DateTime.UtcNow.AddDays(NextCallDateDays).Date
-                });
-
-            activity.ActivityDepartments.Add(
-                new ActivityDepartment
-                    {
-                        Department = negotiator.Department,
-                        DepartmentType = this.GetManagingDepartmentType()
-                    });
+            this.contactsMapper.ValidateAndAssign(message, activity);
+            this.usersMapper.ValidateAndAssign(message, activity);
+            this.departmentsMapper.ValidateAndAssign(message, activity);
+            this.attendeesMapper.ValidateAndAssign(message, activity);
 
             this.activityRepository.Add(activity);
             this.activityRepository.Save();
@@ -111,14 +94,21 @@
             return activity.Id;
         }
 
-        private EnumTypeItem GetLeadNegotiatorUserType()
+        private void ValidateMessage(CreateActivityCommand message, Property property)
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.LeadNegotiator.ToString()).Single();
-        }
+            Dal.Model.Property.Activities.ActivityType activityType = this.activityTypeRepository.GetById(message.ActivityTypeId);
+            this.entityValidator.EntityExists(activityType, message.ActivityTypeId);
+            var activityTypeEnum = EnumExtensions.ParseEnum<ActivityType>(activityType.EnumCode);
+            var propertyTypeEnum = EnumExtensions.ParseEnum<PropertyType>(property.PropertyType.EnumCode);
 
-        private EnumTypeItem GetManagingDepartmentType()
-        {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Managing.ToString()).Single();
+            this.attributeValidator.Validate(PageType.Create, Tuple.Create(propertyTypeEnum, activityTypeEnum), message);
+
+            this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
+
+            this.activityTypeDefinitionValidator.Validate(
+                message.ActivityTypeId,
+                property.Address.CountryId,
+                property.PropertyTypeId);
         }
     }
 }

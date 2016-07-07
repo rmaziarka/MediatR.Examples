@@ -1,104 +1,161 @@
 ﻿<div class="row">
-    <div class="col-md-12">
-        <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY"></h2>
-    </div>
-    <form ng-submit="editActivityForm.$valid && aevm.save()" name="editActivityForm" method="post" novalidate>
-        <div class="col-md-4">
-            <section id="property-basic-info">
-                <fieldset id="activity-edit-basic">
-                    <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                    <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.status.$dirty) && editActivityForm.status.$invalid}">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label for="status" translate="ACTIVITY.EDIT.STATUS"></label>
-                                <enum-select id="activityStatus" name="status" required="true" ng-model="aevm.activity.activityStatusId" enum-type-code="{{aevm.enumTypeActivityStatus}}"></enum-select>
-                                <div ng-messages="editActivityForm.status.$error" ng-show="editActivityForm.$submitted || editActivityForm.status.$dirty">
-                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                                </div>
-                            </div>
-                        </div>
+    <form ng-submit="editActivityForm.isFormValid() && vm.save()" name="editActivityForm" method="post" novalidate>
+        <div class="col-md-12">
+            <h2 class="page-header" translate="ACTIVITY.ADD.CREATE_ACTIVITY" ng-if="vm.isAddMode()"></h2>
+            <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY" ng-if="vm.isEditMode()"></h2>
+            <div class="well">
+                <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
+                <div>{{ vm.activity.property.address.getAddressText() }}</div>
+                <div class="row">
+                    <div class="col-md-3 col-lg-2">
+                        <activity-type-edit-control property-type-id="vm.activity.property.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
+                                                    on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
+                        </activity-type-edit-control>
                     </div>
-                </fieldset>
+                    <div class="col-md-3 col-lg-2">
+                        <enum-item-edit-control ng-model="vm.activity.activityStatusId"
+                            config="vm.config.activityStatus"
+                            schema="vm.activityStatusSchema"
+                            on-selected-item-changed="vm.activityStatusChanged(id)"></enum-item-edit-control>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <section id="activity-edit-vendors">
+                <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
+            </section>
+            <section id="activity-edit-landlords">
+                <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
             </section>
             <section id="activity-edit-negotiators">
-                <negotiators-edit property-division-id="{{aevm.activity.property.divisionId}}" activity-id="aevm.activity.id" departments="aevm.activity.activityDepartments" lead-negotiator="aevm.activity.leadNegotiator" secondary-negotiators="aevm.activity.secondaryNegotiator"></negotiators-edit>
+                <activity-negotiators-edit-control property-division-id="{{ vm.activity.property.divisionId }}"
+                                                   activity-id="vm.activity.id"
+                                                   config="vm.config.negotiators"
+                                                   on-negotiator-added="vm.onNegotiatorAdded(user)"
+                                                   on-negotiator-removed="vm.onNegotiatorRemoved()"
+                                                   lead-negotiator="vm.activity.leadNegotiator"
+                                                   secondary-negotiators="vm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
             </section>
             <section id="activity-edit-departments">
-                <departments-edit activity-id="aevm.activity.id" departments="aevm.activity.activityDepartments" lead-negotiator="aevm.activity.leadNegotiator" secondary-negotiators="aevm.activity.secondaryNegotiator"></departments-edit>
+                <activity-departments-edit-control activity-id="vm.activity.id"
+                                                   config="vm.config.departments"
+                                                   departments="vm.activity.activityDepartments"
+                                                   department-is-related-with-negotiator="vm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>
         </div>
-        <div class="col-md-4">
-            <fieldset id="activity-edit-prices">
+        <div class="col-md-6 col-lg-4">
+            <fieldset id="activity-edit-prices" ng-if="vm.isValuationPricesSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.marketAppraisalPrice.$dirty) && editActivityForm.marketAppraisalPrice.$invalid}">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label for="market-appraisal-price" translate="ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE"></label>
-                            <div class="input-group">
-                                <input id="market-appraisal-price" name="marketAppraisalPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.marketAppraisalPrice" />
-                                <div class="input-group-addon">GBP</div>
-                            </div>
-                            <div ng-messages="editActivityForm.marketAppraisalPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.marketAppraisalPrice.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                            </div>
-                        </div>
+                <price-edit-control config="vm.config.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
+                <price-edit-control config="vm.config.shortLetPricePerWeek" schema="vm.controlSchemas.shortLetPricePerWeek" ng-model='vm.activity.shortLetPricePerWeek'></price-edit-control>
+            </fieldset>
+            <section id="activity-basic-info" ng-if="vm.isBasicInformationSectionVisible()">
+                <fieldset id="activity-edit-basic">
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
+                    <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
+                    <enum-item-edit-control ng-model="vm.activity.disposalTypeId" config="vm.config.disposalType" schema="vm.activityDisposalTypeSchema"></enum-item-edit-control>
+                    <enum-item-edit-control ng-model="vm.activity.sourceId" config="vm.config.source" schema="vm.activitySourceSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.sourceDescription" config="vm.config.sourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
+                    <enum-item-edit-control ng-model="vm.activity.sellingReasonId" config="vm.config.sellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.pitchingThreats" config="vm.config.pitchingThreats" schema="vm.pitchingThreatsSchema"></textarea-edit-control>
+                </fieldset>
+            </section>
+            <section id="activity-additional-info" ng-if="vm.isAdditionalInformationSectionVisible()">
+                <fieldset>
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ADDITIONAL_INFORMATION"></h3>
+                    <h4 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h4>
+                    <text-edit-control ng-model="vm.activity.accessDetails.keyNumber" config="vm.config.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
+                </fieldset>
+            </section>
+            <section id="other-info" ng-if="vm.isOtherSectionVisible()">
+                <fieldset>
+                    <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
+                    <enum-item-edit-control ng-model="vm.activity.decorationId" config="vm.config.decoration" schema="vm.activityDecorationSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.otherCondition" config="vm.config.otherCondition" schema="vm.otherConditionSchema"></textarea-edit-control>
+                </fieldset>
+            </section>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <fieldset id="activity-edit-prices" ng-if="vm.isValuationInfoSectionVisible()">
+                <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.kfValuationPrice" schema="vm.kfValuationPriceSchema" ng-model='vm.activity.kfValuationPrice'></price-edit-control>
                     </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.recommendedPrice.$dirty) && editActivityForm.recommendedPrice.$invalid}">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label for="recommended-price" translate="ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE"></label>
-                            <div class="input-group">
-                                <input id="recommended-price" name="recommendedPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.recommendedPrice" />
-                                <div class="input-group-addon">GBP</div>
-                            </div>
-                            <div ng-messages="editActivityForm.recommendedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.recommendedPrice.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                            </div>
-                        </div>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.vendorValuationPrice" schema="vm.vendorValuationPriceSchema" ng-model='vm.activity.vendorValuationPrice'></price-edit-control>
                     </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.vendorEstimatedPrice.$dirty) && editActivityForm.vendorEstimatedPrice.$invalid}">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label for="vendor-estimated-price" translate="ACTIVITY.EDIT.PRICES.VENDOR_ESIMATED_PRICE"></label>
-                            <div class="input-group">
-                                <input id="vendor-estimated-price" name="vendorEstimatedPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.vendorEstimatedPrice" />
-                                <div class="input-group-addon">GBP</div>
-                            </div>
-                            <div ng-messages="editActivityForm.vendorEstimatedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.vendorEstimatedPrice.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                            </div>
-                        </div>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.agreedInitialMarketingPrice" schema="vm.agreedInitialMarketingPriceSchema" ng-model='vm.activity.agreedInitialMarketingPrice'></price-edit-control>
                     </div>
                 </div>
             </fieldset>
-        </div>
+            <fieldset id="activity-edit-short-long-prices" ng-if="vm.isValuationInfoShortLongSectionVisible()">
+                <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.KF_VALUTATION"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortKfValuationPrice" schema="vm.shortKfValuationPriceSchema" ng-model='vm.activity.shortKfValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longKfValuationPrice" schema="vm.longKfValuationPriceSchema" ng-model='vm.activity.longKfValuationPrice'></price-edit-control>
+                    </div>
+                </div>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.VENDOR_VALUATION"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortVendorValuationPrice" schema="vm.shortVendorValuationPriceSchema" ng-model='vm.activity.shortVendorValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longVendorValuationPrice" schema="vm.longVendorValuationPriceSchema" ng-model='vm.activity.longVendorValuationPrice'></price-edit-control>
+                    </div>
+                </div>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortAgreedInitialMarketingPrice" schema="vm.shortAgreedInitialMarketingPriceSchema" ng-model='vm.activity.shortAgreedInitialMarketingPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longAgreedInitialMarketingPrice" schema="vm.longAgreedInitialMarketingPriceSchema" ng-model='vm.activity.longAgreedInitialMarketingPrice'></price-edit-control>
+                    </div>
 
-        <div class="col-md-4">
-            <section id="activity-edit-property">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.PROPERTY"></h3>
-                <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="aevm.activity.property">
-                </card>
-            </section>
-            <section id="activity-edit-vendors">
-                <list id="list-vendors">
-                    <list-header>
-                        <h3 class="page-header" translate="ACTIVITY.EDIT.VENDORS"></h3>
-                    </list-header>
-                    <list-no-items ng-show="aevm.activity.contacts.length === 0">
-                        <p class="help-block" translate="ACTIVITY.EDIT.NO_VENDORS"></p>
-                    </list-no-items>
-                    <list-item id="list-item-{{contact.id}}" ng-repeat="contact in aevm.activity.contacts">
-                        {{contact.getName()}}
-                    </list-item>
-                </list>
-            </section>
+                </div>
+            </fieldset>
+            <fieldset id="activity-edit-charges" ng-if="vm.isChargesSectionVisible()">
+                <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.serviceChargeAmount" schema="vm.serviceChargeAmountSchema" ng-model="vm.activity.serviceChargeAmount"></price-edit-control>
+                    </div>
+                    <div class="col-xs-8">
+                        <textarea-edit-control ng-model="vm.activity.serviceChargeNote" config="vm.config.serviceChargeNote" schema="vm.serviceChargeNoteSchema"></textarea-edit-control>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.groundRentAmount" schema="vm.groundRentAmountSchema" ng-model="vm.activity.groundRentAmount"></price-edit-control>
+                    </div>
+                    <div class="col-xs-8">
+                        <textarea-edit-control ng-model="vm.activity.groundRentNote" config="vm.config.groundRentNote" schema="vm.groundRentNoteSchema"></textarea-edit-control>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset ng-if="vm.isAppraisalMeetingSectionVisible()">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
+                <activity-appraisal-meeting-date-edit-control config="vm.config.appraisalMeetingDate"
+                                                              appraisal-meeting-start="vm.activity.appraisalMeeting.appraisalMeetingStart"
+                                                              appraisal-meeting-end="vm.activity.appraisalMeeting.appraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
+                <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.appraisalMeetingAttendees" config="vm.config.appraisalMeetingAttendees"></activity-attendees-edit-control>
+                <textarea-edit-control ng-model="vm.activity.appraisalMeeting.appraisalMeetingInvitationText" config="vm.config.appraisalMeetingInvitation" schema="vm.invitationTextSchema"></textarea-edit-control>
+            </fieldset>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <div >
-                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="aevm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                <div>
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()" ng-if="vm.isEditMode()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
                     <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                 </div>
             </div>

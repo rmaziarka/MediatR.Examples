@@ -9,16 +9,42 @@ module Antares.TestHelpers {
         public static generateDto(specificData?: any): Dto.IActivity {
 
             var activity: Dto.IActivity = {
-                activityStatusId: ActivityGenerator.makeRandom('activityStatusId'),
-                activityTypeId: ActivityGenerator.makeRandom('activityTypeId'),
+                activityStatusId: StringGenerator.generate(),
+                activityTypeId: StringGenerator.generate(),
                 contacts: [],
                 attachments: [],
                 createdDate: new Date(),
-                id: ActivityGenerator.makeRandom('id'),
+                id: StringGenerator.generate(),
                 property: PropertyGenerator.generateDto(),
-                propertyId: ActivityGenerator.makeRandom('propertyId'),
+                propertyId: StringGenerator.generate(),
                 activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)],
-                activityDepartments: []
+                solicitor: <Dto.IContact>{},
+                solicitorCompany: <Dto.ICompany>{},
+                activityDepartments: [],
+                sellingReasonId: StringGenerator.generate(),
+                sourceId: StringGenerator.generate(),
+                keyNumber: StringGenerator.generate(),
+                accessArrangements: StringGenerator.generate(),
+                appraisalMeetingEnd: moment().toDate().toDateString(),
+                appraisalMeetingStart: moment().toDate().toDateString(),
+                appraisalMeetingInvitationText: StringGenerator.generate(),
+                appraisalMeetingAttendees: [],
+                kfValuationPrice: 21,
+                agreedInitialMarketingPrice: 21,
+                vendorValuationPrice: 21,
+                shortKfValuationPrice: 23,
+                shortAgreedInitialMarketingPrice: 24,
+                shortVendorValuationPrice: 25,
+                longKfValuationPrice: 26,
+                longAgreedInitialMarketingPrice: 27,
+                longVendorValuationPrice: 28,
+                disposalTypeId: StringGenerator.generate(),
+                decorationId: StringGenerator.generate(),
+                serviceChargeAmount: 29,
+                serviceChargeNote: StringGenerator.generate(),
+                groundRentAmount: 30,
+                groundRentNote: StringGenerator.generate(),
+                otherCondition: StringGenerator.generate()
             }
 
             return angular.extend(activity, specificData || {});
@@ -36,8 +62,8 @@ module Antares.TestHelpers {
             return new Business.Activity(ActivityGenerator.generateDto(specificData));
         }
 
-        private static makeRandom(text: string): string {
-            return text + _.random(1, 1000000);
-        }
+        public static generateActivityEdit(specificData?: any): Activity.ActivityEditModel {
+            return new Activity.ActivityEditModel(ActivityGenerator.generateDto(specificData));
+    }
     }
 }

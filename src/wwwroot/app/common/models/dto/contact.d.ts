@@ -4,5 +4,6 @@
         title: string;
         firstName: string;
         surname: string;
+		company?: ICompany;
     }
 }

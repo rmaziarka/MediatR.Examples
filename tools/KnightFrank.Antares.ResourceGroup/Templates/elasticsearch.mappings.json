@@ -1,0 +1,222 @@
+﻿{
+  "mappings": {
+    "contact": {
+      "properties": {
+        "FirstName": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        },
+        "Surname": {
+          "type": "string"
+        },
+        "Title": {
+          "type": "string"
+        }
+      }
+    },
+    "property": {
+      "properties": {
+        "Address": {
+          "properties": {
+            "AddressFormId": {
+              "type": "string"
+            },
+            "City": {
+              "type": "string"
+            },
+            "Country": {
+              "properties": {
+                "Id": {
+                  "type": "string"
+                },
+                "IsoCode": {
+                  "type": "string"
+                }
+              }
+            },
+            "CountryId": {
+              "type": "string"
+            },
+            "County": {
+              "type": "string"
+            },
+            "Id": {
+              "type": "string"
+            },
+            "Line1": {
+              "type": "string"
+            },
+            "Line2": {
+              "type": "string"
+            },
+            "Line3": {
+              "type": "string"
+            },
+            "Postcode": {
+              "type": "string"
+            },
+            "PropertyName": {
+              "type": "string"
+            },
+            "PropertyNumber": {
+              "type": "string"
+            }
+          }
+        },
+        "AddressId": {
+          "type": "string"
+        },
+        "AttributeValues": {
+          "properties": {
+            "Id": {
+              "type": "string"
+            },
+            "MaxArea": {
+              "type": "double"
+            },
+            "MaxBathrooms": {
+              "type": "long"
+            },
+            "MaxBedrooms": {
+              "type": "long"
+            },
+            "MaxCarParkingSpaces": {
+              "type": "long"
+            },
+            "MaxFunctionRooms": {
+              "type": "long"
+            },
+            "MaxGuestRooms": {
+              "type": "long"
+            },
+            "MaxLandArea": {
+              "type": "double"
+            },
+            "MaxReceptions": {
+              "type": "long"
+            },
+            "MinArea": {
+              "type": "double"
+            },
+            "MinBathrooms": {
+              "type": "long"
+            },
+            "MinBedrooms": {
+              "type": "long"
+            },
+            "MinCarParkingSpaces": {
+              "type": "long"
+            },
+            "MinFunctionRooms": {
+              "type": "long"
+            },
+            "MinGuestRooms": {
+              "type": "long"
+            },
+            "MinLandArea": {
+              "type": "double"
+            },
+            "MinReceptions": {
+              "type": "long"
+            }
+          }
+        },
+        "AttributeValuesId": {
+          "type": "string"
+        },
+        "Division": {
+          "properties": {
+            "Code": {
+              "type": "string"
+            },
+            "EnumTypeId": {
+              "type": "string"
+            },
+            "Id": {
+              "type": "string"
+            }
+          }
+        },
+        "DivisionId": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        },
+        "Ownerships": {
+          "type": "nested",
+          "properties": {
+            "BuyPrice": {
+              "type": "double"
+            },
+            "Id": {
+              "type": "string"
+            },
+            "OwnershipContacts": {
+              "type": "nested",
+              "properties": {
+                "ContactId": {
+                  "type": "string"
+                },
+                "OwnershipId": {
+                  "type": "string"
+                }
+              }
+            },
+            "OwnershipType": {
+              "properties": {
+                "Code": {
+                  "type": "string"
+                },
+                "EnumTypeId": {
+                  "type": "string"
+                },
+                "Id": {
+                  "type": "string"
+                }
+              }
+            },
+            "OwnershipTypeId": {
+              "type": "string"
+            },
+            "PropertyId": {
+              "type": "string"
+            },
+            "PurchaseDate": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+            },
+            "SellDate": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+            },
+            "SellPrice": {
+              "type": "double"
+            }
+          }
+        },
+        "PropertyType": {
+          "properties": {
+            "Code": {
+              "type": "string"
+            },
+            "Id": {
+              "type": "string"
+            },
+            "ParentId": {
+              "type": "string"
+            }
+          }
+        },
+        "PropertyTypeId": {
+          "type": "string"
+        },
+        "TotalAreaBreakdown": {
+          "type": "double"
+        }
+      }
+    }
+  }
+}

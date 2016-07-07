@@ -54,6 +54,10 @@
       <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -81,6 +85,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.WebApi.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ploeh.AutoFixture, Version=3.45.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoFixture.3.45.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +119,7 @@
       <HintPath>..\..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
@@ -131,11 +148,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMoqDataAttribute.cs" />
-    <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
-    <Compile Include="InlineAutoMoqDataAttribute.cs" />
+    <Compile Include="DataShapingFilterTests.cs" />
+    <Compile Include="ModelBinders\ConfigurableRequirementModelBinderTests.cs" />
+    <Compile Include="Services\AzureStorage\DocumentStorageProviderTests.cs" />
     <Compile Include="Services\AzureStorage\Factories\BlobResourceFactoryTests.cs" />
-    <Compile Include="Services\AzureStorage\ActivityStorageProviderTests.cs" />
+    <Compile Include="Services\AzureStorage\EntityDocumentStorageProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\Services\AttachmentDownloadUrlParametersValidatorTests.cs" />
     <Compile Include="Validators\Services\AttachmentUrlParametersValidatorTests.cs" />
@@ -156,6 +173,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987D78C-856D-4315-8B8B-BAF00C286AFF}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KnightFrank.Antares.Tests.Common\KnightFrank.Antares.Tests.Common.csproj">
+      <Project>{28a06047-69af-4192-8cb0-d6fd21073f3b}</Project>
+      <Name>KnightFrank.Antares.Tests.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

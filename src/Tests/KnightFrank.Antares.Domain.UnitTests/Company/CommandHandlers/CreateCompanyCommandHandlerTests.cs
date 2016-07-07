@@ -5,14 +5,13 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    using FluentAssertions;
-
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Company.CommandHandlers;
     using KnightFrank.Antares.Domain.Company.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -30,24 +29,25 @@
         public void Given_CorrectCommand_When_Handle_Then_ShouldReturnValidId(
             [Frozen] Mock<IGenericRepository<Company>> companyRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<CompanyContact>> companyContactRepository,
             CreateCompanyCommand command,
             CreateCompanyCommandHandler handler)
         {
             // Arrange
-            Company addedCompany = null;
+            CompanyContact addedCompanyContact = null;
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(x => new Contact { Id = x }));
 
-            companyRepository.Setup(x => x.Add(It.IsAny<Company>())).Callback<Company>(x => addedCompany = x);
+            companyContactRepository.Setup(x => x.Add(It.IsAny<CompanyContact>())).Callback<CompanyContact>(x => addedCompanyContact = x);
 
             // Act
             handler.Handle(command);
 
             // Assert
-            addedCompany.Contacts.Select(x => x.Id).ShouldAllBeEquivalentTo(command.ContactIds);
-            companyRepository.Verify(x => x.Add(addedCompany), Times.Once);
-            companyRepository.Verify(x => x.Save(), Times.Once);
+            //addedCompany.Contacts.Select(x => x.Id).ShouldAllBeEquivalentTo(command.ContactIds);
+            companyContactRepository.Verify(x => x.Add(It.IsAny<CompanyContact>()), Times.Exactly(command.ContactIds.Count));
+            companyContactRepository.Verify(x => x.Save(), Times.Once);
         }
 
         [Theory]

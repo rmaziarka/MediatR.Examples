@@ -4,15 +4,22 @@ module Antares.Common.Models.Business {
     export class Requirement implements Dto.IRequirement {
         [index: string]: any;
 
-        id: string = '';
+        id: string = null;
+        requirementTypeId: string = null;
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
         description: string;
+        rentMin: number = null;
+        rentMax: number = null;
         requirementNotes: RequirementNote[] = [];
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
         offers: Offer[];
+        attachments: Attachment[] = [];
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -27,6 +34,15 @@ module Antares.Common.Models.Business {
                 if (requirement.viewings) {
                     this.viewings = requirement.viewings.map((item) => new Viewing(item));
                     this.groupViewings(this.viewings);
+                }
+                if (requirement.attachments) {
+                    this.attachments = requirement.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
+                }
+
+                if (requirement.solicitor && requirement.solicitorCompany) {
+                    this.solicitor = new Contact(requirement.solicitor);
+                    this.solicitorCompany = new Company(requirement.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
             }
         }

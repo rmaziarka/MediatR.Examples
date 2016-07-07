@@ -7,7 +7,9 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
@@ -49,10 +51,10 @@
             this.page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
         }
 
-        [When(@"User clicks property details link on view activity page")]
+        [When(@"User clicks property details on view activity page")]
         public void OpenPreviewPropertyPage()
         {
-            this.page.ClickDetailsLink().WaitForSidePanelToShow();
+            this.page.ClickPropertyCard().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view property link from property on view activity page")]
@@ -73,8 +75,8 @@
             this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type on attach file page")]
-        public void SelectAttachmentType(string file, string type)
+        [When(@"User adds (.*) file with (.*) type on view activity page")]
+        public void AddAttachment(string file, string type)
         {
             this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
@@ -82,7 +84,7 @@
             this.page.WaitForSidePanelToHide(60);
         }
 
-        [When(@"User clicks attachment details link on view activity page")]
+        [When(@"User clicks attachment card on view activity page")]
         public void OpenAttachmentPreview()
         {
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
@@ -123,10 +125,22 @@
             }
         }
 
-        [Then(@"Attachment (.*) should be downloaded")]
+        [When(@"User switches to details tab on view activity page")]
+        public void SwitchToDetailsTab()
+        {
+            this.page.OpenDetailsTab();
+        }
+
+        [When(@"User switchs to overview tab on view activity page")]
+        public void SwitchToOverviewTab()
+        {
+            this.page.OpenOverviewTab();
+        }
+
+        [Then(@"Activity attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            FileInfo fileInfo = this.page.PreviewAttachment.GetDownloadedAttachmentInfo();
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
@@ -144,23 +158,33 @@
             }
         }
 
+        [Then(@"Activity details should be displayed on view activity page")]
+        public void CheckActivityOverviewDetails(Table table)
+        {
+            //TODO improve chekcing details
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetails();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.ActivityTitle, actualDetails["title"]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails["status"]),
+                () => Assert.Equal(expectedDetails.Type, actualDetails["type"]));
+        }
+
         [Then(@"Activity details on view activty page are following")]
         public void CheckActivityDetails(Table table)
         {
+            //TODO improve chekcing details
             var details = table.CreateInstance<EditActivityDetails>();
-
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", this.page.MarketAppraisalPrice),
-                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", this.page.RecommendedPrice),
-                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", this.page.VendorEstimatedPrice));
+                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N0") + " GBP", this.page.AskingPrice));
         }
 
         [Then(@"Attachment should be displayed on view activity page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
-            Attachment actual = this.page.AttachmentDetails;
-            var expected = table.CreateInstance<Attachment>();
+            ViewActivityPage.Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<ViewActivityPage.Attachment>();
             expected.Date = DateTime.UtcNow.ToString(Format);
 
             actual.ShouldBeEquivalentTo(expected);
@@ -169,8 +193,9 @@
         [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
-            Attachment expected = this.page.AttachmentDetails;
+            ViewActivityPage.Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
+            ViewActivityPage.Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
@@ -203,7 +228,9 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
-                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
+                () =>
+                    Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime,
+                        this.page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
@@ -213,7 +240,7 @@
         [Then(@"User closes attachment preview page on view activity page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.PreviewAttachment.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
             this.page.WaitForSidePanelToHide();
         }
 
@@ -253,7 +280,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Offer + " GBP", actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
         }
 
@@ -269,7 +296,7 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetDetails()),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
@@ -285,12 +312,78 @@
             Assert.Equal(DateTime.UtcNow.AddDays(day).ToString(Format), this.page.LeadNegotiatorNextCall);
         }
 
-        [Then(@"Departments are displayed on view activity page")]
+        [Then(@"Departments should be displayed on view activity page")]
         public void CheckDepartment(Table table)
         {
             List<Department> expectedDepartments = table.CreateSet<Department>().ToList();
-            List<Department> actualDepartments = this.page.Departments;
+            List<ViewActivityPage.Department> actualDepartments = this.page.Departments;
             expectedDepartments.Should().Equal(actualDepartments, (d1, d2) => d1.Name.Equals(d2.Name));
+        }
+
+        [Then(@"Property details should be displayed in overview tab on view activity page")]
+        public void CheckPropertyDetailsInOverviewTab(Table table)
+        {
+            var expectedAddress = table.CreateInstance<Address>();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
+                () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
+                () => Assert.Equal(expectedAddress.Line2, actualResult["line2"]),
+                () => Assert.Equal(expectedAddress.Postcode, actualResult["postCode"]),
+                () => Assert.Equal(expectedAddress.City, actualResult["city"]),
+                () => Assert.Equal(expectedAddress.County, actualResult["county"]));
+        }
+
+        [Then(@"Activity details should be displayed in overview tab on view activity page")]
+        public void CheckActivityDetailsInOverviewTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Attendees, actualDetails["attendee"]));
+        }
+
+        [Then(@"Appraisal meeting date is set to tomorrow date with start time (.*) in overview tab on view activity page")]
+        public void CheckDateAndTime(string time)
+        {
+            string date = DateTime.Today.AddDays(1).ToString("dd-MM-yyyy");
+            Dictionary<string, string> actualDateTime = this.page.GetAppraisalDateAndTime();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(date, actualDateTime["date"]),
+                () => Assert.Equal(time, actualDateTime["time"]));
+        }
+
+        [Then(@"Activity details should be displayed in details tab on view activity page")]
+        public void CheckActivityDetailsInDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Department, actualDetails["department"]),
+                () => Assert.Equal(expectedDetails.Source, actualDetails["source"]),
+                () => Assert.Equal(expectedDetails.SourceDescription, actualDetails["sourceDescription"]),
+                () => Assert.Equal(expectedDetails.SellingReason, actualDetails["sellingReason"]),
+                () => Assert.Equal(expectedDetails.PitchingThreats, actualDetails["pitchingThreats"]),
+                () => Assert.Equal(expectedDetails.KeyNumber, actualDetails["keyNumber"]),
+                () => Assert.Equal(expectedDetails.AccessArangements, actualDetails["accessArangements"]));
+        }
+
+        [Then(@"Property details should be displayed in details tab on view activity page")]
+        public void CheckPropertyDetailsOnDetailsTab(Table table)
+        {
+            var expectedAddress = table.CreateInstance<Address>();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
+                () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
+                () => Assert.Equal(expectedAddress.Line2, actualResult["line2"]),
+                () => Assert.Equal(expectedAddress.Postcode, actualResult["postCode"]),
+                () => Assert.Equal(expectedAddress.City, actualResult["city"]),
+                () => Assert.Equal(expectedAddress.County, actualResult["county"]));
         }
     }
 }

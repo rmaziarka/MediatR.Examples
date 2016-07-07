@@ -22,9 +22,12 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-    using FixtureExtension;
 
     using FluentValidation.Resources;
+
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("CreateActivityCommandValidator")]
@@ -99,9 +102,7 @@
             ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+            validationResult.IsInvalid(nameof(cmd.PropertyId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -118,9 +119,7 @@
             ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+            validationResult.IsInvalid(nameof(cmd.ActivityStatusId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -135,9 +134,7 @@
             ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+            validationResult.IsInvalid(nameof(cmd.ActivityTypeId), nameof(Messages.notempty_error));
         }
 
         [Theory]

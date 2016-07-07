@@ -1,0 +1,58 @@
+<kf-side-panel-card>
+    <side-panel-header>
+        <h3 translate="OFFER.PREVIEW.PREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+
+        <div class="section-details">
+            <div class="section-row row">
+                <div class="col-md-12 text-left">
+                    <a ui-sref="app.offer-view({id: vm.offer.id})" translate="COMMON.DETAILS"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-details">
+            <h5 translate="COMMON.ACTIVITY"></h5>
+            <card-list-item class="offer-preview-activity">
+                <card show-context-menu="true" display-new-control="true"
+                      card-template-url="'app/offer/view/offerActivityCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
+        </div>
+
+        <div class="section-details">
+            <enum-item-view-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status"></enum-item-view-control>
+            <price-view-control price="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-view-control>
+            <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
+            <date-view-control date="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate"></date-view-control>
+        </div>
+
+        <div class="section-details">
+            <textarea-view-control text="vm.offer.specialConditions" config="vm.config.offer_SpecialConditions" schema="vm.controlSchemas.specialConditions"></textarea-view-control>
+        </div>
+
+        <div class="section-details">
+            <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
+            <div class="panel panel-default">
+                <div class="panel-body" id="offer-preview-negotiator">
+                    {{vm.offer.negotiator.getName()}}
+                </div>
+            </div>
+        </div>
+
+        <div class="section-details">
+            <date-view-control date="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate"></date-view-control>
+            <date-view-control date="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate"></date-view-control>
+        </div>
+
+    </side-panel-content>
+    <side-panel-footer>
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
+            <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+        </button>
+    </side-panel-footer>
+</kf-side-panel-card>

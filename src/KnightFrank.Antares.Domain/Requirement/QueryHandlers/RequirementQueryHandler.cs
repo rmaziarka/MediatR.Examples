@@ -26,6 +26,7 @@
                     .Include(req => req.Contacts)
                     .Include(req => req.Address)
                     .Include(req => req.RequirementNotes)
+                    .Include(req => req.RequirementType)
                     .Include(req => req.Viewings)
                     .Include(req => req.Viewings.Select(v => v.Attendees))
                     .Include(req => req.Viewings.Select(v => v.Negotiator))
@@ -34,6 +35,8 @@
                     .Include(req => req.Offers)
                     .Include(req => req.Offers.Select(v => v.Negotiator))
                     .Include(req => req.Offers.Select(v => v.Activity.Property.Address))
+                    .Include(req => req.Attachments)
+                    .Include(req => req.Attachments.Select(at => at.User))
                     .SingleOrDefault(req => req.Id == message.Id);
 
             return requirement;

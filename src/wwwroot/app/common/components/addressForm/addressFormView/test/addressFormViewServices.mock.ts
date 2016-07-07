@@ -25,7 +25,7 @@ module Antares.Mock.AddressForm {
             new Business.AddressFormFieldDefinition("Line3", "Line3LabelKey", true, "[a-zA-Z]", 1, 0, 1)
             ]);
 
-    export function mockHttpResponce($httpBackend: ng.IHttpBackendService, addressFormId: string = '', respond: any): ng.IHttpBackendService {
+	export function mockHttpResponce($httpBackend: ng.IHttpBackendService, addressFormId: string = '', respond: any): ng.IHttpBackendService {
 
         $httpBackend.whenGET(new RegExp(`\/api\/addressForms\/${addressFormId}`)).respond(() => {
             return respond;

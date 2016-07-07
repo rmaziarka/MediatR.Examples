@@ -19,7 +19,8 @@ module Antares {
 
                 static getInstance($translate: ng.translate.ITranslateService) {
                     var translateFunc: any;
-                    translateFunc = (value: string) => {
+                    translateFunc = (value: string) =>{
+	                    if (!value) return "";
                         var filter = new DynamicTranslateFilter($translate);
                         return filter.translate(value);
                     };

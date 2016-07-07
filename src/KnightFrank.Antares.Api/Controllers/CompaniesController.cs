@@ -3,9 +3,12 @@
 namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
 
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Domain.Company.Commands;
+    using KnightFrank.Antares.Domain.Company.Queries;
 
     using MediatR;
 
@@ -39,16 +42,40 @@ namespace KnightFrank.Antares.Api.Controllers
             return this.GetCompany(companyId);
         }
 
-        /// <summary>
-        ///     Gets the company.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Company entity</returns>
-        [HttpGet]
+		/// <summary>
+		/// Updates a company
+		/// </summary>
+		/// <param name="command">The command</param>
+		/// <returns></returns>
+	    [HttpPut]
+	    [Route("")]
+	    public Company UpdateCompany(UpdateCompanyCommand command)
+	    {
+			Guid companyId = this.mediator.Send(command);
+
+			return this.GetCompany(companyId);
+		}
+
+		/// <summary>
+		///     Gets the company.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns>Company entity</returns>
+		[HttpGet]
         [Route("{id}")]
         public Company GetCompany(Guid id)
         {
-            return new Company { Id = id };
+            var query = new CompanyQuery() { Id = id };
+
+		    Company company = this.mediator.Send(query);
+
+            if (company == null)
+            {
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Company not found."));
+            }
+
+            return company;
+          
         }
     }
 }

@@ -45,6 +45,8 @@
 
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
+        public DbSet<RequirementType> RequirementTypes { get; set; }
+        public DbSet<RequirementTypeLocalised> RequirementTypeLocaliseds{ get; set; }
         public DbSet<EnumType> EnumTypes { get; set; }
         public DbSet<EnumTypeItem> EnumTypeItems { get; set; }
         public DbSet<EnumLocalised> EnumLocaliseds { get; set; }
@@ -84,16 +86,19 @@
         public DbSet<CharacteristicLocalised> CharacteristicLocaliseds { get; set; }
         public DbSet<Viewing> Viewing { get; set; }
         public DbSet<Offer> Offer { get; set; }
+        public DbSet<OfferType> OfferTypes { get; set; }
+        public DbSet<OfferTypeLocalised> OfferTypeLocaliseds { get; set; }
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
         public DbSet<LatestView> LatestView { get; set; }
+        public DbSet<CompanyContact> CompanyContacts { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
             IEnumerable<Type> mapTypes = from t in typeof(KnightFrankContext).Assembly.GetTypes()
-                           where t.BaseType != null
-                           && t.BaseType.IsGenericType
-                           && t.BaseType.GetGenericTypeDefinition() == typeof(BaseEntityConfiguration<>)
-                           select t;
+                                         where t.BaseType != null
+                                         && t.BaseType.IsGenericType
+                                         && t.BaseType.GetGenericTypeDefinition() == typeof(BaseEntityConfiguration<>)
+                                         select t;
 
             foreach (Type mapType in mapTypes)
             {

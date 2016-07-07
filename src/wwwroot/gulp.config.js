@@ -59,6 +59,7 @@
                 '**/common/models/enums/**/*.js',
                 '**/common/components/base/**/*.js',
                 '**/common/**/*.js',
+                '**/**/*Base*.js',
                 '**/*.js'
             ]
         },

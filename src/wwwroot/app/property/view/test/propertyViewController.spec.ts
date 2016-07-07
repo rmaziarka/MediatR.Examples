@@ -8,21 +8,28 @@ module Antares {
     describe('Given property view controller', () => {
         var controller: PropertyViewController,
             $http: ng.IHttpBackendService,
+            evtAggregator: Antares.Core.EventAggregator,
             scope: ng.IScope;
+
+        var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView();
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $controller: any,
+            eventAggregator: Antares.Core.EventAggregator,
             $httpBackend: ng.IHttpBackendService) => {
 
             $http = $httpBackend;
-            var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView();
-
+            evtAggregator = eventAggregator;
             scope = $rootScope.$new();
 
             var bindings = { property: propertyMock };
             controller = <PropertyViewController>$controller('propertyViewController', { $scope: scope }, bindings);
         }));
+
+        beforeAll(() => {
+            jasmine.addMatchers(TestHelpers.CustomMatchers.AttachmentCustomMatchersGenerator.generate());
+        });
 
         describe('when showAreaAdd is executed', () => {
             var clearAreasSpy = jasmine.createSpy('clearAreasSpy');
@@ -240,6 +247,61 @@ module Antares {
                 expect(requestData.areaId).toBe(areaToDrag.id);
                 expect(requestData.order).toBe(newIndexOfDraggedArea);
                 expect(requestData.propertyId).toBe(controller.property.id);
+            });
+        });
+
+        describe('when AttachmentSavedEvent event is triggered', () => {
+            it('then addSavedAttachmentToList should be called', () => {
+                // arrange
+                spyOn(controller, 'addSavedAttachmentToList')
+
+                var attachmentDto = TestHelpers.AttachmentGenerator.generateDto();
+                var command = new Common.Component.Attachment.AttachmentSavedEvent(attachmentDto);
+
+                // act
+                evtAggregator.publish(command);
+
+                // assert
+                expect(controller.addSavedAttachmentToList).toHaveBeenCalledWith(command.attachmentSaved);
+            });
+        });
+
+        describe('when addSavedAttachmentToList is called', () => {
+            it('then attachment should be added to list', () => {
+                // arrange
+                var attachmentDto = TestHelpers.AttachmentGenerator.generateDto();
+                controller.property.attachments = [];
+
+                // act
+                controller.addSavedAttachmentToList(attachmentDto);
+
+                // assert
+                var expectedAttachment = new Business.Attachment(attachmentDto);
+                expect(controller.property.attachments[0]).toBeSameAsAttachment(expectedAttachment);
+            });
+        });
+
+        describe('when saveAttachment is called', () => {
+            it('then proper API request should be sent', () => {
+                // arrange
+                var attachmentModel = TestHelpers.AttachmentUploadCardModelGenerator.generate();
+                var requestData: Property.Command.PropertyAttachmentSaveCommand;
+
+                var expectedUrl = `/api/properties/${controller.property.id}/attachments/`;
+                $http.expectPOST(expectedUrl, (data: string) => {
+                    requestData = JSON.parse(data);
+                    return true;
+                }).respond(201, {});
+
+                // act
+                controller.saveAttachment(attachmentModel);
+                $http.flush();
+
+                // assert
+                expect(requestData).not.toBe(null);
+                expect(requestData.propertyId).toBe(controller.property.id);
+                expect(requestData.attachment).toBeSameAsAttachmentModel(attachmentModel);
+
             });
         });
     });

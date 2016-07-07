@@ -5,7 +5,9 @@ module Antares {
 
     app.config(['$translateProvider', initTranslations]);
     app.config(['$provide', extendOrderByWithEmptyFields]);
+    app.config(['$provide', extendNumberFilter]);
     app.config(['$provide', decorateInputNumber]);
+    app.config(['$provide', decorateForm]);
     app.config(['growlProvider', configureGrowl]);
     app.config(['$httpProvider', setupInterceptors]);
 
@@ -26,6 +28,14 @@ module Antares {
 
     function decorateInputNumber($provider: angular.auto.IProvideService) {
         $provider.decorator('inputDirective', Common.Decorators.InputNumberDirectiveDecorator.decoratorFunction);
+    }
+
+    function extendNumberFilter($provider: angular.auto.IProvideService){
+        $provider.decorator('numberFilter', Common.Decorators.TrimZeroesNumberFilterDecorator.decoratorFunction);
+    }
+
+    function decorateForm($provider: angular.auto.IProvideService) {
+        $provider.decorator('formDirective', Common.Decorators.FormDecorator.decoratorFunction);
     }
 
     function initEnumService(enumService: Services.EnumService) {

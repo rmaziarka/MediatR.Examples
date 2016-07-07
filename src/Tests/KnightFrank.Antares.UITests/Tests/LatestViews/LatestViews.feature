@@ -1,4 +1,4 @@
-﻿Feature: Latest views
+﻿Feature: Latest views UI tests
 
 @LatestViews
 Scenario: Display latest viewed properties
@@ -6,11 +6,12 @@ Scenario: Display latest viewed properties
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2       | Postcode | City          | County          |
 			| 70             | Condo        | Longford St | TS1 4RN  | Middlesbrough | North Yorkshire |
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Michael   | Johnson | Sir   |
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
-		And User clicks property details link on view activity page
-		And User opens navigation drawer menu
-		And User selects Properties menu item
+		And User clicks property details on view activity page
 	Then Latest 1 property should contain following data
 		| LatestData            |
 		| Condo, 70 Longford St |
@@ -31,11 +32,11 @@ Scenario: Display latest viewed properties
 			| 10             | Tulketh Community Sports College | Tag Ln | PR2 3TX  | Preston | Lancashire |
 		And User clicks save property button on create property page
 	Then View property page should be displayed
-	And Latest 3 properties should contain following data
-		| LatestData                                  |
-		| Tulketh Community Sports College, 10 Tag Ln |
-		| Copier King, 203 Sherwood Rd                |
-		| Condo, 70 Longford St                       |
+		And Latest 3 properties should contain following data
+			| LatestData                                  |
+			| Tulketh Community Sports College, 10 Tag Ln |
+			| Copier King, 203 Sherwood Rd                |
+			| Condo, 70 Longford St                       |
 	When User navigates to view property page with id
 	Then View property page should be displayed
 		And Latest 3 properties should contain following data
@@ -67,23 +68,30 @@ Scenario: Display latest viewed properties
 
 @LatestViews
 Scenario: Display latest viewed activities
-	Given Property with Residential division and Retail.Car Showroom type is defined
+	Given Property with Residential division and House type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName              | Line2       | Postcode | City    | County      |
 			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-		And User selects Long Leasehold Sale activity type on create activity page
+		And User selects Freehold Sale type on create activity page
+		And User selects Direct phone call from source list on create activity page
+		And User selects Divorce from selling reason list on create activity page
+		And User selects John Smith from attendees on create activity page
 		And User clicks save button on create activity page
-		And User opens navigation drawer menu
-		And User selects Activities menu item
 	Then Latest 1 activity should contain following data
 		| LatestData                                |
 		| The Alternative Tuck Shop, 24 Holywell St |
+	When User clicks property details on view activity page
+		And User clicks view property link from property on view activity page
+	Then View property page should be displayed
 	When Property with Residential division and Flat type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
 			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Michael   | Johnson | Sir   |
 		And Property Long Leasehold Sale activity is defined
 	When User navigates to edit activity page with id
 	Then Latest 2 activities should contain following data
@@ -100,6 +108,9 @@ Scenario: Display latest viewed activities
 		| Title | FirstName | Surname   |
 		| Lady  | Joanna    | Thornhill |
 		And Property with Residential division and House type is defined
+		And Contacts are created in database
+			| FirstName | Surname | Title |
+			| Tom       | Johnson | Dr    |
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2      | Postcode | City     | County |
 			| 237            | Duke Flat    | Margate Rd | CT12 6TA | Ramsgate | Kent   |
@@ -108,10 +119,12 @@ Scenario: Display latest viewed activities
 			| 10-01-2015   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice |
-			| 100000   | 500000   |
+			| Type             | Description |
+			| Residential Sale | Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
+			| Type             | Status |
+			| Residential Sale | New    |
 	When User navigates to view offer page with id
 		And User clicks activity details on view offer page
 	Then Latest 3 activities should contain following data
@@ -142,11 +155,12 @@ Scenario: Display latest viewed requirements
 		| Title | FirstName | Surname  |
 		| Miss  | Triss     | Merigold |
 	When User navigates to create requirement page
-		And User opens navigation drawer menu
-		And User selects Requirements menu item
 		And User selects contacts on create requirement page
 			| FirstName | Surname  |
 			| Triss     | Merigold |
+		And User fills in sale requirement details on create requirement page
+			| Type             | Description |
+			| Residential Sale | Description |
 		And User fills in location details on create requirement page
 			| Country        | Line2    | Postcode | City   |
 			| United Kingdom | Gower St | WC1E 6BT | London |
@@ -160,10 +174,10 @@ Scenario: Display latest viewed requirements
 		| Dr    | Van       | Wilder  |
 		| Sir   | Van       | Wilder  |
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+			| Type                | Description |
+			| Residential Letting | Description |
 	When User navigates to view requirement page with id
-	Then Latest 2 requirement should contain following data
+	Then Latest 2 requirements should contain following data
 		| LatestData             |
 		| Van Wilder, Van Wilder |
 		| Triss Merigold         |
@@ -175,7 +189,45 @@ Scenario: Display latest viewed requirements
 		And Requirement applicants on view requirement page are same as the following
 			| FirstName | Surname  |
 			| Triss     | Merigold |
-		And Latest 2 requirement should contain following data
+		And Latest 2 requirements should contain following data
 			| LatestData             |
 			| Triss Merigold         |
 			| Van Wilder, Van Wilder |
+
+@LatestViews
+Scenario: Display latest viewed companies
+	Given Contacts are created in database
+		| FirstName | Surname | Title |
+		| Dustin    | Hoffman | Dr    |
+	When User navigates to create company page
+		And User fills in company details on create company page 
+			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
+			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
+		And User selects contacts on create company page
+			| FirstName | Surname |
+			| Dustin    | Hoffman |
+		And User clicks save company button on create company page
+	Then View company page should be displayed
+		And Latest 1 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+	When Contacts are created in database
+		| FirstName | Surname | Title |
+		| Tom       | Hanks   | Dr    |
+		And Company is created in database
+			| Name      | WebsiteUrl               | ClientCarePageUrl         |
+			| Hanks Inc | https://www.tomhanks.com | https://www.tomhanks2.com |
+	When User navigates to edit company page with id
+	Then Latest 2 companies should contain following data
+		| LatestData  |
+		| Hanks Inc   |
+		| Hoffman Inc |
+	When User clicks latest company on 2 position in drawer menu
+	Then View company page should be displayed
+		And Company should have following details on view company page
+			| Name        | WebsiteUrl                   | ClientCarePageUrl             | ClientCareStatus      |
+			| Hoffman Inc | http://www.DustinHoffman.com | http://www.DustinHoffman.test | Massive Action Client |
+		And Latest 2 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+			| Hanks Inc   |

@@ -7,11 +7,11 @@ module Antares {
         export module Filters {
 
             export class EnumSorterFilter {
-                constructor(private enumService: Antares.Services.EnumService, public appConfig: Common.Models.IAppConfig) {
+                constructor(private enumProvider: Antares.Providers.EnumProvider, public appConfig: Common.Models.IAppConfig) {
                 }
 
                 getEnumValue = (enumItemId: string) => {
-                    return this.enumService.getEnumCodeById(enumItemId);
+                    return this.enumProvider.getEnumCodeById(enumItemId);
                 }
 
                 sort = (items: any[], enumType: string, field: string): any => {
@@ -29,9 +29,9 @@ module Antares {
                     return filtered;
                 };
 
-                static getInstance(enumService: Antares.Services.EnumService, appConfig: Common.Models.IAppConfig) {
+                static getInstance(enumProvider: Antares.Providers.EnumProvider, appConfig: Common.Models.IAppConfig) {
                     var filterFunc: any = (items: any, enumType: string, field: string) => {
-                        var filter = new EnumSorterFilter(enumService, appConfig);
+                        var filter = new EnumSorterFilter(enumProvider, appConfig);
                         return filter.sort(items, enumType, field);
                     };
                     filterFunc.$stateful = true;

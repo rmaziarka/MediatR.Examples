@@ -48,12 +48,12 @@
         // ReSharper disable once InconsistentNaming
         Inconsistent_Dynamic_Configuration,
         /// <summary>
-        /// Key value : One or more vendors are not exist.
+        /// Key value : One or more contacts do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Missing_Activity_Vendors_Id,
+        Missing_Activity_Contacts_Id,
         /// <summary>
-        /// Key value : One or more contacts are not exist.
+        /// Key value : One or more contacts do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Missing_Company_Contacts_Id,
@@ -62,6 +62,36 @@
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Missing_Requirement_Applicants_Id,
+        /// <summary>
+        /// Key value : Offer Date must be less than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        OfferDateLessOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Completion Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        CompletionDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Exchange Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ExchangeDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Mortgage Survey Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        MortgageSurveyDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Additional Survey Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        AdditionalSurveyDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Enum value of the field {0} not passed
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Enum_Value_Not_Passed,
         /// <summary>
         /// Key value : One or more attendees are not on the applicant list.
         /// </summary>
@@ -113,25 +143,40 @@
         // ReSharper disable once InconsistentNaming
         Activity_Departments_Not_Unique,
         /// <summary>
-        /// Key value : Activity should hva only one managing department.
+        /// Key value : One or more attendees are duplicated.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Activity_Should_Have_Only_One_Managing_Department,
+        Activity_AppraisalMeetingAttendees_Not_Unique,
         /// <summary>
-        /// Key value : Offer Date must be less than or equal to create date.
+        /// Key value : One or more contacts are duplicated.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        OfferDateLessOrEqualToCreateDate,
+        Activity_Contacts_Not_Unique,
         /// <summary>
-        /// Key value : Completion Date must be greater than or equal to create date.
+        /// Key value : Activity lead negotiator is required.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        CompletionDateGreaterOrEqualToCreateDate,
+        Activity_LeadNegotiator_Is_Required,
         /// <summary>
-        /// Key value : Exchange Date must be greater than or equal to create date.
+        /// Key value : Activity should have exactly one managing department.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        ExchangeDateGreaterOrEqualToCreateDate
+        Activity_Should_Have_Exactly_One_Managing_Department,
+        /// <summary>
+        /// Key value : One or more appraisal meeting attendees do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Attendees_Id,
+        /// <summary>
+        /// Key value : One or more departments do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Departments_Id,
+        /// <summary>
+        /// Key value : One or more negotiators do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Negotiators_Id
     }
 }
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
 
@@ -19,9 +20,12 @@
 
     using Xunit;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     [Binding]
     public class ViewPropertySteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
         private ViewPropertyPage page;
@@ -52,7 +56,7 @@
         [When(@"User clicks add activites button on view property page")]
         public void ClickAddActivityButton()
         {
-            this.page.AddActivity().WaitForSidePanelToShow();
+            this.page.AddActivity();
         }
 
         [When(@"User clicks edit property button on view property page")]
@@ -83,26 +87,7 @@
         [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
-            this.page.ActivityPreview.ClickViewActivity();
-        }
-
-        [When(@"User selects (.*) activity type on create activity page")]
-        public void SelectActivityType(string type)
-        {
-            this.page.Activity.SelectActivityType(type);
-        }
-
-        [When(@"User selects (.*) activity status on create activity page")]
-        public void SelectActivityStatus(string status)
-        {
-            this.page.Activity.SelectActivityStatus(status);
-        }
-
-        [When(@"User clicks save button on create activity page")]
-        public void ClickSaveButtonOnActivityPanel()
-        {
-            this.page.Activity.SaveActivity();
-            this.page.WaitForSidePanelToHide();
+            this.page.ActivityPreview.WaitForDetailsToLoad().ClickViewActivity();
         }
 
         [When(@"User fills in ownership details on view property page")]
@@ -182,6 +167,27 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks add attachment button on view property page")]
+        public void OpenAttachFilePanel()
+        {
+            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks attachment card on view property page")]
+        public void OpenAttachmentPreview()
+        {
+            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
+        }
+
+        [When(@"User adds (.*) file with (.*) type on view property page")]
+        public void AddAttachment(string file, string type)
+        {
+            this.page.AttachFile.SelectType(type)
+                .AddFiletoAttachment(file)
+                .SaveAttachment();
+            this.page.WaitForSidePanelToHide(60);
+        }
+
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
         {
@@ -203,7 +209,7 @@
             {
                 Assert.True(field.Equals(string.Empty)
                     ? this.page.IsAddressDetailsNotVisible(field)
-                    : this.page.IsAddressDetailsVisible(field));
+                    : this.page.IsAddressDetailsVisible(field), field + " in not displayed");
             }
         }
 
@@ -264,16 +270,6 @@
             Assert.True(this.page.IsViewPropertyFormPresent());
         }
 
-        [Then(@"Activity details are set on create activity page")]
-        public void CheckActivityDetailsonActivityPanel(Table table)
-        {
-            var details = table.CreateInstance<ActivityDetails>();
-
-            Verify.That(this.driverContext,
-                () => Assert.Equal(details.Vendor, this.page.Activity.GetActivityVendor()),
-                () => Assert.Equal(details.Status, this.page.Activity.GetActivityStatus()));
-        }
-
         [Then(@"Characteristics are displayed on view property page")]
         public void CheckCharacteristics(Table table)
         {
@@ -302,6 +298,44 @@
                 () => Assert.True(this.page.IsSuccessMessageDisplayed()),
                 () => Assert.Equal("New property has been created", this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
+        }
+
+        [Then(@"Attachment should be displayed on view poperty page")]
+        public void CheckIfAttachmentIsDisplayed(Table table)
+        {
+            Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<Attachment>();
+            expected.Date = DateTime.UtcNow.ToString(Format);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"Attachment details on attachment preview page are the same like on view property page")]
+        public void ChackAttachmentDetails()
+        {
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
+            Attachment expected = this.page.AttachmentDetails;
+            expected.User = "John Smith";
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"User closes attachment preview page on view property page")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
+            this.page.WaitForSidePanelToHide();
+        }
+
+        [Then(@"Property attachment (.*) should be downloaded")]
+        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        {
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
+                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
         }
     }
 }

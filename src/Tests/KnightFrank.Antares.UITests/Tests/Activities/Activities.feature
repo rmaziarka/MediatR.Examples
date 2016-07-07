@@ -5,10 +5,10 @@ Scenario: Create activity
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
 		| Lady  | Sarah     | Chatto  |
-		And Property with Commercial division and Leisure.Hotel type is defined
+		And Property with Residential division and Bungalow type is defined
 		And Property attributes details are defined
-			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |
-			| 20000   | 30000   | 25000       | 40000       | 30                  | 40                  | 60            | 180           | 15               | 25               |
+			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
+			| 1000    | 2000    | 1500        | 3000        | 1                   | 2                   | 1           | 2           | 1             | 2             | 1            | 2            |
 		And Property characteristics are defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
@@ -18,15 +18,48 @@ Scenario: Create activity
 			| 01-01-2005   | 100000000 |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
+		And User selects Freehold Sale type on create activity page
+		And User selects Pre-appraisal status on create activity page
 	Then Activity details are set on create activity page
-	    | Vendor       | Status        |
-	    | Sarah Chatto | Pre-appraisal |
-	When User selects Freehold Sale activity type on create activity page
-		And User selects Market appraisal activity status on create activity page
-		And User clicks save button on create activity page
-	Then Activity details are set on view property page
-		| Vendor       | Status           | Type          |
-		| Sarah Chatto | Market appraisal | Freehold Sale |
+	    | Vendor       | Negotiator | ActivityTitle             | Department |
+	    | Sarah Chatto | John Smith | Hotel Park, 4 Waterloo St | Aldgate    |
+		And Property details are set on create activity page
+			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
+			| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
+		And Attendees are set on create activity page
+			| Attendees    |
+			| John Smith   |
+			| Sarah Chatto |
+	When User selects Direct phone call from source list on create activity page
+	# Improve steps
+		And User fills in source description Text on create activity page
+		And User selects Divorce from selling reason list on create activity page
+		And User fills in pitching threats Text on create activity page
+		And User fills in 123456 key number on create activity page
+		And User fills in access arangements Text on create activity page
+		And User sets appraisal meeting date as tomorrow date on create activity page
+		And User sets start time at 10:00 and end time at 12:00 on create activity page
+		And User selects Sarah Chatto from attendees on create activity page
+		And User fills in invitation text Text on create activity page
+		 
+	When User clicks save button on create activity page
+	Then Activity details should be displayed on view activity page
+		| ActivityTitle             | Status        | Type          |
+		| Hotel Park, 4 Waterloo St | Pre-appraisal | Freehold Sale |
+	Then Property details should be displayed in overview tab on view activity page
+		| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
+		| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
+		And Activity details should be displayed in overview tab on view activity page
+			| Vendor       | Negotiator | Attendees    |
+			| Sarah Chatto | John Smith | Sarah Chatto |
+		And Appraisal meeting date is set to tomorrow date with start time 10:00 - 12:00 in overview tab on view activity page
+	When User switches to details tab on view activity page
+	Then Activity details should be displayed in details tab on view activity page
+		| Vendor       | Negotiator | Department | Source            | SourceDescription | SellingReason | PitchingThreats | KeyNumber | AccessArangements |
+		| Sarah Chatto | John Smith | Aldgate    | Direct phone call | Text              | Divorce       | Text            | 123456    | Text              |
+		And Property details should be displayed in details tab on view activity page
+			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
+			| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
 
 @Activity
 Scenario: Edit activity
@@ -48,8 +81,10 @@ Scenario: Edit activity
 	Then John Smith is set as lead negotiator on view activity page
 	When User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-			| Market appraisal | 4000                 | 5000             | 6000                 |
+			| ActivityStatus   | AskingPrice |
+			| Market appraisal | 4000        |
+		And User fills in KF Valuation 500 on edit activity page
+		And User selects Private Treaty disposal type on edit activity page
 		And User changes lead negotiator to Adam Williams on edit activity page
         And User adds secondary negotiators on edit activity page
             | Name            |
@@ -60,25 +95,27 @@ Scenario: Edit activity
 		And User removes 3 secondary negotiator on edit activity page
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
-		And Activity details on view activty page are following
-			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-			| Market appraisal | 4000                 | 5000             | 6000                 |
+		#And Activity details on view activty page are following
+		#	| ActivityStatus   | AskingPrice |
+		#	| Market appraisal | 4000        |
 		And Adam Williams is set as lead negotiator on view activity page
-        And Secondary negotiators are set on view activity page
-            | Name            | NextCall |
-            | Edward Griffin  | -        |
-            | Eva Sandler     | -        |
-            | Martha Williams | -        |
+	When User switches to details tab on view activity page
+    Then Secondary negotiators are set on view activity page
+        | Name            | NextCall |
+        | Edward Griffin  | -        |
+        | Eva Sandler     | -        |
+        | Martha Williams | -        |
 	When User clicks edit button on view activity page
 		And User sets 3 secondary negotiator as lead negotiator on edit activity page
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Martha Williams is set as lead negotiator on view activity page
-        And Secondary negotiators are set on view activity page
-            | Name           | NextCall |
-            | Adam Williams  | 14       |
-            | Edward Griffin | -        |
-            | Eva Sandler    | -        |
+	When User switches to details tab on view activity page
+    Then Secondary negotiators are set on view activity page
+        | Name           | NextCall |
+        | Adam Williams  | 14       |
+        | Edward Griffin | -        |
+        | Eva Sandler    | -        |
 
 @Activity
 Scenario: Edit negotiators next call dates 
@@ -98,11 +135,12 @@ Scenario: Edit negotiators next call dates
 		And Property Long Leasehold Sale activity with negotiators is defined
 	When User navigates to view activity page with id
 	Then Lead negotiator next call is set to 14 days from current day on view activity page
-		And Secondary negotiators are set on view activity page
-			| Name            | NextCall |
-			| Eva Sandler     | -        |
-			| John Doe        | -        |
-			| Martha Williams | -        |
+	When User switches to details tab on view activity page
+	Then Secondary negotiators are set on view activity page
+		| Name            | NextCall |
+		| Eva Sandler     | -        |
+		| John Doe        | -        |
+		| Martha Williams | -        |
 	When User edits lead negotiator next call to 0 days from current day on view activity page
 		And User edits secondary negotiator next call on view activity page
 			| Name            | NextCall |
@@ -124,7 +162,8 @@ Scenario: Edit negotiators next call dates
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Lead negotiator next call is set to 0 days from current day on view activity page
-        And Secondary negotiators are set on view activity page
+	When User switches to details tab on view activity page
+    Then Secondary negotiators are set on view activity page
             | Name            | NextCall |
             | Eva Sandler     | 20       |
             | John Doe        | -        |
@@ -134,11 +173,14 @@ Scenario: Edit negotiators next call dates
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Lead negotiator next call is set to 30 days from current day on view activity page
-        And Secondary negotiators are set on view activity page
+	When User switches to details tab on view activity page
+    Then Secondary negotiators are set on view activity page
             | Name          | NextCall |
             | Adam Williams | 0        |
             | Eva Sandler   | 20       |
             | John Doe      | -        |
+	When User switchs to overview tab on view activity page
+	Then Lead negotiator next call is set to 30 days from current day on view activity page
 
 @Activity
 Scenario: Edit negotiators departments 
@@ -158,7 +200,8 @@ Scenario: Edit negotiators departments
 		And Property Long Leasehold Sale activity with negotiators is defined
 	When User navigates to view activity page with id
 	Then View activity page should be displayed
-		And Departments are displayed on view activity page
+	When User switches to details tab on view activity page
+	Then Departments should be displayed on view activity page
 			| Name        |
 			| Aldgate     |
 			| Residential |
@@ -170,8 +213,9 @@ Scenario: Edit negotiators departments
             | Jeam Beam      |
             | Helen Williams |
             | Thomas Miller  | 
-		And User clicks save button on edit activity page 
-	Then Departments are displayed on view activity page
+		And User clicks save button on edit activity page
+		And User switches to details tab on view activity page 
+	Then Departments should be displayed on view activity page
 		| Name    |
 		| Aldgate |
 		| Bath    |
@@ -180,7 +224,8 @@ Scenario: Edit negotiators departments
 	When User clicks edit button on view activity page
 		And User sets Bath department as managing department on edit activity page
 		And User clicks save button on edit activity page
-	Then Departments are displayed on view activity page
+		And User switches to details tab on view activity page 
+	Then Departments should be displayed on view activity page
 		| Name    |
 		| Bath    |
 		| Aldgate |

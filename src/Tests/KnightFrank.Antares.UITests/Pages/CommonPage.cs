@@ -19,7 +19,7 @@
             return new Uri(ConfigurationManager.AppSettings["protocol"] + "://" + ConfigurationManager.AppSettings["host"]);
         }
 
-        private static Uri GetUrl(string key)
+        public static Uri GetUrl(string key)
         {
             return new Uri(GetUrl() + ConfigurationManager.AppSettings[key]);
         }
@@ -51,6 +51,9 @@
                 case "search property":
                     this.Driver.NavigateTo(GetUrl("SearchPropertyPage"));
                     break;
+                case "edit preferences":
+                    this.Driver.NavigateTo(GetUrl("EditPreferencesPage"));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;
@@ -81,6 +84,12 @@
                     break;
                 case "edit offer":
                     this.Driver.NavigateTo(GetUrl("EditOfferPage", id));
+                    break;
+                case "view company":
+                    this.Driver.NavigateTo(GetUrl("ViewCompanyPage", id));
+                    break;
+                case "edit company":
+                    this.Driver.NavigateTo(GetUrl("EditCompanyPage", id));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

@@ -30,10 +30,5 @@ module Antares.Mock {
 
             return this.promise;
         };
-        
-        public getEnumCodeById = (enumTypeItemId:string)=> {
-            return this.enumCodeById[enumTypeItemId];
-        }
-
     }
 }

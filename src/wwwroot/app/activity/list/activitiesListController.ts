@@ -13,26 +13,39 @@ module Antares {
 
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
-                private dataAccessService: Antares.Services.DataAccessService){
+                private dataAccessService: Antares.Services.DataAccessService) {
 
                 componentRegistry.register(this, this.componentId);
             }
 
-            setSelected = (itemToSelect: string) =>{
+            setSelected = (itemToSelect: string) => {
                 this.selectedActivity = itemToSelect;
             }
 
-            getSelectedActivity = (): Dto.IActivityQueryResult =>{
+            getSelectedActivity = (): Dto.IActivityQueryResult => {
                 var activities = this.activities.filter((a: Dto.IActivityQueryResult) => { return a.id === this.selectedActivity });
                 return activities[0];
             }
 
-            loadActivities = () =>{
+            loadAllActivities = () => {
                 this.isLoading = true;
-                return this.dataAccessService.getActivityResource().query().$promise.then((activitiesResources: any) =>{
+                return this.dataAccessService.getActivityResource().query().$promise.then((activitiesResources: any) => {
                     this.activities = activitiesResources.map(
-                    (item: Dto.IActivityQueryResult) => new Business.ActivityQueryResult(<Dto.IActivityQueryResult>item));
-                }).finally(() =>{
+                        (item: Dto.IActivityQueryResult) => new Business.ActivityQueryResult(<Dto.IActivityQueryResult>item));
+                }).finally(() => {
+                    this.isLoading = false;
+                    if (this.activities.length > 0) {
+                        this.setSelected(this.activities[0].id);
+                    }
+                });
+            }
+
+            loadActivitiesForRequirement = (requirementTypeId: string, countryCode: string) => {
+                this.isLoading = true;
+                return this.dataAccessService.getActivityResource().getActivitiesForRequirement({ requirementTypeId: requirementTypeId, countryCode: countryCode }, null).$promise.then((activitiesResources: any) => {
+                    this.activities = activitiesResources.map(
+                        (item: Dto.IActivityQueryResult) => new Business.ActivityQueryResult(<Dto.IActivityQueryResult>item));
+                }).finally(() => {
                     this.isLoading = false;
                     if (this.activities.length > 0) {
                         this.setSelected(this.activities[0].id);

@@ -10,8 +10,12 @@
 }
 
 .section-details {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   word-wrap: break-word;
+
+  p {
+    word-wrap: break-word;
+  }
 }
 
 .area-details {

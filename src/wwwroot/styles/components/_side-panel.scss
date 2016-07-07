@@ -11,6 +11,10 @@
   width: 100%;
   z-index: 1050;
 
+  .side-panel-container {
+    height: 100%;
+  }
+
   @media (min-width: $screen-sm-min) {
     width: 350px;
   }
@@ -104,6 +108,7 @@
   bottom: 0;
   padding: 15px;
   text-align: center;
+  z-index: 5;
 }
 
 // Side Panel Animations

@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Common;
 
     public interface IReadGenericRepository<T> : ICovariantReadGenericRepository<T>

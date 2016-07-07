@@ -23,13 +23,19 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                     });
 
 
-            this.Property(o => o.MarketAppraisalPrice)
+            this.Property(o => o.AgreedInitialMarketingPrice)
                 .IsMoney();
 
-            this.Property(o => o.RecommendedPrice)
+            this.Property(o => o.KfValuationPrice)
                 .IsMoney();
 
-            this.Property(o => o.VendorEstimatedPrice)
+            this.Property(o => o.VendorValuationPrice)
+                .IsMoney();
+
+            this.Property(o => o.ShortLetPricePerWeek)
+                .IsMoney();
+
+            this.Property(o => o.AskingPrice)
                 .IsMoney();
 
             this.HasMany(p => p.Attachments)
@@ -39,6 +45,58 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                     cs.MapLeftKey("ActivityId");
                     cs.MapRightKey("AttachmentId");
                 });
+
+            this.HasOptional(p => p.Solicitor)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.SolicitorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorCompanyId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(a => a.Source).WithMany().HasForeignKey(s => s.SourceId).WillCascadeOnDelete(false);
+            
+            this.HasOptional(a => a.SellingReason).WithMany().HasForeignKey(s => s.SellingReasonId).WillCascadeOnDelete(false);
+
+            this.Property(a => a.SourceDescription)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.PitchingThreats)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.KeyNumber)
+                .HasMaxLength(128);
+
+            this.Property(a => a.AccessArrangements)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.AppraisalMeetingStart);
+
+            this.Property(a => a.AppraisalMeetingEnd);
+
+            this.Property(a => a.AppraisalMeetingInvitationText)
+                .HasMaxLength(4000);
+
+            this.Property(x => x.ServiceChargeAmount).IsMoney();
+            this.Property(x => x.ServiceChargeNote).HasMaxLength(4000);
+            this.Property(x => x.GroundRentAmount).IsMoney();
+            this.Property(x => x.GroundRentNote).HasMaxLength(4000);
+
+            this.HasOptional(a => a.DisposalType).WithMany().HasForeignKey(s => s.DisposalTypeId).WillCascadeOnDelete(false);
+
+            this.Property(x => x.OtherCondition).HasMaxLength(4000);
+
+            this.HasOptional(a => a.Decoration).WithMany().HasForeignKey(s => s.DecorationId).WillCascadeOnDelete(false);
+
+            this.Property(x => x.ShortKfValuationPrice).IsMoney();
+            this.Property(x => x.ShortVendorValuationPrice).IsMoney();
+            this.Property(x => x.ShortAgreedInitialMarketingPrice).IsMoney();
+
+            this.Property(x => x.LongKfValuationPrice).IsMoney();
+            this.Property(x => x.LongVendorValuationPrice).IsMoney();
+            this.Property(x => x.LongAgreedInitialMarketingPrice).IsMoney();
         }
     }
 }

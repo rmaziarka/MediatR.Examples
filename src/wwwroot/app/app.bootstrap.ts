@@ -12,6 +12,7 @@ module Antares {
                 .then((result: ng.IHttpPromiseCallbackArg<any>): IAppConfig => {
                     return {
                         rootUrl: result.data["App.Settings"].Api.RootUrl,
+                        appRootUrl: result.data["App.Settings"].App.RootUrl,
                         fileChunkSizeInBytes: result.data["App.Settings"].FileUpload.ChunkSizeInBytes,
                         enumOrder: result.data["App.Settings"].EnumOrder
                     }

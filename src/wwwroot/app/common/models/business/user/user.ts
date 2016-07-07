@@ -15,7 +15,7 @@ module Antares.Common.Models.Business {
         }
 
         public getName() {
-            return this.firstName + ' ' + this.lastName;
+            return ((this.firstName || '') + ' ' + (this.lastName || '')).trim();
         }
     }
 }

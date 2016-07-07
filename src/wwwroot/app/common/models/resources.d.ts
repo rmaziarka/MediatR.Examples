@@ -35,6 +35,9 @@ declare module Antares.Common.Models {
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
         }
 
+        interface ICompanyContactResource extends ng.resource.IResource<Dto.IContact> {
+        }
+
         interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
         }
 
@@ -68,7 +71,7 @@ declare module Antares.Common.Models {
         interface IPropertyAreaBreakdownResource extends ng.resource.IResource<Dto.IPropertyAreaBreakdown> {
         }
 
-        interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
+        interface IActivityAttachmentSaveCommand extends ng.resource.IResource<Antares.Activity.Command.ActivityAttachmentSaveCommand> {
         }
 
         interface IAzureUploadUrlResource extends ng.resource.IResource<Dto.IAzureUploadUrlContainer> {
@@ -78,6 +81,12 @@ declare module Antares.Common.Models {
         }
 
         interface IDepartmentUserResource extends ng.resource.IResource<Dto.IUser> {
+        }
+
+        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IUser> {
+        }
+
+        interface ICurrentUserResource extends ng.resource.IResource<Dto.ICurrentUser> {
         }
 
         // *** IResourceClass extensions ***
@@ -93,8 +102,13 @@ declare module Antares.Common.Models {
             update(params: Object, data: Object): T;
         }
 
+        interface ICompanyResourceClass extends Resources.IBaseResourceClass<Resources.ICompanyResource> {
+
+        }
+
         interface IActivityResourceClass extends Resources.IBaseResourceClass<Resources.IActivityResource> {
-            getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityType>;
+            getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
+            getActivitiesForRequirement(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
         }
 
         interface IActivityUserResourceClass extends Resources.IBaseResourceClass<Resources.IActivityUserResource> {
@@ -108,6 +122,7 @@ declare module Antares.Common.Models {
         }
 
         interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+            getRequirementTypes(params: any): ng.resource.IResource<Dto.IRequirementTypeQueryResult[]>;
         }
 
         interface IViewingResourceClass extends Resources.IBaseResourceClass<Resources.IViewingResource> {
@@ -170,5 +185,9 @@ declare module Antares.Common.Models {
             query(): ng.resource.IResourceArray<IDepartmentUserResource>;
             query(params: IDepartmentUserResourceParameters): ng.resource.IResourceArray<IDepartmentUserResource>;
         }
+
+         interface ICurrentUserResourceClass extends Resources.IBaseResourceClass<Resources.ICurrentUserResource> {
+
+       }
     }
 }

@@ -17,7 +17,98 @@ ActivityDocumentType;Brochure;en;Brochure
 ActivityDocumentType;VideoTour;en;Video Tour
 ActivityDocumentType;EPC;en;EPC
 ActivityDocumentType;GasCertificate;en;Gas Certificate
+RequirementDocumentType;TermsOfBusiness;en;Terms of Business
+PropertyDocumentType;Photograph;en;Photograph
+PropertyDocumentType;FloorPlan;en;Floor Plan
+PropertyDocumentType;Brochure;en;Brochure
+PropertyDocumentType;VideoTour;en;Video Tour
 OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected
 OfferStatus;Accepted;en;Accepted
+ActivityUserType;LeadNegotiator;en;Lead negotiator
+ActivityUserType;SecondaryNegotiator;en;Secondary negotiator
+ActivityDepartmentType;Managing;en;Managing
+ActivityDepartmentType;Standard;en;Standard
+ClientCareStatus;MassiveActionClient;en;Massive Action Client
+ClientCareStatus;PrincipalClient;en;Principal Client
+ClientCareStatus;KeyClient;en;Key Client
+MortgageStatus;Unknown;en;Unknown
+MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
+MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank
+MortgageStatus;InProgress;en;In progress
+MortgageStatus;Agreed;en;Agreed
+MortgageSurveyStatus;Unknown;en;Unknown
+MortgageSurveyStatus;NotRequired;en;Not required
+MortgageSurveyStatus;Complete;en;Complete
+MortgageSurveyStatus;Outstanding;en;Outstanding
+AdditionalSurveyStatus;Unknown;en;Unknown
+AdditionalSurveyStatus;NotRequired;en;Not required
+AdditionalSurveyStatus;InProgress;en;In progress
+AdditionalSurveyStatus;Complete;en;Complete
+SearchStatus;NotStarted;en;Not started
+SearchStatus;AppliedFor;en;Applied for
+SearchStatus;Complete;en;Complete
+Enquiries;NotStarted;en;Not started
+Enquiries;Sent;en;Sent
+Enquiries;Complete;en;Complete
+SalutationFormat;MrJohnSmith;en;Mr John Smith 
+SalutationFormat;JohnSmithEsq;en;John Smith, Esq
+SalutationFormat;MrJohnSmith;cs;Pan John Smith
+SalutationFormat;JohnSmithEsq;cs;John Smith, Esq
+SalutationFormat;MrJohnSmith;de;Herr John Smith
+SalutationFormat;JohnSmithEsq;de;Herr John Smith
+SalutationFormat;MrJohnSmith;es;Sr. John Smith
+SalutationFormat;JohnSmithEsq;es;John Smith, letrado
+SalutationFormat;MrJohnSmith;fr;M. John Smith
+SalutationFormat;JohnSmithEsq;fr;John Smith, Esq
+SalutationFormat;MrJohnSmith;it;Sig. Mario Rossi
+SalutationFormat;JohnSmithEsq;it;Mario Rossi
+SalutationFormat;MrJohnSmith;pl;Pan John Smith
+SalutationFormat;JohnSmithEsq;pl;WP John Smith
+SalutationFormat;MrJohnSmith;sv;John Smith
+SalutationFormat;JohnSmithEsq;sv;John Smith, Esq
+ActivitySource;KFContactsRegister;en;KF Contacts register
+ActivitySource;KFPR;en;KF PR
+ActivitySource;Knightfrank;en;Knightfrank.co.uk
+ActivitySource;KnightfrankGlobalSearch;en;Knightfrank.com global search
+ActivitySource;DirectEmail;en;Direct email
+ActivitySource;DirectPhoneCall;en;Direct phone call
+ActivitySource;DeveloperWebsite;en;Developer Website
+ActivitySource;LeadGenerationCanvassingActivities;en;Lead generation canvassing activities
+ActivitySource;OnTheMarket;en;Onthemarket.com
+ActivitySource;OtherInternetPortal;en;Other internet portal
+ActivitySource;OtherPortalGlobrix;en;Other portal - Globix
+ActivitySource;OtherPortalPrimelocation;en;Other portal - Primelocation
+ActivitySource;POD;en;POD
+ActivitySource;TBSReferralAdvert;en;TBS - Referral - Advert
+ActivitySource;TBSReferralBank;en;TBS - Referral - Bank
+ActivitySource;TBSReferralPastClient;en;TBS - Referral - Past Client
+ActivitySource;TBSReferralKF;en;TBS - Referral - KF
+ActivitySource;TBSReferralProfessionalContact;en;TBS - Referral - Professional Contact
+ActivitySource;TBSReferralWebsite;en;TBS - Referral - Website
+ActivitySource;MagazineA;en;Magazine A
+ActivitySource;MagazineB;en;Magazine B
+ActivitySource;MagazineC;en;Magazine C
+ActivitySource;NewspaperA;en;Newspaper A
+ActivitySource;NewspaperB;en;Newspaper B
+ActivitySource;NewspaperC;en;Newspaper C
+ActivitySellingReason;Upsizing;en;Upsizing
+ActivitySellingReason;DebtFinancialDifficulty;en;Debt/Financial Difficulty
+ActivitySellingReason;Divorce;en;Divorce
+ActivitySellingReason;Downsizing;en;Downsizing
+ActivitySellingReason;FamilySize;en;Family Size
+ActivitySellingReason;PrivateDeveloper;en;Private Developer
+ActivitySellingReason;Probate;en;Probate
+ActivitySellingReason;ReceiverDisposal;en;Receiver Disposal
+ActivitySellingReason;RegularPropertyValueAppraisal;en;Regular Property Value Appraisal
+ActivitySellingReason;Relocation;en;Relocation
+ActivitySellingReason;Retiring;en;Retiring
+ActivitySellingReason;SurpliceToRequirement;en;Surplice to requirement
+DisposalType;PrivateTreaty;en;Private Treaty
+DisposalType;FormalTender;en;Formal Tender
+DisposalType;Auction;en;Auction
+Decoration;Unmodernised;en;Unmodernised
+Decoration;Fair;en;Fair
+Decoration;Good;en;Good
+Decoration;VeryGood;en;Very Good

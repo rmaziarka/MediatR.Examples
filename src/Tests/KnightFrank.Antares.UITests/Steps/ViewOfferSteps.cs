@@ -55,7 +55,7 @@
         [When(@"User clicks view activity link from activity on view offer page")]
         public void OpenViewActivityPage()
         {
-            this.page.ActivityPreview.ClickViewActivity();
+            this.page.ActivityPreview.WaitForDetailsToLoad().ClickViewActivity();
         }
 
         [When(@"User clicks requirement details button on view offer page")]
@@ -92,7 +92,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Status, details[0]),
-                () => Assert.Equal(expectedDetails.Offer + " GBP", details[1]),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", details[1]),
                 () => Assert.Equal(expectedDetails.OfferDate, details[2]),
                 () => Assert.Equal(expectedDetails.SpecialConditions, details[3]),
                 () => Assert.Equal(expectedDetails.ExchangeDate, details[4]),
@@ -117,7 +117,7 @@
             var expectedDetails = table.CreateInstance<OfferData>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.ActivityDetails));
+                () => Assert.Equal(expectedDetails.Details, this.page.GetActivityDetails()));
         }
 
         [Then(@"Offer requirement details on view offer page are same as the following")]
@@ -152,6 +152,62 @@
                 () => Assert.True(this.page.IsSuccessMessageDisplayed()),
                 () => Assert.Equal("Offer successfully saved", this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
+        }
+
+        [Then(@"Offer progress summary details on view offer page are same as the following")]
+        public void CheckProgressSummary(Table table)
+        {
+            var details = table.CreateInstance<OfferProgressSummary>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.MortgageStatus, this.page.MortgageStatus),
+                () => Assert.Equal(details.MortgageSurveyStatus, this.page.MortgageSurveyStatus),
+                () => Assert.Equal(details.AdditionalSurveyStatus, this.page.AdditionalSurveyStatus),
+                () => Assert.Equal(details.SearchStatus, this.page.SearchStatus),
+                () => Assert.Equal(details.Enquiries, this.page.Enquiries),
+                () => Assert.Equal(details.ContractApproved, this.page.IsContractApproved()));
+        }
+
+        [Then(@"Offer mortgage details details on view offer page are same as the following")]
+        public void CheckMortgageDetails(Table table)
+        {
+            var details = table.CreateInstance<OfferMortgageDetails>();
+            details.MortgageSurveyDate = this.scenarioContext.Get<OfferMortgageDetails>("OfferMortgageDetails").MortgageSurveyDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.MortgageLoanToValue + "%", this.page.MortgageLoanToValue),
+                () => Assert.Equal(details.Broker, this.page.Broker.First()),
+                () => Assert.Equal(details.BrokerCompany, this.page.Broker.Last()),
+                () => Assert.Equal(details.Lender, this.page.Lender.First()),
+                () => Assert.Equal(details.LenderCompany, this.page.Lender.Last()),
+                () => Assert.Equal(details.MortgageSurveyDate, this.page.MortgageSurveyDate),
+                () => Assert.Equal(details.Surveyor, this.page.MortgageSurveyor.First()),
+                () => Assert.Equal(details.SurveyorCompany, this.page.MortgageSurveyor.Last()));
+        }
+
+        [Then(@"Offer additional details on view offer page are same as the following")]
+        public void CheckAdditionalDetails(Table table)
+        {
+            var details = table.CreateInstance<OfferAdditional>();
+            details.AdditionalSurveyDate = this.scenarioContext.Get<OfferAdditional>("OfferAdditional").AdditionalSurveyDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.AdditionalSurveyDate, this.page.AdditionalSurveyDate),
+                () => Assert.Equal(details.AdditionalSurveyor, this.page.AdditionalSurveyor.First()),
+                () => Assert.Equal(details.AdditionalSurveyorCompany, this.page.AdditionalSurveyor.Last()),
+                () => Assert.Equal(details.Comment, this.page.Comment));
+        }
+
+        [Then(@"Offer solicitors details on view offer page are same as the following")]
+        public void CheckSolicitors(Table table)
+        {
+            var details = table.CreateInstance<SolicitorsData>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, this.page.VendorSolicitor.First()),
+                () => Assert.Equal(details.VendorCompany, this.page.VendorSolicitor.Last()),
+                () => Assert.Equal(details.Applicant, this.page.ApplicantSolicitor.First()),
+                () => Assert.Equal(details.ApplicantCompany, this.page.ApplicantSolicitor.Last()));
         }
     }
 }

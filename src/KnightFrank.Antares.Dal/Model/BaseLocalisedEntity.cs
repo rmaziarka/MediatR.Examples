@@ -6,7 +6,7 @@
 
     public abstract class BaseLocalisedEntity : BaseEntity, ILocalised
     {
-        public Locale Locale { get; set; }
+        public virtual Locale Locale { get; set; }
 
         public Guid LocaleId { get; set; }
 

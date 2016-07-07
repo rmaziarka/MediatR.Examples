@@ -1,11 +1,17 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Contacts
 {
-    public class Contact : BaseEntity
+    using System.Collections.Generic;
+
+    using KnightFrank.Antares.Dal.Model.Company;
+
+	public class Contact : BaseEntity
     {
-        public string FirstName { get; set; }
+		public string Title { get; set; }
+
+		public string FirstName { get; set; }
 
         public string Surname { get; set; }
 
-        public string Title { get; set; }
-    }
+        public virtual ICollection<CompanyContact> CompaniesContacts { get; set; }
+	}
 }

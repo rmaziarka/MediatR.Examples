@@ -10,7 +10,7 @@
 
     public class ContactsListPage : ProjectPageBase
     {
-        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
+        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[contains(.,'{0}')]//input");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'updateContacts']");
         private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showOwnershipAdd']");
@@ -30,9 +30,9 @@
         {
             string contactDetails = firstName + " " + surname;
 
-            if (!this.Driver.GetElements(this.contact.Format(contactDetails)).First().Selected)
+            if (!this.Driver.GetElements(this.contact.Format(contactDetails)).Last().Selected)
             {
-                this.Driver.GetElements(this.contact.Format(contactDetails)).First().Click();
+                this.Driver.GetElements(this.contact.Format(contactDetails)).Last().Click();
             }
             return this;
         }

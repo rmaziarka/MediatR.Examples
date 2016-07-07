@@ -1,0 +1,8 @@
+﻿<list id="activity-vendors-edit" ng-if="vm.config">
+    <list-header>
+        <h3 class="page-header" translate="ACTIVITY.EDIT.VENDORS"></h3>
+    </list-header>
+    <list-item id="list-item-{{vendor.id}}" ng-repeat="vendor in vm.contacts">
+        {{vendor.getName()}}
+    </list-item>
+</list>

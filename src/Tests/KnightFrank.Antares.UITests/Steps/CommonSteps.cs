@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Threading;
 
     using KnightFrank.Antares.UITests.Pages;
 
@@ -13,9 +14,9 @@
     {
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
+        private readonly CommonPage page;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private readonly CommonPage page;
 
         public CommonSteps(ScenarioContext scenarioContext)
         {
@@ -37,6 +38,12 @@
         public void GoBack()
         {
             this.page.GoBack();
+        }
+
+        [When(@"User waits (.*) seconds")]
+        public void WaitFor(double seconds)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(seconds));
         }
     }
 }

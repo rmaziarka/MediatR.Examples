@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -8,7 +10,13 @@
     using MediatR;
     using Domain.Requirement.Commands;
 
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Activity.Queries;
+    using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Requirement.Queries;
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
     using KnightFrank.Antares.Domain.RequirementNote.Queries;
@@ -21,14 +29,16 @@
     public class RequirementsController : ApiController
     {
         private readonly IMediator mediator;
+        private readonly IGenericRepository<User> userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequirementsController"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
-        public RequirementsController(IMediator mediator)
+        public RequirementsController(IMediator mediator, IGenericRepository<User> userRepository)
         {
             this.mediator = mediator;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -37,6 +47,7 @@
         /// <returns>Requirement identifier.</returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Requirement CreateRequirement(CreateRequirementCommand command)
         {
             Guid requirementId =  this.mediator.Send(command);
@@ -51,6 +62,7 @@
         /// <returns>Requirement.</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Requirement GetRequirementById(Guid id)
         {
             Requirement requirement = this.mediator.Send(new RequirementQuery { Id = id });
@@ -71,6 +83,7 @@
         /// <returns>Requirement note</returns>
         [HttpPost]
         [Route("{id}/notes")]
+        [DataShaping]
         public RequirementNote CreateRequirementNote(Guid id, CreateRequirementNoteCommand command)
         {
             command.RequirementId = id;
@@ -80,6 +93,42 @@
                 this.mediator.Send(new RequirementNoteQuery { Id = requirementNoteId });
 
             return requirementNote;
+        }
+
+        /// <summary>
+        ///     Creates the attachment.
+        /// </summary>
+        /// <param name="id">Activity Id</param>
+        /// <param name="command">Attachment data</param>
+        /// <returns>Created attachment</returns>
+        [HttpPost]
+        [Route("{id}/attachments")]
+        public Attachment CreateAttachment(Guid id, CreateRequirementAttachmentCommand command)
+        {
+            // User id is mocked.
+            // TODO Set correct user id from header.
+            if (command.Attachment != null)
+            {
+                command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
+            }
+
+            command.EntityId = id;
+            Guid attachmentId = this.mediator.Send(command);
+
+            var attachmentQuery = new AttachmentQuery { Id = attachmentId };
+            return this.mediator.Send(attachmentQuery);
+        }
+
+        /// <summary>
+        /// Gets the activity types.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>List of activity types</returns>
+        [HttpGet]
+        [Route("types")]
+        public IEnumerable<RequirementTypeQueryResult> GetRequirementTypes([FromUri(Name = "")]RequirementTypeQuery query)
+        {
+            return this.mediator.Send(query);
         }
     }
 }

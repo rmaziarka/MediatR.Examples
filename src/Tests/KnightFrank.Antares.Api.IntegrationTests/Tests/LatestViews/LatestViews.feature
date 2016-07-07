@@ -11,16 +11,12 @@ Scenario: Create latest viewed property
 
 @LatestViews
 Scenario: Create latest viewed activity
-    Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And User gets Freehold Sale for ActivityType
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User adds Activity to latest viewed entities using api
 	Then User should get OK http status code
 		And Retrieved latest view should contain Activity entity
@@ -31,10 +27,20 @@ Scenario: Create latest viewed requirement
 		| FirstName | Surname | Title  |
 		| Tomasz    | Bien    | Mister |
 		| Adam      | Malysz  | Mister |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 	When User adds Requirement to latest viewed entities using api
 	Then User should get OK http status code
 		And Retrieved latest view should contain Requirement entity
+
+@LatestViews
+Scenario: Create latest viewed company
+	Given Contacts exists in database
+		| FirstName | Surname | Title  |
+		| Tomasz    | Bien    | Mister |
+		And Company exists in database
+	When User adds Company to latest viewed entities using api
+	Then User should get OK http status code
+		And Retrieved latest view should contain Company entity
 
 @LatestViews
 Scenario: Create latest view using invalid entity type
@@ -62,27 +68,27 @@ Scenario: Get latest viewed properties
 
 @LatestViews
 Scenario: Get latest viewed activities
-    Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Activity is added to latest views
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Activity is added to latest views
 		And Activity is added to latest views
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Activity is added to latest views
 	When User gets latest viewed entities
 	Then User should get OK http status code
@@ -93,19 +99,41 @@ Scenario: Get latest viewed requirements
 	Given Contacts exists in database 
 		| FirstName | Surname | Title |
 		| Tomasz    | Bien    | Sir   |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
 		And Requirement is added to latest views
 		And Contacts exists in database
 			| FirstName | Surname | Title |
 			| Tomasz    | Bien    | Dude  |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
 	When User gets latest viewed entities
 	Then User should get OK http status code
 		And Latest viewed details should match Requirement entities
+
+@LatestViews
+Scenario: Get latest viewed companies
+	Given Contacts exists in database
+		| FirstName | Surname | Title |
+		| Anthony   | Hopkins | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+		And Contacts exists in database
+			| FirstName | Surname | Title |
+			| Paul      | Newman  | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+		And Company is added to latest views
+		And Contacts exists in database
+			| FirstName | Surname    | Title |
+			| Denzel    | Washington | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+	When User gets latest viewed entities
+	Then User should get OK http status code
+		And Latest viewed details should match Company entities

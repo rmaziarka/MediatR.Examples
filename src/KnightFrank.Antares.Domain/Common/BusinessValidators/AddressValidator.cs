@@ -115,7 +115,7 @@
         private static void ValidateIfFieldMatchesRegEx(string fieldName, string fieldValue, string regEx)
         {
             var regex = new Regex(regEx, RegexOptions.IgnoreCase);
-            Match match = regex.Match(fieldValue);
+            Match match = regex.Match(fieldValue ?? string.Empty);
 
             if (!match.Success)
             {

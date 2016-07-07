@@ -1,0 +1,29 @@
+﻿<div ng-if="atvm.config">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="country" translate="ADDRESSFORM.COUNTRY"></label>
+                <select class="form-control" id="country" ng-model="atvm.address.countryId" ng-change="atvm.changeCountry(atvm.address.countryId)" required>
+                    <option ng-repeat="c in atvm.countries" value="{{c.country.id}}">{{c.value}}</option>
+                </select>
+                <span class="help-block" ng-show="atvm.isLoading">Loading data...</span>
+            </div>
+        </div>
+    </div>
+
+    <ng-form id="form-address" name="formAddress" ng-hide="atvm.isLoading || !atvm.address.countryId">
+        <div class="row" ng-repeat="row in atvm.addressForm.addressFieldRows | orderBy: 'rowOrder'">
+            <div ng-repeat="field in row | orderBy: 'columnOrder'"
+                 class="col-md-{{field.columnSize}}" ng-class="{'has-error': (atvm.isSubmitted(formAddress) || formAddress.{{field.name}}.$dirty) && formAddress.{{field.name}}.$invalid}">
+                <div class="form-group">
+                    <label ng-class="{required: field.required}" for="{{field.name}}" translate={{field.labelKey}}></label>
+                    <input type="text" class="form-control" id="{{field.name}}" name="{{field.name}}" ng-model="atvm.address[field.name]"
+                           ng-pattern="field.regEx" ng-required="field.required" autocomplete="off"/>
+                    <div ng-messages="formAddress[field.name].$error" ng-show="atvm.isSubmitted(formAddress) || formAddress.{{field.name}}.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+</div>

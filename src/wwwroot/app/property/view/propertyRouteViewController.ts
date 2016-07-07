@@ -5,6 +5,7 @@ module Antares.Property {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import IActivityConfig = Antares.Activity.IActivityConfig;
 
     export class PropertyRouteViewController {
 
