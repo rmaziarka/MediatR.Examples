@@ -8,14 +8,11 @@ module Antares.Common.Component {
         requirement: Business.Requirement;
 
         constructor(
-            private $state: ng.ui.IStateService,
-            private appConfig: Common.Models.IAppConfig,
-            private $window: ng.IWindowService) {
+            private $state: ng.ui.IStateService) {
         }
 
-        navigateToRequirement = (requirement: Dto.IRequirement) => {
-            var requirementViewUrl = this.appConfig.appRootUrl + this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: false });
-            this.$window.open(requirementViewUrl, '_blank');
+        navigateToRequirement = (requirement: Dto.IRequirement) =>{
+            this.$state.go('app.requirement-view', { id : requirement.id });
         }
     }
 
