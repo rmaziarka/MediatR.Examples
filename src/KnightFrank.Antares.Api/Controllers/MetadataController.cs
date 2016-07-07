@@ -6,11 +6,18 @@
     using System.Web.Http.ModelBinding;
 
     using KnightFrank.Antares.Api.ModelBinders;
+    using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Offer.Commands;
+
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
 
     /// <summary>
     /// Metadata controller.
@@ -53,7 +60,7 @@
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/activity")]
-        public dynamic GetActivityConfiguration(PageType pageType, Guid propertyTypeId, Guid activityTypeId, [ModelBinder(typeof(ConfigurableActivityModelBinder))]object entity)
+        public dynamic GetActivityConfiguration(PageType pageType, Guid propertyTypeId, Guid activityTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateActivityCommand, UpdateActivityCommand, Activity>))]object entity)
         {
             if (propertyTypeId == Guid.Empty || activityTypeId == Guid.Empty)
                 return null;
@@ -84,6 +91,7 @@
             IList<InnerFieldState> fieldStates = this.requirementConfiguration.GetInnerFieldsState(pageType, new Tuple<RequirementType>(requirementType), entity);
             return fieldStates.MapToResponse();
         }
+
         /// <summary>
         /// Gets the offer configuration.
         /// </summary>
@@ -94,7 +102,7 @@
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/offer")]
-        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableOfferModelBinder))]object entity)
+        public dynamic GetOfferConfiguration<T>(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateOfferCommand, UpdateOfferCommand, Offer>))]object entity)
         {
             if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
                 return null;
