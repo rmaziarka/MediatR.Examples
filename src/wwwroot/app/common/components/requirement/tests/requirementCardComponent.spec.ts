@@ -24,15 +24,9 @@ module Antares {
             scope.$apply();
         }));
 
-        it('then requirement link should be proper', () =>{
+        it('then requirement template should containt contact names', () =>{
             // assert
-            var requirementLink = element.find('#requirement-link').children('a').attr('ui-sref');
-            expect(requirementLink).toEqual('app.requirement-view({id: vm.requirement.id})');
-        });
-
-        it('then requirement details should display proper address text', () =>{
-            // assert
-            var requirementDetailsElement = element.find('#requirement-details');
+            var requirementDetailsElement = element.find('card-template');
             var properRequirementTextToDisplay = controller.requirement.getContactNames();
             expect(requirementDetailsElement.text()).toBe(properRequirementTextToDisplay);
         });
