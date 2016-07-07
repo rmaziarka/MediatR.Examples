@@ -102,7 +102,7 @@
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/offer")]
-        public dynamic GetOfferConfiguration<T>(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateOfferCommand, UpdateOfferCommand, Offer>))]object entity)
+        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateOfferCommand, UpdateOfferCommand, Offer>))]object entity)
         {
             if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
                 return null;
