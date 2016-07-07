@@ -39,12 +39,19 @@
 
         public bool IsViewContactFormPresent()
         {
-            return this.Driver.IsElementPresent(this.viewContactForm, BaseConfiguration.MediumTimeout);
+            this.Driver.WaitForElementToBeDisplayed(this.viewContactForm, BaseConfiguration.LongTimeout);
+            return true;
         }
 
         public void OpenEditContactPage()
         {
             this.Driver.Click(this.editButton);
+        }
+
+        public ViewContactPage OpenViewContactPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view contacts", id);
+            return this;
         }
     }
 }

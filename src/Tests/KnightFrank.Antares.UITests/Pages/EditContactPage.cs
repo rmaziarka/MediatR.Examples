@@ -55,7 +55,7 @@ namespace KnightFrank.Antares.UITests.Pages
 
         public bool IsEditContactFormPresent()
         {
-            return this.Driver.IsElementPresent(this.editContactForm, BaseConfiguration.MediumTimeout);
+            return this.Driver.IsElementPresent(this.editContactForm, BaseConfiguration.LongTimeout);
         }
     }
 }

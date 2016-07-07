@@ -39,7 +39,8 @@ namespace KnightFrank.Antares.UITests.Steps
             }
         }
 
-        [Then(@"User edits contact's details on edit contact page")]
+        [When(@"User fills in contact details on edit contact page")]
+        [Then(@"User fills in contact details on edit contact page")]
         public void EditContact(Table table)
         {
             var contact = table.CreateInstance<Contact>();
@@ -49,6 +50,7 @@ namespace KnightFrank.Antares.UITests.Steps
                 .SetTitle(contact.Title);
         }
 
+        [When(@"User clicks save button on edit contact page")]
         [Then(@"User clicks save button on edit contact page")]
         public void SaveEditedContact()
         {

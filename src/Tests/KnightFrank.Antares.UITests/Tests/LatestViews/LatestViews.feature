@@ -213,3 +213,43 @@ Scenario: Display latest viewed companies
 			| LatestData  |
 			| Hoffman Inc |
 			| Hanks Inc   |
+
+@LatestViews
+Scenario: Display latest viewed contacts
+	Given Contacts are created in database
+		| FirstName | LastName   | Title |
+		| Mig       | Jagger     | Dr    |
+		| David     | Hasselhoff | Guard |
+	When User navigates to view contact page with id
+	Then Latest 2 contacts should contain following data
+	     | LatestData       |
+         | David Hasselhoff |
+         | Mig Jagger	    |
+	When User navigates to create contact page
+		And User fills in contact details on create contact page
+			| FirstName | LastName  | Title |
+			| Erick     | Ban		| Mr    |
+	And User clicks save contact button on create contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData       |
+			| Erick Ban        |
+			| David Hasselhoff |
+			| Mig Jagger       |
+	When User clicks latest contact on 2 position in drawer menu
+	Then Latest 3 contacts should contain following data
+		| LatestData       |
+		| David Hasselhoff |
+		| Erick Ban		   |
+		| Mig Jagger	   |
+	When User clicks edit button on view contact page
+		And User fills in contact details on edit contact page
+			| FirstName | LastName | Title |
+			| Mark      | Twain    | Sir   |
+		And User clicks save button on edit contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData |
+			| Mark Twain |
+			| Erick Ban  |
+			| Mig Jagger |
