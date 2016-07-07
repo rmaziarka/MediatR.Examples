@@ -222,7 +222,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ModelBinders\ConfigurableModelBinder.cs" />
     <Compile Include="ModelBinders\ConfigurableRequirementModelBinder.cs" />
-    <Compile Include="ModelBinders\ConfigurableOfferModelBinder.cs" />
     <Compile Include="Core\NullToDefaultValueConverter.cs" />
     <Compile Include="Services\AzureStorage\IDocumentStorageProvider.cs" />
     <Compile Include="Controllers\CompanyContactsController.cs" />
@@ -231,7 +230,6 @@
     <Compile Include="Controllers\OffersController.cs" />
     <Compile Include="DataShapingAttribute.cs" />
     <Compile Include="DataShapingFilter.cs" />
-    <Compile Include="ModelBinders\ConfigurableActivityModelBinder.cs" />
     <Compile Include="Models\AttachmentDownloadUrlParameters.cs" />
     <Compile Include="Services\AzureStorage\AzureDownloadUrlContainer.cs" />
     <Compile Include="Services\AzureStorage\AzureUploadUrlContainer.cs" />
