@@ -14,7 +14,6 @@
         public Guid ActivityId { get; set; }
         public virtual Activity Activity { get; set; }
         public virtual ICollection<TenancyTerm> Terms { get; set; }
-        public virtual ICollection<Contact> Tenants { get; set; }
-        public virtual ICollection<Contact> Landlords { get; set; }
+        public virtual ICollection<TenancyContact> Contacts { get; set; }
     }
 }

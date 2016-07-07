@@ -98,3 +98,5 @@ Decoration;Unmodernised
 Decoration;Fair
 Decoration;Good
 Decoration;VeryGood
+TenancyContactType;Landlord
+TenancyContactType;Tenant
