@@ -11,12 +11,12 @@
                 .HasForeignKey(x => x.ParentId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.Activity)
+            this.HasOptional(x => x.Activity)
                 .WithMany()
                 .HasForeignKey(x => x.ActivityId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.Requirement)
+            this.HasOptional(x => x.Requirement)
                 .WithMany()
                 .HasForeignKey(x => x.RequirementId)
                 .WillCascadeOnDelete(false);
