@@ -1,7 +1,7 @@
 <div ng-if="vm.config">
     <h3 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.HEADER"></h3>
 
-    <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
+    <h4 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
     <div class="form-group">
         <search ng-show="vm.isLeadNegotiatorInEditMode" id="lead-search"
                 options="vm.negotiatorsSearchOptions"
@@ -47,7 +47,7 @@
 
     <card-list id="card-list-negotiators" show-item-add="vm.isSecondaryNegotiatorsInEditMode ? null : vm.editSecondaryNegotiators">
         <card-list-header>
-            <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
+            <h4 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
             <div class="form-group">
             <search ng-show="vm.isSecondaryNegotiatorsInEditMode" id="secondary-search"
                     options="vm.negotiatorsSearchOptions"

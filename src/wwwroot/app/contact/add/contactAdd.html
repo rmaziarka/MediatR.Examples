@@ -5,7 +5,8 @@
 
         <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <h3 class="page-header" translate="CONTACT.BASIC_INFORMATION"></h3>
                     <fieldset>
                         <div id="title-section" class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
                             <div class="row">
@@ -49,14 +50,18 @@
                             </div>
                         </div>
                     </fieldset>
+
+                    <section>
+                        <h3 class="page-header" translate="CONTACT.SALUTATION.TITLE"></h3>
+                        <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
+                                        default-salutation-format-id="vm.defaultSalutationFormatId" />
+                    </section>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <h3 class="page-header" translate="CONTACT.SALUTATION.TITLE"></h3>
-                    <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
-                                      default-salutation-format-id="vm.defaultSalutationFormatId" />
+                <div class="col-sm-6 col-md-6 col-lg-4">
+
                 </div>
 
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-4">
                     <section id="contact-edit-negotiators">
                         <contact-negotiators-edit-control contact-id="vm.contact.id"
                                                           lead-negotiator="vm.contact.leadNegotiator"
@@ -64,9 +69,15 @@
                         </contact-negotiators-edit-control>
                     </section>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                    </div>
                 </div>
+            </div>
         </form>
     </div>
 </div>

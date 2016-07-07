@@ -1,12 +1,12 @@
 <div>
     <h3 class="page-header" translate="CONTACT.NEGOTIATORS.HEADER"></h3>
-    <h4 translate="CONTACT.NEGOTIATORS.LEAD"></h4>
+    <h4 class="page-header" translate="CONTACT.NEGOTIATORS.LEAD"></h4>
     <card id="card-lead-negotiator" card-template-url="'app/contact/templates/negotiatorCard.html'" item="vm.leadNegotiator">
     </card>
 
     <card-list id="card-list-negotiators">
         <card-list-header>
-            <h4 translate="CONTACT.NEGOTIATORS.SECONDARY"></h4>
+            <h4 class="page-header" translate="CONTACT.NEGOTIATORS.SECONDARY"></h4>
         </card-list-header>
         <card-list-no-items id="empty-secondary-negotiators" ng-show="!vm.secondaryNegotiators || vm.secondaryNegotiators.length === 0">
             <p class="help-block" translate="CONTACT.NEGOTIATORS.EMPTY"></p>
