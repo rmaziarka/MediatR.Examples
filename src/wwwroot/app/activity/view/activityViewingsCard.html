@@ -1,6 +1,19 @@
-<div class="panel-item">
-    <span>{{cvm.item.requirement.getContactNames()}}</span>
+<div class="card-columns row">
+    <div class="col-sm-4 col-md-2 col-lg-2">
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.VIEWINGS.DETAILS.VIEWING"></h4></div>
+        <div>
+            <div>{{::vm.item.startDate | date : 'dd-MM-yyyy'}},</div>
+            <div>{{::vm.item.startDate | date : 'HH:mm'}} - {{::vm.item.endDate | date : 'HH:mm'}}</div>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-2">
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.VIEWINGS.DETAILS.LEAD_NEGOTIATOR"></h4></div>
+        <div>{{vm.item.negotiator.firstName + ' ' + vm.item.negotiator.lastName}}</div>
+    </div>
+    <div class="col-sm-4 col-md-2 col-lg-2">
+    </div>
+    <!--<div class="col-sm-12 col-md-5 col-lg-6">
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.LATEST_NOTE"></h4></div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem mollitia modi ducimus sapiente maiores quaerat culpa minima odit magnam magni. Vero quas exercitationem autem assumenda fugit tempore ut voluptas quisquam at. Aliquid doloribus, dignissimos magnam iure? Aperiam ex nesciunt quam consequatur, culpa alias id necessitatibus placeat, delectus, corporis assumenda eos...</p>
+    </div>-->
 </div>
-<small>
-    {{::cvm.item.startDate | date : 'HH:mm'}} - {{::cvm.item.endDate | date : 'HH:mm'}}
-</small>
