@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
 
@@ -15,5 +14,7 @@
         public virtual Activity Activity { get; set; }
         public virtual ICollection<TenancyTerm> Terms { get; set; }
         public virtual ICollection<TenancyContact> Contacts { get; set; }
+        public Guid TenancyTypeId { get; set; }
+        public virtual TenancyType TenancyType { get; set; }
     }
 }

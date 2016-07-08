@@ -34,6 +34,7 @@
 :r .\SQL\RequirementTypeLocalised.sql
 :r .\SQL\OfferType.sql
 :r .\SQL\OfferTypeLocalised.sql
+:r .\SQL\TenancyType.sql
 
 :r .\Views\ElasticSearchContact.sql
 :r .\Views\ElasticSearchProperty.sql

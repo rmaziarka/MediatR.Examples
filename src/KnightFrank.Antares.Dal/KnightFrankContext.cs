@@ -94,6 +94,7 @@
         public DbSet<CompanyContact> CompanyContacts { get; set; }
         public DbSet<Tenancy> Tenancies { get; set; }
         public DbSet<TenancyTerm> Terms { get; set; }
+        public DbSet<TenancyType> TenancyTypes { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
