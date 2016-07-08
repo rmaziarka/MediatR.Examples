@@ -8,9 +8,12 @@ module Antares.Tenancy {
     function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
             .state('app.tenancy-view', {
-                url: '/tenancy/view',
-                params: {},
-                template: '<tenancy-view></tenancy-view>'
+                url: '/tenancy/view',                
+                template: "<tenancy-view></tenancy-view>"
+            })
+            .state('app.tenancy-add', {
+                url: '/tenancy/add',                
+                template: "<tenancy-add activity='activity' requirement='requirement'></tenancy-add>"
             });
     }
 }
