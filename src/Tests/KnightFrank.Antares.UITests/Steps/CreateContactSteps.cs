@@ -1,8 +1,11 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -51,6 +54,17 @@
             this.page.SetFirstName(contact.FirstName)
                 .SetLastName(contact.LastName)
                 .SetTitle(contact.Title);
+        }
+
+        [When(@"User selects secondary negotiatiors on create contact page")]
+        public void CreateSecondaryContactUsers(Table table)
+        {
+            List<User> users = table.CreateSet<User>().ToList();
+
+            foreach (User user in users)
+            {
+                this.page.SelectSecondaryNegotiator(user.FirstName + ' ' + user.LastName);
+            }
         }
 
         [When(@"User clicks save contact button on create contact page")]

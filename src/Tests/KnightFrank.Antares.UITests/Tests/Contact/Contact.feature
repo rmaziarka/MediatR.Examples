@@ -9,6 +9,10 @@ Scenario: Create contact
 		And User fills in contact details on create contact page
 			| FirstName | LastName  | Title |
 			| Alan      | Macarthur | Mr    |
+		And User selects secondary negotiatiors on create contact page
+			| FirstName | LastName |
+			| John      | Doe      |
+			| Thomas    | Miller   |
 		And User clicks save contact button on create contact page
 	Then View contact page should be displayed
 		And Contact details on view contact page are same as the following
@@ -17,6 +21,11 @@ Scenario: Create contact
 		And Mailings salutations details on view contact page are same as the following
 			| DefaultMailingSalutation | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation |
 			| Semiformal               | Sir                     | Mr Macarthur                | Alan                      |                           | Mr Alan Macarthur         |
+		And Primary negotiator is John Smith on view contact page
+		And Secondary negotiators on view contact page are the same as following
+			| Name          |
+			| John Doe      |
+			| Thomas Miller |
 
 @Contact 
 Scenario: Edit contact
@@ -26,9 +35,16 @@ Scenario: Edit contact
 	When User navigates to view contact page with id
 		And User clicks edit button on view contact page
 	Then Edit contact page should be displayed
-		And User fills in contact details on edit contact page
+	When User fills in contact details on edit contact page
 			| FirstName | LastName  | Title |
 			| Joseph    | McGregor  | Sir   |
+		And User selects primary negotiator to Adam Williams on edit contact page
+		And User removes 2 secondary negotiator on edit contact page
+		And User removes 1 secondary negotiator on edit contact page
+		And User selects secondary negotiatiors on edit contact page
+			| FirstName | LastName |
+			| John      | Doe      |
+			| Thomas    | Miller   |
 		And User clicks save button on edit contact page
 	Then View contact page should be displayed
 		And Contact details on view contact page are same as the following
@@ -37,6 +53,21 @@ Scenario: Edit contact
 		And Mailings salutations details on view contact page are same as the following
 			| DefaultMailingSalutation | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation |
 			| Formal                   | Sir McGregor            | Sir McGregor                | Joseph                    |                           | Sir Joseph McGregor       |
+		And Primary negotiator is Adam Williams on view contact page
+		And Secondary negotiators on view contact page are the same as following
+			| Name          |
+			| John Doe      |
+			| Thomas Miller |
+	When User clicks edit button on view contact page
+		Then Edit contact page should be displayed
+	When User sets 2 secondary negotiator as lead negotiator on edit contact page
+	And User clicks save button on edit contact page
+	Then View contact page should be displayed
+	    And Primary negotiator is Thomas Miller on view contact page
+		And Secondary negotiators on view contact page are the same as following
+			| Name          |
+			| Adam Williams |
+			| John Doe		| 
 
 @Contact
 Scenario Outline: Contact salutations 

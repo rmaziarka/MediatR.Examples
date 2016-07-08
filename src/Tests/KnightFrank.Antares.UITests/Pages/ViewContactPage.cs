@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -18,6 +21,9 @@
         private readonly ElementLocator informal = new ElementLocator(Locator.Id, "mailingInformalSalutation");
         private readonly ElementLocator personal = new ElementLocator(Locator.Id, "mailingPersonalSalutation");
         private readonly ElementLocator envelope = new ElementLocator(Locator.Id, "mailingEnvelopeSalutation");
+        // Primary and Secondary Negotiators
+        private readonly ElementLocator primaryNegotiatorLabel = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
+        private readonly ElementLocator secondaryNegotiatorsLabels = new ElementLocator(Locator.CssSelector, "#card-list-negotiators .panel-item");
 
         public ViewContactPage(DriverContext driverContext) : base(driverContext)
         {
@@ -36,6 +42,10 @@
         public string MailingPersonalSalutation => this.Driver.GetElement(this.personal).Text;
 
         public string MailingEnvelopeSalutation => this.Driver.GetElement(this.envelope).Text;
+
+        public string PrimaryNegotiator => this.Driver.GetElement(this.primaryNegotiatorLabel).Text;
+
+        public List<string> SecondaryNegotiators => this.Driver.GetElements(this.secondaryNegotiatorsLabels).Select(e => e.Text).ToList();
 
         public bool IsViewContactFormPresent()
         {

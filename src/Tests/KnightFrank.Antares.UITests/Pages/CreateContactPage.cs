@@ -23,6 +23,12 @@
         private readonly ElementLocator mailingsInformalInput = new ElementLocator(Locator.Id, "mailing-informal-salutation");
         private readonly ElementLocator mailingsPersonalInput = new ElementLocator(Locator.Id, "mailing-personal-salutation");
         private readonly ElementLocator mailingsEnvelopeInput = new ElementLocator(Locator.Id, "mailing-envelope-salutation");
+        // Secondary Negotiators
+        private readonly ElementLocator secondaryNegotiatorAddButton = new ElementLocator(Locator.Id, "addItemBtn");
+        private readonly ElementLocator secondaryNegotiatorSearch = new ElementLocator(Locator.CssSelector, "#secondary-search input");
+        private readonly ElementLocator secondaryNegotiatorDropdown = new ElementLocator(Locator.XPath, "//search[@id='secondary-search']//span[starts-with(., '{0}')]");
+        private readonly ElementLocator secondaryNegotiatorCloseButton = new ElementLocator(Locator.CssSelector, "#secondary-search button");
+
 
         public CreateContactPage(DriverContext driverContext) : base(driverContext)
         {
@@ -68,6 +74,19 @@
         public CreateContactPage SelectMailingsUseSalutation(string text)
         {
             this.Driver.GetElement<Select>(this.salutationsMailingsDropdown).SelectByText(text);
+            return this;
+        }
+
+        public CreateContactPage SelectSecondaryNegotiator(string text)
+        {
+            this.Driver.Click(this.secondaryNegotiatorAddButton);
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.SendKeys(this.secondaryNegotiatorSearch, text);
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.WaitForElementToBeDisplayed(this.secondaryNegotiatorDropdown.Format(text), BaseConfiguration.MediumTimeout);
+            this.Driver.Click(this.secondaryNegotiatorDropdown.Format(text));
+            this.Driver.Click(this.secondaryNegotiatorCloseButton);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 

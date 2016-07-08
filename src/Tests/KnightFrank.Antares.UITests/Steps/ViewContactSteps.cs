@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Company;
+    using FluentAssertions;
+
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -19,9 +20,8 @@
     public class ViewContactSteps
     {
         private readonly DriverContext driverContext;
-        private ViewContactPage page;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
+        private ViewContactPage page;
 
         public ViewContactSteps(ScenarioContext scenarioContext)
         {
@@ -72,6 +72,7 @@
             var details = table.CreateInstance<Salutation>();
 
             Verify.That(this.driverContext,
+
                 () => Assert.Equal(details.DefaultMailingSalutation, this.page.DefaultMailingSalutation),
                 () => Assert.Equal(details.MailingFormalSalutation, this.page.MailingFormalSalutation),
                 () => Assert.Equal(details.MailingSemiformalSalutation, this.page.MailingSemiformalSalutation),
@@ -84,6 +85,19 @@
         public void CheckViewContactPage()
         {
             Assert.True(this.page.IsViewContactFormPresent());
+        }
+
+        [Then(@"Primary negotiator is (.*) on view contact page")]
+        public void CheckPrimaryNegotiator(string negotiator)
+        {
+            Verify.That(this.driverContext, () => Assert.Equal(negotiator, this.page.PrimaryNegotiator));
+        }
+
+        [Then(@"Secondary negotiators on view contact page are the same as following")]
+        public void CheckSecondaryNegotiator(Table table)
+        {
+            List<string> negotiators = table.CreateSet<Negotiator>().Select(n => n.Name).ToList();
+            negotiators.Should().Equal(this.page.SecondaryNegotiators);
         }
     }
 }
