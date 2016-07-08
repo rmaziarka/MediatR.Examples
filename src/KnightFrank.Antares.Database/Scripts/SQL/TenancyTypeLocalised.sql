@@ -8,7 +8,7 @@ CREATE TABLE #TempTenancyTypeLocalised (
 ALTER TABLE TenancyTypeLocalised NOCHECK CONSTRAINT ALL
 
 BULK INSERT #TempTenancyTypeLocalised
-    FROM '$(OutputPath)\Scripts\Data\Configuration\TenancyTypeLocalised.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\tenancytypelocalised.csv'
         WITH
     (
 		FIRSTROW = 2,
@@ -17,16 +17,13 @@ BULK INSERT #TempTenancyTypeLocalised
 		TABLOCK
     )
 
-MERGE dbo.TenancyTypeLocalised AS T
+MERGE TenancyTypeLocalised AS T
 	USING
 	(
-		SELECT
-		P.Id AS TenancyTypeId,
-		L.Id AS LocaleId,
-		[Value]
+		SELECT P.Id AS TenancyTypeId, L.Id AS LocaleId, Temp.Value
 		FROM #TempTenancyTypeLocalised Temp
-		JOIN Locale L ON L.IsoCode = Temp.LocaleCode
-		JOIN TenancyType P ON P.Code = Temp.TenancyTypeCode
+		JOIN dbo.Locale L ON L.IsoCode = Temp.LocaleCode
+		JOIN dbo.TenancyType P ON P.Code = Temp.TenancyTypeCode
 	)
 	AS S
 	ON

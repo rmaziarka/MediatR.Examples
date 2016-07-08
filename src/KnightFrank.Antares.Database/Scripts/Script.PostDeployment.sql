@@ -35,6 +35,7 @@
 :r .\SQL\OfferType.sql
 :r .\SQL\OfferTypeLocalised.sql
 :r .\SQL\TenancyType.sql
+:r .\SQL\TenancyTypeLocalised.sql
 
 :r .\Views\ElasticSearchContact.sql
 :r .\Views\ElasticSearchProperty.sql
