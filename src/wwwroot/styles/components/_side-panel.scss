@@ -9,7 +9,7 @@
   top: $header-height;
   transform: translateZ(0) translateX(100%);
   width: 100%;
-  z-index: 1050;
+  z-index: 1030;
 
   .side-panel-container {
     height: 100%;
@@ -21,7 +21,7 @@
 
   &::after {
     @extend %fade;
-    z-index: 1060;
+    z-index: 1040;
   }
 
   &.side-panel-loading {
