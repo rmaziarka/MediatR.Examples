@@ -39,7 +39,7 @@ Configuration SetupJdbc
 
 		[Parameter(Mandatory = $false)]
 		[string]
-		$BranchName = "master",
+		$BranchName = "develop",
 
 		[Parameter(Mandatory = $false)]
 		[hashtable]
@@ -47,15 +47,18 @@ Configuration SetupJdbc
 
 		[Parameter(Mandatory = $true)]
 		[string]
-		$PathToSettingsTemplate
+		$PathToSettingsTemplate,
+
+		[Parameter(Mandatory = $false)]
+		[string]
+		$JdbcVersion = "2.3.3.1"
 		)
 
 	$tempDownloadFolder = "$env:SystemDrive\temp\download\"
 		
-	$jdbcFileName = 'elasticsearch-jdbc-2.3.2.0.zip'
-	$jdbcUnpack = "$env:SystemDrive\jdbc\$BranchName"
-	$jdbcVersion = '2.3.2.0'
-	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion"
+	$jdbcFileName = "elasticsearch-jdbc-$JdbcVersion.zip"
+	$jdbcUnpack = "$tempDownloadFolder\elasticsearch-jdbc-$JdbcVersion"
+	$jdbcFolder = "$env:SystemDrive\jdbc\$BranchName\elasticsearch-jdbc"
 
     $nssmVersion = '2.24'
     $nssmUnpack = "$env:SystemDrive\nssm"
@@ -84,6 +87,14 @@ Configuration SetupJdbc
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $jdbcFileName
 			Destination = $jdbcUnpack
 			DestinationType = "Directory"
+		}
+
+		File CopyJdbc {
+			DestinationPath = $jdbcFolder
+			SourcePath = "$jdbcUnpack\elasticsearch-jdbc-$JdbcVersion"
+			Force = $true
+			Recurse = $true
+			DependsOn = '[xArchive]UnzipJdbc'
 		}
 
 		Script ConfigureJdbc
@@ -120,14 +131,14 @@ Configuration SetupJdbc
 				$json = $settings | ConvertTo-Json -Depth 999				
 				[System.IO.File]::WriteAllLines($pathToSettings, $json)
 		    }
-			DependsOn = '[xArchive]UnzipJdbc'
+			DependsOn = '[File]CopyJdbc'
 	    }
 
         cNssm StartJdbc {
             ExeFolder = "$jdbcFolder\bin"
             ExeOrBatName = "execute.bat"
             NssmFolder = $nssmFolder
-            ServiceName = "jdbc-$jdbcVersion-$BranchName"
+            ServiceName = "jdbc-$BranchName"
             ServiceDisplayName = "JDBC importer for Elasticsearch ($BranchName)"
             DependsOn = @('[Script]ConfigureJdbc')
         }
