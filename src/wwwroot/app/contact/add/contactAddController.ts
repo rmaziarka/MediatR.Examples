@@ -169,9 +169,6 @@ module Antares.Contact {
         }
 
         public save() {
-            this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
-            this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
-
             if (this.selectedTitle) {
                 this.contact.title = this.selectedTitle;
             }
