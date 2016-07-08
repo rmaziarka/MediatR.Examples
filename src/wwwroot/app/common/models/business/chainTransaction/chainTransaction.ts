@@ -1,13 +1,19 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class ChainTransaction {
+    export class ChainTransaction implements Dto.IChainTransaction {
         id: string = '';
+        propertyId: string = '';
+        mortgageId: string = '';
+        surveyId: string = '';
+        searchesId: string = '';
+        enquiriesId: string = '';
+        contractAgreedId: string = '';
         activity: Business.Activity = null;
         requirement: Business.Requirement = null;
         parent: ChainTransaction = null;
         isEnd: boolean = false;
-        property: Business.Property = null;
+        property: Business.PreviewProperty = null;
         vendor: string = '';
         agentUser: Business.User = null;
         agentContact: Business.Contact = null;
@@ -24,7 +30,7 @@ module Antares.Common.Models.Business {
         constructor(chainTransaction?: Dto.IChainTransaction) {
             angular.extend(this, chainTransaction);
             if (chainTransaction) {
-                this.property = new Business.Property(chainTransaction.property);
+                this.property = new Business.PreviewProperty(chainTransaction.property);
                 if (chainTransaction.activity) {
                     this.activity = new Business.Activity(chainTransaction.activity);
                 }

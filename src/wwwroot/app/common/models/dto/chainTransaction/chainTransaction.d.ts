@@ -9,7 +9,7 @@
         parent?: IChainTransaction;
         isEnd: boolean;
         propertyId: string;
-        property: Dto.IProperty;
+        property: Dto.IPreviewProperty;
         vendor: string;
         agentUserId?: string;
         agentUser?: Dto.IUser;

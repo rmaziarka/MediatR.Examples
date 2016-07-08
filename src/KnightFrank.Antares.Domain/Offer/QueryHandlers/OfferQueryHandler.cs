@@ -27,6 +27,7 @@
                     .Include(v => v.Requirement.Contacts)
                     .Include(v => v.Requirement.Solicitor)
                     .Include(v => v.Requirement.SolicitorCompany)
+                    .Include(v => v.Requirement.ChainTransactions)
                     .Include(v => v.Negotiator)
                     .Include(v => v.Activity)
                     .Include(v => v.Activity.Contacts)
@@ -41,6 +42,7 @@
                     .Include(v => v.LenderCompany)
                     .Include(v => v.SurveyorCompany)
                     .Include(v => v.AdditionalSurveyorCompany)
+                    .Include(v => v.Activity.ChainTransactions)
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return offer;
