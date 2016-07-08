@@ -9,9 +9,6 @@ module Antares.Common.Component {
             type: '@',
             action: '<',
             item: '<'
-        },
-        require: {
-            "parent": "^card"
         }
     });
 }
