@@ -40,5 +40,23 @@ declare module Antares.Common.Models.Dto {
         groundRentAmount?: number;
         groundRentNote: string;
         otherCondition: string;
+        priceTypeId: string;
+        price: number;
+        matchFlexibilityId: string;
+        matchFlexValue: number;
+        matchFlexPercentage: number;
+        rentPaymentPeriodId: string;
+        shortAskingWeekRent: number;
+        shortAskingMonthRent: number;
+        longAskingWeekRent: number;
+        longAskingMonthRent: number;
+        shortMatchFlexibilityId: string;
+        shortMatchFlexWeekValue: number;
+        shortMatchFlexMonthValue: number;
+        shortMatchFlexPercentage: number;
+        longMatchFlexibilityId: string;
+        longMatchFlexWeekValue: number;
+        longMatchFlexMonthValue: number;
+        longMatchFlexPercentage: number;
     }
 }
