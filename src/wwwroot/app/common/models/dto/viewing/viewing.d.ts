@@ -4,6 +4,7 @@
         activityId: string;
         requirementId: string;
         negotiatorId: string;
+        negotiator: Dto.IUser;
         startDate: Date | string;
         endDate: Date | string;
         invitationText: string;
