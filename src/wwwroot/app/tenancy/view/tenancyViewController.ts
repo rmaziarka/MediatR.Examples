@@ -5,5 +5,5 @@ module Antares.Tenancy {
         constructor() { }
     }
 
-    angular.module('app').controller('tenancyViewController', TenancyViewController);
+    angular.module('app').controller('TenancyViewController', TenancyViewController);
 }

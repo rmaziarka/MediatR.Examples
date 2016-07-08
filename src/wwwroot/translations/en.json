@@ -544,5 +544,19 @@
   "PREFERENCES": {
     "HEADER": "Preferences",
     "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
+  },
+  "TENANCY": {
+    "COMMON": {
+      "BASIC_INFORMATION": "Basic information",
+      "TENANTS": "Tenants",
+      "LANDLORDS": "Landlords",
+      "TERMS": "Terms",
+      "START_DATE": "Start date",
+      "END_DATE": "End date",
+      "RENT": "Rent (weekly)"
+    },
+    "CREATE_TENANCY": "Create tenancy",
+    "EDIT_TENANCY": "Edit tenancy",
+    "VIEW_TENANCY": "View tenancy"
   }
 }
