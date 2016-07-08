@@ -1,19 +1,29 @@
 ﻿namespace KnightFrank.Antares.Api.Core
 {
-    using System.Web.Http.Filters;
+	using System;
+	using System.Net.Http.Headers;
+	using System.Web.Http.Filters;
 
 	/// <summary>
 	/// CachingFilterAttribute
 	/// </summary>
-	public class CachingFilterAttribute : ExceptionFilterAttribute
+	public class CachingFilterAttribute : ActionFilterAttribute
     {
 		/// <summary>
-		/// OnResultExecuted
+		/// OnActionExecuted
 		/// </summary>
 		/// <param name="context"></param>
-		public void OnResultExecuted(HttpActionExecutedContext context)
+		public override void OnActionExecuted(HttpActionExecutedContext context)
 		{
-			context.Response.Headers.Add("Cache-Control", "no-cache");
+			if (context.Response != null)
+			{
+				context.Response.Headers.CacheControl = new CacheControlHeaderValue()
+				{
+					NoCache = true
+				};
+			}
+
+			base.OnActionExecuted(context);
 		}
 	}
 }
