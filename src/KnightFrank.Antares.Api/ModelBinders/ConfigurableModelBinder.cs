@@ -8,25 +8,25 @@
     using FluentValidation;
 
     using KnightFrank.Antares.Api.Core;
-    using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
 
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Configurable activity model binder
+    ///     Configurable offer model binder
     /// </summary>
     /// <seealso cref="System.Web.Http.ModelBinding.IModelBinder" />
-    public class ConfigurableActivityModelBinder : IModelBinder
+    public class ConfigurableModelBinder<TCreateCommand, TUpdateCommand, TView> : IModelBinder
+        where TCreateCommand : class, new()
+        where TUpdateCommand : new() 
     {
         /// <summary>
-        /// Binds the model to a value by using the specified controller context and binding context.
+        ///     Binds the model to a value by using the specified controller context and binding context.
         /// </summary>
         /// <param name="actionContext">The action context.</param>
         /// <param name="bindingContext">The binding context.</param>
         /// <returns>
-        /// true if model binding is successful; otherwise, false.
+        ///     true if model binding is successful; otherwise, false.
         /// </returns>
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
@@ -37,26 +37,22 @@
             }
 
             var jsonSerializerSettings = new JsonSerializerSettings
-                                             {
-                                                 Converters = new List<JsonConverter>
-                                                 {
-                                                     new NullToDefaultValueConverter<Guid>(),
-                                                     new NullToDefaultValueConverter<DateTime>()
-                                                 }
-                                             };
+            {
+                Converters = new List<JsonConverter> { new NullToDefaultValueConverter<Guid>(), new NullToDefaultValueConverter<DateTime>() }
+            };
 
             var pageType = (PageType)actionContext.ActionArguments["pageType"];
             switch (pageType)
             {
                 case PageType.Create:
-                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent, jsonSerializerSettings);
+                    bindingContext.Model = JsonConvert.DeserializeObject<TCreateCommand>(requestContent, jsonSerializerSettings) ?? new TCreateCommand();
                     break;
                 case PageType.Update:
-                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent, jsonSerializerSettings);
+                    bindingContext.Model = JsonConvert.DeserializeObject<TUpdateCommand>(requestContent, jsonSerializerSettings);
                     break;
                 case PageType.Details:
                 case PageType.Preview:
-                    bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent, jsonSerializerSettings);
+                    bindingContext.Model = JsonConvert.DeserializeObject<TView>(requestContent, jsonSerializerSettings);
                     break;
             }
             return true;
