@@ -139,6 +139,11 @@ module Antares {
             });
         });
 
+        it('when page is loaded then default mailings and events salutations are set', () =>{
+            expect(controller.contact.defaultMailingSalutationId).not.toBeUndefined();
+            expect(controller.contact.defaultEventSalutationId).not.toBeUndefined();
+        });
+
         ///////// firstNameSelector
 
         it('when first name value is too long then validation message should be displayed', () => {
