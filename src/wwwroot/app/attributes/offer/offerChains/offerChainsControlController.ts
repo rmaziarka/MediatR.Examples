@@ -2,6 +2,9 @@
 
 module Antares.Attributes.Offer {
     import Enums = Common.Models.Enums;
+    import RequirementService = Antares.Requirement.RequirementService;
+    import KfModalService = Antares.Services.KfModalService;
+    import ActivityService = Antares.Activity.ActivityService;
 
     export class OfferChainsControlController {
         // bindings
@@ -14,7 +17,10 @@ module Antares.Attributes.Offer {
         currentChain: any;
         panelInPreviewMode: boolean = false;
 
-        constructor(private eventAggregator: Core.EventAggregator) {}
+        constructor(private eventAggregator: Core.EventAggregator,
+            private activityService: ActivityService,
+            private requirementService: RequirementService,
+            private kfModalService: KfModalService) { }
 
         addChain = () =>{
             this.currentChain = {};
@@ -38,8 +44,19 @@ module Antares.Attributes.Offer {
         }
 
         removeChain = (chain: any) =>{
-            // remove chain
+            var titleCode = "OFFER.VIEW.DELETE_CHAIN_TITLE";
+            var messageCode = "OFFER.VIEW.DELETE_CHAIN_MESSAGE";
+            var confirmCode = "OFFER.VIEW.DELETE_CHAIN_CONFIRM";
+            var promise = this.kfModalService.showModal(titleCode, messageCode, confirmCode);
             // publish event
+        }
+
+        updateChain = (chain: any) =>{
+            
+        }
+
+        isEndOfChainVisibleInPanel = () =>{
+            return false;
         }
     }
 
