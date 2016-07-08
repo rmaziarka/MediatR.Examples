@@ -20,3 +20,8 @@ SalutationFormat
 ActivitySellingReason
 DisposalType
 Decoration
+ChainMortgageStatus
+ChainMortgageSurveyStatus
+ChainSearchStatus
+ChainEnquiries
+ChainContractAgreedStatus
