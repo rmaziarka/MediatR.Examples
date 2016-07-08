@@ -46,8 +46,9 @@ module Antares.Common.Models.Business {
         serviceChargeNote: string = '';
         groundRentAmount: number = null;
         groundRentNote: string = '';
-        otherCondition: string = '';      
-
+        otherCondition: string = '';
+        chainTransactions: Business.ChainTransaction[] = [];
+         
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
@@ -91,8 +92,17 @@ module Antares.Common.Models.Business {
                     this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
-            this.secondaryNegotiator = this.secondaryNegotiator || [];
-            this.leadNegotiator = this.leadNegotiator || new ActivityUser();
+                if (activity.chainTransactions) {
+                    this.chainTransactions = activity.chainTransactions.map((chainTransaction: Dto.IChainTransaction) => { return new Business.ChainTransaction(chainTransaction) });
+                }
+                else {
+                    this.chainTransactions = [];
+                }
+
+                this.secondaryNegotiator = this.secondaryNegotiator || [];
+                this.leadNegotiator = this.leadNegotiator || new ActivityUser();
+
+                this.createChainTransactionMock();
             }
         }
 
@@ -100,6 +110,135 @@ module Antares.Common.Models.Business {
             this.viewingsByDay = [];
             var groupedViewings: _.Dictionary<Viewing[]> = _.groupBy(viewings, (i: Viewing) => { return i.day; });
             this.viewingsByDay = <ViewingGroup[]>_.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });
+        }
+
+        createChainTransactionMock(){
+            // TODO remove after backend ready
+            var parent = new ChainTransaction();            
+            parent.id = "{E3AE5C64-6EDF-44ED-9572-9E6C31E6B5EE}";
+            parent.activity = <Activity>{};
+            parent.property = <Business.PreviewProperty>{
+                ownerships: []
+            };
+            parent.property.address = <Business.Address>
+            {
+                id: "{B6CF58E1-5E99-4CCD-808D-17E78282A8AB}",
+                propertyName : "West Forum",
+                propertyNumber : "142",
+                line2 : "Strzegomska",
+                postcode : "123"
+            }
+            parent.vendor = 'Mark Bower';
+            parent.agentUser = <Business.User> {
+                id: "{BB34F76F-0A43-4902-BDE3-6024FC80FE34}",
+                firstName: "Agent",
+                lastName: "User"
+            };
+            parent.solicitorContact = <Business.Contact> {
+                id: "{D1152CD5-DB0A-4F7F-97BB-A1CA28661191}",
+                firstName: "Kim",
+                surname: "West",
+                title: "Mr"
+            };
+            parent.solicitorCompany = <Business.Company> {
+                id: "{DE89525B-FDCA-4414-97DB-258172EE58D5}",
+                name: "West Company"
+            };
+            parent.mortgage = new Business.EnumTypeItem();
+            parent.survey = new Business.EnumTypeItem();
+            parent.searches = new Business.EnumTypeItem();
+            parent.enquiries = new Business.EnumTypeItem();
+            parent.contractAgreed = new Business.EnumTypeItem();
+            parent.surveyDate = new Date();
+
+            var child = new ChainTransaction();
+            child.id = "{9B58E45A-5347-47EE-89EF-DFB0ECA33C47}";
+            child.activity = <Activity>{
+                
+            };
+            child.property = <Business.PreviewProperty>{
+                ownerships: []
+            };
+            child.property.address = <Business.Address>
+                {
+                id: "{9B58E45A-5347-47EE-89EF-DFB0ECA33C47}",
+                    propertyName: "Sky Tower",
+                    propertyNumber: "123",
+                    line2: "Powstancow Slaskich",
+                    postcode: "1232"
+                }
+            child.vendor = 'Gilberto Lyons';
+            child.agentContact = <Business.Contact>{
+                id: "{CCF43460-41DB-42A3-8DE8-6D7D71BCBFF1}",
+                firstName: "Krista",
+                surname: "Porter",
+                title: "Mr"
+            };
+            child.agentCompany = <Business.Company>{
+                id: "{EA577562-88D3-4A1D-BD23-F08B36DE3171}",
+                name: "Agent Company"
+            };
+            child.solicitorContact = <Business.Contact>{
+                id: "{767460B5-191A-49DD-9F8F-5FB268237AC5}",
+                firstName: "Tyhtrone",
+                surname: "Jonston",
+                title: "Mr"
+            };
+            child.solicitorCompany = <Business.Company>{
+                id: "{1B56ED97-C25B-40FF-A547-FE105B244326}",
+                name: "East West"
+            };
+            child.mortgage = new Business.EnumTypeItem();
+            child.survey = new Business.EnumTypeItem();
+            child.searches = new Business.EnumTypeItem();
+            child.enquiries = new Business.EnumTypeItem();
+            child.contractAgreed = new Business.EnumTypeItem();
+            child.surveyDate = new Date();
+
+            var child2 = new ChainTransaction();
+            child2.id = "{959BEBA7-F46C-4B7F-93DA-EB532FEEB1AB}";
+            child2.activity = <Activity>{
+            };            
+            child2.property = <Business.PreviewProperty>{
+                ownerships: []
+            };
+            child2.property.address = <Business.Address>
+                {
+                id: "{2828AB31-CB63-40A9-AF95-E45543FF535F}",
+                    propertyName: "Water Tower",
+                    propertyNumber: "1",
+                    line2: "Aleja Wisniowa",
+                    postcode: "12"
+                }
+            child2.vendor = 'Faye Castro';
+            child2.agentUser = <Business.User>{
+                id: "{5345C209-CECF-44F8-98AC-C3ED90469DFB}",
+                firstName: "John",
+                lastName: "Smith"
+            };
+            child2.solicitorContact = <Business.Contact>{
+                id: "{9CD195CE-B516-4C56-BEB8-632B04162443}",
+                firstName: "Casey",
+                surname: "Delgado",
+                title: "Mr"
+            };
+            child2.solicitorCompany = <Business.Company>{
+                id: "{2207BBF3-2C28-4643-B9F4-1E62FEB98677}",
+                name: "Delgado Company"
+            };
+            child2.mortgage = new Business.EnumTypeItem();
+            child2.survey = new Business.EnumTypeItem();
+            child2.searches = new Business.EnumTypeItem();
+            child2.enquiries = new Business.EnumTypeItem();
+            child2.contractAgreed = new Business.EnumTypeItem();
+            child2.surveyDate = new Date();
+
+            child.parent = parent;
+            child2.parent = child;
+
+            this.chainTransactions.push(parent);
+            this.chainTransactions.push(child);
+            this.chainTransactions.push(child2);
         }
     }
 }

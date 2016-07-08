@@ -12,12 +12,12 @@
                 .WillCascadeOnDelete(false);
 
             this.HasOptional(x => x.Activity)
-                .WithMany()
+                .WithMany(x => x.ChainTransactions)
                 .HasForeignKey(x => x.ActivityId)
                 .WillCascadeOnDelete(false);
 
             this.HasOptional(x => x.Requirement)
-                .WithMany()
+                .WithMany(x => x.ChainTransactions)
                 .HasForeignKey(x => x.RequirementId)
                 .WillCascadeOnDelete(false);
 

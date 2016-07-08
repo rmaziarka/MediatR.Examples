@@ -1,0 +1,29 @@
+// Modal
+
+.modal {
+
+  .modal-dialog {
+    margin: 70px auto 30px;
+  }
+
+  .modal-content {
+    box-shadow: 4px 4px 5px $color-black-alpha;
+  }
+
+  .modal-header {
+    border-bottom: 0;
+  }
+
+  .modal-footer {
+    border-top: 0;
+    text-align: center;
+  }
+}
+
+.modal-backdrop {
+  background-color: $color-black-alpha;
+
+  &.in {
+    opacity: 1;
+  }
+}

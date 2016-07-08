@@ -44,5 +44,7 @@
         public Guid? SolicitorCompanyId { get; set; }
 
         public virtual Company SolicitorCompany { get; set; }
+
+        public virtual ICollection<ChainTransaction> ChainTransactions { get; set; }
     }
 }
