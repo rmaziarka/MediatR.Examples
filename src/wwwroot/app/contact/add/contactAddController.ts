@@ -141,8 +141,8 @@ module Antares.Contact {
                 return item.id === this.defaultSalutationFormatId;
             });
 
-            this.defaultMailingSalutationId = mailingVal.id;
-            this.defaultEventSalutationId = eventVal.id;
+            this.contact.defaultMailingSalutationId = mailingVal.id;
+            this.contact.defaultEventSalutationId = eventVal.id;
 
             if (defaultFormat != null)
                 this.defaultSalutationFormat = (defaultFormat.code || "");
@@ -169,9 +169,6 @@ module Antares.Contact {
         }
 
         public save() {
-            this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
-            this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
-
             if (this.selectedTitle) {
                 this.contact.title = this.selectedTitle;
             }
