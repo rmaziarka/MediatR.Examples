@@ -48,7 +48,7 @@ module Antares.Activity  {
         groundRentNote: string = '';
         otherCondition: string = '';
         priceTypeId: string = '';
-        price: number = null;
+        activityPrice: number = null;
         matchFlexibilityId: string = '';
         matchFlexValue: number = null;
         matchFlexPercentage: number = null;

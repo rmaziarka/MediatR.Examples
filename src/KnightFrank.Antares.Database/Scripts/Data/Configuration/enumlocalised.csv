@@ -6,6 +6,8 @@ OwnershipType;Leaseholder;en;Leasehold
 ActivityStatus;PreAppraisal;en;Pre-appraisal
 ActivityStatus;MarketAppraisal;en;Market appraisal
 ActivityStatus;NotSelling;en;Not selling
+ActivityStatus;ForSaleUnavailable;en;For Sale Unavailable
+ActivityStatus;ToLetUnavailable;en;To Let Unavailable
 Division;Residential;en;Residential property
 Division;Commercial;en;Commercial property
 ActivityDocumentType;TermsOfBusiness;en;Terms of Business

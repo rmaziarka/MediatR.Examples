@@ -109,7 +109,7 @@
 
         public virtual EnumTypeItem PriceType { get; set; }
 
-        public decimal? Price { get; set; }
+        public decimal? ActivityPrice { get; set; }
 
         public Guid? MatchFlexibilityId { get; set; }
 

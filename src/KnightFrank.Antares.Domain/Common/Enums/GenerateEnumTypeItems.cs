@@ -50,6 +50,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
+		ForSaleUnavailable,
+		ToLetUnavailable,
 	}
 
 	public enum Division
@@ -221,7 +223,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		AskingPrice,
 		PriceOnApplication,
 		GuidePrice,
-		OffersInTheRegionOf,
+		OffersInRegionOf,
 		OffersInExcessOf,
 		FixedPrice,
 		PriceReducedTo,

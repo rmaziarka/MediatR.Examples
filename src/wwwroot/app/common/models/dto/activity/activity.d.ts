@@ -41,7 +41,7 @@ declare module Antares.Common.Models.Dto {
         groundRentNote: string;
         otherCondition: string;
         priceTypeId: string;
-        price: number;
+        activityPrice: number;
         matchFlexibilityId: string;
         matchFlexValue: number;
         matchFlexPercentage: number;

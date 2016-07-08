@@ -103,7 +103,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.HasOptional(a => a.ShortMatchFlexibility).WithMany().HasForeignKey(s => s.ShortMatchFlexibilityId).WillCascadeOnDelete(false);
             this.HasOptional(a => a.LongMatchFlexibility).WithMany().HasForeignKey(s => s.LongMatchFlexibilityId).WillCascadeOnDelete(false);
 
-            this.Property(a => a.Price).IsMoney();
+            this.Property(a => a.ActivityPrice).IsMoney();
             this.Property(a => a.MatchFlexValue).IsMoney();
             this.Property(a => a.ShortAskingWeekRent).IsMoney();
             this.Property(a => a.ShortAskingMonthRent).IsMoney();
