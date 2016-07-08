@@ -343,12 +343,21 @@
       "RECENT_FILES": "Recent files",
         "VIEWING_DETAILS": "Viewing details",
       "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
-        "NO_VIEWINGS": "No viewings",
-        "OFFERS": "Offers",
+      "NO_VIEWINGS": "No viewings",
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
-      "VIEWINGS": "Viewings"
+      "VIEWINGS": "Viewings",
+      "OFFERS": {
+        "HEADER": "Offers",
+        "NO_OFFERS": "No offers",
+        "DETAILS": {
+          "OFFER": "Offer",
+          "LEAD_NEGOTIATOR": "Lead negotiator",
+          "PROPOSED_EXCHANGE": "Proposed exchange",
+          "LATEST_NOTE": "Latest note"
+        }
+      }
       }
     },
     "NEGOTIATORS": {

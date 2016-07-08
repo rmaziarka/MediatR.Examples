@@ -1,29 +1,23 @@
-<div class="card-item">
-    <span>{{cvm.item.requirement.getContactNames()}}</span>
-</div>
-<div class="card-info">
-    <span class="offer-status offer-status-{{cvm.item.statusId | dynamicTranslate | lowercase}}">{{cvm.item.statusId | dynamicTranslate}}</span><span class="offer-price">{{cvm.item.price}} GBP</span>
-</div>
-
-<!-- Cards with header
-
 <div class="card-columns row">
     <div class="col-sm-4 col-md-2 col-lg-2">
-        <div class="card-columns-header"><h4>Offer</h4></div>
-        <div>180,000 GBP</div>
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.OFFER"></h4></div>
+        <div ng-if="vm.item.price != null">
+            <span class="offer-price">{{vm.item.price | number: 2: true}} {{'GBP' | translate}}</span>
+        </div>
+        <div ng-if="vm.item.pricePerWeek != null">
+            <span class="offer-price">{{vm.item.pricePerWeek | number: 2: true }} {{'REQUIREMENT.VIEW.OFFER_PER_WEEK' | translate}}</span>
+        </div>
     </div>
     <div class="col-sm-4 col-md-3 col-lg-2">
-        <div class="card-columns-header"><h4>Lead negotiator</h4></div>
-        <div>Jan Kowalski</div>
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.LEAD_NEGOTIATOR"></h4></div>
+        <div>{{vm.item.negotiator.firstName + ' ' + vm.item.negotiator.lastName}}</div>
     </div>
     <div class="col-sm-4 col-md-2 col-lg-2">
-        <div class="card-columns-header"><h4>Proposed exchange</h4></div>
-        <time>12-05-2016</time>
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.PROPOSED_EXCHANGE"></h4></div>
+        <time>{{(vm.item.exchangeDate | date : 'dd-MM-yyyy') || '-'}}</time>
     </div>
-    <div class="col-sm-12 col-md-5 col-lg-6">
-        <div class="card-columns-header"><h4>Latest note</h4></div>
+    <!--<div class="col-sm-12 col-md-5 col-lg-6">
+        <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.LATEST_NOTE"></h4></div>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem mollitia modi ducimus sapiente maiores quaerat culpa minima odit magnam magni. Vero quas exercitationem autem assumenda fugit tempore ut voluptas quisquam at. Aliquid doloribus, dignissimos magnam iure? Aperiam ex nesciunt quam consequatur, culpa alias id necessitatibus placeat, delectus, corporis assumenda eos...</p>
-    </div>
+    </div>-->
 </div>
-
--->
