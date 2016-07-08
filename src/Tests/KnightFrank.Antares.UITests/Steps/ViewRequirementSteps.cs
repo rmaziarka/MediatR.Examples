@@ -412,6 +412,14 @@
             Assert.Equal(details.Details, this.page.Offer.GetDetails());
         }
 
+        //TODO remove old details when new card will be introduced on create offer panel
+        [Then(@"Create offer activity details on view requirement page are same as the following")]
+        public void CheckCreateOfferActivity(Table table)
+        {
+            var details = table.CreateInstance<OfferData>();
+            Assert.Equal(details.Details, this.page.Offer.OldDetails);
+        }
+
         [Then(@"New offer should be created and displayed on view requirement page")]
         public void CheckIfOfferCreated()
         {

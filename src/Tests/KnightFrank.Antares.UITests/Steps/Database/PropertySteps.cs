@@ -21,6 +21,7 @@
     {
         private readonly KnightFrankContext dataContext;
         private readonly ScenarioContext scenarioContext;
+        private readonly DateTime date = DateTime.UtcNow;
 
         public PropertySteps(ScenarioContext scenarioContext)
         {
@@ -159,8 +160,8 @@
                 PropertyId = propertyId,
                 ActivityTypeId = activityTypeId,
                 ActivityStatusId = activityStatusId,
-                CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.UtcNow,
+                CreatedDate = this.date,
+                LastModifiedDate = this.date,
                 Contacts =
                     this.scenarioContext.ContainsKey("ContactsList")
                         ? this.scenarioContext.Get<List<Contact>>("ContactsList")
@@ -176,7 +177,7 @@
                                 e =>
                                     e.EnumType.Code.Equals(nameof(UserType)) &&
                                     e.Code.Equals(nameof(UserType.LeadNegotiator))).Id,
-                        CallDate = DateTime.UtcNow.AddDays(14)
+                        CallDate = this.date.AddDays(14)
                     }
                 },
                 ActivityDepartments = new List<ActivityDepartment>
@@ -201,7 +202,9 @@
                     new List<ActivityAttendee>
                     {
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
-                    }
+                    },
+                AppraisalMeetingStart = this.date,
+                AppraisalMeetingEnd = this.date.AddHours(1)
             };
 
             this.dataContext.Activities.Add(activity);
@@ -224,8 +227,8 @@
                 PropertyId = propertyId,
                 ActivityTypeId = activityTypeId,
                 ActivityStatusId = activityStatusId,
-                CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.UtcNow,
+                CreatedDate = this.date,
+                LastModifiedDate = this.date,
                 Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList"),
                 ActivityUsers = new List<ActivityUser>
                 {
@@ -238,7 +241,7 @@
                                 e =>
                                     e.EnumType.Code.Equals(nameof(UserType)) &&
                                     e.Code.Equals(nameof(UserType.LeadNegotiator))).Id,
-                        CallDate = DateTime.UtcNow.AddDays(14)
+                        CallDate = this.date.AddDays(14)
                     },
                     new ActivityUser
                     {
@@ -302,7 +305,9 @@
                     new List<ActivityAttendee>
                     {
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
-                    }
+                    },
+                AppraisalMeetingStart = this.date,
+                AppraisalMeetingEnd = this.date.AddHours(1)
             };
 
             this.dataContext.Activities.Add(activity);
