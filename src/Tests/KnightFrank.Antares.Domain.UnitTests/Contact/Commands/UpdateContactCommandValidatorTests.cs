@@ -99,12 +99,36 @@
 
         [Theory]
         [AutoMoqData]
+        public void Given_IncorrectUpdateContactCommandWithEmptyMailingFormalSalutation_When_Validating_Then_ValidationError(
+            UpdateContactCommandValidator validator,
+            UpdateContactCommand command,
+            Fixture fixture)
+        {
+            command.MailingFormalSalutation = string.Empty;
+
+            TestIncorrectCommand(validator, command, nameof(command.MailingFormalSalutation));
+        }
+
+        [Theory]
+        [AutoMoqData]
         public void Given_IncorrectUpdateContactCommandWithTooLongMailingSemiformalSalutation_When_Validating_Then_ValidationError(
             UpdateContactCommandValidator validator,
             UpdateContactCommand command,
             Fixture fixture)
         {
             command.MailingSemiformalSalutation = string.Join(string.Empty, fixture.CreateMany<string>(5)).Substring(0, 129);
+
+            TestIncorrectCommand(validator, command, nameof(command.MailingSemiformalSalutation));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_IncorrectUpdateContactCommandWithEmptyMailingSemiformalSalutation_When_Validating_Then_ValidationError(
+            UpdateContactCommandValidator validator,
+            UpdateContactCommand command,
+            Fixture fixture)
+        {
+            command.MailingSemiformalSalutation = string.Empty;
 
             TestIncorrectCommand(validator, command, nameof(command.MailingSemiformalSalutation));
         }
@@ -141,6 +165,18 @@
             Fixture fixture)
         {
             command.MailingEnvelopeSalutation = string.Join(string.Empty, fixture.CreateMany<string>(5)).Substring(0, 129);
+
+            TestIncorrectCommand(validator, command, nameof(command.MailingEnvelopeSalutation));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_IncorrectUpdateContactCommandWithEmptyMailingEnvelopeSalutation_When_Validating_Then_ValidationError(
+            UpdateContactCommandValidator validator,
+            UpdateContactCommand command,
+            Fixture fixture)
+        {
+            command.MailingEnvelopeSalutation = string.Empty;
 
             TestIncorrectCommand(validator, command, nameof(command.MailingEnvelopeSalutation));
         }

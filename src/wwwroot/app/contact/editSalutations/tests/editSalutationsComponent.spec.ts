@@ -73,6 +73,10 @@ module Antares {
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingFormalSalutationSelector);
         });
 
+        it('when mailing formal salutation value is empty then validation message should be displayed', () => {
+            assertValidator.assertRequiredValidator("", false, pageObjectSelectors.mailingFormalSalutationSelector);
+        });
+
         ///////// mailingSemiformalSalutationSelector
 
         it('when mailing semiformal salutation value is too long then validation message should be displayed', () => {
@@ -83,6 +87,10 @@ module Antares {
         it('when mailing semiformal salutation value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingSemiformalSalutationSelector);
+        });
+
+        it('when mailing semiformal salutation value is empty then validation message should be displayed', () => {
+            assertValidator.assertRequiredValidator("", false, pageObjectSelectors.mailingSemiformalSalutationSelector);
         });
 
         ///////// mailingInformalSalutationSelector
@@ -119,6 +127,10 @@ module Antares {
         it('when mailing envelope salutation value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingEnvelopeSalutationSelector);
+        });
+
+        it('when mailing envelope salutation value is empty then validation message should be displayed', () => {
+            assertValidator.assertRequiredValidator("", false, pageObjectSelectors.mailingEnvelopeSalutationSelector);
         });
 
         ///////// eventInviteSalutationSelector
