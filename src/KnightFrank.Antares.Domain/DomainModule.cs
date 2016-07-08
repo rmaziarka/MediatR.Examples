@@ -78,18 +78,17 @@
             this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>();
             this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType>>>().To<OfferControlsConfiguration>();
             this.Bind<IControlsConfiguration<Tuple<RequirementType>>>().To<RequirementControlsConfiguration>();
-            this.Bind<IControlsConfiguration<Tuple<TenancyType>>>().To<TenancyControlsConfiguration>();
+            this.Bind<IControlsConfiguration<Tuple<TenancyType, RequirementType>>>().To<TenancyControlsConfiguration>();
            
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
             this.Bind<IAttributeValidator<Tuple<RequirementType>>>().To(typeof(AttributeValidator<>));
             this.Bind<IAttributeValidator<Tuple<OfferType, RequirementType>>>().To(typeof(AttributeValidator<>));
-            this.Bind<IAttributeValidator<Tuple<TenancyType>>>().To(typeof(AttributeValidator<>));
+            this.Bind<IAttributeValidator<Tuple<TenancyType, RequirementType>>>().To(typeof(AttributeValidator<>));
 
             this.Bind<IEntityMapper<Dal.Model.Property.Activities.Activity>>().To<ActivityEntityMapper>();
             this.Bind<IEntityMapper<Dal.Model.Offer.Offer>>().To<OfferEntityMapper>();
             this.Bind<IEntityMapper<Dal.Model.Property.Requirement>>().To<RequirementEntityMapper>();
             this.Bind<IEntityMapper<Dal.Model.Tenancy.Tenancy>>().To<TenancyEntityMapper>();
-
         }
     }
 }

@@ -18,5 +18,13 @@
             IEnumerable<OfferType> offerTypes = EnumExtensions.GetValues<OfferType>();
             return offerTypes.Single(x => x.ToString() == requirementType.ToString());
         }
+
+        public static TOut GetEnum<TIn, TOut>(TIn inputType) 
+            where TIn: struct
+            where TOut: struct
+        {
+            IEnumerable<TOut> outputTypes = EnumExtensions.GetValues<TOut>();
+            return outputTypes.Single(x => x.ToString() == inputType.ToString());
+        }
     }
 }

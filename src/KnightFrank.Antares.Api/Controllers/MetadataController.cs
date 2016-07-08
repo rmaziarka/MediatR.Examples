@@ -32,7 +32,7 @@
         private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
         private readonly IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration;
         private readonly IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration;
-        private readonly IControlsConfiguration<Tuple<TenancyType>> tenancyTermConfiguration;
+        private readonly IControlsConfiguration<Tuple<TenancyType, RequirementType>> tenancyTermConfiguration;
 
         private readonly IEnumParser enumParser;
 
@@ -48,7 +48,7 @@
             IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
             IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration,
             IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration,
-            IControlsConfiguration<Tuple<TenancyType>> tenancyTermConfiguration,
+            IControlsConfiguration<Tuple<TenancyType, RequirementType>> tenancyTermConfiguration,
             IEnumParser enumParser)
         {
             this.activityConfiguration = activityConfiguration;
@@ -127,20 +127,22 @@
         /// </summary>
         /// <param name="pageType">Type of the page.</param>
         /// <param name="tenancyTypeId">Type of the tenancy.</param>
+        /// <param name="requirementTypeId">Type of the requirement.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/tenancy")]
-        public dynamic GetTenancyConfiguration(PageType pageType, Guid tenancyTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateTenancyCommand, UpdateTenancyCommand, Tenancy>))]object entity)
+        public dynamic GetTenancyConfiguration(PageType pageType, Guid tenancyTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableModelBinder<CreateTenancyCommand, UpdateTenancyCommand, Tenancy>))]object entity)
         {
-            if (tenancyTypeId == Guid.Empty)
+            if (tenancyTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
             {
                 return null;
             }
 
-            TenancyType tenancyType = this.enumParser.Parse<Antares.Dal.Model.Tenancy.TenancyType, TenancyType>(tenancyTypeId);
+            TenancyType tenancyType = this.enumParser.Parse<Dal.Model.Tenancy.TenancyType, TenancyType>(tenancyTypeId);
+            RequirementType requirementType = this.enumParser.Parse<Dal.Model.Property.RequirementType, RequirementType>(requirementTypeId);
 
-            IList<InnerFieldState> fieldStates = this.tenancyTermConfiguration.GetInnerFieldsState(pageType, new Tuple<TenancyType>(tenancyType), entity);
+            IList<InnerFieldState> fieldStates = this.tenancyTermConfiguration.GetInnerFieldsState(pageType, new Tuple<TenancyType, RequirementType>(tenancyType, requirementType), entity);
             return fieldStates.MapToResponse();
         }
     }

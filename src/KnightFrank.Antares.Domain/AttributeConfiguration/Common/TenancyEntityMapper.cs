@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Tenancy;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;

@@ -9,7 +9,7 @@
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
 
-    public class TenancyControlsConfiguration : ControlsConfigurationPerOneType<TenancyType>
+    public class TenancyControlsConfiguration : ControlsConfigurationPerTwoTypes<TenancyType, RequirementType>
     {
         public TenancyControlsConfiguration()
         {
@@ -41,7 +41,7 @@
         public override void DefineMappings()
         {
             this.Use(new List<ControlCode> { ControlCode.Tenancy_Term }, 
-                this.When(new List<TenancyType> { TenancyType.ResidentialLetting }, PageType.Create, PageType.Update, PageType.Details));
+                this.When(TenancyType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Create, PageType.Update, PageType.Details));
         }
     }
 }
