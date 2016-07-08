@@ -1,8 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Tenancy
 {
-    public class TenancyType : BaseEntity
+    public class TenancyType : BaseEntityWithCode
     {
-        public string Code { get; set; }
-        public string EnumCode { get; set; }
     }
 }

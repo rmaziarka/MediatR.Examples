@@ -12,7 +12,7 @@
         public virtual Requirement Requirement{ get; set; }
         public Guid ActivityId { get; set; }
         public virtual Activity Activity { get; set; }
-        public virtual ICollection<TenancyTerm> Terms { get; set; }
+        public virtual ICollection<TenancyTerm> Terms { get; set; } = new List<TenancyTerm>();
         public virtual ICollection<TenancyContact> Contacts { get; set; }
         public Guid TenancyTypeId { get; set; }
         public virtual TenancyType TenancyType { get; set; }
