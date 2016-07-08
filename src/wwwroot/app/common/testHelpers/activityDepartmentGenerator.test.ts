@@ -7,7 +7,8 @@ module Antares.TestHelpers {
 
     export class ActivityDepartmentGenerator {
         public static generateDto(specificData?: any): Dto.IActivityDepartment {
-            var department = DepartmentGenerator.generateDto();
+            var departmentGenerator = new TestHelpers.DepartmentGenerator();
+            var department = departmentGenerator.generateDto();
             var departmentType =  EnumTypeItemGenerator.generateDto();
 
             var activityDepartment: Dto.IActivityDepartment = {

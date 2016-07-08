@@ -100,8 +100,10 @@ module Antares {
             describe('and one new department is related with negotiator', () => {
                 var newActivityDepartment1: Business.ActivityDepartment;
                 var newActivityDepartment2: Business.ActivityDepartment;
-                var newDepartment1 = TestHelpers.DepartmentGenerator.generate();
-                var newDepartment2 = TestHelpers.DepartmentGenerator.generate();
+                var departmentGenerator = new TestHelpers.DepartmentGenerator();
+
+                var newDepartment1 = departmentGenerator.generate(Business.Department);
+                var newDepartment2 = departmentGenerator.generate(Business.Department);
 
                 beforeEach(() => {
                     newActivityDepartment1 = TestHelpers.ActivityDepartmentGenerator.generate({ id: null, department: newDepartment1 });

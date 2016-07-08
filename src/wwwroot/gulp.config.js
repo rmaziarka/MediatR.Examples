@@ -41,6 +41,7 @@
                 clientApp + '**/*.spec.js'
             ],
             specsAndMocksOrder: [
+                '**/testHelpers/*Base*.js',
                 '**/testHelpers/**/*',
                 '**/common/**/*.mock.js',
                 '**/common/**/*.test.js',

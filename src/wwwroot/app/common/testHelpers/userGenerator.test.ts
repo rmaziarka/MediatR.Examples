@@ -6,8 +6,9 @@ module Antares.TestHelpers {
 
     export class UserGenerator {
         public static generateDto(specificData?: any): Dto.IUser {
+            var departmentGenerator = new TestHelpers.DepartmentGenerator();
 
-            var department: Dto.IDepartment = TestHelpers.DepartmentGenerator.generateDto();
+            var department: Dto.IDepartment = departmentGenerator.generateDto();
             var user: Dto.IUser = {
                 id: StringGenerator.generate(),
                 firstName: StringGenerator.generate(),
@@ -20,7 +21,8 @@ module Antares.TestHelpers {
         }
 
         public static generateUserDataDto(): Dto.ICurrentUser {
-            var department: Dto.IDepartment = TestHelpers.DepartmentGenerator.generateDto();
+            var departmentGenerator = new TestHelpers.DepartmentGenerator();
+            var department: Dto.IDepartment = departmentGenerator.generateDto();
 
             var userData: Dto.ICurrentUser = {
                 id: StringGenerator.generate(),
