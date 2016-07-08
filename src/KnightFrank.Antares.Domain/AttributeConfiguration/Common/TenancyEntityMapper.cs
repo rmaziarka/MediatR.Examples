@@ -15,13 +15,13 @@
     public class TenancyEntityMapper : BaseEntityMapper<Tenancy, Tuple<TenancyType>>
     {
         private readonly IControlsConfiguration<Tuple<TenancyType>> tenancyTermControlsConfiguration;
-        private readonly IReadGenericRepository<Requirement> requirementRepository;
+        private readonly IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository;
 
         public TenancyEntityMapper(IControlsConfiguration<Tuple<TenancyType>> tenancyTermControlsConfiguration,
-             IReadGenericRepository<Requirement> requirementRepository)
+             IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository)
         {
             this.tenancyTermControlsConfiguration = tenancyTermControlsConfiguration;
-            this.requirementRepository = requirementRepository;
+            this.tenancyTypeRepository = tenancyTypeRepository;
         }
 
         public override Tenancy MapAllowedValues<TSource>(TSource source, Tenancy tenancy, PageType pageType)
@@ -31,20 +31,19 @@
             return tenancy;
         }
 
-        public override Tenancy NullifyDisallowedValues(Tenancy requirement, PageType pageType)
+        public override Tenancy NullifyDisallowedValues(Tenancy tenancy, PageType pageType)
         {
-            Tuple<TenancyType> configKey = this.GetConfigurationKey(requirement);
-            requirement = base.NullifyDisallowedValues(requirement, this.tenancyTermControlsConfiguration, pageType, configKey);
-            return requirement;
+            Tuple<TenancyType> configKey = this.GetConfigurationKey(tenancy);
+            tenancy = base.NullifyDisallowedValues(tenancy, this.tenancyTermControlsConfiguration, pageType, configKey);
+            return tenancy;
         }
 
         private Tuple<TenancyType> GetConfigurationKey(Tenancy tenancy)
         {
-            // TODO use tenancy type
-            Requirement requirement = tenancy.Requirement ?? 
-                this.requirementRepository.GetWithInclude(x => x.RequirementType).Single(x => x.Id == tenancy.RequirementId);
+            Dal.Model.Tenancy.TenancyType tenancyType = tenancy.TenancyType ?? 
+                this.tenancyTypeRepository.GetById(tenancy.TenancyTypeId);
 
-            var requirementTypeEnum = EnumExtensions.ParseEnum<TenancyType>(requirement.RequirementType.EnumCode);
+            var requirementTypeEnum = EnumExtensions.ParseEnum<TenancyType>(tenancyType.EnumCode);
 
             return new Tuple<TenancyType>(requirementTypeEnum);
         }
