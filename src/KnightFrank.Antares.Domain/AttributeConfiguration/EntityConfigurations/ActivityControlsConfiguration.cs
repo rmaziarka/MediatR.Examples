@@ -25,7 +25,7 @@
 
         private Guid GetEnumTypeItemId(EnumType enumType, Enum enumTypeCode)
         {
-            string enumTypeCodeString = enumTypeCode.ToString(); // EF needs string and won't work with Enum
+            string enumTypeCodeString = enumTypeCode.ToString(); // EF needs string and doesn't work with Enum
             return
                 this.enumTypeItemRepository
                 .FindBy(x => x.EnumType.Code == enumType.ToString() && x.Code == enumTypeCodeString)
@@ -202,13 +202,6 @@
         public override void DefineMappings()
         {
             Guid activityStatusMarketAppraisalId = this.GetEnumTypeItemId(EnumType.ActivityStatus, ActivityStatus.MarketAppraisal);
-            Guid activityStatusForSaleUnavailableId = this.GetEnumTypeItemId(EnumType.ActivityStatus, ActivityStatus.ForSaleUnavailable);
-            Guid matchFlexPriceValueId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexPrice, ActivityMatchFlexPrice.MinimumPrice);
-            Guid matchFlexPricePercentageId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexPrice, ActivityMatchFlexPrice.Percentage);
-            Guid matchFlexRentValueId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexRent, ActivityMatchFlexRent.MinimumRent);
-            Guid matchFlexRentPercentageId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexRent, ActivityMatchFlexRent.Percentage);
-            Guid rentPaymentPeriodWeekId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Weekly);
-            Guid rentPaymentPeriodMonthId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Monthly);
 
             List<Tuple<PropertyType, ActivityType>> openMarketLetting =
                 new[]
@@ -370,8 +363,20 @@
                 },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
+            
+            this.DefineMappingsForPrices(openMarketLetting, residentialSale);
+        }
 
-            //TODO: extract method from code below 
+        private void DefineMappingsForPrices(List<Tuple<PropertyType, ActivityType>> openMarketLetting, List<Tuple<PropertyType, ActivityType>> residentialSale)
+        {
+            Guid activityStatusForSaleUnavailableId = this.GetEnumTypeItemId(EnumType.ActivityStatus, ActivityStatus.ForSaleUnavailable);
+            Guid matchFlexPriceValueId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexPrice, ActivityMatchFlexPrice.MinimumPrice);
+            Guid matchFlexPricePercentageId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexPrice, ActivityMatchFlexPrice.Percentage);
+            Guid matchFlexRentValueId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexRent, ActivityMatchFlexRent.MinimumRent);
+            Guid matchFlexRentPercentageId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexRent, ActivityMatchFlexRent.Percentage);
+            Guid rentPaymentPeriodWeekId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Weekly);
+            Guid rentPaymentPeriodMonthId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Monthly);
+
             this.Use(
                 new List<ControlCode>
                 {
@@ -394,7 +399,7 @@
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId);
 
             this.Use(
-                new List<ControlCode>{ControlCode.MatchFlexValue},
+                new List<ControlCode> { ControlCode.MatchFlexValue },
                 this.When(residentialSale, PageType.Create, PageType.Update))
                 .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPriceValueId)
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPriceValueId);
@@ -506,7 +511,7 @@
                 new List<ControlCode> { ControlCode.ShortMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.ShortMatchFlexibilityId != matchFlexRentPercentageId);
-            
+
             this.Use(
                 new List<ControlCode> { ControlCode.LongMatchFlexWeekValue },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
@@ -528,7 +533,7 @@
                 new List<ControlCode> { ControlCode.LongMatchFlexMonthValue },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => this.StatusToLetUnavailableAndLongFlexAndPeriod(x, matchFlexRentValueId, rentPaymentPeriodMonthId));
-            
+
             this.Use(
                 new List<ControlCode> { ControlCode.LongMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
