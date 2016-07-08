@@ -1,0 +1,20 @@
+<div class="card card-with-header" ng-class="{'card-no-menu': !vm.showContextMenu, 'card-details': vm.showItemDetails, 'card-selectable': vm.allowSelection, 'card-selected': vm.selected}" ng-click="vm.clicked()">
+    <div class="card-body">
+        <div class="card-header">
+            <div class="card-header-content" ng-click="vm.showItemDetails(vm.item)">
+                <div class="card-item">
+                    <div ng-transclude="headerContent"></div>
+                </div>
+            </div>
+            <div class="card-action" tabindex="-1" ng-if="vm.showContextMenu" uib-dropdown uib-dropdown-toggle>
+                <a href="" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                <ul class="card-menu dropdown-menu" ng-transclude="contextMenu" uib-dropdown-menu role="menu">
+                </ul>
+            </div>
+        </div>
+        <div class="card-content" ng-click="vm.showItemDetails(vm.item)">
+            <div ng-include src="vm.cardTemplateUrl" ng-if="vm.cardTemplateUrl"></div>
+            <div ng-transclude="template" ng-if="!vm.cardTemplateUrl"></div>
+        </div>
+    </div>
+</div>
