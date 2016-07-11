@@ -89,7 +89,8 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_Activity_Solicitor,
         Offer_Requirement_Solicitor,
         Offer_Vendor,
-        Offer_Landlord
+        Offer_Landlord,
+        Offer_UpwardChain
         #endregion
     }
 }

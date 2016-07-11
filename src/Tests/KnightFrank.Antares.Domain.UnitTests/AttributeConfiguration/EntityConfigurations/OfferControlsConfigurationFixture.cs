@@ -142,7 +142,7 @@
                         new[] { RequirementType.ResidentialSale },
                         residentialSaleControlCodes.Concat(detailsControlCodes).Concat(new[]
                             {
-                                ControlCode.Offer_Activity_Solicitor, ControlCode.Offer_Requirement_Solicitor
+                                ControlCode.Offer_Activity_Solicitor, ControlCode.Offer_Requirement_Solicitor, ControlCode.Offer_UpwardChain
                             })));
 
             return data;

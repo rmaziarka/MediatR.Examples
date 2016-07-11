@@ -1,4 +1,4 @@
-<div class="section-details">
+<div class="section-details" ng-if="vm.config">
     <h3 class="page-header">Upward chain</h3>
 
     <div class="form-group">
@@ -19,34 +19,4 @@
         chain="vm.currentChain"
         is-last-chain="vm.isEndOfChainVisibleInPanel()">
     </offer-chain-panel>
-
-    <card-list-item class="chain-list">
-        <card show-context-menu="true" show-item-details="" display-new-control="true"
-              card-template-url="'app/offer/templates/chainCard.html'" item="">
-            <card-context-menu>
-                <context-menu-item type="delete" item="" action=""></context-menu-item>
-                <context-menu-item type="edit" item="" action=""></context-menu-item>
-            </card-context-menu>
-        </card>
-
-        <card show-context-menu="true" show-item-details="" display-new-control="true"
-              card-template-url="'app/offer/templates/chainCard.html'" item="">
-            <card-context-menu>
-                <context-menu-item type="delete" item="" action=""></context-menu-item>
-                <context-menu-item type="edit" item="" action=""></context-menu-item>
-            </card-context-menu>
-        </card>
-
-        <card show-context-menu="true" show-item-details="" display-new-control="true"
-              card-template-url="'app/offer/templates/chainCard.html'" item="">
-            <card-context-menu>
-                <context-menu-item type="delete" item="" action=""></context-menu-item>
-                <context-menu-item type="edit" item="" action=""></context-menu-item>
-            </card-context-menu>
-        </card>
-
-        <card show-context-menu="false" show-item-details="" display-new-control="true"
-              card-template-url="'app/offer/templates/chainCard.html'" item="">
-        </card>
-    </card-list-item>
 </div>
