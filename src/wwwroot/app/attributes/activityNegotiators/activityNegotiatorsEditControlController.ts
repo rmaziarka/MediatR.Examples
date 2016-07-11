@@ -7,9 +7,9 @@ module Antares.Attributes {
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
     import SearchOptions = Antares.Common.Component.SearchOptions;
 
-	export interface IActivityNegotiatorsEditControlForm extends ng.IFormController {
-		callDate: ng.INgModelController
-	}
+    export interface IActivityNegotiatorsEditControlForm extends ng.IFormController {
+        callDate: ng.INgModelController
+    }
 
     export class ActivityNegotiatorsEditControlController {
         // bindings
@@ -31,8 +31,9 @@ module Antares.Attributes {
 
         public today: Date = new Date();
         public usersSearchMaxCount: number = 100;
+        public minDate: Date = moment("1970-01-01").toDate();
 
-		public negotiatorsForm: IActivityNegotiatorsEditControlForm;
+        public negotiatorsForm: IActivityNegotiatorsEditControlForm;
 
         constructor(
             private $scope: ng.IScope,
@@ -51,7 +52,7 @@ module Antares.Attributes {
         }
 
         public editLeadNegotiator = () => {
-            this.isLeadNegotiatorInEditMode = true;
+            this.isLeadNegotiatorInEditMode = true; 
         }
 
         public changeLeadNegotiator = (user: Dto.IUser) => {
@@ -122,6 +123,14 @@ module Antares.Attributes {
                 .then((users: any) => {
                     return users.map((user: Common.Models.Dto.IUser) => { return new Common.Models.Business.User(<Common.Models.Dto.IUser>user); });
                 });
+        }
+        
+        public getNextCallDateValidDate = (): Date =>{
+            if (this.negotiatorsForm.$dirty) {
+                return this.today;
+            }
+
+            return this.minDate;
         }
 
         private fixLeadNegotiatorCallDate = () => {
