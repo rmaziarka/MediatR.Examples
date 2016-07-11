@@ -71,7 +71,7 @@
         [When(@"User clicks (.*) viewings details link on view activity page")]
         public void OpenViewingsDetails(int position)
         {
-            this.page.OpenViewingDetails(position);
+            this.page.OpenViewingDetails(position).WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view requirement from viewing on view activity page")]
@@ -179,11 +179,9 @@
 
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
-            Verify.That(this.driverContext,
+            Verify.That(this.driverContext, 
                 () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
-                () =>
-                    Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime,
-                        this.page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
@@ -270,7 +268,7 @@
         public void CheckPropertyDetailsInOverviewTab(Table table)
         {
             var expectedAddress = table.CreateInstance<Address>();
-            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnOverviewTab();
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
                 () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
@@ -315,14 +313,16 @@
                 () => Assert.Equal(expectedDetails.SellingReason, actualDetails["sellingReason"]),
                 () => Assert.Equal(expectedDetails.PitchingThreats, actualDetails["pitchingThreats"]),
                 () => Assert.Equal(expectedDetails.KeyNumber, actualDetails["keyNumber"]),
-                () => Assert.Equal(expectedDetails.AccessArangements, actualDetails["accessArangements"]));
+                () => Assert.Equal(expectedDetails.AccessArrangements, actualDetails["accessArangements"]),
+                () => Assert.Equal(expectedDetails.Decoration, actualDetails["decoration"]),
+                () => Assert.Equal(expectedDetails.OtherConditions, actualDetails["otherConditions"]));
         }
 
         [Then(@"Property details should be displayed in details tab on view activity page")]
         public void CheckPropertyDetailsOnDetailsTab(Table table)
         {
             var expectedAddress = table.CreateInstance<Address>();
-            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnActivityOverviewTab();
+            Dictionary<string, string> actualResult = this.page.GetPropertyAddressOnOverviewTab();
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedAddress.PropertyNumber, actualResult["number"]),
                 () => Assert.Equal(expectedAddress.PropertyName, actualResult["name"]),
@@ -330,6 +330,18 @@
                 () => Assert.Equal(expectedAddress.Postcode, actualResult["postCode"]),
                 () => Assert.Equal(expectedAddress.City, actualResult["city"]),
                 () => Assert.Equal(expectedAddress.County, actualResult["county"]));
+        }
+
+        [Then(@"Details specific for freehold sale activity type are displayed in details tab on view activity page")]
+        public void CheckPropertyDetailsonDetailsTabForFreeholdSaleActivity(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ValuationInformation>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnDetailsTabForFreeholdSale();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.DisposalType, actualDetails["disposalType"]),
+                () => Assert.Equal(expectedDetails.KfValuation, actualDetails["kfValuation"]),
+                () => Assert.Equal(expectedDetails.VendorValuation, actualDetails["vendorValuation"]),
+                () => Assert.Equal(expectedDetails.AgreedInitialMarketingPrice, actualDetails["agreedInitialMarketingPrice"]));
         }
     }
 }

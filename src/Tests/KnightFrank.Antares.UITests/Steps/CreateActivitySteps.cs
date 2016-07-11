@@ -40,28 +40,64 @@
             }
         }
 
-        [When(@"User selects (.*) type on create activity page")]
-        public void SelectActivityType(string type)
+        [When(@"User selects activity status and type on create actvity page")]
+        public void SelectStatusAndType(Table table)
         {
-            this.page.SelectActivityType(type);
+            var details = table.CreateInstance<ActivityDetails>();
+            this.page.SelectActivityType(details.Type)
+                .SelectActivityStatus(details.Status);
         }
 
-        [When(@"User selects (.*) status on create activity page")]
-        public void SelectActivityStatus(string status)
+        [When(@"User fills in basic information on create activity page")]
+        public void FillInBasicInformation(Table table)
         {
-            this.page.SelectActivityStatus(status);
+            var basicInformation = table.CreateInstance<ActivityDetails>();
+            this.page.SelectDisposalType(basicInformation.DisposalType)
+                .SelectSource(basicInformation.Source)
+                .SetSourceDescription(basicInformation.SourceDescription)
+                .SetPitchingThreats(basicInformation.PitchingThreats);
         }
 
-        [When(@"User selects (.*) from source list on create activity page")]
-        public void SelectSource(string source)
+        [When(@"User fills in additional information on create activity page")]
+        public void AddAdditionalInformation(Table table)
         {
-            this.page.SelectSource(source);
+            var additionalInformation = table.CreateInstance<ActivityDetails>();
+            this.page.SetKeyNumber(additionalInformation.KeyNumber)
+                .SetAccessArangements(additionalInformation.AccessArrangements);
         }
 
-        [When(@"User fills in source description (.*) on create activity page")]
-        public void AddSourceDescription(string description)
+        [When(@"User fills in attendees on create activity page")]
+        public void AddAttendees(Table table)
         {
-            this.page.SetSourceDescription(description);
+            var attendees = table.CreateInstance<ActivityDetails>();
+            this.page.SelectAttendee(attendees.Attendees)
+                .SetInvitationText(attendees.InvitationText);
+        }
+
+        [When(@"User fills in appraisal meeting information on create activity page")]
+        public void SetDateAndTime(Table table)
+        {
+            var dateAndTime = table.CreateInstance<ActivityDetails>();
+            this.page.SetTime(dateAndTime.StartTime, dateAndTime.EndTime).SetDate();
+        }
+
+        [When(@"User fills in valuation information for activity with freehold sale type on create activity page")]
+        public void AddValutationinformation(Table table)
+        {
+            var valutationInformation = table.CreateInstance<ValuationInformation>();
+            this.page
+                .SetKfValuation(valutationInformation.KfValuation)
+                .SetVendorValuation(valutationInformation.VendorValuation)
+                .SetAgreedInitialMarketingPrice(valutationInformation.AgreedInitialMarketingPrice);
+        }
+
+        [When(@"User fills in other information on create activity page")]
+        public void AddOtherInformation(Table table)
+        {
+            var otherInformation = table.CreateInstance<ActivityDetails>();
+            this.page
+                .SelectDecoration(otherInformation.Decoration)
+                .SetOtherConditions(otherInformation.OtherConditions);
         }
 
         [When(@"User selects (.*) from selling reason list on create activity page")]
@@ -103,7 +139,7 @@
         [When(@"User selects (.*) from attendees on create activity page")]
         public void SelectAttendee(string attendee)
         {
-            this.page.SelectAtendee(attendee);
+            this.page.SelectAttendee(attendee);
         }
 
         [When(@"User fills in invitation text (.*) on create activity page")]
@@ -116,6 +152,12 @@
         public void ClickSaveButtonOnActivityPanel()
         {
             this.page.SaveActivity();
+        }
+
+        [When(@"User selects (.*) from source list on create activity page")]
+        public void SelectSource(string source)
+        {
+            this.page.SelectSource(source);
         }
 
         [Then(@"Property details are set on create activity page")]
@@ -135,7 +177,7 @@
         [Then(@"Attendees are set on create activity page")]
         public void CheckAttendees(Table table)
         {
-            List<string> expectedAttendees = table.CreateSet<ActivityAttendees>().Select(x => x.Attendees).ToList();
+            List<string> expectedAttendees = table.CreateSet<ActivityDetails>().Select(x => x.Attendees).ToList();
             List<string> actualAttendess = this.page.ActivityAttendees;
             expectedAttendees.ShouldBeEquivalentTo(actualAttendess);
         }

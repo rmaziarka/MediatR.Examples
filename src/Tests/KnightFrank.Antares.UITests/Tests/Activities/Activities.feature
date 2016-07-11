@@ -1,7 +1,7 @@
 ﻿Feature: Activities UI tests
 
 @Activity
-Scenario: Create activity
+Scenario: Create freehold sale activity for residential property
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
 		| Lady  | Sarah     | Chatto  |
@@ -17,9 +17,10 @@ Scenario: Create activity
 			| PurchaseDate | BuyPrice  |
 			| 01-01-2005   | 100000000 |
 	When User navigates to view property page with id
-		And User clicks add activites button on view property page	
-		And User selects Freehold Sale type on create activity page
-		And User selects Pre-appraisal status on create activity page
+		And User clicks add activites button on view property page
+		And User selects activity status and type on create actvity page
+			| Type          | Status           |
+			| Freehold Sale | Market appraisal |	
 	Then Activity details are set on create activity page
 	    | Vendor       | Negotiator | ActivityTitle             | Department |
 	    | Sarah Chatto | John Smith | Hotel Park, 4 Waterloo St | Aldgate    |
@@ -30,33 +31,43 @@ Scenario: Create activity
 			| Attendees    |
 			| John Smith   |
 			| Sarah Chatto |
-	When User selects Direct phone call from source list on create activity page
-	# Improve steps
-		And User fills in source description Text on create activity page
-		And User selects Divorce from selling reason list on create activity page
-		And User fills in pitching threats Text on create activity page
-		And User fills in 123456 key number on create activity page
-		And User fills in access arangements Text on create activity page
-		And User sets appraisal meeting date as tomorrow date on create activity page
-		And User sets start time at 10:00 and end time at 12:00 on create activity page
-		And User selects Sarah Chatto from attendees on create activity page
-		And User fills in invitation text Text on create activity page
-		 
-	When User clicks save button on create activity page
+	When User selects Divorce from selling reason list on create activity page
+		And User fills in basic information on create activity page
+			| DisposalType | Source            | SourceDescription | PitchingThreats |
+			| Auction      | Direct phone call | Text              | Text            |
+		And User fills in additional information on create activity page
+			| KeyNumber | AccessArrangements |
+			| 123456    | Text               |
+		And User fills in appraisal meeting information on create activity page
+			| StartTime | Endtime |
+			| 10:00     | 12:00   |
+		And User fills in attendees on create activity page
+			| Attendees    | InvitationText |
+			| Sarah Chatto | Text           |
+		And User fills in valuation information for activity with freehold sale type on create activity page
+			| KfValuation | VendorValuation | AgreedInitialMarketingPrice |
+			| 1000        | 2000            | 3000                        |
+		And User fills in other information on create activity page
+			| Decoration | OtherConditions |
+			| Good       | Text            |
+		And User clicks save button on create activity page
 	Then Activity details should be displayed on view activity page
-		| ActivityTitle             | Status        | Type          |
-		| Hotel Park, 4 Waterloo St | Pre-appraisal | Freehold Sale |
-	Then Property details should be displayed in overview tab on view activity page
-		| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
-		| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
+		| ActivityTitle             | Status           | Type          |
+		| Hotel Park, 4 Waterloo St | Market appraisal | Freehold Sale |
+		And Property details should be displayed in overview tab on view activity page
+			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
+			| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
 		And Activity details should be displayed in overview tab on view activity page
 			| Vendor       | Negotiator | Attendees    |
 			| Sarah Chatto | John Smith | Sarah Chatto |
 		And Appraisal meeting date is set to tomorrow date with start time 10:00 - 12:00 in overview tab on view activity page
 	When User switches to details tab on view activity page
 	Then Activity details should be displayed in details tab on view activity page
-		| Vendor       | Negotiator | Department | Source            | SourceDescription | SellingReason | PitchingThreats | KeyNumber | AccessArangements |
-		| Sarah Chatto | John Smith | Aldgate    | Direct phone call | Text              | Divorce       | Text            | 123456    | Text              |
+		| Vendor       | Negotiator | Department | Source            | SourceDescription | SellingReason | PitchingThreats | KeyNumber | AccessArrangements | Decoration | OtherConditions |
+		| Sarah Chatto | John Smith | Aldgate    | Direct phone call | Text              | Divorce       | Text            | 123456    | Text               | Good       | Text            |
+		And Details specific for freehold sale activity type are displayed in details tab on view activity page
+			| DisposalType | KfValuation | VendorValuation | AgreedInitialMarketingPrice |
+			| Auction      | 1,000 GBP   | 2,000 GBP       | 3,000 GBP                   |
 		And Property details should be displayed in details tab on view activity page
 			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
 			| 4              | Hotel Park   | Waterloo St | PE30 1NZ | King's Lynn | Norfolk |
