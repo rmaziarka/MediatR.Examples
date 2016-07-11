@@ -63,8 +63,8 @@ module Antares.TestHelpers {
             return new Business.Activity(ActivityGenerator.generateDto(specificData));
         }
 
-        public static generateActivityEdit(specificData?: any): Activity.ActivityEditModel {
-            return new Activity.ActivityEditModel(ActivityGenerator.generateDto(specificData));
+        public static generateActivityEdit(specificData?: any): Business.ActivityEditModel {
+            return new Business.ActivityEditModel(ActivityGenerator.generateDto(specificData));
     }
     }
 }
