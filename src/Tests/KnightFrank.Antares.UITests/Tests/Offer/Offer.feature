@@ -1,5 +1,7 @@
 ﻿Feature: Offer UI tests
 
+#----------------- RESIDENTIAL LETTING OFFER -----------------#
+
 @Requirement
 @Offer
 Scenario: Create residential letting offer on requirement
@@ -26,9 +28,9 @@ Scenario: Create residential letting offer on requirement
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-	#Then Activity details on view requirement page are same as the following
-	#	| Details                         |
-	#	| Lori Petty’s house, 8 George St |
+	Then Create offer activity details on view requirement page are same as the following
+		| Details                         |
+		| Lori Petty’s house, 8 George St |
 	When User fills in letting offer details on view requirement page
 		| Status | OfferPerWeek | SpecialConditions |
 		| New    | 1000         | Text              |
@@ -92,6 +94,103 @@ Scenario: Update residential letting offer on requirement
 		| Details                                                     | Status   | OfferPerWeek | SpecialConditions  | Negotiator |
 		| 1 Vivien Leigh Crutchley Ave B78 3JT Tamworth Staffordshire | Accepted | 2000         | Special conditions | John Smith |
 
+@Offer
+Scenario: View residential letting offer details page
+	Given Contacts are created in database
+		| Title | FirstName | Surname |
+		| Sir   | Gene      | Hackman |
+		| Chef  | Sidney    | Poitier |
+		And Property with Residential division and Flat type is defined
+		And Property attributes details are defined
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
+			| 4           | 5           | 2             | 4             | 1            | 2            |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2       | Line3 | Postcode | City       | County             |
+			| 3              | Gene’s house | Needwood Cl |       | M40 8JN  | Manchester | Greater Manchester |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-01-2001   | 250000   |
+		And Property Open Market Letting activity is defined
+		And Requirement for GB is created in database
+			| Type                | Description |
+			| Residential Letting | Description |
+		And Viewing for requirement is defined
+	When User navigates to view requirement page with id
+		And User clicks make an offer button for 1 activity on view requirement page
+		And User fills in letting offer details on view requirement page
+			| Status   | OfferPerWeek | SpecialConditions  |
+			| Accepted | 3500         | Special conditions |
+		And User clicks save offer button on view requirement page
+	Then New offer should be created and displayed on view requirement page
+	When User clicks details offer button for 1 offer on view requirement page
+	Then View offer page should be displayed
+		And Offer header details on view offer page are same as the following
+			| Details                      | Status   |
+			| Gene Hackman, Sidney Poitier | Accepted |
+		And Offer activity details on view offer page are same as the following
+			| Details                                                          |
+			| 3 Gene’s house Needwood Cl M40 8JN Manchester Greater Manchester |
+		And Offer requirement details on view offer page are same as the following
+			| Details                      |
+			| Gene Hackman, Sidney Poitier |
+		And Letting offer details on view offer page are same as the following
+			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
+			| Accepted | 3500         | Special conditions | John Smith |
+	When User clicks activity details on view offer page
+	Then Activity details on view offer page are same as the following 
+		| Status        | Negotiator | Vendor                      | Type                |
+		| Pre-appraisal | John Smith | Gene Hackman;Sidney Poitier | Open Market Letting |
+	When User clicks view activity link from activity on view offer page
+	Then View activity page should be displayed
+	When User goes back to previous page
+		And User clicks requirement details button on view offer page
+	Then View requirement page should be displayed
+
+@Offer
+Scenario: Update new residential letting offer
+	Given Contacts are created in database	
+		| Title | FirstName | Surname  |
+		| Sir   | Peter     | O'Toole  |
+		| Sir   | Ben       | Kingsley |
+		And Property with Residential division and House type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2     | Line3 | Postcode | City       | County             |
+			| 53             | Miller House | Miller St |       | M4       | Manchester | Greater Manchester |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-12-2010   | 325000   |
+		And Property Open Market Letting activity is defined
+		And Requirement for GB is created in database
+			| Type                | Description |
+			| Residential Letting | Description |
+		And Viewing for requirement is defined
+		And Offer for requirement is defined
+			| Type                | Status |
+			| Residential Letting | New    |
+	When User navigates to view offer page with id
+		And User clicks edit offer button on view offer page
+		And User fills in letting offer details on edit offer page
+			| Status   | OfferPerWeek | SpecialConditions  |
+			| Accepted | 2000         | Special conditions |
+		And User clicks save offer on edit offer page
+	Then Offer updated success message should be displayed
+		And Letting offer details on view offer page are same as the following
+			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
+			| Accepted | 2000         | Special conditions | John Smith |
+		And Offer header details on view offer page are same as the following
+			| Details                     | Status   |
+			| Peter O'Toole, Ben Kingsley | Accepted |
+		And Offer activity details on view offer page are same as the following
+			| Details                                                    |
+			| 53 Miller House Miller St M4 Manchester Greater Manchester |
+		And Offer requirement details on view offer page are same as the following
+			| Details                     |
+			| Peter O'Toole, Ben Kingsley |
+
+#----------------- END RESIDENTIAL LETTING OFFER -----------------#
+
+#----------------- RESIDENTIAL SALE OFFER -----------------#
 @Requirement
 @Offer
 Scenario: Create residential sale offer on requirement
@@ -118,9 +217,9 @@ Scenario: Create residential sale offer on requirement
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-	#Then Activity details on view requirement page are same as the following
-	#	| Details                                                                  |
-	#	| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county |
+	Then Create offer activity details on view requirement page are same as the following
+		| Details                                     |
+		| John Soane’s house, 13 Lincoln’s Inn Fields |
 	When User fills in sale offer details on view requirement page
 		| Status | Offer  | SpecialConditions |
 		| New    | 100000 | Text              |
@@ -184,7 +283,6 @@ Scenario: Update residential sale offer on requirement
 		| Details                                         | Status   | Offer | SpecialConditions  | Negotiator |
 		| 22 House Eltham Dr LS6 2TU Leeds West Yorkshire | Accepted | 2000  | Special conditions | John Smith |
 
-#SAME TEST FOR LETTING OFFER
 @Offer
 Scenario: View residential sale offer details page
 	Given Contacts are created in database
@@ -226,7 +324,7 @@ Scenario: View residential sale offer details page
 		And Offer requirement details on view offer page are same as the following
 			| Details                        |
 			| Judith Greciet, Julius Chaloff |
-		And Offer details on view offer page are same as the following
+		And Sale offer details on view offer page are same as the following
 			| Status    | Offer | SpecialConditions     | Negotiator |
 			| Withdrawn | 95000 | My special conditions | John Smith |
 	When User clicks activity details on view offer page
@@ -239,7 +337,6 @@ Scenario: View residential sale offer details page
 		And User clicks requirement details button on view offer page
 	Then View requirement page should be displayed
 
-#SAME TEST FOR LETTING OFFER?
 @Offer
 Scenario: Update new residential sale offer
 	Given Contacts are created in database	
@@ -247,8 +344,8 @@ Scenario: Update new residential sale offer
 		| Sir   | John      | Adams   |
 		| Lady  | Sarah     | Adams   |
 		And Company is created in database
-			| Name    | WebsiteUrl             | ClientCarePageUrl      |
-			| Testing | https://www.google.com | https://www.google.com |
+			| Name    |
+			| Testing |
 	Given Contacts are created in database
 		| Title | FirstName | Surname      |
 		| Lady  | Sarah     | McCorquodale |
@@ -273,15 +370,18 @@ Scenario: Update new residential sale offer
 			| Residential Sale | New    |
 	When User navigates to view offer page with id
 		And User clicks edit offer button on view offer page
-		And User fills in offer details on edit offer page
+		And User fills in sale offer details on edit offer page
 			| Status | Offer  | SpecialConditions     |
 			| New    | 450000 | My special conditions |
 		And User selects solicitors on edit offer page
 			| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
 			| John Adams | Testing       | Sarah Adams | Testing          |
-		And User clicks save offer on edit offer page
+	Then Following solicitors should be displayed on edit offer page
+		| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
+		| John Adams | Testing       | Sarah Adams | Testing          |
+	When User clicks save offer on edit offer page
 	Then Offer updated success message should be displayed
-		And Offer details on view offer page are same as the following
+		And Sale offer details on view offer page are same as the following
 			| Status | Offer  | SpecialConditions     | Negotiator |
 			| New    | 450000 | My special conditions | John Smith |
 		And Offer header details on view offer page are same as the following
@@ -306,8 +406,8 @@ Scenario: Create and update accepted residential sale offer
 		| Sir   | Adrian    | Smith     |
 		| Sir   | Bruce     | Dickinson |
 		And Company is created in database
-			| Name        | WebsiteUrl             | ClientCarePageUrl      |
-			| Objectivity | https://www.google.com | https://www.google.com |
+			| Name        |
+			| Objectivity |
 		And Contacts are created in database
 			| Title | FirstName | Surname |
 			| Sir   | Mark      | Walport |
@@ -340,7 +440,7 @@ Scenario: Create and update accepted residential sale offer
 			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries   | ContractApproved |
 			| Unknown        | Unknown              | Unknown                | Not started  | Not started | false            |
 	When User clicks edit offer button on view offer page
-		And User fills in offer details on edit offer page
+		And User fills in sale offer details on edit offer page
 			| Status   | Offer  | SpecialConditions |
 			| Accepted | 120000 | Text              |
 		And User fills in offer progress summary on edit offer page
@@ -357,7 +457,7 @@ Scenario: Create and update accepted residential sale offer
 		| Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     | Bruce Dickinson    | Objectivity               |
 	When User clicks save offer on edit offer page
 	Then Offer updated success message should be displayed
-		And Offer details on view offer page are same as the following
+		And Sale offer details on view offer page are same as the following
 			| Status   | Offer  | SpecialConditions | Negotiator |
 			| Accepted | 120000 | Text              | John Smith |
 		And Offer progress summary details on view offer page are same as the following
@@ -369,3 +469,5 @@ Scenario: Create and update accepted residential sale offer
 		And Offer additional details on view offer page are same as the following
 			| AdditionalSurveyor | AdditionalSurveyorCompany | Comment  |
 			| Bruce Dickinson    | Objectivity               | Approved |
+
+#----------------- END RESIDENTIAL SALE OFFER -----------------#
