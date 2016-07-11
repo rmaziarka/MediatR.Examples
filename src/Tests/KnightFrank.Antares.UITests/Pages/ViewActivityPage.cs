@@ -72,7 +72,24 @@
         private readonly ElementLocator pitchingThreats = new ElementLocator(Locator.Id, "pitchingThreatsId");
         private readonly ElementLocator keyNumber = new ElementLocator(Locator.Id, "keyNumberId");
         private readonly ElementLocator accessArangements = new ElementLocator(Locator.Id, "accessArrangementsId");
-     
+        private readonly ElementLocator disposalType = new ElementLocator(Locator.Id, "disposalTypeId");
+        private readonly ElementLocator decoration = new ElementLocator(Locator.Id, "decorationId");
+        private readonly ElementLocator otherConditions = new ElementLocator(Locator.Id, "otherCondition");
+        //Valuation information locators
+        private readonly ElementLocator valuationInformationKfEstimatedPrice = new ElementLocator(Locator.Id, "kfValuationPrice");
+        private readonly ElementLocator valuationInformationVendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorValuationPrice");
+        private readonly ElementLocator valuationInformationkAgreedInitialMarketingPrice = new ElementLocator(Locator.Id, "agreedInitialMarketingPrice");
+//        private readonly ElementLocator valuationInformationkFvaluationShortLet = new ElementLocator(Locator.Id, "shortKfValuationPrice");
+//        private readonly ElementLocator valuationInformationkFvaluationLongLet = new ElementLocator(Locator.Id, "longKfValuationPrice");
+//        private readonly ElementLocator valuationInformationVendorValuationShortLet = new ElementLocator(Locator.Id, "shortVendorValuationPrice");
+//        private readonly ElementLocator valuationInformationVendorValuationLongLet = new ElementLocator(Locator.Id, "longVendorValuationPrice");
+//        private readonly ElementLocator valuationInformationAgreedInitialMarketingShortLet = new ElementLocator(Locator.Id, "shortAgreedInitialMarketingPrice");
+//        private readonly ElementLocator valuationInformationAgreedInitialMarketingLongLet = new ElementLocator(Locator.Id, "longAgreedInitialMarketingPrice");
+//        private readonly ElementLocator chargesServiceCharge = new ElementLocator(Locator.Id, "serviceChargeAmount");
+//        private readonly ElementLocator chargesServiceChargeNotes = new ElementLocator(Locator.Id, "serviceChargeNote");
+//        private readonly ElementLocator chargesGroundRent = new ElementLocator(Locator.Id, "groundRentAmount");
+//        private readonly ElementLocator chargesGroundRentNotes = new ElementLocator(Locator.Id, "groundRentNote");
+
         private const string Format = "dd-MM-yyyy";
 
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
@@ -81,6 +98,7 @@
 
         public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
 
+        //TODO check if still valid data
         public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
 
         public string VendorEstimatedPrice => this.Driver.GetElement(this.vendorEstimatedPrice).Text;
@@ -129,7 +147,7 @@
 
         public bool IsViewActivityFormPresent()
         {
-            this.Driver.WaitForAngularToFinish();
+            this.Driver.WaitForAngularToFinish(60);
             return this.Driver.IsElementPresent(this.viewActivityForm, BaseConfiguration.LongTimeout);
         }
 
@@ -262,7 +280,7 @@
             return actualDetails;
         }
 
-        public Dictionary<string, string> GetPropertyAddressOnActivityOverviewTab()
+        public Dictionary<string, string> GetPropertyAddressOnOverviewTab()
         {
             var propertyAddress = new Dictionary<string, string>
             {
@@ -309,7 +327,21 @@
                 { "sellingReason", this.Driver.GetElement(this.sellingReason).Text },
                 { "pitchingThreats", this.Driver.GetElement(this.pitchingThreats).Text },
                 { "keyNumber", this.Driver.GetElement(this.keyNumber).Text },
-                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text }
+                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text },
+                { "decoration", this.Driver.GetElement(this.decoration).Text },
+                { "otherConditions", this.Driver.GetElement(this.otherConditions).Text }
+            };
+            return details;
+        }
+
+        public Dictionary<string, string> GetActivityDetailsOnDetailsTabForFreeholdSale()
+        {
+            var details = new Dictionary<string, string>
+            {
+                { "disposalType", this.Driver.GetElement(this.disposalType).Text },
+                { "kfValuation", this.Driver.GetElement(this.valuationInformationKfEstimatedPrice).Text },
+                { "vendorValuation", this.Driver.GetElement(this.valuationInformationVendorEstimatedPrice).Text },
+                { "agreedInitialMarketingPrice", this.Driver.GetElement(this.valuationInformationkAgreedInitialMarketingPrice).Text }
             };
             return details;
         }
