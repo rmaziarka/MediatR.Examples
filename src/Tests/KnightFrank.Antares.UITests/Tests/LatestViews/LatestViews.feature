@@ -74,7 +74,9 @@ Scenario: Display latest viewed activities
 			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-		And User selects Freehold Sale type on create activity page
+		And User selects activity status and type on create actvity page
+			| Type          | Status        |
+			| Freehold Sale | Pre-appraisal |
 		And User selects Direct phone call from source list on create activity page
 		And User selects Divorce from selling reason list on create activity page
 		And User selects John Smith from attendees on create activity page
