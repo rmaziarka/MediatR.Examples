@@ -93,7 +93,7 @@
         [When(@"User clicks (.*) viewings details link on view activity page")]
         public void OpenViewingsDetails(int position)
         {
-            this.page.OpenViewingDetails(position);
+            this.page.OpenViewingDetails(position).WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view requirement from viewing on view activity page")]
@@ -226,11 +226,9 @@
 
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
-            Verify.That(this.driverContext,
+            Verify.That(this.driverContext, 
                 () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
-                () =>
-                    Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime,
-                        this.page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
