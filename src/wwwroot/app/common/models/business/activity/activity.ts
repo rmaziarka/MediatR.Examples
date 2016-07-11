@@ -127,7 +127,8 @@ module Antares.Common.Models.Business {
                 propertyNumber : "142",
                 line2 : "Strzegomska",
                 postcode : "123"
-            }
+                }
+            parent.property.address = new Business.Address(parent.property.address);
             parent.vendor = 'Mark Bower';
             parent.agentUser = <Business.User> {
                 id: "{BB34F76F-0A43-4902-BDE3-6024FC80FE34}",
@@ -145,10 +146,15 @@ module Antares.Common.Models.Business {
                 name: "West Company"
             };
             parent.mortgage = new Business.EnumTypeItem();
+            parent.mortgageId = 'e0994e69-3a44-e611-8299-8cdcd42baca7';
             parent.survey = new Business.EnumTypeItem();
+            parent.surveyId = 'e8994e69-3a44-e611-8299-8cdcd42baca7';
             parent.searches = new Business.EnumTypeItem();
+            parent.searchesId = 'ec994e69-3a44-e611-8299-8cdcd42baca7';
             parent.enquiries = new Business.EnumTypeItem();
+            parent.enquiriesId = 'f0994e69-3a44-e611-8299-8cdcd42baca7';
             parent.contractAgreed = new Business.EnumTypeItem();
+            parent.contractAgreedId = 'f3994e69-3a44-e611-8299-8cdcd42baca7';
             parent.surveyDate = new Date();
 
             var child = new ChainTransaction();
@@ -167,6 +173,7 @@ module Antares.Common.Models.Business {
                     line2: "Powstancow Slaskich",
                     postcode: "1232"
                 }
+            child.property.address = new Business.Address(child.property.address);
             child.vendor = 'Gilberto Lyons';
             child.agentContact = <Business.Contact>{
                 id: "{CCF43460-41DB-42A3-8DE8-6D7D71BCBFF1}",
@@ -189,10 +196,15 @@ module Antares.Common.Models.Business {
                 name: "East West"
             };
             child.mortgage = new Business.EnumTypeItem();
+            child.mortgageId = 'e0994e69-3a44-e611-8299-8cdcd42baca7';
             child.survey = new Business.EnumTypeItem();
+            child.surveyId = 'e8994e69-3a44-e611-8299-8cdcd42baca7';
             child.searches = new Business.EnumTypeItem();
+            child.searchesId = 'ec994e69-3a44-e611-8299-8cdcd42baca7';
             child.enquiries = new Business.EnumTypeItem();
+            child.enquiriesId = 'f0994e69-3a44-e611-8299-8cdcd42baca7';
             child.contractAgreed = new Business.EnumTypeItem();
+            child.contractAgreedId = 'f3994e69-3a44-e611-8299-8cdcd42baca7';
             child.surveyDate = new Date();
 
             var child2 = new ChainTransaction();
@@ -210,6 +222,7 @@ module Antares.Common.Models.Business {
                     line2: "Aleja Wisniowa",
                     postcode: "12"
                 }
+            child2.property.address = new Business.Address(child2.property.address);
             child2.vendor = 'Faye Castro';
             child2.agentUser = <Business.User>{
                 id: "{5345C209-CECF-44F8-98AC-C3ED90469DFB}",
@@ -227,10 +240,15 @@ module Antares.Common.Models.Business {
                 name: "Delgado Company"
             };
             child2.mortgage = new Business.EnumTypeItem();
+            child2.mortgageId = 'e0994e69-3a44-e611-8299-8cdcd42baca7';
             child2.survey = new Business.EnumTypeItem();
+            child2.surveyId = 'e8994e69-3a44-e611-8299-8cdcd42baca7';
             child2.searches = new Business.EnumTypeItem();
+            child2.searchesId = 'ec994e69-3a44-e611-8299-8cdcd42baca7';
             child2.enquiries = new Business.EnumTypeItem();
+            child2.enquiriesId = 'f0994e69-3a44-e611-8299-8cdcd42baca7';
             child2.contractAgreed = new Business.EnumTypeItem();
+            child2.contractAgreedId = 'f3994e69-3a44-e611-8299-8cdcd42baca7';
             child2.surveyDate = new Date();
 
             child.parent = parent;

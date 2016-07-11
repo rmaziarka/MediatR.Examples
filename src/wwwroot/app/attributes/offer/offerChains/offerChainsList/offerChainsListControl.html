@@ -1,0 +1,15 @@
+<card-list-item class="chain-list">
+    <card ng-repeat="chain in vm.chains" show-context-menu="true" show-item-details="vm.previewChain" display-new-control="true"
+          card-template-url="'app/offer/templates/chainCard.html'" item="chain">
+        <card-context-menu>
+            <context-menu-item type="delete" item="chain" action="vm.deleteChain"></context-menu-item>
+            <context-menu-item type="edit" item="chain" action="vm.editChain"></context-menu-item>
+        </card-context-menu>
+    </card>
+
+    <card ng-if="vm.chains.length > 0" show-context-menu="false" show-item-details="" display-new-control="true"
+          card-template-url="'app/property/templates/propertyCard.html'" item="vm.property">
+    </card>
+</card-list-item>
+
+<span ng-if="vm.chains.length == 0" translate="CHAIN.VIEW.NO_UPWARD_CHAIN"></span>

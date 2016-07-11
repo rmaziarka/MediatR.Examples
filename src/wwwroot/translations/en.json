@@ -429,6 +429,18 @@
       "NO_ATTACHMENTS": "No attachments"
     }
   },
+  "CHAIN": {
+    "VIEW": {
+      "STATUSES": {
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SEARCHES": "Searches",
+        "ENQUERIES": "Enquiries",
+        "CONTACT_AGREED": "Contract Agreed"
+      },
+      "NO_UPWARD_CHAIN": "No Upward chain specified"
+    }
+  },
   "OFFER": {
     "ADD": {
       "ACTIVITY": "Activity",
