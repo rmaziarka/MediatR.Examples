@@ -2,9 +2,8 @@
 {
     using System;
 
-    using MediatR;
-
-    public class UpdateTenancyCommand : IRequest<Guid>
+    public class UpdateTenancyCommand : TenancyCommandBase
     {
+        public Guid TenancyId { get; set; }
     }
 }

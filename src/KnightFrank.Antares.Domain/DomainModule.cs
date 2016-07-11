@@ -17,6 +17,7 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Tenancy.Commands;
     using KnightFrank.Antares.Domain.Tenancy.Relations;
 
     using Ninject.Modules;
@@ -48,6 +49,7 @@
             this.Bind<IActivityReferenceMapper<ActivityUser>>().To<ActivityUsersMapper>();
 
             this.Bind<ITenancyReferenceMapper<TenancyTerm>>().To<TenancyTermsMapper>();
+            this.Bind<IReferenceMapper<CreateTenancyCommand, Dal.Model.Tenancy.Tenancy, Dal.Model.Contacts.Contact>>().To<TenancyContactMapper>();
 
             this.ConfigureAttributeConfigurations();
 

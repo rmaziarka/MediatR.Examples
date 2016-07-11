@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Api;
@@ -8,6 +10,7 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
+    using KnightFrank.Antares.Domain.Tenancy.Queries;
 
     using MediatR;
 
@@ -50,15 +53,14 @@
         [Route("{id}")]
         public Tenancy GetTenancy(Guid id)
         {
-            // TODO 
-            //Tenancy tenancy = this.mediator.Send(new TenancyQuery { Id = id });
+            Tenancy tenancy = this.mediator.Send(new TenancyQuery { Id = id });
 
-            //if (tenancy == null)
-            //{
-            //    throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Tenancy not found."));
-            //}
+            if (tenancy == null)
+            {
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Tenancy not found."));
+            }
 
-            return new Tenancy();
+            return tenancy;
         }
 
         /// <summary>

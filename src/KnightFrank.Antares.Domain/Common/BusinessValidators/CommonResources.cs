@@ -176,7 +176,17 @@
         /// Key value : One or more negotiators do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Missing_Activity_Negotiators_Id
+        Missing_Activity_Negotiators_Id,
+        /// <summary>
+        /// Key value : One or more contact are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Tenancy_Contacts_Not_Unique,
+        /// <summary>
+        /// Key value : One or more contacts do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Tenancy_Contacts_Id
     }
 }
 

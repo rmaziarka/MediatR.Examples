@@ -317,6 +317,7 @@
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
     <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
+    <Compile Include="Tenancy\CommandHandlers\UpdateTenancyCommandHandler.cs" />
     <Compile Include="Tenancy\CommandHandlers\CreateTenancyCommandHandler.cs" />
     <Compile Include="Tenancy\Commands\CreateTenancyTermValidator.cs" />
     <Compile Include="Tenancy\Commands\TenancyCommandBase.cs" />
@@ -324,7 +325,9 @@
     <Compile Include="Tenancy\Commands\CreateTenancyCommand.cs" />
     <Compile Include="Tenancy\Commands\CreateTenancyTerm.cs" />
     <Compile Include="Tenancy\Queries\TenancyQuery.cs" />
+    <Compile Include="Tenancy\QueryHandlers\TenancyQueryHandler.cs" />
     <Compile Include="Tenancy\Relations\ITenancyReferenceMapper.cs" />
+    <Compile Include="Tenancy\Relations\TenancyContactMapper.cs" />
     <Compile Include="Tenancy\Relations\TenancyTermsMapper.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
     <Compile Include="User\Commands\UserCommandProfile.cs" />

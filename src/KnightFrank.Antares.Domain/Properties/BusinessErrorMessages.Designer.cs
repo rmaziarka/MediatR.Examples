@@ -295,6 +295,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more contacts do not exist..
+        /// </summary>
+        internal static string Missing_Tenancy_Contacts_Id {
+            get {
+                return ResourceManager.GetString("Missing_Tenancy_Contacts_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mortgage Survey Date must be greater than or equal to {0}..
         /// </summary>
         internal static string MortgageSurveyDateGreaterOrEqualToCreateDate {
@@ -372,6 +381,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string PropertyAreaBreakdown_OrderOutOfRange {
             get {
                 return ResourceManager.GetString("PropertyAreaBreakdown_OrderOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more contact are duplicated..
+        /// </summary>
+        internal static string Tenancy_Contacts_Not_Unique {
+            get {
+                return ResourceManager.GetString("Tenancy_Contacts_Not_Unique", resourceCulture);
             }
         }
     }

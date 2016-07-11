@@ -24,6 +24,7 @@
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<Tenancy> tenancyGenericRepository;
         private readonly ITenancyReferenceMapper<TenancyTerm> termMapper;
+        private readonly ITenancyReferenceMapper<Contact> tenancyContactsMapper;
         private readonly IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator;
         private readonly IGenericRepository<Requirement> requirementRepository;
         private readonly IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository;
@@ -34,7 +35,8 @@
             ITenancyReferenceMapper<TenancyTerm> termMapper, 
             IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator, 
             IGenericRepository<Requirement> requirementRepository, 
-            IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository)
+            IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository, 
+            ITenancyReferenceMapper<Contact> tenancyContactsMapper)
         {
             this.entityValidator = entityValidator;
             this.tenancyGenericRepository = tenancyGenericRepository;
@@ -42,6 +44,7 @@
             this.attributeValidator = attributeValidator;
             this.requirementRepository = requirementRepository;
             this.tenancyTypeRepository = tenancyTypeRepository;
+            this.tenancyContactsMapper = tenancyContactsMapper;
         }
 
         public Guid Handle(CreateTenancyCommand message)
@@ -49,8 +52,8 @@
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
             this.entityValidator.EntityExists<Requirement>(message.RequirementId);
 
-            this.entityValidator.EntitiesExist<Contact>(message.Landlords);
-            this.entityValidator.EntitiesExist<Contact>(message.Tenants);
+            this.entityValidator.EntitiesExist<Contact>(message.LandlordContacts);
+            this.entityValidator.EntitiesExist<Contact>(message.TenantContacts);
 
             Enums.RequirementType requirementTypeEnum = this.GetRequirementTypeEnum(message.RequirementId);
             Enums.TenancyType tenancyTypeEnum = EnumMapper.GetEnum<Enums.RequirementType, Enums.TenancyType>(requirementTypeEnum);
@@ -67,6 +70,7 @@
             };
 
             this.termMapper.ValidateAndAssign(message, tenancy);
+            this.tenancyContactsMapper.ValidateAndAssign(message, tenancy);
 
             this.tenancyGenericRepository.Add(tenancy);
             this.tenancyGenericRepository.Save();

@@ -13,7 +13,7 @@
         public Guid ActivityId { get; set; }
         public virtual Activity Activity { get; set; }
         public virtual ICollection<TenancyTerm> Terms { get; set; } = new List<TenancyTerm>();
-        public virtual ICollection<TenancyContact> Contacts { get; set; }
+        public virtual ICollection<TenancyContact> Contacts { get; set; } = new List<TenancyContact>();
         public Guid TenancyTypeId { get; set; }
         public virtual TenancyType TenancyType { get; set; }
     }

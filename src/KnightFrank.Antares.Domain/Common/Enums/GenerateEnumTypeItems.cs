@@ -26,6 +26,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	TenancyContactType,
 	 }
 
 	
@@ -210,5 +211,11 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	public enum TenancyContactType
+	{
+		Landlord,
+		Tenant,
 	}
 }
