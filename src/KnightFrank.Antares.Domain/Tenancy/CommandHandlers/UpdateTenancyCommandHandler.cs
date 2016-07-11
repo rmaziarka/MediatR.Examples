@@ -47,7 +47,7 @@
             var requirementTypeEnum = EnumExtensions.ParseEnum<Enums.RequirementType>(tenancy.Requirement.RequirementType.EnumCode);
             var tenancyTypeEnum = EnumExtensions.ParseEnum<Enums.TenancyType>(tenancy.TenancyType.EnumCode);
 
-            this.attributeValidator.Validate(PageType.Create, Tuple.Create(tenancyTypeEnum, requirementTypeEnum), message);
+            this.attributeValidator.Validate(PageType.Update, Tuple.Create(tenancyTypeEnum, requirementTypeEnum), message);
 
             this.termMapper.ValidateAndAssign(message, tenancy);
 
