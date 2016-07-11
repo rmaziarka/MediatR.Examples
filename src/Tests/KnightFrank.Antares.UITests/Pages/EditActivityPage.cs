@@ -103,9 +103,9 @@
             return this;
         }
 
-        public EditActivityPage FillKfValuation(string kfValuation)
+        public EditActivityPage FillKfValuation(string text)
         {
-            this.Driver.SendKeys(this.kfValuation, kfValuation);
+            this.Driver.SendKeys(this.kfValuation, text);
             return this;
         }
 
