@@ -142,7 +142,7 @@
             this.page.OfferPreview.WaitForDetailsToLoad().ClickViewLink();
         }
 
-        [When(@"User clicks make an offer button for (.*) activity on view requirement page")]
+        [When(@"User clicks make an offer button for (.*) viewing on view requirement page")]
         public void MakeAnOffer(int position)
         {
             this.page.OpenViewingActions(position)
@@ -157,6 +157,7 @@
             this.page.OpenOfferActions(position)
                 .EditOffer(1)
                 .WaitForSidePanelToShow();
+            this.page.Offer.WaitForDetailsToLoad();
         }
 
         [When(@"User clicks details offer button for (.*) offer on view requirement page")]

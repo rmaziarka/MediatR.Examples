@@ -22,7 +22,7 @@
         private readonly ElementLocator offerProposedexchangeDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-exchange-date");
         private readonly ElementLocator offerProposedCompletionDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-completion-date");
         private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in #activity-link > a");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-preview-panel .busy");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, ".side-panel-loading");
 
         public OfferPreviewPage(DriverContext driverContext) : base(driverContext)
         {

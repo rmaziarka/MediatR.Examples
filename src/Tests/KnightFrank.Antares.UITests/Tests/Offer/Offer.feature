@@ -27,7 +27,7 @@ Scenario: Create residential letting offer on requirement
 			| Residential Letting | Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
-		And User clicks make an offer button for 1 activity on view requirement page
+		And User clicks make an offer button for 1 viewing on view requirement page
 	Then Create offer activity details on view requirement page are same as the following
 		| Details                         |
 		| Lori Petty’s house, 8 George St |
@@ -117,7 +117,7 @@ Scenario: View residential letting offer details page
 			| Residential Letting | Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
-		And User clicks make an offer button for 1 activity on view requirement page
+		And User clicks make an offer button for 1 viewing on view requirement page
 		And User fills in letting offer details on view requirement page
 			| Status   | OfferPerWeek | SpecialConditions  |
 			| Accepted | 3500         | Special conditions |
@@ -216,7 +216,7 @@ Scenario: Create residential sale offer on requirement
 			| Residential Sale | Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
-		And User clicks make an offer button for 1 activity on view requirement page
+		And User clicks make an offer button for 1 viewing on view requirement page
 	Then Create offer activity details on view requirement page are same as the following
 		| Details                                     |
 		| John Soane’s house, 13 Lincoln’s Inn Fields |
@@ -306,7 +306,7 @@ Scenario: View residential sale offer details page
 			| Residential Sale | Description |     
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
-		And User clicks make an offer button for 1 activity on view requirement page
+		And User clicks make an offer button for 1 viewing on view requirement page
 		And User fills in sale offer details on view requirement page
 			| Status    | Offer | SpecialConditions     |
 			| Withdrawn | 95000 | My special conditions |
@@ -428,7 +428,7 @@ Scenario: Create and update accepted residential sale offer
 			| Residential Sale | Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
-		And User clicks make an offer button for 1 activity on view requirement page
+		And User clicks make an offer button for 1 viewing on view requirement page
 		And User fills in sale offer details on view requirement page
 			| Status   | Offer  | SpecialConditions     |
 			| Accepted | 110000 | My special conditions |

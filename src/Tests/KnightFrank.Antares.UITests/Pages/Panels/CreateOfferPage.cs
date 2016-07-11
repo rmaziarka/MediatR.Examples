@@ -23,7 +23,7 @@
         private readonly ElementLocator saveOffer = new ElementLocator(Locator.CssSelector, ".slide-in button[type = 'submit']");
         private readonly ElementLocator specialConditions = new ElementLocator(Locator.CssSelector, ".slide-in #offer-special-conditions");
         private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-add-panel .busy");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, ".side-panel-loading");
 
         public CreateOfferPage(DriverContext driverContext) : base(driverContext)
         {
