@@ -21,6 +21,8 @@ module Antares {
             controller.requirement = requirementMock;
 
             scope["requirement"] = requirementMock;
+            spyOn(controller, 'navigateToRequirement');
+
             scope.$apply();
         }));
 
@@ -29,6 +31,12 @@ module Antares {
             var requirementDetailsElement = element.find('card-template');
             var properRequirementTextToDisplay = controller.requirement.getContactNames();
             expect(requirementDetailsElement.text()).toBe(properRequirementTextToDisplay);
+        });
+
+        it('when details link is clicked then navigateToRequirement() is called', () =>{
+            var menuItem = element.find('context-menu-item[type=details] a');
+            menuItem.triggerHandler('click');
+            expect(controller.navigateToRequirement).toHaveBeenCalledWith(requirementMock);
         });
     });
 }
