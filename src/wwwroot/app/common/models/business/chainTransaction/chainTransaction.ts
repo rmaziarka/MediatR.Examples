@@ -18,8 +18,10 @@ module Antares.Common.Models.Business {
         agentUser: Business.User = null;
         agentContact: Business.Contact = null;
         agentCompany: Business.Company = null;
+        agentCompanyContact: Business.CompanyContactRelation = null;
         solicitorContact: Business.Contact = null;
         solicitorCompany: Business.Company = null;
+        solicitorCompanyContact: Business.CompanyContactRelation = null;
         mortgage: Business.EnumTypeItem = null;
         survey: Business.EnumTypeItem = null;
         searches: Business.EnumTypeItem = null;
@@ -43,17 +45,15 @@ module Antares.Common.Models.Business {
                 if (chainTransaction.agentUser) {
                     this.agentUser = new User(chainTransaction.agentUser);
                 }
-                if (chainTransaction.agentContact) {
+                if (chainTransaction.agentContact && chainTransaction.agentCompany) {
                     this.agentContact = new Contact(chainTransaction.agentContact);
-                }
-                if (chainTransaction.agentCompany) {
                     this.agentCompany = new Company(chainTransaction.agentCompany);
+                    this.agentCompanyContact = new CompanyContactRelation(this.agentContact, this.agentCompany);
                 }
-                if (chainTransaction.solicitorContact) {
+                if (chainTransaction.solicitorContact && chainTransaction.solicitorCompany) {
                     this.solicitorContact = new Contact(chainTransaction.solicitorContact);
-                }
-                if (chainTransaction.solicitorCompany) {
                     this.solicitorCompany = new Company(chainTransaction.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitorContact, this.solicitorCompany);
                 }
                 if (chainTransaction.surveyDate) {
                     this.surveyDate = new Date(<string>chainTransaction.surveyDate);

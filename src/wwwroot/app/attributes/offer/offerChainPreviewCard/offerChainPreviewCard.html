@@ -1,0 +1,40 @@
+﻿<form name="vm.offerAddCardForm" ng-submit="vm.offerAddCardForm.isFormValid() && vm.save()" novalidate>
+    <kf-side-panel-card>
+        <side-panel-header>
+            <h3 translate="OFFER.CHAIN.PREVIEW.CHAIN_PREVIEW"></h3>
+        </side-panel-header>
+        <side-panel-content>
+
+            <div class="section-details">
+                <company-contact-view-control company-contact="vm.chain.agentCompanyContact"
+                                              config="vm.controlConfig"
+                                              schema="vm.controlSchemas.agentCompanyContact">
+                </company-contact-view-control>
+            </div>
+
+            <div class="section-details">
+                <company-contact-view-control company-contact="vm.chain.solicitorCompanyContact"
+                                              config="vm.config.controlConfig"
+                                              schema="vm.controlSchemas.solicitorCompanyContact">
+                </company-contact-view-control>
+            </div>
+
+            <div class="section-details">
+                <enum-item-view-control ng-model="vm.chain.mortgageId" config="vm.controlConfig" schema="vm.controlSchemas.mortgage"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.surveyId" config="vm.controlConfig" schema="vm.controlSchemas.survey"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.searchesId" config="vm.controlConfig" schema="vm.controlSchemas.searches"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.enquiriesId" config="vm.controlConfig" schema="vm.controlSchemas.enquiries"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.contractAgreedId" config="vm.controlConfig" schema="vm.controlSchemas.contractAgreed"></enum-item-view-control>
+            </div>
+
+            <div class="section-details">
+                <date-view-control date="vm.chain.surveyDate" config="vm.config.chain_SurveyDate" schema="vm.controlSchemas.surveyDate"></date-view-control>
+            </div>
+        </side-panel-content>
+        <side-panel-footer>
+            <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
+                <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+            </button>
+        </side-panel-footer>
+    </kf-side-panel-card>
+</form>
