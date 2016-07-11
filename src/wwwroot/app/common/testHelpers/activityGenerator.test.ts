@@ -44,7 +44,25 @@ module Antares.TestHelpers {
                 serviceChargeNote: StringGenerator.generate(),
                 groundRentAmount: 30,
                 groundRentNote: StringGenerator.generate(),
-                otherCondition: StringGenerator.generate()
+                otherCondition: StringGenerator.generate(),
+                priceTypeId: StringGenerator.generate(),
+                activityPrice: 31,
+                matchFlexibilityId: StringGenerator.generate(),
+                matchFlexValue: 32,
+                matchFlexPercentage: 33,
+                rentPaymentPeriodId: StringGenerator.generate(),
+                shortAskingWeekRent: 34,
+                shortAskingMonthRent: 35,
+                longAskingWeekRent: 36,
+                longAskingMonthRent: 37,
+                shortMatchFlexibilityId: StringGenerator.generate(),
+                shortMatchFlexWeekValue: 38,
+                shortMatchFlexMonthValue: 39,
+                shortMatchFlexPercentage: 40,
+                longMatchFlexibilityId: StringGenerator.generate(),
+                longMatchFlexWeekValue: 41,
+                longMatchFlexMonthValue: 42,
+                longMatchFlexPercentage: 43
             }
 
             return angular.extend(activity, specificData || {});
