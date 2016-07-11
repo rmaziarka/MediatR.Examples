@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
@@ -24,7 +25,7 @@
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<Tenancy> tenancyGenericRepository;
         private readonly ITenancyReferenceMapper<TenancyTerm> termMapper;
-        private readonly ITenancyReferenceMapper<Contact> tenancyContactsMapper;
+        private readonly IReferenceMapper<CreateTenancyCommand, Tenancy, Contact> tenancyContactsMapper;
         private readonly IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator;
         private readonly IGenericRepository<Requirement> requirementRepository;
         private readonly IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository;
@@ -35,8 +36,8 @@
             ITenancyReferenceMapper<TenancyTerm> termMapper, 
             IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator, 
             IGenericRepository<Requirement> requirementRepository, 
-            IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository, 
-            ITenancyReferenceMapper<Contact> tenancyContactsMapper)
+            IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository,
+            IReferenceMapper<CreateTenancyCommand, Tenancy, Contact> tenancyContactsMapper)
         {
             this.entityValidator = entityValidator;
             this.tenancyGenericRepository = tenancyGenericRepository;

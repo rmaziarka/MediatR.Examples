@@ -2,10 +2,8 @@
 {
     using System;
 
-    public class CreateTenancyTerm
+    public class UpdateTenancyTerm
     {
-        public Guid? Id { get; set; }
-
         public decimal Price { get; set; }
 
         public DateTime StartDate { get; set; }

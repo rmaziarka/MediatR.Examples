@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Tenancy.Relations
 {
-    using System;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Tenancy;
@@ -11,21 +10,16 @@
     {
         public void ValidateAndAssign(TenancyCommandBase message, Tenancy entity)
         {
-            message.Terms.Where(x => IsNewlyAddedTerm(x.Id)).ToList().ForEach(x =>
+            if (!entity.Terms.Any())
             {
-                entity.Terms.Add(
-                    new TenancyTerm
-                    {
-                        StartDate = x.StartDate,
-                        EndDate = x.EndDate,
-                        Price = x.Price
-                    });
-            });
-        }
+                entity.Terms.Add(new TenancyTerm());
+            }
 
-        private static bool IsNewlyAddedTerm(Guid? id)
-        {
-            return !id.HasValue;
+            TenancyTerm tenancyTerm = entity.Terms.First();
+
+            tenancyTerm.StartDate = message.Term.StartDate;
+            tenancyTerm.EndDate = message.Term.EndDate;
+            tenancyTerm.Price = message.Term.Price;
         }
     }
 }

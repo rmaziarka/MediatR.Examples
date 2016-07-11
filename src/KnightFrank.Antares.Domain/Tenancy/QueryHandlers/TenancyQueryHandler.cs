@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Tenancy.QueryHandlers
 {
+    using System.Data.Entity;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Tenancy;
@@ -19,11 +20,13 @@
 
         public Tenancy Handle(TenancyQuery message)
         {
-            return this.tenancyRepository.GetWithInclude(x => x.Id == message.Id,
-                x => x.Contacts,
-                x => x.Requirement,
-                x => x.Activity,
-                x => x.Terms).FirstOrDefault();
+            return this.tenancyRepository.Get()
+                       .Include(x => x.Requirement)
+                       .Include(x => x.Activity)
+                       .Include(x => x.Terms)
+                       .Include(x => x.Contacts)
+                       .Include(x => x.Contacts.Select(c => c.Contact))
+                       .SingleOrDefault(x => x.Id == message.Id);
         }
     }
 }

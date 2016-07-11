@@ -27,15 +27,15 @@
             foreach (PageType pageType in new[] { PageType.Create, PageType.Update })
             {
                 this.AddControl(pageType, ControlCode.Tenancy_Term,
-                    Field<CreateTenancyCommand>.Create(x => x.Terms)
+                    Field<TenancyCommandBase>.Create(x => x.Term)
                                                .Required()
-                                               .ExternalCollectionValidator(new CreateTenancyTermValidator()));
+                                               .ExternalValidator(new CreateTenancyTermValidator()));
             }
         }
 
         private void DefineControlsForDetails()
         {
-            this.AddControl(PageType.Details, ControlCode.Tenancy_Term, Field<CreateTenancyCommand>.Create(x => x.Terms));
+            this.AddControl(PageType.Details, ControlCode.Tenancy_Term, Field<CreateTenancyCommand>.Create(x => x.Term));
         }
 
         public override void DefineMappings()

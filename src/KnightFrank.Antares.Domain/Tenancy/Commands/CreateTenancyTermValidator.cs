@@ -2,7 +2,7 @@
 {
     using FluentValidation;
 
-    public class CreateTenancyTermValidator : AbstractValidator<CreateTenancyTerm>
+    public class CreateTenancyTermValidator : AbstractValidator<UpdateTenancyTerm>
     {
         public CreateTenancyTermValidator()
         {
