@@ -5,6 +5,8 @@ module Antares.Component {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Dto = Common.Models.Dto;
+    import Commands = Common.Models.Commands;
+    import Enums = Common.Models.Enums;
     import OfferViewConfig = Offer.IOfferViewConfig;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
@@ -12,7 +14,11 @@ module Antares.Component {
         offer: Business.Offer;
         config: OfferViewConfig;
 
+        //fields
         private offerStatuses: Common.Models.Dto.IEnumItem[];
+        private offerChainsType: any = Enums.OfferChainsType;
+        private activityEditCommand: Commands.IChainTransactionCommand;
+        private isUpwardChainPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         // controls
         controlSchemas: any = {
@@ -142,6 +148,9 @@ module Antares.Component {
             private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+
+            var activityEditModel = new Business.ActivityEditModel(this.offer.activity);
+            this.activityEditCommand = new Commands.Activity.ActivityEditCommand(activityEditModel);
         }
 
         navigateToActivity = (ativity: Business.Activity) => {

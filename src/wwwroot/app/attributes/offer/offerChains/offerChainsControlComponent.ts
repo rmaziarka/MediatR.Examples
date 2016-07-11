@@ -8,6 +8,7 @@ module Antares.Attributes.Offer {
         bindings: {
             isPanelVisible: '<',
             chainCommand: '<',
+            property: '<',
             chainType: '<',
             config:'<'
         }

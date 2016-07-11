@@ -81,7 +81,12 @@
 
         <!-- Upward chain -->
         <section>
-            <offer-chains-control></offer-chains-control>
+            <offer-chains-control is-panel-visible="vm.isUpwardChainPanelVisible"
+                                  chain-command="vm.activityEditCommand"
+                                  property="vm.offer.activity.property"
+                                  chain-type="vm.offerChainsType.Activity"
+                                  config="vm.config.offer_UpwardChain">
+            </offer-chains-control>
         </section>
         <!-- // Upward chain -->
 

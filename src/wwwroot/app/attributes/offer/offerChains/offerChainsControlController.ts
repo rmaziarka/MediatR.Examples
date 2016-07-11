@@ -4,12 +4,13 @@ module Antares.Attributes.Offer {
     import Enums = Common.Models.Enums;
     import RequirementService = Antares.Requirement.RequirementService;
     import KfModalService = Antares.Services.KfModalService;
-    import ActivityService = Antares.Activity.ActivityService;
+    import ActivityService = Services.ActivityService;
 
     export class OfferChainsControlController {
         // bindings
         isPanelVisible: Enums.SidePanelState;
-        chainCommand: any;
+        chainCommand: Common.Models.Commands.IChainTransactionCommand;
+        property: Common.Models.Business.Property;
         config: IOfferChainsControlConfig;
         chainType: Enums.OfferChainsType;
 
