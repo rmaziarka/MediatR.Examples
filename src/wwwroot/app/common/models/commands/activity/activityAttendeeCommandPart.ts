@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Activity.Commands {
+module Antares.Common.Models.Commands.Activity {
     import Dto = Common.Models.Dto;
 
     export class ActivityAttendeeCommandPart {
