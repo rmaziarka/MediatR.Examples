@@ -3,6 +3,6 @@
 
     export class OpenChainPanelEvent extends Event {
         private openChainPanelEvent: boolean;
-        getKey(): string { return "offerChains.openPanel"; }
+        getKey(): string { return "offerChain.openPanel"; }
     }
 }

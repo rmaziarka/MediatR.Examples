@@ -536,6 +536,24 @@
       "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
       "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
       "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+    },
+    "CHAIN": {
+      "PREVIEW": {
+        "CHAIN_PREVIEW": "Chain preview",
+        "IS_END": "End of chain",
+        "PROPERTY": "Property",
+        "VENDOR": "Vendor",
+        "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SEARCHES": "Searches",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_AGREED": "Contract agreed",
+        "SURVEY_DATE": "Survey date"
+      }
     }
   },
   "DEPARTMENTS": {
