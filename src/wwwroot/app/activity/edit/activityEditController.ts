@@ -142,7 +142,7 @@ module Antares.Activity {
         }
 
 
-        shortKfValuationPriceSchema = {
+        shortKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortKfValuationPriceForm',
@@ -150,7 +150,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        shortVendorValuationPriceSchema = {
+        shortVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortVendorValuationPriceForm',
@@ -158,7 +158,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        shortAgreedInitialMarketingPriceSchema = {
+        shortAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortAgreedInitialMarketingPriceForm',
@@ -166,7 +166,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longKfValuationPriceSchema = {
+        longKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longKfValuationPriceForm',
@@ -174,7 +174,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longVendorValuationPriceSchema = {
+        longVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longVendorValuationPriceForm',
@@ -182,7 +182,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longAgreedInitialMarketingPriceSchema = {
+        longAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longAgreedInitialMarketingPriceForm',
@@ -222,8 +222,52 @@ module Antares.Activity {
             controlId: 'otherCondition',
             translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
             fieldName: 'otherCondition',
-            formName: 'otherConditionForm'
+            formName: 'otherConditionForm',
+
         }
+
+
+
+
+
+        priceTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'priceTypeId',
+            translationKey: 'ACTIVITY.COMMON.PRICE_TYPE',
+            fieldName: 'priceTypeId',
+            formName: 'priceTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityPriceType
+        }
+
+        activityPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'activityPrice',
+            translationKey: 'ACTIVITY.COMMON.PRICE',
+            formName: 'activityPricetForm',
+            fieldName: 'activityPrice'
+        }
+
+        matchFlexibilitySchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'matchFlexibilityId',
+            translationKey: '',
+            fieldName: 'matchFlexibilityId',
+            formName: 'matchFlexibilityForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityMatchFlexPrice
+        }
+
+        matchFlexValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'matchFlexValue',
+            translationKey: '',
+            formName: 'matchFlexValueForm',
+            fieldName: 'matchFlexValue'
+        }
+
+        matchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'matchFlexPercentage',
+            translationKey: '',
+            formName: 'matchFlexPercentageForm',
+            fieldName: 'matchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+
 
         configMocked: any = {
             attendees: {
@@ -271,12 +315,16 @@ module Antares.Activity {
 
         public activityTypeChanged = (activityTypeId: string) => {
             this.activity.activityTypeId = activityTypeId;
-
             this.reloadConfig(this.activity);
         }
 
         public activityStatusChanged = (id: string) =>{
             this.activity.activityStatusId = id;
+            this.reloadConfig(this.activity);
+        }
+
+        public matchFlexibilityChanged = (id: string) => {
+            this.activity.matchFlexibilityId = id;
             this.reloadConfig(this.activity);
         }
 

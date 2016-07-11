@@ -79,6 +79,30 @@
         </div>
 
         <div class="col-md-6 col-lg-4">
+
+            <fieldset id="activity-price">
+                <h3 class="page-header" translate="ACTIVITY.COMMON.PRICE"></h3>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <enum-item-edit-control ng-model="vm.activity.priceTypeId" config="vm.config.priceType" schema="vm.priceTypeSchema"></enum-item-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.activityPrice" schema="vm.activityPriceSchema" ng-model="vm.activity.activityPrice"></price-edit-control>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-xs-12" translate="ACTIVITY.COMMON.MATCH_FLEXIBILITY"></label>
+                    <div class="col-xs-6">
+                        <enum-item-edit-control on-selected-item-changed="vm.matchFlexibilityChanged(id)" ng-model="vm.activity.matchFlexibilityId" config="vm.config.matchFlexibility" schema="vm.matchFlexibilitySchema"></enum-item-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.matchFlexValue" schema="vm.matchFlexValueSchema" ng-model="vm.activity.matchFlexValue"></price-edit-control>
+                        <price-edit-control config="vm.config.matchFlexPercentage" schema="vm.matchFlexPercentageSchema" ng-model="vm.activity.matchFlexPercentage"></price-edit-control>
+                    </div>
+                </div>
+            </fieldset>
+
+
             <fieldset id="activity-edit-prices" ng-if="vm.isValuationInfoSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                 <div class="row">

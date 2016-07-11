@@ -9,6 +9,10 @@ declare module Antares.Activity {
         landlords: Attributes.IActivityLandlordsControlConfig;
         negotiators: Attributes.IActivityNegotiatorsControlConfig;
         property: Attributes.IPropertyViewControlConfig;
+        priceType: any;
+        activityPrice: any;
+        matchFlexValue: any;
+        matchFlexPercentage: any;
         shortAskingMonthRent: any;
         shortAskingWeekRent: any;
         shortMatchFlexMonthValue: any;

@@ -401,24 +401,24 @@
             this.Use(
                 new List<ControlCode> { ControlCode.MatchFlexValue },
                 this.When(residentialSale, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPriceValueId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPriceValueId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPriceValueId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPriceValueId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.MatchFlexValue },
                 this.When(residentialSale, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPriceValueId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPriceValueId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.MatchFlexPercentage },
                 this.When(residentialSale, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPricePercentageId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPricePercentageId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPricePercentageId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPricePercentageId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.MatchFlexPercentage },
                 this.When(residentialSale, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId && x.MatchFlexibilityId != matchFlexPricePercentageId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusForSaleUnavailableId || x.MatchFlexibilityId != matchFlexPricePercentageId);
 
             this.Use(
                 new List<ControlCode>

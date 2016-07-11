@@ -2,7 +2,7 @@
     <div class="form-group" show-errors>
         <div class="row">
             <div class="col-md-12">
-                <label for="{{vm.schema.controlId}}" translate="{{vm.schema.translationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
+                <label for="{{vm.schema.controlId}}" ng-if="vm.schema.translationKey" translate="{{vm.schema.translationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
                 <div class="input-group">
                     <input ng-model="vm.ngModel"
                            id="{{vm.schema.controlId}}" ng-required="vm.config[vm.schema.fieldName].required" ng-disabled="!vm.config[vm.schema.fieldName].active"

@@ -127,20 +127,20 @@ module Antares {
         });
 
         describe('when selected tab is changed', () => {
-            beforeEach(() => {                
+            beforeEach(() => {
                 controller.isOfferPreviewPanelVisible = Enums.SidePanelState.Opened;
                 controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
                 controller.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Opened
                 controller.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Opened;
-                controller.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;                
+                controller.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
 
             it("when 'Overview' tab is selected then selected tab index must be 0 and all side panels must have state 'Untouched'", () => {
                 // act
                 controller.setActiveTabIndex(0);
-                
+
                 // assert  
-                expect(controller.selectedTabIndex).toBe(0);                              
+                expect(controller.selectedTabIndex).toBe(0);
                 assertPanelState(controller, Enums.SidePanelState.Untouched);
             });
 
@@ -195,5 +195,26 @@ module Antares {
                 });
         });
 
+        describe('when isPriceSectionVisible is called', () => {
+            type TestCase = [any, any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, null, true],
+                    [obj, obj, null, obj, true],
+                    [obj, obj, null, null, false],
+                    [null, obj, obj, obj, false],
+                    [obj, null, obj, obj, false]])
+                .dataIt((data: TestCase) =>
+                    `where priceType is ${data[0]} and activityPrice is ${data[1]} and matchFlexValue is ${data[2]} and matchFlexPercentage is ${data[3]} then isPriceSectionVisible must return ${data[4]}`)
+                .run((data: TestCase) => {
+                    controller.config.priceType = data[0];
+                    controller.config.activityPrice = data[1];
+                    controller.config.matchFlexValue = data[2];
+                    controller.config.matchFlexPercentage = data[3];
+
+                    // act & assert
+                    expect(controller.isPriceSectionVisible()).toBe(data[4]);
+                });
+        });
     });
 }

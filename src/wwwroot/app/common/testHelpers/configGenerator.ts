@@ -281,7 +281,11 @@ module Antares.TestHelpers {
                 longAskingWeekRent: {},
                 longMatchFlexMonthValue: {},
                 longMatchFlexWeekValue: {},
-                longMatchFlexPercentage: {}
+                longMatchFlexPercentage: {},
+                priceType: {},
+                activityPrice: {},
+                matchFlexValue: {},
+                matchFlexPercentage: {}
             };
 
             return config;

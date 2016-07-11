@@ -157,7 +157,7 @@
 
         activityPriceSchema: Antares.Attributes.IPriceControlSchema = {
             controlId: 'activityPrice',
-            translationKey: 'ACTIVITY.COMMON.GROUND_RENT'
+            translationKey: 'ACTIVITY.COMMON.PRICE'
         }
 
         matchFlexValueSchema: Antares.Attributes.IRangeControlSchema = {
@@ -366,7 +366,7 @@
             this.hidePanels();
         }
 
-        public isRentSectionVisible = (): Boolean =>{
+        public isRentSectionVisible = (): boolean =>{
             return this.config != null &&
                 this.config.shortAskingMonthRent != null &&
                 this.config.shortAskingWeekRent != null &&
@@ -374,6 +374,14 @@
                 this.config.longAskingMonthRent != null &&
                 this.config.longAskingWeekRent != null &&
                 ((this.config.longMatchFlexMonthValue != null && this.config.longMatchFlexWeekValue != null) || this.config.longMatchFlexPercentage != null);
+
+        }
+
+        public isPriceSectionVisible = (): boolean => {
+            return this.config != null &&
+                this.config.priceType != null &&
+                this.config.activityPrice != null &&
+                (this.config.matchFlexValue != null || this.config.matchFlexPercentage != null);
 
         }
 
