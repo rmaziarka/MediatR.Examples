@@ -46,7 +46,11 @@
         {
         }
 
-        public List<string> SecondaryNegotiatorsNextCalls => this.Driver.GetElements(this.secondaryNegotiatorNextCall.Format(string.Empty)).Select(el => el.GetAttribute("value")).ToList();
+        public List<string> SecondaryNegotiatorsNextCalls
+            =>
+                this.Driver.GetElements(this.secondaryNegotiatorNextCall.Format(string.Empty))
+                    .Select(el => el.GetAttribute("value"))
+                    .ToList();
 
         public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCall).GetAttribute("value");
 
@@ -103,12 +107,11 @@
             return this;
         }
 
-        public EditActivityPage FillKfValuation(string kfValuation)
+        public EditActivityPage FillKfValuation(string text)
         {
-            this.Driver.SendKeys(this.kfValuation, kfValuation);
+            this.Driver.SendKeys(this.kfValuation, text);
             return this;
         }
-
 
         public EditActivityPage SetSecondaryNegotiator(Negotiator secondaryNegotiator)
         {

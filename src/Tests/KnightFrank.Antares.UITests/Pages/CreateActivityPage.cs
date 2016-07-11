@@ -30,12 +30,14 @@
         private readonly ElementLocator propertyCounty = new ElementLocator(Locator.CssSelector, "#activity-edit-basic .card-details ng-include > div:nth-of-type(6) span");
         // attendees locators
         private readonly ElementLocator attendees = new ElementLocator(Locator.CssSelector, "activity-attendees-edit-control label");
-        private readonly ElementLocator attendeeToSelect = new ElementLocator(Locator.XPath, "//activity-attendees-edit-control//label[contains(.,'{0}')]/input");
+        private readonly ElementLocator attendeeToSelect = new ElementLocator(Locator.XPath, "//activity-attendees-edit-control//label[contains(.,'{0}')]");
+        private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "invitationTextId");
         // basic information locators
         private readonly ElementLocator source = new ElementLocator(Locator.Id, "sourceId");
         private readonly ElementLocator sourceDescription = new ElementLocator(Locator.Id, "sourceDescriptionId");
         private readonly ElementLocator sellingReason = new ElementLocator(Locator.Id, "sellingReasonId");
         private readonly ElementLocator pitchingThreats = new ElementLocator(Locator.Id, "pitchingThreatsId");
+        private readonly ElementLocator disposalType = new ElementLocator(Locator.Id, "disposalTypeId");
         // additional information locators
         private readonly ElementLocator keyNumber = new ElementLocator(Locator.Id, "keyNumberId");
         private readonly ElementLocator accessArrangements = new ElementLocator(Locator.Id, "accessArrangementsId");
@@ -43,7 +45,23 @@
         private readonly ElementLocator date = new ElementLocator(Locator.Name, "meetingDate");
         private readonly ElementLocator startTime = new ElementLocator(Locator.CssSelector, "#meeting-start-time input");
         private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, "#meeting-end-time input");
-        private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "invitationTextId");
+        // valuation information locators
+        private readonly ElementLocator kfValuation = new ElementLocator(Locator.Id, "kfValuationPrice");
+        private readonly ElementLocator vendorValuation = new ElementLocator(Locator.Id, "vendorValuationPrice");
+        private readonly ElementLocator agreedinitialMarketingPrice = new ElementLocator(Locator.Id, "agreedInitialMarketingPrice");
+        private readonly ElementLocator kfValuationShortLet = new ElementLocator(Locator.Id, "shortKfValuationPrice");
+        private readonly ElementLocator kfValuationLongLet = new ElementLocator(Locator.Id, "longKfValuationPrice");
+        private readonly ElementLocator vendorValuationShortLet = new ElementLocator(Locator.Id, "shortVendorValuationPrice");
+        private readonly ElementLocator vendorValuationLongLet = new ElementLocator(Locator.Id, "longVendorValuationPrice");
+        private readonly ElementLocator agreedInitialMarketingPriceShortLet = new ElementLocator(Locator.Id, "shortAgreedInitialMarketingPrice");
+        private readonly ElementLocator agreedInitialMarketingPriceLongLet = new ElementLocator(Locator.Id, "longAgreedInitialMarketingPrice");
+        private readonly ElementLocator serviceCharge = new ElementLocator(Locator.Id, "serviceChargeAmount");
+        private readonly ElementLocator serviceChargeNote = new ElementLocator(Locator.Id, "serviceChargeNote");
+        private readonly ElementLocator groundRent = new ElementLocator(Locator.Id, "groundRentAmount");
+        private readonly ElementLocator groundRentNote = new ElementLocator(Locator.Id, "groundRentNote");
+        //other locators
+        private readonly ElementLocator decoration = new ElementLocator(Locator.Id, "decorationId");
+        private readonly ElementLocator otherConditions = new ElementLocator(Locator.Id, "otherCondition");
 
         public CreateActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -142,15 +160,111 @@
             return this;
         }
 
-        public CreateActivityPage SelectAtendee(string attendee)
+        public CreateActivityPage SelectAttendee(string attendee)
         {
-            this.Driver.GetElement(this.attendeeToSelect.Format(attendee)).JavaScriptClick();
+            this.Driver.GetElement(this.attendeeToSelect.Format(attendee)).Click();
             return this;
         }
 
         public CreateActivityPage SetInvitationText(string invitation)
         {
             this.Driver.SendKeys(this.invitationText, invitation);
+            return this;
+        }
+
+        public CreateActivityPage SetKfValuation(string valuation)
+        {
+            this.Driver.SendKeys(this.kfValuation, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetVendorValuation(string valuation)
+        {
+            this.Driver.SendKeys(this.vendorValuation, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetAgreedInitialMarketingPrice(string price)
+        {
+            this.Driver.SendKeys(this.agreedinitialMarketingPrice, price);
+            return this;
+        }
+
+        public CreateActivityPage SetKfValuationShortLet(string valuation)
+        {
+            this.Driver.SendKeys(this.kfValuationShortLet, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetKfValuationLongLet(string valuation)
+        {
+            this.Driver.SendKeys(this.kfValuationLongLet, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetVendorValuationShortLet(string valuation)
+        {
+            this.Driver.SendKeys(this.vendorValuationShortLet, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetVendorValuationLongLet(string valuation)
+        {
+            this.Driver.SendKeys(this.vendorValuationLongLet, valuation);
+            return this;
+        }
+
+        public CreateActivityPage SetAgreedInitialMarketingPriceShortLet(string price)
+        {
+            this.Driver.SendKeys(this.agreedInitialMarketingPriceShortLet, price);
+            return this;
+        }
+
+        public CreateActivityPage SetAgreedInitialMarketingPriceLongLet(string price)
+        {
+            this.Driver.SendKeys(this.agreedInitialMarketingPriceLongLet, price);
+            return this;
+        }
+
+        public CreateActivityPage SetServiceCharge(string charge)
+        {
+            this.Driver.SendKeys(this.serviceCharge, charge);
+            return this;
+        }
+
+        public CreateActivityPage SetServiceChargeNote(string charge)
+        {
+            this.Driver.SendKeys(this.serviceChargeNote, charge);
+            return this;
+        }
+
+        public CreateActivityPage SetGroundRent(string rent)
+        {
+            this.Driver.SendKeys(this.groundRent, rent);
+            return this;
+        }
+
+        public CreateActivityPage SetGroundRentNote(string note)
+        {
+            this.Driver.SendKeys(this.groundRentNote, note);
+            return this;
+        }
+
+        public CreateActivityPage SelectDecoration(string element)
+        {
+            this.Driver.GetElement<Select>(this.decoration).SelectByText(element);
+            return this;
+        }
+
+        public CreateActivityPage SetOtherConditions(string conditions)
+        {
+            this.Driver.SendKeys(this.otherConditions, conditions);
+            return this;
+        }
+
+        public CreateActivityPage SelectDisposalType(string disposal)
+        {
+            this.Driver.GetElement<Select>(this.disposalType).SelectByText(disposal);
             return this;
         }
     }
@@ -183,11 +297,49 @@
 
         public string KeyNumber { get; set; }
 
-        public string AccessArangements { get; set; }
+        public string AccessArrangements { get; set; }
+
+        public string InvitationText { get; set; }
+
+        public string Decoration { get; set; }
+
+        public string OtherConditions { get; set; }
+
+        public string DisposalType { get; set; }
+
+        public string StartTime { get; set; }
+
+        public string EndTime { get; set; }
     }
 
-    internal class ActivityAttendees
+    internal class ValuationInformation
     {
-        public string Attendees { get; set; }
+        public string KfValuation { get; set; }
+
+        public string VendorValuation { get; set; }
+
+        public string AgreedInitialMarketingPrice { get; set; }
+
+        public string KfValuationShortLet { get; set; }
+
+        public string KfValuationLongLet { get; set; }
+
+        public string VendorValuationShortLet { get; set; }
+
+        public string VendorValuationLongLet { get; set; }
+
+        public string AgreedInitialMarketingPriceShortLet { get; set; }
+
+        public string AgreedInitialMarketingPriceLongLet { get; set; }
+
+        public string ServiceCharge { get; set; }
+
+        public string ServiceChargeNote { get; set; }
+
+        public string GroundRent { get; set; }
+
+        public string GroundRentNote { get; set; }
+
+        public string DisposalType { get; set; }
     }
 }
