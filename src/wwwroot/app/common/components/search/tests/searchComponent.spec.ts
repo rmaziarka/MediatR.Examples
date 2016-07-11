@@ -98,6 +98,7 @@ module Antares {
         });
 
         describe('when clicking cancel', () => {
+
             it('than cancel action is called', () => {
                 // arrange
                 spyOn(controller, 'cancel');

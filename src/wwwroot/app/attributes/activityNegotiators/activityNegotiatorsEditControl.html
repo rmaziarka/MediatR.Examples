@@ -1,13 +1,16 @@
 <div ng-if="vm.config">
     <h3 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.HEADER"></h3>
 
-    <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
-    <search ng-show="vm.isLeadNegotiatorInEditMode" id="lead-search"
-            options="vm.negotiatorsSearchOptions"
-            focus-on="vm.isLeadNegotiatorInEditMode"
-            blur-on="!vm.isLeadNegotiatorInEditMode"
-            on-select-item="vm.changeLeadNegotiator" on-cancel="vm.cancelChangeLeadNegotiator" load-items="vm.getUsers"
-            item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.FIND"></search>
+    <h4 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
+    <div class="form-group">
+        <search ng-show="vm.isLeadNegotiatorInEditMode" id="lead-search"
+                options="vm.negotiatorsSearchOptions"
+                focus-on="vm.isLeadNegotiatorInEditMode"
+                blur-on="!vm.isLeadNegotiatorInEditMode"
+                on-select-item="vm.changeLeadNegotiator" on-cancel="vm.cancelChangeLeadNegotiator" load-items="vm.getUsers"
+                item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.FIND"
+                class="form-group"></search>
+    </div>
     <div id="lead-edit-btn-wrapper" ng-hide="vm.isLeadNegotiatorInEditMode" class="form-group">
         <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="vm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
     </div>
@@ -44,13 +47,16 @@
 
     <card-list id="card-list-negotiators" show-item-add="vm.isSecondaryNegotiatorsInEditMode ? null : vm.editSecondaryNegotiators">
         <card-list-header>
-            <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
+            <h4 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
+            <div class="form-group">
             <search ng-show="vm.isSecondaryNegotiatorsInEditMode" id="secondary-search"
                     options="vm.negotiatorsSearchOptions"
                     focus-on="vm.isSecondaryNegotiatorsInEditMode"
                     blur-on="!vm.isSecondaryNegotiatorsInEditMode"
                     on-select-item="vm.addSecondaryNegotiator" on-cancel="vm.cancelAddSecondaryNegotiator" load-items="vm.getUsers"
-                    item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.ADD"></search>
+                    item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.ADD"
+                    class="form-group"></search>
+            </div>
         </card-list-header>
         <card-list-no-items id="empty-secondary-negotiators" ng-show="!vm.secondaryNegotiators || vm.secondaryNegotiators.length === 0">
             <p class="help-block" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.EMPTY"></p>

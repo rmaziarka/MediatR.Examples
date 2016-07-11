@@ -9,7 +9,7 @@ Scenario Outline: Create offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type <requirementType> exists in database
 	When User creates New offer using api
@@ -30,7 +30,7 @@ Scenario Outline: Create offer with mandatory fields
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type <requirementType> exists in database
 	When User creates Accepted offer with mandatory fields using api
@@ -51,7 +51,7 @@ Scenario Outline: Create offer with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type <requirementType> exists in database
 	When User creates offer with invalid <data> using api
@@ -75,7 +75,7 @@ Scenario Outline: Get offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Company exists in database
 		And Requirement of type <requirementType> exists in database
@@ -92,7 +92,7 @@ Scenario Outline: Get offer
 @Offers
 Scenario Outline: Get Accepted offer
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -102,7 +102,7 @@ Scenario Outline: Get Accepted offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type <requirementType> exists in database
 		And Offer with Accepted status exists in database
@@ -129,7 +129,7 @@ Scenario Outline: Update offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Company exists in database
 		And Requirement of type <requirementType> exists in database
@@ -146,7 +146,7 @@ Scenario Outline: Update offer
 @Offers
 Scenario Outline: Update accepted offer
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -156,12 +156,12 @@ Scenario Outline: Update accepted offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type <requirementType> exists in database
 		And Offer with <offerStatus> status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Adam      | Lajoie  | Sir   |
 		And Company exists in database
 	When User updates offer with <newOfferStatus> status
@@ -186,7 +186,7 @@ Scenario Outline: Update offer with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Company exists in database
 		And Requirement of type <requirementType> exists in database
@@ -208,7 +208,7 @@ Scenario Outline: Update offer with invalid data
 @Offers
 Scenario Outline: Update accepted offer with invalid data
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -218,7 +218,7 @@ Scenario Outline: Update accepted offer with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type ResidentialSale exists in database
 		And Offer with Accepted status exists in database

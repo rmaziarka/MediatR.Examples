@@ -3,8 +3,8 @@
 @Property
 Scenario: Update residential property
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Alex      | Johnson |
+		| Title | FirstName | LastName |
+		| Sir   | Alex      | Johnson  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -72,8 +72,8 @@ Scenario: Update residential property
 			| Unmodernised           | Comment  |
 			| Very Good              | Comment  |
 		And Ownership details should contain following data on view property page
-			| Position | ContactName | ContactSurname | Type     | PurchaseDate |
-			| 1        | Alex        | Johnson        | Freehold | 05-01-2014   |
+			| Position | ContactName | ContactLastName | Type     | PurchaseDate |
+			| 1        | Alex        | Johnson         | Freehold | 05-01-2014   |
 		And Activity details are set on view property page
 			| Vendor       | Status        | Type          |
 			| Alex Johnson | Pre-appraisal | Freehold Sale |
@@ -86,8 +86,8 @@ Scenario: Update residential property
 @Property
 Scenario: Create residential property
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Eva       | Queen   |
+		| Title | FirstName | LastName |
+		| Dr    | Eva       | Queen    |
 		And User navigates to create property page
 	When User selects United Kingdom country on create property page
 		And User selects Residential property and Flat type on create property page
@@ -124,14 +124,14 @@ Scenario: Create residential property
 			| Coastal       |                      |
 			| Swimming Pool |                      |
 	When User selects contacts for ownership on view property page
-		| FirstName | Surname |
-		| Eva       | Queen   |
+		| FirstName | LastName |
+		| Eva       | Queen    |
 		When User fills in ownership details on view property page
 			| Type     | Current | PurchasePrice | PurchaseDate |
 			| Freehold | true    | 1000000       | 15-01-2014   |
 	Then Ownership details should contain following data on view property page
-		| Position | ContactName | ContactSurname | Type     | PurchaseDate |
-		| 1        | Eva         | Queen          | Freehold | 15-01-2014   |
+		| Position | ContactName | ContactLastName | Type     | PurchaseDate |
+		| 1        | Eva         | Queen           | Freehold | 15-01-2014   |
 	When User clicks add activites button on view property page	
 		And User selects activity status and type on create actvity page
 			| Type                | Status        |
@@ -165,8 +165,8 @@ Scenario: Create residential property
 @Property
 Scenario: Create commercial property
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Alexander | London  |
+		| Title | FirstName | LastName |
+		| Dr    | Alexander | London   |
 		And User navigates to create property page
 	When User selects United Kingdom country on create property page
 		And User selects Commercial property and Hotel type on create property page

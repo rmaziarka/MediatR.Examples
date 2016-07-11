@@ -1,45 +1,82 @@
 ﻿<div class="row">
-    <div class="col-md-6">
-        <h2 class="page-header">Create contact</h2>
+    <div class="col-md-12">
+        <h2 class="page-header" translate="CONTACT.CREATE_CONTACT"></h2>
+
+
         <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
-            <fieldset>
-                <h3 class="page-header">Basic information</h3>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="required" for="title" translate="CONTACT.TITLE"></label>
-                            <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
-                            <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <h3 class="page-header" translate="CONTACT.BASIC_INFORMATION"></h3>
+                    <fieldset>
+                        <div id="title-section" class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="required" for="title" translate="CONTACT.TITLE"></label>
+
+                                    <search search-id="title"
+                                            search-name="title"
+                                            on-select-item="vm.contactTitleSelect"
+                                            on-change-value="vm.contactTitleSelect"
+                                            load-items="vm.getContactTitles"
+                                            options="vm.searchOptions"
+                                            item-template-url="app/contact/titleComponent/contactTitleSearchTemplate.html"></search>
+
+                                    <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="required" for="first-name" translate="CONTACT.FIRSTNAME"></label>
-                            <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
-                            <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
+                                    <input type="text" class="form-control" id="first-name" name="firstName" ng-maxlength="128" ng-model="vm.contact.firstName" ng-change="vm.setSalutations()" autocomplete="off">
+                                    <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="required" for="surname" translate="CONTACT.SURNAME"></label>
-                            <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname" autocomplete="off">
-                            <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.lastName.$dirty) && addContactForm.lastName.$invalid}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="required" for="last-name" translate="CONTACT.LASTNAME"></label>
+                                    <input type="text" class="form-control" id="last-name" name="lastName" required ng-maxlength="128" ng-model="vm.contact.lastName" ng-change="vm.setSalutations()" autocomplete="off">
+                                    <div ng-messages="addContactForm.lastName.$error" ng-show="addContactForm.$submitted || addContactForm.lastName.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </fieldset>
+
+                    <section>
+                        <h3 class="page-header" translate="CONTACT.SALUTATION.TITLE"></h3>
+                        <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
+                                        default-salutation-format-id="vm.defaultSalutationFormatId" />
+                    </section>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <section id="contact-edit-negotiators">
+                        <contact-negotiators-edit-control contact-id="vm.contact.id"
+                                                          lead-negotiator="vm.contact.leadNegotiator"
+                                                          secondary-negotiators="vm.contact.secondaryNegotiators">
+                        </contact-negotiators-edit-control>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                     </div>
                 </div>
-            </fieldset>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
             </div>
         </form>
     </div>

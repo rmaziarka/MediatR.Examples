@@ -3,21 +3,21 @@
 @Requirement
 Scenario: Create residential sale requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Miss  | Alana     | Jones   |
+		| Title | FirstName | LastName |
+		| Miss  | Alana     | Jones    |
 	When User navigates to create requirement page
 		And User selects contacts on create requirement page
-			| FirstName | Surname |
-			| Alana     | Jones   |
+			| FirstName | LastName |
+			| Alana     | Jones    |
 	Then List of applicants should contain following contacts
-		| FirstName | Surname |
-		| Alana     | Jones   |
+		| FirstName | LastName |
+		| Alana     | Jones    |
 	When User fills in sale requirement details on create requirement page
 		| Type             | Description |
 		| Residential Sale | Description |
 		And User fills in location details on create requirement page
-			| Country        | Line2        | Postcode | City   |
-			| United Kingdom | Upper Ground | SE1 9PP  | London |
+		| Country        | Line2        | Postcode | City   |
+		| United Kingdom | Upper Ground | SE1 9PP  | London |
 		And User clicks save requirement button on create requirement page
 	Then New requirement should be created
 		And Requirement location details on view requirement page are same as the following
@@ -27,21 +27,21 @@ Scenario: Create residential sale requirement
 			| Type             | Description |
 			| Residential Sale | Description |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname |
-			| Alana     | Jones   |
+			| FirstName | LastName |
+			| Alana     | Jones    |
 
 @Requirement
 Scenario: Create residential letting requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
+		| Title | FirstName | LastName |
 		| Dr    | Alan      | Harper  |
 	When User navigates to create requirement page
 		And User selects contacts on create requirement page
-			| FirstName | Surname |
-			| Alan      | Harper  |
+			| FirstName | LastName |
+			| Alan      | Harper   |
 	Then List of applicants should contain following contacts
-		| FirstName | Surname |
-		| Alan      | Harper  |
+		| FirstName | LastName |
+		| Alan      | Harper   |
 	When User fills in letting requirement details on create requirement page
 		| Type                | Description | RentMin | RentMax |
 		| Residential Letting | Description | 1000    | 2000    |
@@ -57,14 +57,14 @@ Scenario: Create residential letting requirement
 			| Type                | Description | RentMin | RentMax |
 			| Residential Letting | Description | 1000    | 2000    |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname |
-			| Alan      | Harper  |
+			| FirstName | LastName |
+			| Alan      | Harper   |
 
 @Requirement
 Scenario: Create note on residential letting requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Miss  | Anna      | Wilder  |
+		| Title | FirstName | LastName |
+		| Miss  | Anna      | Wilder   |
 		And Requirement for GB is created in database
 			| Type                | Description |
 			| Residential Letting | Description |

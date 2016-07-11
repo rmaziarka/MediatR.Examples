@@ -3,8 +3,8 @@
 @Activity
 Scenario: Create freehold sale activity for residential property
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Sarah     | Chatto  |
+		| Title | FirstName | LastName |
+		| Lady  | Sarah     | Chatto   |
 		And Property with Residential division and Bungalow type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -75,8 +75,8 @@ Scenario: Create freehold sale activity for residential property
 @Activity
 Scenario: Edit activity
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Amanda    | Harlech |
+		| Title | FirstName | LastName |
+		| Lady  | Amanda    | Harlech  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -131,8 +131,8 @@ Scenario: Edit activity
 @Activity
 Scenario: Edit negotiators next call dates 
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Mr    | Michael   | Johnson |
+		| Title | FirstName | LastName |
+		| Mr    | Michael   | Johnson  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -196,8 +196,8 @@ Scenario: Edit negotiators next call dates
 @Activity
 Scenario: Edit negotiators departments 
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Mr    | Michael   | Jordan  |
+		| Title | FirstName | LastName |
+		| Mr    | Michael   | Jordan   |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
