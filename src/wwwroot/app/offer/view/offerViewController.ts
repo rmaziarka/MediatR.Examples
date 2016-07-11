@@ -9,7 +9,7 @@ module Antares.Component {
     import Enums = Common.Models.Enums;
     import OfferViewConfig = Offer.IOfferViewConfig;
 
-    export class OfferViewController extends Core.WithPanelsBaseController {
+    export class OfferViewController {
         // bindings
         offer: Business.Offer;
         config: OfferViewConfig;
@@ -19,138 +19,27 @@ module Antares.Component {
         private offerChainsType: any = Enums.OfferChainsType;
         private activityEditCommand: Commands.IChainTransactionCommand;
         private isUpwardChainPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        private isActivityPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         // controls
-        controlSchemas: any = {
-            activitySolicitor: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'vendorSolicitor',
-                translationKey: 'OFFER.VIEW.SOLICITOR',
-                emptyTranslationKey: 'OFFER.VIEW.NO_SOLICITOR'
-            },
-            requirementSolicitor: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'applicantSolicitor',
-                translationKey: 'OFFER.VIEW.SOLICITOR',
-                emptyTranslationKey: 'OFFER.VIEW.NO_SOLICITOR'
-            },
-            broker: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'broker',
-                translationKey: 'OFFER.EDIT.BROKER',
-                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
-            },
-            lender: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'lender',
-                translationKey: 'OFFER.EDIT.LENDER',
-                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER'
-            },
-            surveyor: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'surveyor',
-                translationKey: 'OFFER.EDIT.SURVEYOR',
-                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
-            },
-            additionalSurveyor: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: 'additionalSurveyor',
-                translationKey: 'OFFER.EDIT.SURVEYOR',
-                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
-            },
-            mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
-                controlId: "mortgage-loan-to-value",
-                translationKey: "OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE",
-                fieldName: "mortgageLoanToValue"
-            },
-            contractApproved: <Attributes.IRadioButtonsViewControlSchema>{
-                fieldName: "offerContractApproved",
-                translationKey: "OFFER.VIEW.CONTRACT_APPROVED",
-                templateUrl: "app/attributes/radioButtons/templates/radioButtonsViewBoolean.html"
-            },
-            status: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-status",
-                translationKey: "OFFER.VIEW.STATUS",
-                enumTypeCode: Dto.EnumTypeCode.OfferStatus
-            },
-            price: <Attributes.IPriceControlSchema>{
-                controlId: "offer-price",
-                translationKey: "OFFER.VIEW.OFFER",
-                fieldName: "price"
-            },
-            pricePerWeek: <Attributes.IPriceControlSchema>{
-                controlId: "offer-price-per-week",
-                translationKey: "OFFER.VIEW.OFFER",
-                fieldName: "pricePerWeek",
-                suffix: "OFFER.EDIT.OFFER_PER_WEEK"
-            },
-            offerDate: <Attributes.IDateControlSchema>{
-                controlId: "offer-date",
-                translationKey: "OFFER.VIEW.OFFER_DATE",
-                fieldName: "offerDate"
-            },
-            exchangeDate: <Attributes.IDateControlSchema>{
-                controlId: "offer-exchange-date",
-                translationKey: "OFFER.VIEW.EXCHANGE_DATE",
-                fieldName: "exchangeDate"
-            },
-            completionDate: <Attributes.IDateControlSchema>{
-                controlId: "offer-completion-date",
-                translationKey: "OFFER.VIEW.COMPLETION_DATE",
-                fieldName: "completionDate"
-            },
-            specialConditions: <Attributes.ITextControlSchema>{
-                controlId: "offer-special-conditions",
-                translationKey: "OFFER.VIEW.SPECIAL_CONDITIONS",
-                fieldName: "specialConditions"
-            },
-            mortgageStatus: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-mortgage-status",
-                translationKey: "OFFER.VIEW.MORTGAGE_STATUS",
-                enumTypeCode: Dto.EnumTypeCode.MortgageStatus
-            },
-            mortgageSurveyStatus: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-mortgage-survey-status",
-                translationKey: "OFFER.VIEW.MORTGAGE_SURVEY_STATUS",
-                enumTypeCode: Dto.EnumTypeCode.MortgageSurveyStatus
-            },
-            additionalSurveyStatus: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-additional-survey-status",
-                translationKey: "OFFER.VIEW.ADDITIONAL_SURVEY_STATUS",
-                enumTypeCode: Dto.EnumTypeCode.AdditionalSurveyStatus
-            },
-            searchStatus: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-search-status",
-                translationKey: "OFFER.VIEW.SEARCH_STATUS",
-                enumTypeCode: Dto.EnumTypeCode.SearchStatus
-            },
-            enquiries: <Attributes.IEnumItemControlSchema>{
-                controlId: "offer-enquiries",
-                translationKey: "OFFER.VIEW.ENQUIRIES",
-                enumTypeCode: Dto.EnumTypeCode.Enquiries
-            },
-            mortgageSurveyDate: <Attributes.IDateControlSchema>{
-                controlId: "mortgage-survey-date",
-                translationKey: "OFFER.VIEW.MORTGAGE_SURVEY_DATE",
-                fieldName: "mortgageSurveyDate"
-            },
-            additionalSurveyDate: <Attributes.IDateControlSchema>{
-                controlId : "additional-survey-date",
-                translationKey : "OFFER.VIEW.ADDITIONAL_SURVEY_DATE",
-                fieldName : "additionalSurveyDate"
-            },
-            progressComment: <Attributes.ITextControlSchema>{
-                controlId: "offer-progress-comment",
-                translationKey: "OFFER.VIEW.COMMENT",
-                fieldName: "progressComment"
-            }
-        };
+        controlSchemas: OfferViewSchema = OfferViewSchema;
 
         constructor(
-            componentRegistry: Core.Service.ComponentRegistry,
-            private $scope: ng.IScope,
+            private eventAggregator: Core.EventAggregator,
             private $state: ng.ui.IStateService,
             private latestViewsProvider: LatestViewsProvider,
-            private enumService: Services.EnumService) {
-            super(componentRegistry, $scope);
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
+            private enumProvider: Providers.EnumProvider){
+            this.offerStatuses = this.enumProvider.enums.offerStatus;
 
             var activityEditModel = new Business.ActivityEditModel(this.offer.activity);
             this.activityEditCommand = new Commands.Activity.ActivityEditCommand(activityEditModel);
+
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, this.hidePanels);
+        }
+
+        hidePanels = () =>{
+            this.isActivityPreviewPanelVisible = Enums.SidePanelState.Closed;
+            this.isUpwardChainPanelVisible = Enums.SidePanelState.Closed;
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
@@ -161,8 +50,8 @@ module Antares.Component {
             this.$state.go('app.requirement-view', { id: requirement.id });
         }
 
-        showActivityPreview = (offer: Common.Models.Business.Offer) => {
-            this.showPanel(this.components.activityPreview);
+        showActivityPreview = (offer: Common.Models.Business.Offer) =>{
+            this.isActivityPreviewPanelVisible = Enums.SidePanelState.Opened;
 
             this.latestViewsProvider.addView({
                 entityId: offer.activity.id,
@@ -172,22 +61,6 @@ module Antares.Component {
 
         goToEdit = () => {
             this.$state.go('app.offer-edit', { id: this.$state.params['id'] });
-        }
-
-        defineComponentIds() {
-            this.componentIds = {
-                activityPreviewSidePanelId: 'viewOffer:activityPreviewSidePanelComponent'
-            };
-        }
-
-        defineComponents() {
-            this.components = {
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
-            };
-        }
-
-        onEnumLoaded = (result: any) => {
-            this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
         }
 
         isMortgageDetailsSectionVisible = () => {
