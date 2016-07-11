@@ -17,6 +17,9 @@ module Antares.Attributes.Offer {
         //fields
         currentChain: any;
         panelInPreviewMode: boolean = false;
+        titleCode: string = "OFFER.VIEW.DELETE_CHAIN_TITLE";
+        messageCode: string = "OFFER.VIEW.DELETE_CHAIN_MESSAGE";
+        confirmCode: string = "OFFER.VIEW.DELETE_CHAIN_CONFIRM";
 
         constructor(private eventAggregator: Core.EventAggregator,
             private activityService: ActivityService,
@@ -45,10 +48,7 @@ module Antares.Attributes.Offer {
         }
 
         removeChain = (chain: any) =>{
-            var titleCode = "OFFER.VIEW.DELETE_CHAIN_TITLE";
-            var messageCode = "OFFER.VIEW.DELETE_CHAIN_MESSAGE";
-            var confirmCode = "OFFER.VIEW.DELETE_CHAIN_CONFIRM";
-            var promise = this.kfModalService.showModal(titleCode, messageCode, confirmCode);
+            var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             // publish event
         }
 

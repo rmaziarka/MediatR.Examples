@@ -4,10 +4,10 @@ module Antares.Component {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
-    import Dto = Common.Models.Dto;
     import Commands = Common.Models.Commands;
     import Enums = Common.Models.Enums;
     import OfferViewConfig = Offer.IOfferViewConfig;
+    import OpenChainPanelEvent = Antares.Attributes.Offer.OpenChainPanelEvent;
 
     export class OfferViewController {
         // bindings
@@ -35,11 +35,17 @@ module Antares.Component {
             this.activityEditCommand = new Commands.Activity.ActivityEditCommand(activityEditModel);
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, this.hidePanels);
+            this.eventAggregator.with(this).subscribe(OpenChainPanelEvent, this.openChainPanel);
         }
 
         hidePanels = () =>{
             this.isActivityPreviewPanelVisible = Enums.SidePanelState.Closed;
             this.isUpwardChainPanelVisible = Enums.SidePanelState.Closed;
+        }
+
+        openChainPanel = () =>{
+            this.hidePanels();
+            this.isUpwardChainPanelVisible = Enums.SidePanelState.Opened;
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
