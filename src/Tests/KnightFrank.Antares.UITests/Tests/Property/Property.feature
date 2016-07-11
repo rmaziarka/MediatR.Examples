@@ -151,8 +151,9 @@ Scenario: Create residential property
 	Then Address details on view activity page are following
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
-	When User clicks add attachment button on view activity page
-		And User adds PDF document.pdf file with Brochure type on view activity page
+	When User switches to attachments tab on view activity page
+		And User clicks add attachment button on attachments tab on view activity page
+		And User adds PDF document.pdf file with Brochure type on attachments tab on view activity page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
 			| ActivityStatus   | ShortLetPricePerWeek | KfValuationPricePerWeek |

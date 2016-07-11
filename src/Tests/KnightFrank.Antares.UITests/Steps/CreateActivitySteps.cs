@@ -21,7 +21,6 @@
     {
         private readonly DriverContext driverContext;
         private readonly CreateActivityPage page;
-
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
 
