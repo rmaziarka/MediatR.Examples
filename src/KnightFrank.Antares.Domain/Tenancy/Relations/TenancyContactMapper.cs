@@ -15,11 +15,11 @@
 
     public class TenancyContactMapper : IReferenceMapper<CreateTenancyCommand, Tenancy, Contact> 
     {
-        private readonly EntityValidator entityValidator;
+        private readonly IEntityValidator entityValidator;
         private readonly ICollectionValidator collectionValidator;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
-        public TenancyContactMapper(EntityValidator entityValidator,
+        public TenancyContactMapper(IEntityValidator entityValidator,
             ICollectionValidator collectionValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
