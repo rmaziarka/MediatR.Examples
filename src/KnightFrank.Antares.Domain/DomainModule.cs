@@ -17,8 +17,8 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-    using KnightFrank.Antares.Domain.Tenancy.Relations;
 
     using Ninject.Modules;
 

@@ -181,8 +181,8 @@
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />
     <Compile Include="Tenancy\CommandHandlers\UpdateTenancyCommandHandlerTests.cs" />
     <Compile Include="Tenancy\CommandHandlers\CreateTenancyCommandHandlerTests.cs" />
-    <Compile Include="Tenancy\Relations\TenancyContactMapperTests.cs" />
-    <Compile Include="Tenancy\Relations\TenancyTermsMapperTests.cs" />
+    <Compile Include="Tenancy\CommandHandlers\Relations\TenancyContactMapperTests.cs" />
+    <Compile Include="Tenancy\CommandHandlers\Relations\TenancyTermsMapperTests.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandlerTests.cs" />
     <Compile Include="User\Commands\UpdateUserCommandValidatorTests.cs" />
     <Compile Include="User\Queries\UserQueryValidatorTests.cs" />

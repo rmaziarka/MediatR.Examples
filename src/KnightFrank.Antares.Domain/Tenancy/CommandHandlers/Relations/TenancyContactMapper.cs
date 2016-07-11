@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Tenancy.Relations
+﻿namespace KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations
 {
     using System;
     using System.Collections.Generic;

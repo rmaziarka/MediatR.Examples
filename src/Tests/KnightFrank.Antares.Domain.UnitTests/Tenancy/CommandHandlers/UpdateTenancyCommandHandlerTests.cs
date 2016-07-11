@@ -16,8 +16,8 @@
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Tenancy.CommandHandlers;
+    using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-    using KnightFrank.Antares.Domain.Tenancy.Relations;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;

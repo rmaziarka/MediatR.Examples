@@ -1,4 +1,4 @@
-namespace KnightFrank.Antares.Domain.Tenancy.Relations
+namespace KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations
 {
     using KnightFrank.Antares.Dal.Model.Tenancy;
     using KnightFrank.Antares.Domain.Common;

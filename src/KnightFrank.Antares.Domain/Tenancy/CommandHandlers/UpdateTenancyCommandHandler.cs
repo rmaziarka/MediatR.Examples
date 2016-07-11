@@ -9,8 +9,8 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-    using KnightFrank.Antares.Domain.Tenancy.Relations;
 
     using MediatR;
     using Enums = Common.Enums;

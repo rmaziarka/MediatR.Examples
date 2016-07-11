@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Tenancy.Relations
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Tenancy.CommandHandlers.Relations
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,8 +6,8 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Tenancy;
+    using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-    using KnightFrank.Antares.Domain.Tenancy.Relations;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Xunit;

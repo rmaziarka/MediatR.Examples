@@ -1,10 +1,9 @@
-﻿namespace KnightFrank.Antares.Domain.Tenancy.Relations
+﻿namespace KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations
 {
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Tenancy;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-
 
     public class TenancyTermsMapper : ITenancyReferenceMapper<TenancyTerm>
     {

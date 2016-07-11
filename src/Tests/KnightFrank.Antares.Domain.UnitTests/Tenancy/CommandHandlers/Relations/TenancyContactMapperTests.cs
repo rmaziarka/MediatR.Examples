@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Tenancy.Relations
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Tenancy.CommandHandlers.Relations
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +12,8 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
-    using KnightFrank.Antares.Domain.Tenancy.Relations;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
