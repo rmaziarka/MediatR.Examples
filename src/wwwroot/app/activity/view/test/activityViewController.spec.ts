@@ -4,12 +4,14 @@ module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given activity view controller', () => {
         var scope: ng.IScope,
             evtAggregator: Antares.Core.EventAggregator,
             controller: ActivityViewController,
-            $http: ng.IHttpBackendService;
+            $http: ng.IHttpBackendService,
+            obj = 'an object';
 
         var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
@@ -26,6 +28,7 @@ module Antares {
 
             var bindings = { activity: activityMock };
             controller = <ActivityViewController>$controller('activityViewController', { $scope: scope }, bindings);
+            controller.config = TestHelpers.ConfigGenerator.generateActivityViewConfig();
         }));
 
         beforeAll(() => {
@@ -157,6 +160,39 @@ module Antares {
                 expect(controller.isViewingPreviewPanelVisible).toBe(state);
                 expect(controller.isOfferPreviewPanelVisible).toBe(state);
             };
+        });
+
+        describe('when isRentSectionVisibleVisible is called', () => {
+            type TestCase = [any, any, any, any, any, any, any, any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, null, null, obj, obj, obj, obj, obj, obj, true],
+                    [obj, obj, obj, obj, null, obj, obj, obj, obj, obj, true],
+                    [obj, obj, null, null, null, obj, obj, obj, obj, obj, false],
+                    [obj, obj, obj, obj, obj, obj, obj, obj, obj, null, true],
+                    [obj, obj, obj, obj, obj, obj, obj, null, null, obj, true],
+                    [obj, obj, obj, obj, obj, obj, obj, null, null, null, false],
+                    [null, obj, obj, obj, obj, obj, obj, obj, obj, obj, false],
+                    [obj, null, obj, obj, obj, obj, obj, obj, obj, obj, false],
+                    [obj, obj, obj, obj, obj, null, obj, obj, obj, obj, false],
+                    [obj, obj, obj, obj, obj, obj, null, obj, obj, obj, false]])
+                .dataIt((data: TestCase) =>
+                    `where shortAskingMonthRent is ${data[0]} and shortAskingWeekRent is ${data[1]} and shortMatchFlexMonthValue is ${data[2]} and shortMatchFlexWeekValue is ${data[3]} and shortMatchFlexPercentage is ${data[4]} and longAskingMonthRent is ${data[5]} and longAskingWeekRent is ${data[6]} and longMatchFlexMonthValue is ${data[7]} and longMatchFlexWeekValue is ${data[8]} and longMatchFlexPercentage is ${data[9]} then isValuationInfoShortLongSectionVisible must return ${data[10]}`)
+                .run((data: TestCase) => {
+                    controller.config.shortAskingMonthRent = data[0];
+                    controller.config.shortAskingWeekRent = data[1];
+                    controller.config.shortMatchFlexMonthValue = data[2];
+                    controller.config.shortMatchFlexWeekValue = data[3];
+                    controller.config.shortMatchFlexPercentage = data[4];
+                    controller.config.longAskingMonthRent = data[5];
+                    controller.config.longAskingWeekRent = data[6];
+                    controller.config.longMatchFlexMonthValue = data[7];
+                    controller.config.longMatchFlexWeekValue = data[8];
+                    controller.config.longMatchFlexPercentage = data[9];
+
+                    // act & assert
+                    expect(controller.isRentSectionVisible()).toBe(data[10]);
+                });
         });
 
     });

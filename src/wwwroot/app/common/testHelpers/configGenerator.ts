@@ -263,6 +263,30 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateActivityViewConfig(): Antares.Activity.IActivityViewConfig {
+            var config: Antares.Activity.IActivityViewConfig = {
+                activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
+                activityType: ConfigGenerator.generateActivityTypeEditConfig(),
+                departments: ConfigGenerator.generateDepartmentViewControlConfig(),
+                vendors: ConfigGenerator.generateActivityVendorsConfig(),
+                landlords: ConfigGenerator.generateActivityLandlordsConfig(),
+                negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
+                property: ConfigGenerator.generatePropertyViewControlConfig(),
+                shortAskingMonthRent: {},
+                shortAskingWeekRent: {},
+                shortMatchFlexMonthValue: {},
+                shortMatchFlexWeekValue: {},
+                shortMatchFlexPercentage: {},
+                longAskingMonthRent: {},
+                longAskingWeekRent: {},
+                longMatchFlexMonthValue: {},
+                longMatchFlexWeekValue: {},
+                longMatchFlexPercentage: {}
+            };
+
+            return config;
+        }
+
         public static generateActivityEditConfig(): Antares.Activity.IActivityEditConfig {
             var config: Antares.Activity.IActivityEditConfig = {
                 activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),

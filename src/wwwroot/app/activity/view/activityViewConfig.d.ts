@@ -8,6 +8,16 @@ declare module Antares.Activity {
         vendors: Attributes.IActivityVendorsControlConfig;
         landlords: Attributes.IActivityLandlordsControlConfig;
         negotiators: Attributes.IActivityNegotiatorsControlConfig;
-        property: Attributes.IPropertyViewControlConfig
+        property: Attributes.IPropertyViewControlConfig;
+        shortAskingMonthRent: any;
+        shortAskingWeekRent: any;
+        shortMatchFlexMonthValue: any;
+        shortMatchFlexWeekValue: any;
+        shortMatchFlexPercentage: any;
+        longAskingMonthRent: any;
+        longAskingWeekRent: any;
+        longMatchFlexMonthValue: any;
+        longMatchFlexWeekValue: any;
+        longMatchFlexPercentage: any;
     }
 }

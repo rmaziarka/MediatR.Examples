@@ -12,6 +12,7 @@
         // bindings
         activity: Business.ActivityViewModel;
         public selectedTabIndex: number = 0;
+        public config: IActivityViewConfig;
 
         //fields
         isAttachmentsUploadPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -174,6 +175,76 @@
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
 
+        shortAskingMonthRentSchema: Antares.Attributes.IPriceControlSchema = {
+            controlId: 'shortAskingMonthRent',
+            translationKey: 'ACTIVITY.COMMON.ASKING_RENT_SHORT_LET',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_MONTH'
+        }
+
+        shortAskingWeekRentSchema: Antares.Attributes.IPriceControlSchema = {
+            controlId: 'shortAskingWeekRent',
+            translationKey: '',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        shortMatchFlexMonthValueSchema: Antares.Attributes.IRangeControlSchema = {
+            minControlId: 'shortMatchFlexMonthValue',
+            maxControlId: '',
+            formName: 'shortMatchFlexMonthValueForm',
+            translationKey: 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            unit: 'ACTIVITY.COMMON.GBP_PER_MONTH'
+        }
+
+        shortMatchFlexWeekValueSchema: Antares.Attributes.IRangeControlSchema = {
+            minControlId: 'shortMatchFlexWeekValue',
+            maxControlId: '',
+            formName: 'shortMatchFlexWeekValueForm',
+            translationKey: '',
+            unit: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        shortMatchFlexPercentageSchema = {
+            controlId : 'shortMatchFlexPercentage',
+            translationKey : 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            fieldName : 'shortMatchFlexPercentage',
+            suffix : 'ACTIVITY.COMMON.PERCENT'
+        }
+
+        longAskingMonthRentSchema: Antares.Attributes.IPriceControlSchema = {
+            controlId: 'longAskingMonthRent',
+            translationKey: 'ACTIVITY.COMMON.ASKING_RENT_LONG_LET',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_MONTH'
+        }
+
+        longAskingWeekRentSchema: Antares.Attributes.IPriceControlSchema = {
+            controlId: 'longAskingWeekRent',
+            translationKey: '',
+            suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        longMatchFlexMonthValueSchema: Antares.Attributes.IRangeControlSchema = {
+            minControlId: 'longMatchFlexMonthValue',
+            maxControlId: '',
+            formName: 'longMatchFlexMonthValueForm',
+            translationKey: 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            unit: 'ACTIVITY.COMMON.GBP_PER_MONTH'
+        }
+
+        longMatchFlexWeekValueSchema: Antares.Attributes.IRangeControlSchema = {
+            minControlId: 'longMatchFlexWeekValue',
+            maxControlId: '',
+            formName: 'longMatchFlexWeekValueForm',
+            translationKey: '',
+            unit: 'ACTIVITY.COMMON.GBP_PER_WEEK'
+        }
+
+        longMatchFlexPercentageSchema = {
+            controlId: 'longMatchFlexPercentage',
+            translationKey: 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            fieldName: 'longMatchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+
         constructor(
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
@@ -293,6 +364,17 @@
 
         cancelViewingPreview() {
             this.hidePanels();
+        }
+
+        public isRentSectionVisible = (): Boolean =>{
+            return this.config != null &&
+                this.config.shortAskingMonthRent != null &&
+                this.config.shortAskingWeekRent != null &&
+                ((this.config.shortMatchFlexMonthValue != null && this.config.shortMatchFlexWeekValue != null) || this.config.shortMatchFlexPercentage != null) &&
+                this.config.longAskingMonthRent != null &&
+                this.config.longAskingWeekRent != null &&
+                ((this.config.longMatchFlexMonthValue != null && this.config.longMatchFlexWeekValue != null) || this.config.longMatchFlexPercentage != null);
+
         }
 
         goToEdit = () => {
