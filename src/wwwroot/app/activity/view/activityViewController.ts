@@ -149,6 +149,31 @@
             translationKey: 'ACTIVITY.COMMON.DECORATION',            
         }
 
+        priceTypeSchema: Antares.Attributes.IEnumItemControlSchema = {
+            controlId: 'priceTypeId',
+            translationKey: 'ACTIVITY.COMMON.TYPE'
+        }
+
+        activityPriceSchema: Antares.Attributes.IPriceControlSchema = {
+            controlId: 'activityPrice',
+            translationKey: 'ACTIVITY.COMMON.GROUND_RENT'
+        }
+
+        matchFlexValueSchema: Antares.Attributes.IRangeControlSchema = {
+            minControlId: 'matchFlexValue',
+            maxControlId: '',
+            formName: 'matchFlexValueForm',
+            translationKey: 'ACTIVITY.COMMON.PRICE_FLEXIBILITY',
+            unit: 'ACTIVITY.COMMON.GBP'
+        }
+
+        matchFlexPercentageSchema = {
+            controlId: 'matchFlexPercentage',
+            translationKey: 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            fieldName: 'matchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+
         constructor(
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,

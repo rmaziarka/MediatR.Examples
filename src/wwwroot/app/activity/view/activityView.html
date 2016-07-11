@@ -19,9 +19,9 @@
                         </section>
                         <section id="activity-view-property">
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true"
-                                config="avvm.config.property"></property-view-control>
+                                                   config="avvm.config.property"></property-view-control>
                         </section>
-                        <hr />
+                        <hr/>
                         <section id="activity-view-vendors-summary">
                             <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
                         </section>
@@ -30,7 +30,7 @@
                         </section>
                         <section>
                             <activity-negotiators-view-control config="avvm.config.negotiators" property-division-id="{{avvm.activity.property.divisionId}}"
-                                lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isOverviewTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator"
+                                                               lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isOverviewTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator"
                                                                hide-secondary-negotiators="true">
                             </activity-negotiators-view-control>
                         </section>
@@ -74,7 +74,7 @@
                         </section>
                         <section>
                             <activity-negotiators-view-control config="avvm.config.negotiators" property-division-id="{{avvm.activity.property.divisionId}}"
-                                lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isDetailsTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator">
+                                                               lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isDetailsTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator">
                             </activity-negotiators-view-control>
                         </section>
                         <section id='departments-section'>
@@ -90,7 +90,7 @@
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
                         </section>
                         <enum-item-view-control ng-model="avvm.activity.disposalTypeId" config="avvm.config.disposalType" schema="avvm.activityDisposalTypeSchema"></enum-item-view-control>
-                        
+
                         <enum-item-view-control config="avvm.config.source"
                                                 ng-model="avvm.activity.sourceId"
                                                 schema="avvm.activitySourceSchema"></enum-item-view-control>
@@ -108,12 +108,12 @@
                             <h3 class="page-header" translate="ACTIVITY.COMMON.ADDITIONAL_INFORMATION"></h3>
                         </section>
                         <text-view-control config="avvm.config.keyNumber"
-                                               text="avvm.activity.accessDetails.keyNumber"
-                                               schema="avvm.activityKeyNumberSchema"></text-view-control>
+                                           text="avvm.activity.accessDetails.keyNumber"
+                                           schema="avvm.activityKeyNumberSchema"></text-view-control>
                         <textarea-view-control config="avvm.config.accessArrangements"
                                                text="avvm.activity.accessDetails.accessArrangements"
                                                schema="avvm.activityAccessArrangementsSchema"></textarea-view-control>
- 
+
                         <div id="other-info" ng-if="avvm.config.decoration && avvm.config.otherCondition">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
                             <enum-item-view-control ng-model="avvm.activity.decorationId" config="avvm.config.decoration" schema="avvm.activityDecorationSchema"></enum-item-view-control>
@@ -121,6 +121,16 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div id="activity-rent">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.RENT"></h3>
+                        </div>
+                        <div id="activity-price" ng-show="avvm.config.priceType && avvm.config.activityPrice && avvm.config.matchFlexValue && avvm.config.matchFlexPercentage">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.PRICE"></h3>
+                            <enum-item-view-control ng-model="avvm.activity.priceTypeId" config="avvm.config.priceType" schema="avvm.priceTypeSchema"></enum-item-view-control>
+                            <price-view-control config="avvm.config.activityPrice" schema="avvm.activityPriceSchema" price="avvm.activity.activityPrice"></price-view-control>
+                            <range-view-control min="avvm.config.matchFlexValue" config="avvm.config.matchFlexValue" schema="avvm.matchFlexValueSchema"></range-view-control>
+                            <price-view-control config="avvm.config.matchFlexPercentage" schema="avvm.matchFlexPercentageSchema" price="avvm.activity.matchFlexPercentage"></price-view-control>
+                        </div>
                         <div id="activity-view-prices" ng-if="avvm.config.kfValuationPrice && avvm.config.vendorValuationPrice && avvm.config.agreedInitialMarketingPrice">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                             <price-view-control config="avvm.config.kfValuationPrice" schema="avvm.kfValuationPriceSchema" price="avvm.activity.kfValuationPrice"></price-view-control>
@@ -140,17 +150,17 @@
 
                             <h4 class="page-header" translate="ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE"></h4>
                             <price-view-control config="avvm.config.shortAgreedInitialMarketingPrice" schema="avvm.shortAgreedInitialMarketingPriceSchema"
-                                price='avvm.activity.shortAgreedInitialMarketingPrice'></price-view-control>
+                                                price='avvm.activity.shortAgreedInitialMarketingPrice'></price-view-control>
                             <price-view-control config="avvm.config.longAgreedInitialMarketingPrice" schema="avvm.longAgreedInitialMarketingPriceSchema"
-                                price='avvm.activity.longAgreedInitialMarketingPrice'></price-view-control>
-                    </div>
+                                                price='avvm.activity.longAgreedInitialMarketingPrice'></price-view-control>
+                        </div>
                         <div id="activity-view-charges" ng-if="avvm.config.serviceChargeAmount && avvm.config.serviceChargeNote && avvm.config.groundRentAmount && avvm.config.groundRentNote">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
                             <price-view-control price="avvm.activity.serviceChargeAmount" config="avvm.config.serviceChargeAmount" schema="avvm.serviceChargeAmountSchema"></price-view-control>
                             <textarea-view-control text="avvm.activity.serviceChargeNote" config="avvm.config.serviceChargeNote" schema="avvm.serviceChargeNoteSchema"></textarea-view-control>
                             <price-view-control price="avvm.activity.groundRentAmount" config="avvm.config.groundRentAmount" schema="avvm.groundRentAmountSchema"></price-view-control>
                             <textarea-view-control text="avvm.activity.groundRentNote" config="avvm.config.groundRentNote" schema="avvm.groundRentNoteSchema"></textarea-view-control>
-                </div>
+                        </div>
                     </div>
                 </div>
             </uib-tab>
