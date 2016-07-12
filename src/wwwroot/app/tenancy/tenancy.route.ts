@@ -23,7 +23,6 @@ module Antares.Tenancy {
                 resolve: {
                     tenancy: ($stateParams: ng.ui.IStateParamsService, tenancyService: Antares.Services.TenancyService) => {
                         return tenancyService.getTenancy($stateParams['id']);
-
                     }
                 }
             }).state('app.tenancy-add', {
