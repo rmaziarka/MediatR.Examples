@@ -139,7 +139,7 @@
         [When(@"User clicks view activity from offer on view requirement page")]
         public void ClickViewActivityOffer()
         {
-            this.page.OfferPreview.WaitForDetailsToLoad().ClickViewLink();
+            this.page.OfferPreview.WaitForDetailsToLoad().ClickActivityDetailsLink();
         }
 
         [When(@"User clicks make an offer button for (.*) activity on view requirement page")]

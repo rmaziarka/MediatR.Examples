@@ -43,13 +43,13 @@ Scenario: Create residential letting offer on requirement
 	Then Letting offer details on view requirement page are same as the following
 		| Details                                                            | Status | OfferPerWeek | SpecialConditions | Negotiator |
 		| 8 Lori Petty’s house George St NN16 0AW Kettering Northamptonshire | New    | 1000         | Text              | John Smith |
-	#   -------TODO when view on activity is done-------
-	#When User clicks view activity from offer on view requirement page
-	#Then View activity page should be displayed
-	#	And Offer should be displayed on view activity page
-	#	And Offer details on 1 position on view activity page are same as the following
-	#		| Details                                  | OfferPerWeek | Status |
-	#		| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    |
+	When User clicks view activity from offer on view requirement page
+	Then View activity page should be displayed
+		And Offer should be displayed on overview tab on view activity page
+		And Letting offer details on 1 position on overview tab on view activity page are same as the following
+			| Details                                  | OfferPerWeek | Status | Negotiator |
+			| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    | John Smith |
+	#   -------TODO when offer preview is done-------
 	#When User clicks 1 offer details on view activity page
 	#Then Offer details on view activity page are same as the following
 	#	| Details                                  | Status | OfferPerWeek | SpecialConditions | Negotiator |
@@ -232,13 +232,13 @@ Scenario: Create residential sale offer on requirement
 	Then Sale offer details on view requirement page are same as the following
 		| Details                                                                  | Status | Offer  | SpecialConditions | Negotiator |
 		| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county | New    | 100000 | Text              | John Smith |
-	#   -------TODO when view on activity is done-------
-	#When User clicks view activity from offer on view requirement page
-	#Then View activity page should be displayed
-	#	And Offer should be displayed on view activity page
-	#	And Offer details on 1 position on view activity page are same as the following
-	#		| Details                                    | Offer  | Status |
-	#		| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    |
+	When User clicks view activity from offer on view requirement page
+	Then View activity page should be displayed
+		And Offer should be displayed on overview tab on view activity page
+		And Sale offer details on 1 position on overview tab on view activity page are same as the following
+			| Details                                    | Offer  | Status | Negotiator |
+			| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    | John Smith |
+	#   -------TODO when offer preview is done-------
 	#When User clicks 1 offer details on view activity page
 	#Then Offer details on view activity page are same as the following
 	#	| Details                                    | Status | Offer  | SpecialConditions | Negotiator |
