@@ -6,7 +6,7 @@
     {
         public TenancyTermConfiguration()
         {
-            this.Property(x => x.Price).IsMoney().IsRequired();
+            this.Property(x => x.AgreedRent).IsMoney().IsRequired();
             this.Property(x => x.StartDate).IsRequired();
             this.Property(x => x.EndDate).IsRequired();
         }

@@ -18,7 +18,7 @@
 
             tenancyTerm.StartDate = message.Term.StartDate;
             tenancyTerm.EndDate = message.Term.EndDate;
-            tenancyTerm.Price = message.Term.Price;
+            tenancyTerm.AgreedRent = message.Term.Price;
         }
     }
 }
