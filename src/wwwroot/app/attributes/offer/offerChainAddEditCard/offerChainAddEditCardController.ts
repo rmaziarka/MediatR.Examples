@@ -23,14 +23,14 @@ module Antares.Attributes.Offer.OfferChain {
         public companyContactType = Common.Models.Enums.CompanyContactType;
 
         // controls
-        controlConfig: Dto.IControlConfig = {
-            mortgageId: { required: true, active: true },
-            surveyId: { required: true, active: true },
-            searchesId: { required: true, active: true },
-            enquiriesId: { required: true, active: true },
-            contractAgreedId: { required: true, active: true },
-            vendor: { required: true, active: true },
-            thirdPartyAgent: { required: true, active: true }
+        controlConfig: any = {
+            mortgageId: <Dto.IControlConfig>{ required: true, active: true },
+            surveyId: <Dto.IControlConfig>{ required: true, active: true },
+            searchesId: <Dto.IControlConfig>{ required: true, active: true },
+            enquiriesId: <Dto.IControlConfig>{ required: true, active: true },
+            contractAgreedId: <Dto.IControlConfig>{ required: true, active: true },
+            vendor: <Dto.IControlConfig>{ required: true, active: true },
+            thirdPartyAgent: <Dto.IControlConfig>{ required: true, active: true }
         };
 
         controlSchemas: any = {
