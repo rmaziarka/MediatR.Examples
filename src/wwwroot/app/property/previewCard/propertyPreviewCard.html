@@ -4,11 +4,11 @@
     </side-panel-header>
     <side-panel-content>
         <div class="row section-row">
-            <div class="col-xs-5"><a ui-sref="app.property-view({ id: vm.property.id })" translate="PROPERTY.PREVIEW.PROPERTY_VIEW_LINK"></a></div>
+            <div class="col-xs-6"><a ui-sref="app.property-view({ id: vm.property.id })" translate="PROPERTY.PREVIEW.PROPERTY_VIEW_LINK"></a></div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="PROPERTY.PREVIEW.ADDRESS"></div>
-            <div class="col-xs-7" id="property-preview-address" ng-if="!!vm.property.address">
+            <div class="col-xs-6 section-title" translate="PROPERTY.PREVIEW.ADDRESS"></div>
+            <div class="col-xs-6" id="property-preview-address" ng-if="!!vm.property.address">
                 <address-form-view address="vm.property.address"
                                    template-url="'app/common/components/addressForm/addressFormView/templates/propertyAddressForm.html'"
                                    address-type="property"></address-form-view>
