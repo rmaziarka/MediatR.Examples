@@ -4,6 +4,8 @@
             <h3 translate="OFFER.CHAIN.EDIT.CHAIN_TRANSACTION"></h3>
         </side-panel-header>
         <side-panel-content>
+            <checkbox-edit-control ng-model="vm.chain.isEnd" config="vm.controlConfig.isEnd" schema="vm.controlSchemas.isEnd"></checkbox-edit-control>
+
             <!-- TODO: Implement property edit component -->
             <property-edit-control> </property-edit-control>
 
@@ -25,7 +27,7 @@
                 </div>
 
                 <card-list-item ng-show="vm.isKnightFrankAgent">
-                    <card id="card-chain-edit-agent-user" show-context-menu="false" display-new-control="true" card-template-url="'app/attributes/offer/offerChainAddEditCard/templates/agentUserCard.html'"
+                    <card id="card-chain-edit-agent-user" show-context-menu="false" display-new-control="true" card-template-url="'app/attributes/offer/offerChainAddEditCard/templates/userCard.html'"
                           item="vm.chain.agentUser">
                     </card>
                 </card-list-item>

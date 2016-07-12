@@ -608,7 +608,9 @@
         "ENQUIRIES": "Enquiries",
         "CONTRACT_AGREED": "Contract agreed",
         "KNIGHT_FRANK": "Knight Frank",
-        "THIRD_PARTY": "3rd party"
+        "THIRD_PARTY": "3rd party",
+        "VENDOR": "Vendor",
+        "IS_END": "End of chain"
       }
     }
   },

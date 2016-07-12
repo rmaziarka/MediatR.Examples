@@ -30,17 +30,20 @@ module Antares.Attributes.Offer.OfferChain {
             enquiriesId: <Dto.IControlConfig>{ required: true, active: true },
             contractAgreedId: <Dto.IControlConfig>{ required: true, active: true },
             vendor: <Dto.IControlConfig>{ required: true, active: true },
-            thirdPartyAgent: <Dto.IControlConfig>{ required: true, active: true }
+            thirdPartyAgent: <Dto.IControlConfig>{ required: true, active: true },
+            isEnd: <Dto.IControlConfig>{ required: false, active: true }
         };
 
         controlSchemas: any = {
             isEnd: <any>{
+                formName: "isEndControlForm",
                 controlId: "offer-chain-edit-is-end",
                 translationKey: "OFFER.CHAIN.EDIT.IS_END",
+                fieldName: "isEnd"
             },
             property: <any>{
                 controlId: "offer-chain-edit-property",
-                translationKey: "OFFER.CHAIN.EDIT.PROPERTY",
+                translationKey: "OFFER.CHAIN.EDIT.PROPERTY"
             },
             vendor: <any>{
                 formName: "vendorControlForm",
@@ -56,7 +59,7 @@ module Antares.Attributes.Offer.OfferChain {
             },
             agentUser: <any>{
                 controlId: "offer-chain-edit-agent-user",
-                translationKey: "OFFER.CHAIN.EDIT.AGENT",
+                translationKey: "OFFER.CHAIN.EDIT.AGENT"
             },
             agentCompanyContact: <Attributes.ICompanyContactViewControlSchema>{
                 controlId: "offer-chain-edit-agent-contact",
