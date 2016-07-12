@@ -7,12 +7,8 @@ module Antares.Attributes.Offer.OfferChain {
     export class OfferChainPreviewCardController {
         // bindings
         chain: Business.ChainTransaction;
+        config: any;
         onEdit: () => void;
-
-        // controls
-        controlConfig: Dto.IControlConfig = {
-            // not specified, all controls should be displayed
-        };
 
         controlSchemas: any = {
             //TODO - specify control scheme type

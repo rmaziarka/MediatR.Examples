@@ -7,6 +7,7 @@ module Antares.Attributes.Offer.OfferChain {
         controller: 'offerChainPreviewCardController',
         bindings: {
             chain: '<',
+            config: '<',
             onEdit: '&'
         }
     });
