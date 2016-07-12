@@ -23,6 +23,11 @@ module Antares.Common.Models.Dto {
         ActivitySource = <any>'activitySource',
         ActivitySellingReason = <any>'activitySellingReason',
         DisposalType = <any>'disposalType',
-        Decoration = <any>'decoration'
+        Decoration = <any>'decoration',
+        ChainMortgageStatus = <any>'chainMortgageStatus',
+        ChainMortgageSurveyStatus = <any>'chainMortgageSurveyStatus',
+        ChainSearchStatus = <any>'chainSearchStatus',
+        ChainEnquiries = <any>'chainEnquiries',
+        ChainContractAgreedStatus = <any>'chainContractAgreedStatus'
     }
 }
