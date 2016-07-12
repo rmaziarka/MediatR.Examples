@@ -264,5 +264,7 @@
         public string Time { get; set; }
 
         public string Name { get; set; }
+
+        public string Negotiator { get; set; }
     }
 }
