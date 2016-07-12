@@ -49,7 +49,7 @@ Scenario: Create viewing on residential sale requirement
 		And Viewing should be displayed on overview tab on view activity page
 		And Viewing details on 1 position on overview tab on view activity page are same as the following
 			| Date       | Time          | Name                                     | Negotiator |
-			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde | John Smith |
+			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde | -          |
 	When User clicks 1 viewings details link on overview tab on view activity page
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
@@ -148,7 +148,7 @@ Scenario: Create viewing on residential letting requirement
 		And Viewing should be displayed on overview tab on view activity page
 		And Viewing details on 1 position on overview tab on view activity page are same as the following
 			| Date       | Time          | Name                                     | Negotiator |
-			| 12-06-2016 | 10:00 - 11:00 | Maggie Smith, Judi Dench, Cate Blanchett | John Smith |
+			| 12-06-2016 | 10:00 - 11:00 | Maggie Smith, Judi Dench, Cate Blanchett | -          |
 	When User clicks 1 viewings details link on overview tab on view activity page
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                   | InvitationText | PostViewingComment |
