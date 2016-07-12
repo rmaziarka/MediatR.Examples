@@ -101,12 +101,12 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.LeadNegotiator.ToString()).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == UserType.LeadNegotiator.ToString()).Single();
         }
 
         private EnumTypeItem GetSecondaryNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.SecondaryNegotiator.ToString()).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == UserType.SecondaryNegotiator.ToString()).Single();
         }
 
     }

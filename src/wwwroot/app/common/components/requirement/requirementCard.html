@@ -1,13 +1,11 @@
 ﻿<h5 translate="COMMON.REQUIREMENT"></h5>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="panel-item" id="requirement-details">
+<card-list-item class="viewing-preview-requirement">
+    <card show-context-menu="true" display-new-control="true" item="vm.requirement">
+        <card-template>
             {{vm.requirement.getContactNames()}}
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-right" id="requirement-link">
-                <a ui-sref="app.requirement-view({id: vm.requirement.id})" translate="COMMON.VIEW"></a>
-            </div>
-        </div>
-    </div>
-</div>
+        </card-template>
+        <card-context-menu>
+            <context-menu-item type="details" item="vm.requirement" action="vm.navigateToRequirement"></context-menu-item>
+        </card-context-menu>
+    </card>
+</card-list-item>

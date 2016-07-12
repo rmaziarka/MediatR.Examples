@@ -9,5 +9,6 @@
         roles: string[];
         salutationFormatId: string;
         department: Dto.IDepartment;
+        locale: ILocale;
     }
 }

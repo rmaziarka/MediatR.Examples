@@ -49,10 +49,10 @@ module Antares.Company {
             this.components.sidePanels.contact().hide();
         }
      
-        formatUrlWithProtocol = (url:string):string=> {
+        formatUrlWithProtocol = (url: string): string => {
             //regular expression for url with a protocol (case insensitive)
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (url.length > 0) {
+            if (url && url.length > 0) {
                 if (!r.test(url)) {
                     return `http://${url}`;
                 }

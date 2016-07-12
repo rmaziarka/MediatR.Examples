@@ -18,7 +18,9 @@ module Antares {
                 $scope = $rootScope.$new();
                 $http = $httpBackend;
 
-                var bindings = { onSelectItem: () => {}, onCancel: () => {} };
+                var seachOptions = new Common.Component.SearchOptions();
+
+                var bindings = { onSelectItem: () => { }, onCancel: () => { }, options: seachOptions };
                 controller = <SearchController>$controller('SearchController', {}, bindings);
             }));
 
