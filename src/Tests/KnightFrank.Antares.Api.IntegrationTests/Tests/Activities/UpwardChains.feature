@@ -38,7 +38,6 @@ Scenario: Create upward chain for residential sale activity with mandatory field
 	Then User should get OK http status code
 		And Upward chain transaction from offer activity should match transaction already added
 
-@ignore
 Scenario Outline: Create upward chain with invalid data
 	Given Property exists in database
 		| PropertyType | Division    |

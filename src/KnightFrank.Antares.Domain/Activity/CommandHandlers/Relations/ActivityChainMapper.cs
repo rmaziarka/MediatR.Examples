@@ -14,17 +14,21 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     public class ActivityChainMapper : IActivityReferenceMapper<ChainTransaction>
     {
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<ChainTransaction> chainTransactionRepository;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
         public ActivityChainMapper(
             IEntityValidator entityValidator,
+            IEnumTypeItemValidator enumTypeItemValidator,
             IGenericRepository<ChainTransaction> chainTransactionRepository)
         {
             this.entityValidator = entityValidator;
+            this.enumTypeItemValidator = enumTypeItemValidator;
             this.chainTransactionRepository = chainTransactionRepository;
         }
 
@@ -61,9 +65,17 @@
 
             foreach (ChainTransaction chainTransaction in message.ChainTransactions)
             {
+                this.enumTypeItemValidator.ItemExists(EnumType.ChainMortgageSurveyStatus, chainTransaction.SurveyId);
+                this.enumTypeItemValidator.ItemExists(EnumType.ChainMortgageStatus, chainTransaction.MortgageId);
+                this.enumTypeItemValidator.ItemExists(EnumType.ChainSearchStatus, chainTransaction.SearchesId);
+                this.enumTypeItemValidator.ItemExists(EnumType.ChainContractAgreedStatus, chainTransaction.ContractAgreedId);
+                this.enumTypeItemValidator.ItemExists(EnumType.ChainEnquiries, chainTransaction.EnquiriesId);
+                this.entityValidator.EntityExists<Requirement>(chainTransaction.RequirementId);
+                this.entityValidator.EntityExists<Activity>(chainTransaction.ActivityId);
                 this.entityValidator.EntityExists<Property>(chainTransaction.PropertyId);
                 this.entityValidator.EntityExists<Company>(chainTransaction.SolicitorCompanyId);
                 this.entityValidator.EntityExists<Contact>(chainTransaction.SolicitorContactId);
+                this.entityValidator.EntityExists<ChainTransaction>(chainTransaction.ParentId);
                 if (chainTransaction.AgentUserId.HasValue)
                 {
                     this.entityValidator.EntityExists<User>(chainTransaction.AgentUserId);

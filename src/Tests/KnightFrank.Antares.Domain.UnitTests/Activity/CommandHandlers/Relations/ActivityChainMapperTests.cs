@@ -25,7 +25,6 @@
         [Theory]
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_CommandChainTransactionShouldMapToActivityChainTransactions(
-            [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<ChainTransaction>> chainTransactionRepository,
             ActivityChainMapper mapper)
         {
@@ -76,8 +75,9 @@
 
             var fixture = new Fixture();
             var entityValidator = fixture.Freeze<Mock<IEntityValidator>>();
+            var enumTypeValidator = fixture.Freeze<Mock<IEnumTypeItemValidator>>();
             var chainTransactionRepository = fixture.Freeze<Mock<IGenericRepository<ChainTransaction>>>();
-            var mapper = new ActivityChainMapper(entityValidator.Object, chainTransactionRepository.Object);
+            var mapper = new ActivityChainMapper(entityValidator.Object, enumTypeValidator.Object, chainTransactionRepository.Object);
 
             // Act
             // Assert
