@@ -559,12 +559,13 @@
         "NO_AGENT": "Agent contact not specified",
         "SOLICITOR": "Solicitor",
         "NO_SOLICITOR": "Solicitor contact not specified",
+        "PROGRESS": "Progress",
         "MORTGAGE": "Mortgage",
         "SURVEY": "Survey",
+        "SURVEY_DATE": "Survey date",
         "SEARCHES": "Searches",
         "ENQUIRIES": "Enquiries",
-        "CONTRACT_AGREED": "Contract agreed",
-        "SURVEY_DATE": "Survey date"
+        "CONTRACT_AGREED": "Contract agreed"
       }
     }
   },
