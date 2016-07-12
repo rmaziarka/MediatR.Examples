@@ -18,12 +18,6 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         panelShown = () => {
-            this.chain = new Business.ChainTransaction();
-            this.chain.property = new Business.PreviewProperty();
-            this.chain.property.address = new Business.Address();
-            this.chain.property.address.countryId = 'countryId';
-            this.chain.property.address.line2 = "line2";
-            this.chain.surveyDate = new Date();
         }
 
         public edit = (chain: Business.ChainTransaction) => {

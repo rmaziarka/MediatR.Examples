@@ -171,7 +171,8 @@ module Antares.Common.Models.Business {
                     propertyName: "Sky Tower",
                     propertyNumber: "123",
                     line2: "Powstancow Slaskich",
-                    postcode: "1232"
+                    postcode: "1232",
+                    countryId: "285C0E65-F447-E611-8115-00155D038C01"
                 }
             child.property.address = new Business.Address(child.property.address);
             child.vendor = 'Gilberto Lyons';
