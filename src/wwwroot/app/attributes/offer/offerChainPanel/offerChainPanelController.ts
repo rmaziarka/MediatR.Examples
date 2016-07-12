@@ -37,18 +37,18 @@ module Antares.Attributes.Offer.OfferChain {
 
         private defineControlConfig = (chain: Business.ChainTransaction) => {
             return {
-                isEnd: <Dto.IControlConfig>{ required: true, active: true },
-                property: <Dto.IControlConfig>{ required: true, active: true },
-                vendor: <Dto.IControlConfig>{ required: true, active: true },
-                agentUser: chain != null && chain.agentUser != null ? <Dto.IControlConfig>{ required: true, active: true } : null,
-                agentCompanyContact: chain == null || chain.agentUser != null ? null : <Dto.IControlConfig>{ required: true, active: true },
-                solicitorCompanyContact: <Dto.IControlConfig>{ required: true, active: true },
-                mortgage: <Dto.IControlConfig>{ required: true, active: true },
-                survey: <Dto.IControlConfig>{ required: true, active: true },
-                searches: <Dto.IControlConfig>{ required: true, active: true },
-                enquiries: <Dto.IControlConfig>{ required: true, active: true },
-                contractAgreed: <Dto.IControlConfig>{ required: true, active: true },
-                surveyDate: <Dto.IControlConfig>{ required: true, active: true }
+                isEnd: { isEnd: { required: false, active: true } },
+                property: { propertyId: { required: true, active: true } },
+                vendor: { vendor: { required: true, active: true } },
+                agentUser: chain != null && chain.agentUser != null ? { agentUserId: { required: true, active: true } } : null,
+                agentCompanyContact: chain == null || chain.agentUser != null ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
+                solicitorCompanyContact: { solicitorContactId: { required: true, active: true }, solicitorCompanyId: { required: true, active: true } },
+                mortgage: { mortgageId: { required: true, active: true } },
+                survey: { surveyId: { required: true, active: true } },
+                searches: { searchesId: { required: true, active: true } },
+                enquiries: { enquiriesId: { required: true, active: true } },
+                contractAgreed: { contractAgreedId: { required: true, active: true } },
+                surveyDate: { surveyDate: { required: true, active: true } }
             }
         }
     }

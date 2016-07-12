@@ -12,7 +12,11 @@ module Antares.Attributes.Offer.OfferChain {
     export class OfferChainAddEditCardController {
         // bindings
         chain: Dto.IChainTransaction;
+        config: any;
         onEdit: () => void;
+
+        //properties
+        configAgentType:Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
 
         public isThirdPartyAgentInEditMode: boolean = true;
         public thirdPartyAgentSearchOptions: SearchOptions = new SearchOptions();
@@ -23,17 +27,6 @@ module Antares.Attributes.Offer.OfferChain {
         public companyContactType = Common.Models.Enums.CompanyContactType;
 
         // controls
-        controlConfig: any = {
-            mortgageId: <Dto.IControlConfig>{ required: true, active: true },
-            surveyId: <Dto.IControlConfig>{ required: true, active: true },
-            searchesId: <Dto.IControlConfig>{ required: true, active: true },
-            enquiriesId: <Dto.IControlConfig>{ required: true, active: true },
-            contractAgreedId: <Dto.IControlConfig>{ required: true, active: true },
-            vendor: <Dto.IControlConfig>{ required: true, active: true },
-            thirdPartyAgent: <Dto.IControlConfig>{ required: true, active: true },
-            isEnd: <Dto.IControlConfig>{ required: false, active: true }
-        };
-
         controlSchemas: any = {
             isEnd: <any>{
                 formName: "isEndControlForm",
@@ -107,8 +100,10 @@ module Antares.Attributes.Offer.OfferChain {
                 enumTypeCode: Dto.EnumTypeCode.ChainContractAgreedStatus
             },
             surveyDate: <Attributes.IDateEditControlSchema>{
+                formName: "surveyDateControlForm",
                 controlId: "offer-chain-edit-survey-date",
                 translationKey: "OFFER.CHAIN.EDIT.SURVEY_DATE",
+                fieldName: "surveyDate"
             },
             agentType: <Attributes.IRadioButtonsEditControlSchema>{
                 formName: "chainEditAgentTypeForm",
@@ -133,7 +128,6 @@ module Antares.Attributes.Offer.OfferChain {
                     break;
             }
         }
-        
 
         public editThirdPartyAgent = () => {
             this.isThirdPartyAgentInEditMode = true;

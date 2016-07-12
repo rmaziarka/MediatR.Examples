@@ -23,15 +23,15 @@ module Antares.Attributes.Offer {
             private kfModalService: KfModalService) { }
 
         deleteChain = (chain: ChainTransaction) => {
-            this.onChainRemove({ chain: chain });
+            this.onChainRemove({ chain: angular.copy(chain) });
         }
 
         editChain = (chain: ChainTransaction) => {
-            this.onChainEdit({ chain: chain });
+            this.onChainEdit({ chain: angular.copy(chain) });
         }
 
         previewChain = (chain: ChainTransaction) => {
-            this.onChainPreview({ chain: chain });
+            this.onChainPreview({ chain: angular.copy(chain) });
         }
     }
 

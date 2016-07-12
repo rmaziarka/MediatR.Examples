@@ -4,18 +4,24 @@
             <h3 translate="OFFER.CHAIN.EDIT.CHAIN_TRANSACTION"></h3>
         </side-panel-header>
         <side-panel-content>
-            <checkbox-edit-control ng-model="vm.chain.isEnd" config="vm.controlConfig.isEnd" schema="vm.controlSchemas.isEnd"></checkbox-edit-control>
-
-            <!-- TODO: Implement property edit component -->
-            <property-edit-control> </property-edit-control>
-
-            <text-edit-control ng-model="vm.chain.vendor" config="vm.controlConfig" schema="vm.controlSchemas.vendor"></text-edit-control>
+            <div class="section-details">
+                <checkbox-edit-control ng-model="vm.chain.isEnd" config="vm.config.isEnd" schema="vm.controlSchemas.isEnd"></checkbox-edit-control>
+            </div>
 
             <div class="section-details">
-                <radio-buttons-edit-control id="agent" config="vm.controlConfig" ng-model="vm.isKnightFrankAgent"
+                <!-- TODO: Implement property edit component -->
+                <property-edit-control> </property-edit-control>
+            </div>
+
+            <div class="section-details">
+                <text-edit-control ng-model="vm.chain.vendor" config="vm.config.vendor" schema="vm.controlSchemas.vendor"></text-edit-control>
+            </div>
+
+            <div class="section-details">
+                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isKnightFrankAgent"
                                             schema="vm.controlSchemas.agentType">
                 </radio-buttons-edit-control>
-                
+
                 <search ng-show="vm.isThirdPartyAgentInEditMode && vm.isKnightFrankAgent" id="thirdPartyAgent-search"
                         options="vm.thirdPartyAgentSearchOptions"
                         focus-on="vm.isThirdPartyAgentInEditMode"
@@ -26,15 +32,19 @@
                     <button class="btn btn-default" id="agent-user-btn" type="button" ng-click="vm.editThirdPartyAgent()"><i class="fa fa-pencil"></i></button>
                 </div>
 
-                <card-list-item ng-show="vm.isKnightFrankAgent">
-                    <card id="card-chain-edit-agent-user" show-context-menu="false" display-new-control="true" card-template-url="'app/attributes/offer/offerChainAddEditCard/templates/userCard.html'"
-                          item="vm.chain.agentUser">
-                    </card>
-                </card-list-item>
+                <div class="section-row row" ng-if="vm.config.agentUser">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default applicant">
+                            <div class="panel-body">
+                                {{ vm.chain.agentUser.getName() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--TODO: create card instead of panel-->
-                <company-contact-edit-control ng-show="!vm.isKnightFrankAgent" schema="vm.controlSchemas.thirdPartyAgent"
-                                              config="vm.controlConfig.thirdPartyAgent"
+                <company-contact-edit-control schema="vm.controlSchemas.thirdPartyAgent"
+                                              config="vm.config.agentCompanyContact"
                                               type="vm.companyContactType.ThirdPartyAgent"
                                               company-contact="vm.chain.agentCompanyContact"
                                               is-panel-visible="vm.isThirdPartyAgentEditPanelVisible">
@@ -43,16 +53,12 @@
 
             <div class="section-details">
                 <h4 translate="OFFER.CHAIN.EDIT.PROGRESS">Progress</h4>
-                <enum-item-edit-control ng-model="vm.chain.mortgageId" config="vm.controlConfig" schema="vm.controlSchemas.mortgage" hide-empty-value="true"></enum-item-edit-control>
-                <enum-item-edit-control ng-model="vm.chain.surveyId" config="vm.controlConfig" schema="vm.controlSchemas.enquiries" hide-empty-value="true"></enum-item-edit-control>
-                <!--<date-edit-control ng-model="vm.chain.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate" greater-than="vm.offer.offerDate">
-                    <override-errors>
-                        <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
-                    </override-errors>
-                </date-edit-control>-->
-                <enum-item-edit-control ng-model="vm.chain.searchesId" config="vm.controlConfig" schema="vm.controlSchemas.searches" hide-empty-value="true"></enum-item-edit-control>
-                <enum-item-edit-control ng-model="vm.chain.enquiriesId" config="vm.controlConfig" schema="vm.controlSchemas.enquiries" hide-empty-value="true"></enum-item-edit-control>
-                <enum-item-edit-control ng-model="vm.chain.contractAgreedId" config="vm.controlConfig" schema="vm.controlSchemas.contractAgreed" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.mortgageId" config="vm.config.mortgage" schema="vm.controlSchemas.mortgage" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.surveyId" config="vm.config.survey" schema="vm.controlSchemas.survey" hide-empty-value="true"></enum-item-edit-control>
+                <date-edit-control ng-model="vm.chain.surveyDate" config="vm.config.surveyDate" schema="vm.controlSchemas.surveyDate"></date-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.searchesId" config="vm.config.searches" schema="vm.controlSchemas.searches" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.enquiriesId" config="vm.config.enquiries" schema="vm.controlSchemas.enquiries" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.contractAgreedId" config="vm.config.contractAgreed" schema="vm.controlSchemas.contractAgreed" hide-empty-value="true"></enum-item-edit-control>
             </div>
         </side-panel-content>
         <side-panel-footer>
