@@ -5,8 +5,8 @@ module Antares.Tenancy {
 
     export class TenancyEditModel {
         id: string = null;
-        activity: ActivityPreviewEditModel;
-        requirement: RequirementPreviewEditModel;
+        activity: Business.ActivityPreviewModel;
+        requirement: Business.RequirementPreviewModel;
         landlords: Business.Contact[];
         tenants: Business.Contact[];
         startDate: Date | string = null;

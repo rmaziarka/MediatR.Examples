@@ -1,8 +1,9 @@
 declare module Antares.Common.Models.Dto {
     interface ITenancyContact {
         id: string;
-        userId: string;
-        user: Dto.IUser;
-        userType: Dto.IEnumTypeItem;
+        contactId: string;
+        contact: Dto.IContact;
+        contactType: Dto.IEnumTypeItem;
+        tenancyId: string;
     }
 }

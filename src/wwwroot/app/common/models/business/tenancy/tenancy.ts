@@ -3,12 +3,15 @@
 module Antares.Common.Models.Business {
     export class Tenancy {
         id: string = null;
-        activity: Activity;
-        requirement: Requirement;
-        landlords: Business.Contact[];
-        tenants: Business.Contact[];
-        startDate: Date | string = null;
-        ednDate: Date | string = null;
-        rent: number; 
+        requirementId: string = null;
+        requirement: Requirement = null;
+        activityId: string = null;
+        activity: Activity = null;
+        contacts: TenancyContact[];
+        terms: TenancyTerm[];
+        tenancyTypeId: string = null;
+        tenancyType: EnumTypeItem = null;
+        landlords: Contact[];
+        tenants: Contact[];        
     }
 }

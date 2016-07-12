@@ -18,8 +18,8 @@ module Antares.Tenancy {
                 url: '/activity/:activityId/requirement/:requirementId/tenancy/edit',
                 template: "<tenancy-edit tenancy='tenancy'></tenancy-edit>",
                 controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity) => {
-                    var activityPreview = new Tenancy.ActivityPreviewEditModel(activity);
-                    var requirementPreview = new Tenancy.RequirementPreviewEditModel(requirement);
+                    var activityPreview = new Business.ActivityPreviewModel(activity);
+                    var requirementPreview = new Business.RequirementPreviewModel(requirement);
                     
                     var tenancy = new Tenancy.TenancyEditModel();
                     tenancy.activity = activityPreview;

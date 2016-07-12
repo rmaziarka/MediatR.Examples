@@ -8,11 +8,11 @@ module Antares.Tenancy {
 
         constructor(private $state: ng.ui.IStateService) {}
 
-        navigateToActivity = (ativity: Business.Activity) => {
+        navigateToActivity = (ativity: Business.ActivityPreviewModel) => {
             this.$state.go('app.activity-view', { id: ativity.id });
         }
 
-        navigateToRequirement = (requirement: Tenancy.RequirementPreviewEditModel) => {
+        navigateToRequirement = (requirement: Business.RequirementPreviewModel) => {
             this.$state.go('app.requirement-view', { id: requirement.id });
         }
 
