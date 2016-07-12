@@ -45,6 +45,8 @@ module Antares {
             $q = _$q_;
             latestViewsProvider = _latestViewsProvider_;
             enumProvider = _enumProvider_;
+            enumProvider.enums = TestHelpers.EnumDictionaryGenerator.generateDictionary();;
+            
 
             $scope = $rootScope.$new();
             controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
