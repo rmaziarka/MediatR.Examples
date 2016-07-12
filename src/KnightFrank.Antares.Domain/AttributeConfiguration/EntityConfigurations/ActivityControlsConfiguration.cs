@@ -125,7 +125,7 @@
             foreach (PageType pageType in new[] { PageType.Create, PageType.Update })
             {
                 this.AddControl(pageType, ControlCode.ActivityType, Field<ActivityCommandBase>.Create(x => x.ActivityTypeId).Required());
-                this.AddControl(pageType, ControlCode.ActivityStatus, Field<ActivityCommandBase>.Create(x => x.ActivityStatusId).Required());
+                this.AddControl(pageType, ControlCode.ActivityStatus, Field<ActivityCommandBase>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required());
                 this.AddControl(pageType, ControlCode.Departments, Field<ActivityCommandBase>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
                 this.AddControl(pageType, ControlCode.AskingPrice, Field<ActivityCommandBase>.Create(x => x.AskingPrice));
                 this.AddControl(pageType, ControlCode.ShortLetPricePerWeek, Field<ActivityCommandBase>.Create(x => x.ShortLetPricePerWeek));
@@ -217,8 +217,11 @@
 
             this.Use(ControlCode.CreationDate, this.ForAll(PageType.Preview, PageType.Details));
 
-            this.Use(new[] { ControlCode.ActivityStatus, ControlCode.ActivityType },
+            this.Use(new[] { ControlCode.ActivityType },
                 this.When(allResidentials, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
+
+            this.Use(new[] { ControlCode.ActivityStatus },
+                this.When(allResidentials, PageType.Preview, PageType.Details));
 
             this.Use(new[] { ControlCode.Departments, ControlCode.Negotiators },
                 this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
@@ -352,7 +355,7 @@
                 },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
-            
+
             this.DefineMappingsForPrices(openMarketLetting, residentialSale);
         }
 
@@ -365,6 +368,8 @@
             Guid matchFlexRentPercentageId = this.GetEnumTypeItemId(EnumType.ActivityMatchFlexRent, ActivityMatchFlexRent.Percentage);
             Guid rentPaymentPeriodWeekId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Weekly);
             Guid rentPaymentPeriodMonthId = this.GetEnumTypeItemId(EnumType.RentPaymentPeriod, RentPaymentPeriod.Monthly);
+
+            this.DefineAllowedStatuses(openMarketLetting, residentialSale);
 
             this.Use(
                 new List<ControlCode>
@@ -533,6 +538,31 @@
                 new List<ControlCode> { ControlCode.LongMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.LongMatchFlexibilityId != matchFlexRentPercentageId);
+        }
+
+        private void DefineAllowedStatuses(List<Tuple<PropertyType, ActivityType>> openMarketLetting, List<Tuple<PropertyType, ActivityType>> residentialSale)
+        {
+            this.Use(ControlCode.ActivityStatus, this.When(residentialSale, PageType.Create, PageType.Update))
+                .WithAllowedValues<ActivityCommandBase, Guid, ActivityStatus>(
+                    x => x.ActivityStatusId,
+                    new List<ActivityStatus>
+                        {
+                            ActivityStatus.PreAppraisal,
+                            ActivityStatus.MarketAppraisal,
+                            ActivityStatus.NotSelling,
+                            ActivityStatus.ForSaleUnavailable
+                        });
+
+            this.Use(ControlCode.ActivityStatus, this.When(openMarketLetting, PageType.Create, PageType.Update))
+                .WithAllowedValues<ActivityCommandBase, Guid, ActivityStatus>(
+                    x => x.ActivityStatusId,
+                    new List<ActivityStatus>
+                        {
+                            ActivityStatus.PreAppraisal,
+                            ActivityStatus.MarketAppraisal,
+                            ActivityStatus.NotSelling,
+                            ActivityStatus.ToLetUnavailable
+                        });
         }
     }
 }
