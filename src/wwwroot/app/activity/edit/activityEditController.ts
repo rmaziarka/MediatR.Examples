@@ -223,7 +223,7 @@ module Antares.Activity {
             controlId: 'otherCondition',
             translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
             fieldName: 'otherCondition',
-            formName: 'otherConditionForm',
+            formName: 'otherConditionForm'
 
         }
 
@@ -350,7 +350,7 @@ module Antares.Activity {
             controlId: 'longMatchFlexMonthValue',
             translationKey: '',
             formName: 'longMatchFlexMonthValueForm',
-            fieldName: 'longMatchFlexMonthValue',
+            fieldName: 'longMatchFlexMonthValue'
         }
 
         longMatchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
@@ -360,19 +360,7 @@ module Antares.Activity {
             fieldName: 'longMatchFlexPercentage',
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
-
-        configMocked: any = {
-            attendees: {
-                attendees: {
-                    active: true
-                }
-            }
-        }
-
-        configAppraisalMeetingDateMocked: any = {
-            appraisalMeetingDate: { start: { active: true, required: true }, end: { active: true, required: true } }
-        }
-
+        
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -544,22 +532,22 @@ module Antares.Activity {
         }
 
         public isOtherSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.decoration != null && this.config.editConfig.otherCondition != null;
+            return this.config && this.config.editConfig && this.config.editConfig.decoration != null && this.config.editConfig.otherCondition != null;
         }
 
         public isValuationInfoSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.kfValuationPrice != null && this.config.editConfig.vendorValuationPrice != null &&
+            return this.config && this.config.editConfig && this.config.editConfig.kfValuationPrice != null && this.config.editConfig.vendorValuationPrice != null &&
                 this.config.editConfig.agreedInitialMarketingPrice != null;
         }
 
         public isValuationInfoShortLongSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.shortKfValuationPrice != null && this.config.editConfig.longKfValuationPrice != null &&
+            return this.config && this.config.editConfig && this.config.editConfig.shortKfValuationPrice != null && this.config.editConfig.longKfValuationPrice != null &&
                 this.config.editConfig.shortVendorValuationPrice != null && this.config.editConfig.longVendorValuationPrice != null &&
                 this.config.editConfig.shortAgreedInitialMarketingPrice != null && this.config.editConfig.longAgreedInitialMarketingPrice != null;
         }
 
         public isChargesSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.serviceChargeAmount != null && this.config.editConfig.groundRentAmount != null && this.config.editConfig.groundRentNote != null;
+            return this.config && this.config.editConfig && this.config.editConfig.serviceChargeAmount != null && this.config.editConfig.groundRentAmount != null && this.config.editConfig.groundRentNote != null;
         }
 
         private get pageMode(): PageMode {
@@ -657,20 +645,20 @@ module Antares.Activity {
         }
 
         public isValuationPricesSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.askingPrice != null || this.config.editConfig.shortLetPricePerWeek != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.askingPrice != null || this.config.editConfig.shortLetPricePerWeek != null);
         }
 
         public isBasicInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.property != null || this.config.editConfig.disposalType != null || this.config.editConfig.source != null ||
+            return this.config && this.config.editConfig && (this.config.editConfig.property != null || this.config.editConfig.disposalType != null || this.config.editConfig.source != null ||
                 this.config.editConfig.sourceDescription != null || this.config.editConfig.sellingReason != null || this.config.editConfig.pitchingThreats != null);
         }
 
         public isAdditionalInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.keyNumber != null || this.config.editConfig.accessArrangements != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.keyNumber != null || this.config.editConfig.accessArrangements != null);
         }
 
         public isAppraisalMeetingSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.appraisalMeetingDate != null ||
+            return this.config && this.config.editConfig && (this.config.editConfig.appraisalMeetingDate != null ||
                 this.config.editConfig.appraisalMeetingAttendees != null || this.config.editConfig.appraisalMeetingInvitation != null);
         }
     }

@@ -147,7 +147,7 @@
 
         activityDecorationSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'decorationId',
-            translationKey: 'ACTIVITY.COMMON.DECORATION',            
+            translationKey: 'ACTIVITY.COMMON.DECORATION'        
         }
 
         priceTypeSchema: Antares.Attributes.IEnumItemControlSchema = {
@@ -207,7 +207,7 @@
             controlId : 'shortMatchFlexPercentage',
             translationKey : 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
             fieldName : 'shortMatchFlexPercentage',
-            suffix : 'ACTIVITY.COMMON.PERCENT'
+            suffix: 'ACTIVITY.COMMON.PERCENT'
         }
 
         longAskingMonthRentSchema: Antares.Attributes.IPriceControlSchema = {
