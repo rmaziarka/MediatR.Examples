@@ -79,6 +79,8 @@
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\Contact\ContactTitleConfiguration.cs" />
     <Compile Include="Model\Configuration\Contact\ContactUserConfiguration.cs" />
+    <Compile Include="Model\Configuration\Company\CompanyCategoryConfiguration.cs" />
+    <Compile Include="Model\Configuration\Company\CompanyCategoryLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Company\CompanyContactConfiguration.cs" />
     <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferTypeLocalisedConfiguration.cs" />
@@ -167,6 +169,8 @@
     <Compile Include="Model\Property\PropertyTypeLocalised.cs" />
     <Compile Include="Model\Property\Requirement.cs" />
     <Compile Include="Model\LatestView\LatestView.cs" />
+    <Compile Include="Model\Company\CompanyCategory.cs" />
+    <Compile Include="Model\Company\CompanyCategoryLocalised.cs" />
     <Compile Include="Model\Resource\Country.cs" />
     <Compile Include="Model\Resource\CountryLocalised.cs" />
     <Compile Include="Model\Resource\Locale.cs" />

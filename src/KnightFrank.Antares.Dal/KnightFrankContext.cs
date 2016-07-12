@@ -76,6 +76,8 @@
         public DbSet<PropertyTypeLocalised> PropertyTypeLocaliseds { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinitions { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyCategory> CompanyCategories { get; set; }
+        public DbSet<CompanyCategoryLocalised> CompanyCategoryLocaliseds { get; set; }
         public DbSet<Attribute> Attributes { get; set; }
         public DbSet<PropertyAttributeForm> PropertyAttributeForms { get; set; }
         public DbSet<PropertyAttributeFormDefinition> PropertyAttributeFormDefinitions { get; set; }

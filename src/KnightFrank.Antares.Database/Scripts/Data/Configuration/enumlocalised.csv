@@ -33,6 +33,8 @@ ActivityDepartmentType;Standard;en;Standard
 ClientCareStatus;MassiveActionClient;en;Massive Action Client
 ClientCareStatus;PrincipalClient;en;Principal Client
 ClientCareStatus;KeyClient;en;Key Client
+CompanyType;KnightFrankGroup;en;Knight Frank Group
+CompanyType;KnightFrankAffiliates;en;Knight Frank Affiliates
 MortgageStatus;Unknown;en;Unknown
 MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank

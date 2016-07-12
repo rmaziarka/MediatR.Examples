@@ -17,6 +17,7 @@ module Antares.Common.Models.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
+	 	CompanyType,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -24,6 +25,8 @@ module Antares.Common.Models.Enums
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
+	 	DisposalType,
+	 	Decoration,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 }
@@ -116,6 +119,12 @@ module Antares.Common.Models.Enums
 		KeyClient,
 	}
 
+	export enum CompanyType
+	{
+		KnightFrankGroup,
+		KnightFrankAffiliates,
+	}
+
 	export enum MortgageSurveyStatus
 	{
 		Unknown,
@@ -150,22 +159,6 @@ module Antares.Common.Models.Enums
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
-	}
-
-	export enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	export enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
 	}
 
 	export enum ActivitySource
@@ -211,5 +204,36 @@ module Antares.Common.Models.Enums
 		Relocation,
 		Retiring,
 		SurpliceToRequirement,
+	}
+
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	export enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }

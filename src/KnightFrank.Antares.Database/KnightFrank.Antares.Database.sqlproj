@@ -194,6 +194,10 @@
     <None Include="Scripts\Data\Configuration\contactTitle.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Data\Configuration\companyCategory.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -275,6 +279,8 @@
     <None Include="Scripts\Views\ElasticSearchProperty.sql" />
     <None Include="Scripts\SQL\OfferType.sql" />
     <None Include="Scripts\SQL\OfferTypeLocalised.sql" />
+    <None Include="Scripts\SQL\CompanyCategory.sql" />
+    <None Include="Scripts\SQL\CompanyCategoryTypeLocalised.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\SQL\ContactTitle.sql" />

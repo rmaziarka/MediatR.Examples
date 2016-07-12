@@ -37,6 +37,8 @@ MortgageStatus;InProgress
 ClientCareStatus;MassiveActionClient
 ClientCareStatus;PrincipalClient
 ClientCareStatus;KeyClient
+CompanyType;KnightFrankGroup
+CompanyType;KnightFrankAffiliates
 MortgageStatus;Agreed
 MortgageSurveyStatus;Unknown
 MortgageSurveyStatus;NotRequired
