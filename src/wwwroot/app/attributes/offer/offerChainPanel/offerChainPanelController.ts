@@ -48,7 +48,7 @@ module Antares.Attributes.Offer.OfferChain {
                 searches: { searchesId: { required: true, active: true } },
                 enquiries: { enquiriesId: { required: true, active: true } },
                 contractAgreed: { contractAgreedId: { required: true, active: true } },
-                surveyDate: { surveyDate: { required: true, active: true } }
+                surveyDate: { surveyDate: { required: false, active: true } }
             }
         }
     }
