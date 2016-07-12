@@ -1,7 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 
-module Antares.Tenancy {
-    import Business = Common.Models.Business;
+module Antares.Common.Models.Business {
 
     export class TenancyEditModel {
         id: string = null;

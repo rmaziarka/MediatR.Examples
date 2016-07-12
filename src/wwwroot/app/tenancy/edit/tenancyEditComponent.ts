@@ -6,7 +6,8 @@ module Antares.Tenancy {
         controllerAs: 'tevm',
         controller: 'TenancyEditController',
         bindings: {
-            tenancy: '<'
+            tenancy: '<',
+            config: '<'
         }
     });
 }

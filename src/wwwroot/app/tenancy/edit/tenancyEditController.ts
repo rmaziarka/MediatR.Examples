@@ -4,7 +4,7 @@ module Antares.Tenancy {
     import Business = Antares.Common.Models.Business;
 
     export class TenancyEditController {
-        tenancy: TenancyEditModel;
+        tenancy: Business.TenancyEditModel;
 
         constructor(private $state: ng.ui.IStateService) {}
 
