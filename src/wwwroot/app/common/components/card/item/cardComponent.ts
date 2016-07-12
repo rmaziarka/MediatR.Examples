@@ -6,7 +6,8 @@ module Antares.Common.Component {
         controllerAs: 'cvm',
         controller: 'CardController',
         transclude: {
-            'contextMenu': '?cardContextMenu'
+            'contextMenu': '?cardContextMenu',
+            'template': '?cardTemplate'
         },
         bindings: {
             item: '<',
