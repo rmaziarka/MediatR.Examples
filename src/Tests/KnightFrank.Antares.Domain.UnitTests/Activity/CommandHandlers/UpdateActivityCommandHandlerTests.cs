@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
@@ -49,6 +50,7 @@
             [Frozen] Mock<IActivityReferenceMapper<ActivityUser>> usersMapper,
             [Frozen] Mock<IActivityReferenceMapper<ActivityDepartment>> departmentsMapper,
             [Frozen] Mock<IActivityReferenceMapper<ActivityAttendee>> attendeesMapper,
+            [Frozen] Mock<IActivityReferenceMapper<ChainTransaction>> chainTransactionMapper,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
             IFixture fixture)
@@ -80,6 +82,7 @@
             usersMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 1)).Verifiable();
             departmentsMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 2)).Verifiable();
             attendeesMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 3)).Verifiable();
+            chainTransactionMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 4)).Verifiable();
 
             // Act
             Guid activityId = handler.Handle(command);
@@ -103,6 +106,7 @@
             usersMapper.Verify();
             departmentsMapper.Verify();
             attendeesMapper.Verify();
+            chainTransactionMapper.Verify();
         }
     }
 }

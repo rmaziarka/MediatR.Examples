@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
@@ -16,7 +17,6 @@
 
     public class ActivityChainMapper : IActivityReferenceMapper<ChainTransaction>
     {
-        
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<ChainTransaction> chainTransactionRepository;
 
@@ -42,12 +42,12 @@
                    .ToList()
                    .ForEach(x => activity.ChainTransactions.Add(x));
 
-            var existingChains = message.ChainTransactions
+            IEnumerable<ChainTransaction> existingChains = message.ChainTransactions
                                         .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id));
 
             foreach (ChainTransaction existingChain in existingChains)
             {
-                var chainToUpdate = activity.ChainTransactions.Single(x => x.Id == existingChain.Id);
+                ChainTransaction chainToUpdate = activity.ChainTransactions.Single(x => x.Id == existingChain.Id);
                 Mapper.Map(existingChain, chainToUpdate);
             }
         }
