@@ -6,12 +6,12 @@
 
     using FluentValidation;
 
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
@@ -20,6 +20,7 @@
     using Ninject.Modules;
 
     using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
 
     public class DomainModule : NinjectModule
     {
@@ -43,6 +44,7 @@
             this.Bind<IActivityReferenceMapper<Dal.Model.Contacts.Contact>>().To<ActivityContactsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityDepartment>>().To<ActivityDepartmentsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityUser>>().To<ActivityUsersMapper>();
+            this.Bind<IActivityReferenceMapper<ChainTransaction>>().To<ActivityChainMapper>();
 
             this.ConfigureAttributeConfigurations();
 

@@ -9,7 +9,6 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
-    using KnightFrank.Antares.Domain.Common.Enums;
 
     using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
     using RequirementType = KnightFrank.Antares.Domain.Common.Enums.RequirementType;

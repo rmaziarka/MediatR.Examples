@@ -298,6 +298,7 @@
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
+                .Excluding(x => x.ChainTransactions)
                 .Excluding(x => x.SellingReason));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
