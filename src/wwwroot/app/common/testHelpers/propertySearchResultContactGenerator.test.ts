@@ -10,7 +10,7 @@ module Antares.TestHelpers {
             var contact: Dto.IPropertySearchResultContact = {
                 id: PropertySearchResultContactGenerator.makeRandom('id'),
                 firstName: PropertySearchResultContactGenerator.makeRandom('firstName'),
-                surname: PropertySearchResultContactGenerator.makeRandom('surname'),
+                lastName: PropertySearchResultContactGenerator.makeRandom('lastName'),
                 title: PropertySearchResultContactGenerator.makeRandom('title')
             }
 

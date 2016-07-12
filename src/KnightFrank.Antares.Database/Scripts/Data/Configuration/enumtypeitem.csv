@@ -26,8 +26,8 @@ OfferStatus;New
 OfferStatus;Withdrawn
 OfferStatus;Rejected
 OfferStatus;Accepted
-ActivityUserType;LeadNegotiator
-ActivityUserType;SecondaryNegotiator
+UserType;LeadNegotiator
+UserType;SecondaryNegotiator
 ActivityDepartmentType;Managing
 ActivityDepartmentType;Standard
 MortgageStatus;Unknown
@@ -98,3 +98,11 @@ Decoration;Unmodernised
 Decoration;Fair
 Decoration;Good
 Decoration;VeryGood
+MailingSalutation;MailingFormal
+MailingSalutation;MailingSemiformal
+MailingSalutation;MailingInformal
+MailingSalutation;MailingPersonal
+EventSalutation;EventInvite
+EventSalutation;EventSemiformal
+EventSalutation;EventInformal
+EventSalutation;EventPersonal

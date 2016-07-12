@@ -4,8 +4,8 @@
 Scenario Outline: Create requirement
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User sets locations details for the requirement with max length fields
 		And User creates <type> requirement using api
 	Then User should get OK http status code
@@ -20,8 +20,8 @@ Scenario Outline: Create requirement
 Scenario Outline: Create requirement with mandatory fields
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User creates <type> requirement with mandatory fields using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
@@ -35,8 +35,8 @@ Scenario Outline: Create requirement with mandatory fields
 Scenario Outline: Create requirement without data
 	Given User gets GB address form for Property and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User sets locations details for the requirement
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
@@ -66,8 +66,8 @@ Scenario: Create requirement with invalid contact
 @Requirements
 Scenario Outline: Get requirement
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
-		| Mister | Tomasz    | Bien    |
+		| Title  | FirstName | LastName |
+		| Mister | Tomasz    | Bien     |
 		And Requirement of type <type> exists in database
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
@@ -81,8 +81,8 @@ Scenario Outline: Get requirement
 @Requirements
 Scenario Outline: Get requirement with notes
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
-		| Mister | Tomasz    | Bien    |
+		| Title  | FirstName | LastName |
+		| Mister | Tomasz    | Bien     |
 		And Requirement of type <type> exists in database
 		And Requirement notes exists in database
 			| Description |
@@ -106,8 +106,8 @@ Scenario Outline: Get requirement with offer and viewing
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| Title  | FirstName | Surname |
-			| Mister | Tomasz    | Bien    |
+			| Title  | FirstName | LastName |
+			| Mister | Tomasz    | Bien     |
 		And Company exists in database
 		And Requirement of type <type> exists in database
 		And Offer with New status exists in database

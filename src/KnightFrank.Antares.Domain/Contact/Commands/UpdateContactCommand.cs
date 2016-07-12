@@ -1,15 +1,46 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact.Commands
 {
+    using System;
+    using System.Collections.Generic;
+
     using MediatR;
 
-    public class UpdateContactCommand : IRequest
+    public class UpdateContactCommand : IRequest<Guid> 
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string FirstName { get; set; }
 
-        public string Surname { get; set; }
+        public string LastName { get; set; }
 
         public string Title { get; set; }
+
+        public string MailingFormalSalutation { get; set; }
+
+        public string MailingSemiformalSalutation { get; set; }
+
+        public string MailingInformalSalutation { get; set; }
+
+        public string MailingPersonalSalutation { get; set; }
+
+        public string MailingEnvelopeSalutation { get; set; }
+
+        public Guid? DefaultMailingSalutationId { get; set; }
+
+        public string EventInviteSalutation { get; set; }
+
+        public string EventSemiformalSalutation { get; set; }
+
+        public string EventInformalSalutation { get; set; }
+
+        public string EventPersonalSalutation { get; set; }
+
+        public string EventEnvelopeSalutation { get; set; }
+
+        public Guid? DefaultEventSalutationId { get; set; }
+
+        public ContactUserCommand LeadNegotiator { get; set; }
+
+        public IList<ContactUserCommand> SecondaryNegotiators { get; set; }
     }
 }

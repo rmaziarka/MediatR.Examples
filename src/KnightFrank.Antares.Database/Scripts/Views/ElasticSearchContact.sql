@@ -14,7 +14,7 @@ AS
 		-- Contact
 		c.Id AS 'Id',
 		c.FirstName AS 'FirstName',
-		c.Surname AS 'Surname',
+		c.LastName AS 'LastName',
 		c.Title AS 'Title'
 	FROM [dbo].[Contact] c
 	

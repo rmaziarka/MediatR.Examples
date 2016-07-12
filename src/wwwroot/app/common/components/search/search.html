@@ -1,16 +1,22 @@
 ﻿<div>
     <kf-scroll-top for-input-element=".search input" scroll-on-element=".search .dropdown-menu"></kf-scroll-top>
-    <div class="search form-group edit-form" scroll-top-on=".dropdown-menu">
+    <div class="search edit-form" scroll-top-on=".dropdown-menu">
+
         <input type="text" class="form-control"
-               name="searchText"
+               id="{{vm.searchId || ''}}"
+               name="{{vm.searchName || 'searchText'}}"
                ng-model="vm.selectedItem"
+               ng-required="vm.options.isRequired"
                ng-model-options="vm.options.modelOptions"
+               ng-change="vm.change()"
+               ng-maxlength="vm.options.maxLength"
                uib-typeahead="item as item.getName() for item in vm.loadItems($viewValue)"
                typeahead-min-length="vm.options.minLength"
                typeahead-on-select="vm.select($item)"
                typeahead-editable="vm.options.isEditable"
                typeahead-template-url="{{vm.itemTemplateUrl}}"
-               placeholder="{{vm.searchPlaceholder | translate}}">
-        <button data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+               placeholder="{{vm.searchPlaceholder | translate}}"
+               autocomplete="off" />
+        <button ng-if="vm.options.showCancelButton" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
     </div>
 </div>

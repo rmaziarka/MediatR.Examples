@@ -1,8 +1,11 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -37,6 +40,7 @@
         }
 
         [Given(@"User navigates to create contact page")]
+        [When(@"User navigates to create contact page")]
         public void OpenCreateContactPage()
         {
             this.page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
@@ -47,9 +51,20 @@
         {
             var contact = table.CreateInstance<Contact>();
 
-            this.page.SetTitle(contact.Title)
-                .SetFirstName(contact.FirstName)
-                .SetSurname(contact.Surname);
+            this.page.SetFirstName(contact.FirstName)
+                .SetLastName(contact.LastName)
+                .SetTitle(contact.Title);
+        }
+
+        [When(@"User selects secondary negotiatiors on create contact page")]
+        public void CreateSecondaryContactUsers(Table table)
+        {
+            List<User> users = table.CreateSet<User>().ToList();
+
+            foreach (User user in users)
+            {
+                this.page.SelectSecondaryNegotiator(user.FirstName + ' ' + user.LastName);
+            }
         }
 
         [When(@"User clicks save contact button on create contact page")]
@@ -58,23 +73,23 @@
             this.page.SaveContact();
         }
 
-        [Then(@"New contact should be created")]
-        public void CheckIfContactCreated()
-        {
-            //TODO implement check if contact was created
-        }
-
         [Then(@"Contact form on create contact page should be displayed")]
         public void CheckIfContactFormPresent()
         {
             Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
         }
 
-        [Then(@"User is taken to the contact add page")]
-        public void UserIsTakenToTheContactAddPage()
+        [Then(@"Check Mailings Salutations")]
+        public void CheckSemiMailingsSalutations(Table table)
         {
-            Assert.True(new CreateContactPage(this.driverContext).CheckIfContactAddPage());
-        }
+            var salutations = table.CreateInstance<Contact>();
 
+            Verify.That(this.driverContext,
+                () => Assert.Equal(salutations.MailingSemiformalSalutation, this.page.SemiformalMailingSalutation),
+                () => Assert.Equal(salutations.MailingFormalSalutation, this.page.FormalMailingSalutation),
+                () => Assert.Equal(salutations.MailingInformalSalutation, this.page.InformalMailingSalutation),
+                () => Assert.Equal(salutations.MailingPersonalSalutation, this.page.PersonalMailingSalutation),
+                () => Assert.Equal(salutations.MailingEnvelopeSalutation, this.page.EnvelopeMailingSalutation));
+        }
     }
 }

@@ -97,6 +97,7 @@ module Antares {
                 spyOn(provider, 'loadActivities');
                 spyOn(provider, 'loadRequirements');
                 spyOn(provider, 'loadCompanies');
+                spyOn(provider, 'loadContacts');
 
                 // act 
                 provider.loadLatestData(result);
@@ -116,6 +117,10 @@ module Antares {
 
             it('then loadCompanies method should be called with http result data', () => {
                 expect(provider.loadCompanies).toHaveBeenCalledWith(result.data);
+            });
+
+            it('then loadContacts method should be called with http result data', () => {
+                expect(provider.loadContacts).toHaveBeenCalledWith(result.data);
             });
         });
 
@@ -382,6 +387,64 @@ module Antares {
                 expect(listCompany.id).toBe(expectedId);
                 expect(listCompany.name).toBe(expectedName);
                 expect(listCompany.url).toBe(expectedUrl);
+            });
+        });
+
+        describe('when loadContacts is called with latest views', () => {
+
+            beforeEach(inject(($state: angular.ui.IState) => {
+                // arrange 
+                spyOn($state, 'href')
+                    .and.callFake((state: string, obj: any) => {
+                        return state + obj.id;
+                    });
+            }));
+
+            it('if there is no contact views then contacts field is undefined', () => {
+                //arrange
+                var views: LatestViewResultItem[] = [];
+
+                //act
+                provider.loadContacts(views);
+
+                //assert
+                expect(provider.contacts).toBeUndefined();
+            });
+
+            it('if there are three contact views then contacts field should contains three entries', () => {
+                //arrange
+                var contactViews = LatestViewGenerator.generateContactList(3);
+                var views = [
+                    contactViews
+                ];
+
+                //act
+                provider.loadContacts(views);
+
+                //assert
+                expect(provider.contacts.length).toBe(3);
+            });
+
+            it('if latest viewed contact exists then entry should contain all data', () => {
+                //arrange
+                var contactViews = LatestViewGenerator.generateContactList(1);
+                var views = [
+                    contactViews
+                ];
+
+                //act
+                provider.loadContacts(views);
+
+                //assert
+                var contactView = contactViews.list[0];
+                var expectedId = contactView.id;
+                var expectedName = new Contact(contactView.data).getName();
+                var expectedUrl = "app.contact-view" + expectedId;
+
+                var listContact = provider.contacts[0];
+                expect(listContact.id).toBe(expectedId);
+                expect(listContact.name).toBe(expectedName);
+                expect(listContact.url).toBe(expectedUrl);
             });
         });
     });
