@@ -4,6 +4,7 @@ module Antares {
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
     import Enums = Common.Models.Enums;
+    import Commands = Common.Models.Commands;
     import runDescribe = TestHelpers.runDescribe;
 
     describe('Given edit activity controller', () => {
@@ -17,7 +18,7 @@ module Antares {
             controller: ActivityEditController,
             $q: ng.IQService,
             $scope: ng.IScope,
-            activityService: Activity.ActivityService,
+            activityService: Services.ActivityService,
             enumProvider: Providers.EnumProvider,
             latestViewsProvider: Providers.LatestViewsProvider,
             obj = 'an object';
@@ -33,7 +34,7 @@ module Antares {
             $httpBackend: ng.IHttpBackendService,
             _enumProvider_: Providers.EnumProvider,
             _$q_: ng.IQService,
-            _activityService_: Activity.ActivityService,
+            _activityService_: Services.ActivityService,
             _latestViewsProvider_: Providers.LatestViewsProvider) => {
 
             // init
@@ -48,7 +49,7 @@ module Antares {
 
             $scope = $rootScope.$new();
             controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
-            controller.activity = new Activity.ActivityEditModel();
+            controller.activity = new Business.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
             controller.config = <Activity.IActivityEditViewConfig>{
@@ -143,8 +144,8 @@ module Antares {
                 describe('for edit mode', () => {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
-                    var requestData: Antares.Activity.Commands.IActivityEditCommand;
-                    var activity: Activity.ActivityEditModel;
+                    var requestData: Commands.Activity.IActivityEditCommand;
+                    var activity: Business.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
@@ -154,7 +155,7 @@ module Antares {
 
                         activityFromService = TestHelpers.ActivityGenerator.generateDto();
 
-                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityEditCommand) => {
+                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Commands.Activity.IActivityEditCommand) => {
                             requestData = activityCommand;
                             return deferred.promise;
                         });
@@ -185,8 +186,8 @@ module Antares {
                 describe('for add mode', () => {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
-                    var requestData: Antares.Activity.Commands.IActivityAddCommand;
-                    var activity: Activity.ActivityEditModel;
+                    var requestData: Commands.Activity.IActivityAddCommand;
+                    var activity: Business.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
@@ -197,7 +198,7 @@ module Antares {
 
                         activityFromService = TestHelpers.ActivityGenerator.generateDto();
 
-                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityAddCommand) => {
+                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Commands.Activity.IActivityAddCommand) => {
                             requestData = activityCommand;
                             return deferred.promise;
                         });
@@ -236,7 +237,7 @@ module Antares {
                     });
                 });
 
-                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Activity.ActivityEditModel) => {
+                var expectCorrectRequest = (requestData: Commands.Activity.IActivityBaseCommand, activity: Business.ActivityEditModel) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
@@ -247,8 +248,8 @@ module Antares {
                     expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
                     expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
                     expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
-                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
-                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Commands.Activity.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Commands.Activity.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
 
                     expect(requestData.kfValuationPrice).toEqual(activity.kfValuationPrice);
@@ -389,7 +390,7 @@ module Antares {
         describe('when in edit mode', () => {
             var deferred: ng.IDeferred<any>;
             var activityFromService: Dto.IActivity;
-            var activity: Activity.ActivityEditModel;
+            var activity: Business.ActivityEditModel;
             var userData: Dto.ICurrentUser;
 
             beforeEach(() => {
@@ -436,7 +437,7 @@ module Antares {
         describe('when in add mode', () => {
             var deferred: ng.IDeferred<any>;
             var activityFromService: Dto.IActivity;
-            var activity: Activity.ActivityEditModel;
+            var activity: Business.ActivityEditModel;
             var userData: Dto.ICurrentUser;
 
             beforeEach(() => {

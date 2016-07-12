@@ -111,11 +111,27 @@
 
             return controlFields;
         }
-
-        public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
+        
+        public static IList<Tuple<Control, IList<IField>>> WithAllowedValues<TEntity, TProperty, TEnum>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, TProperty>> expression, IEnumerable<TEnum> allowedValues) where TEnum : struct
         {
-            IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = 
-                controlFields.Where(x => x.Item2.Any(f => typeof(TEntity).IsSameOrSubclassOf(f.InnerField.ContainerType)));
+            IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = GetControlsForCurrentType<TEntity>(controlFields);
+
+            List<string> allowedCodes = allowedValues.Select(x => x.ToString()).ToList();
+
+            foreach (Tuple<Control, IList<IField>> tuple in controlsForCurrentType)
+            {
+                foreach (InnerDictionaryField innerField in GetInnerDictionaryFields(tuple.Item2, expression.ToString()))
+                {
+                    innerField.AllowedCodes = allowedCodes;
+                }
+            }
+
+            return controlFields;
+        }
+
+        public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression)
+        {
+            IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = GetControlsForCurrentType<TEntity>(controlFields);
 
             foreach (Tuple<Control, IList<IField>> tuple in controlsForCurrentType)
             {
@@ -127,8 +143,7 @@
 
         public static IList<Tuple<Control, IList<IField>>> HiddenWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression)
         {
-            IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType =
-                controlFields.Where(x => x.Item2.Any(f => typeof(TEntity).IsSameOrSubclassOf(f.InnerField.ContainerType)));
+            IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = GetControlsForCurrentType<TEntity>(controlFields);
 
             foreach (Tuple<Control, IList<IField>> tuple in controlsForCurrentType)
             {
@@ -142,7 +157,7 @@
         {
             if (controls.Count > 1)
             {
-                // epxression is stronly typed so it cannot be set for multiple controls but only for one control from specyfic mode.
+                // expression is strongly typed so it cannot be set for multiple controls but only for one control from specific mode.
                 throw new NotSupportedException();
             }
 
@@ -172,6 +187,19 @@
             }
 
             return controls;
+        }
+
+        private static IEnumerable<Tuple<Control, IList<IField>>> GetControlsForCurrentType<TEntity>(IList<Tuple<Control, IList<IField>>> controlFields)
+        {
+            return controlFields.Where(x => x.Item2.Any(f => typeof(TEntity).IsSameOrSubclassOf(f.InnerField.ContainerType)));
+        }
+
+        private static IEnumerable<InnerDictionaryField> GetInnerDictionaryFields(IList<IField> fields, string expression)
+        {
+            return
+                fields.Where(x => x.InnerField is InnerDictionaryField && x.InnerField.Expression.ToString() == expression)
+                      .Select(x => x.InnerField)
+                      .Cast<InnerDictionaryField>();
         }
     }
 }
