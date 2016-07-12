@@ -13,7 +13,7 @@ module Antares.Common.Models.Enums
 	 	RequirementDocumentType,
 	 	PropertyDocumentType,
 	 	OfferStatus,
-	 	ActivityUserType,
+	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
@@ -24,6 +24,8 @@ module Antares.Common.Models.Enums
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
+	 	MailingSalutation,
+	 	EventSalutation,
 	 }
 
 	
@@ -86,7 +88,7 @@ module Antares.Common.Models.Enums
 		Accepted,
 	}
 
-	export enum ActivityUserType
+	export enum UserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,
@@ -148,6 +150,22 @@ module Antares.Common.Models.Enums
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 
 	export enum ActivitySource

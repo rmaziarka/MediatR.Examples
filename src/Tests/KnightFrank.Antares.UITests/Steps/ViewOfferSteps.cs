@@ -79,8 +79,8 @@
                 () => Assert.Equal(this.page.RequirementNumber, 1));
         }
 
-        [Then(@"Offer details on view offer page are same as the following")]
-        public void CheckOffer(Table table)
+        [Then(@"Sale offer details on view offer page are same as the following")]
+        public void CheckSaleOffer(Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             var offer = this.scenarioContext.Get<OfferData>("Offer");
@@ -93,6 +93,27 @@
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Status, details[0]),
                 () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", details[1]),
+                () => Assert.Equal(expectedDetails.OfferDate, details[2]),
+                () => Assert.Equal(expectedDetails.SpecialConditions, details[3]),
+                () => Assert.Equal(expectedDetails.ExchangeDate, details[4]),
+                () => Assert.Equal(expectedDetails.CompletionDate, details[5]),
+                () => Assert.Equal(expectedDetails.Negotiator, details[6]));
+        }
+
+        [Then(@"Letting offer details on view offer page are same as the following")]
+        public void CheckLettingOffer(Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+            List<string> details = this.page.OfferDetails;
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Status, details[0]),
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", details[1]),
                 () => Assert.Equal(expectedDetails.OfferDate, details[2]),
                 () => Assert.Equal(expectedDetails.SpecialConditions, details[3]),
                 () => Assert.Equal(expectedDetails.ExchangeDate, details[4]),

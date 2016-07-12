@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -68,9 +69,35 @@
         /// <param name="command">Contact entity</param>
         [HttpPost]
         [Route("")]
-        public Guid CreateContact([FromBody] CreateContactCommand command)
+        public Contact CreateContact([FromBody] CreateContactCommand command)
         {
-            return this.mediator.Send(command);
+            Guid contactId = this.mediator.Send(command);
+
+            return this.GetContact(contactId);
+        }
+
+        /// <summary>
+        /// Get contact title list
+        /// </summary>
+        [HttpGet]
+        [Route("titles")]
+        public IList<ContactTitle> GetContactTitles()
+        {
+            return this.mediator.Send(new ContactTitleQuery()).ToList();
+        }
+
+        /// <summary>
+        /// Updates a contact
+        /// </summary>
+        /// <param name="command">The command with contact to update</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public Contact UpdateContact(UpdateContactCommand command)
+        {
+            Guid contactId = this.mediator.Send(command);
+
+            return this.GetContact(contactId);
         }
     }
 }

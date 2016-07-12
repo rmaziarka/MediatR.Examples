@@ -18,6 +18,7 @@ module Antares.Providers {
         public activities: ILatestListEntry[];
         public requirements: ILatestListEntry[];
         public companies: ILatestListEntry[];
+        public contacts: ILatestListEntry[];
 
         constructor(private latestViewsService: LatestViewsService, private $state: angular.ui.IStateService) {
         }
@@ -39,6 +40,7 @@ module Antares.Providers {
             this.loadActivities(result.data);
             this.loadRequirements(result.data);
             this.loadCompanies(result.data);
+            this.loadContacts(result.data);
         }
 
         public loadActivities = (latestViewsItems: ILatestViewResultItem[]) => {
@@ -112,6 +114,23 @@ module Antares.Providers {
                 });
 
             this.companies = companies;
+        }
+
+        public loadContacts = (latestViewsItems: ILatestViewResultItem[]) => {
+            var latestContacts = latestViewsItems
+                .filter((item) => item.entityTypeCode === <any>EntityTypeEnum.Contact)[0];
+
+            if (!latestContacts)
+                return;
+
+            var contacts = latestContacts.list.map(view =>
+                <ILatestListEntry>{
+                    id: view.id,
+                    name: new Contact(view.data).getName(),
+                    url: this.$state.href("app.contact-view", { id: view.id })
+                });
+
+            this.contacts = contacts;
         }
     }
 

@@ -224,6 +224,9 @@
   </data>
   <data name="Tenancy_Contacts_Not_Unique" xml:space="preserve">
     <value>One or more contact are duplicated.</value>
+    </data>
+  <data name="Negotiators_Not_Unique" xml:space="preserve">
+    <value>One or more negotiators are duplicated.</value>
   </data>
   <data name="Missing_Tenancy_Contacts_Id" xml:space="preserve">
     <value>One or more contacts do not exist.</value>

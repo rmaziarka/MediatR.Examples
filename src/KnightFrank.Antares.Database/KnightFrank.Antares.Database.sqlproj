@@ -191,10 +191,17 @@
     <None Include="Scripts\Data\Configuration\offertypelocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Data\Configuration\contactTitle.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\SQL\TenancyType.sql" />
     <None Include="Scripts\SQL\TenancyTypeLocalised.sql" />
-    <None Include="Scripts\Data\Configuration\tenancytype.csv" />
-    <None Include="Scripts\Data\Configuration\tenancytypelocalised.csv" />
+    <None Include="Scripts\Data\Configuration\tenancytype.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\tenancytypelocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -276,6 +283,9 @@
     <None Include="Scripts\Views\ElasticSearchProperty.sql" />
     <None Include="Scripts\SQL\OfferType.sql" />
     <None Include="Scripts\SQL\OfferTypeLocalised.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\ContactTitle.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

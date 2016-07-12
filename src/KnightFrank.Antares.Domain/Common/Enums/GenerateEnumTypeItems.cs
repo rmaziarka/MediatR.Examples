@@ -13,7 +13,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	RequirementDocumentType,
 	 	PropertyDocumentType,
 	 	OfferStatus,
-	 	ActivityUserType,
+	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
@@ -27,6 +27,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	DisposalType,
 	 	Decoration,
 	 	TenancyContactType,
+	 	MailingSalutation,
+	 	EventSalutation,
 	 }
 
 	
@@ -89,7 +91,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Accepted,
 	}
 
-	public enum ActivityUserType
+	public enum UserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,
@@ -217,5 +219,21 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	{
 		Landlord,
 		Tenant,
+	}
+
+	public enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	public enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }
