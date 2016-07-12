@@ -1,13 +1,12 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Activity.Commands {
-    import Business = Common.Models.Business;
+module Antares.Common.Models.Commands.Activity {
     
     export class ActivityAddCommand extends ActivityBaseCommand implements IActivityAddCommand {
         id: string = null;
         propertyId: string;
 
-        constructor(activity: Activity.ActivityEditModel) {
+        constructor(activity: Business.ActivityEditModel) {
             super(activity);
             this.propertyId = activity.propertyId;
         }

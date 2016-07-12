@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Activity.Commands {
+module Antares.Common.Models.Commands.Activity {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     
@@ -61,7 +61,7 @@ module Antares.Activity.Commands {
         longMatchFlexMonthValue: number = null;
         longMatchFlexPercentage: number = null; 
 
-        constructor(activity: Activity.ActivityEditModel) {
+        constructor(activity: Business.ActivityEditModel) {
             this.activityStatusId = activity.activityStatusId;
             this.shortLetPricePerWeek = activity.shortLetPricePerWeek;
             this.askingPrice = activity.askingPrice;

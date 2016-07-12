@@ -1,6 +1,6 @@
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.OWNER"></div>
-    <div class="col-xs-7">
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.OWNER"></div>
+    <div class="col-xs-6">
         <div class="row">
             <div class="col-md-12" ng-repeat="contact in vm.ownership.contacts" data-type="ownership-list-contact">
                 {{contact.getName()}}{{$last ? '' : ', '}}
@@ -9,22 +9,22 @@
     </div>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.OWNERSHIPTYPE"></div>
-    <div class="col-xs-7" id="ownership-list-ownership-type">{{vm.ownership.ownershipTypeId | dynamicTranslate}} </div>
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.OWNERSHIPTYPE"></div>
+    <div class="col-xs-6" id="ownership-list-ownership-type">{{vm.ownership.ownershipTypeId | dynamicTranslate}} </div>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.PURCHASEDATE"></div>
-    <div class="col-xs-7" id="ownership-list-purchase-date">{{vm.ownership.purchaseDate | date : 'dd-MM-yyyy'}}</div>
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.PURCHASEDATE"></div>
+    <div class="col-xs-6" id="ownership-list-purchase-date">{{vm.ownership.purchaseDate | date : 'dd-MM-yyyy'}}</div>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.SELLDATE"></div>
-    <div class="col-xs-7" id="ownership-list-sell-date">{{vm.ownership.sellDate | date : 'dd-MM-yyyy'}}</div>
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.SELLDATE"></div>
+    <div class="col-xs-6" id="ownership-list-sell-date">{{vm.ownership.sellDate | date : 'dd-MM-yyyy'}}</div>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.PURCHASEPRICE"></div>
-    <div class="col-xs-7"><span id="ownership-list-purchase-price">{{vm.ownership.buyPrice}}</span> <span ng-show="vm.ownership.buyPrice">GBP</span></div>
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.PURCHASEPRICE"></div>
+    <div class="col-xs-6"><span id="ownership-list-purchase-price">{{vm.ownership.buyPrice}}</span> <span ng-show="vm.ownership.buyPrice">GBP</span></div>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="OWNERSHIP.VIEW.SELLPRICE"></div>
-    <div class="col-xs-7"><span id="ownership-list-sell-price">{{vm.ownership.sellPrice}}</span> <span ng-show="vm.ownership.sellPrice">GBP</span></div>
+    <div class="col-xs-6 section-title" translate="OWNERSHIP.VIEW.SELLPRICE"></div>
+    <div class="col-xs-6"><span id="ownership-list-sell-price">{{vm.ownership.sellPrice}}</span> <span ng-show="vm.ownership.sellPrice">GBP</span></div>
 </div>

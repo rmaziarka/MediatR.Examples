@@ -149,7 +149,7 @@
     </side-panel-header>
     <side-panel-content>
         <div class="row section-row">
-            <div class="col-xs-5">
+            <div class="col-xs-6">
                 <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
             </div>
         </div>
@@ -159,20 +159,20 @@
             </div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
-            <div class="col-xs-7" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
+            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.STATUS"></div>
+            <div class="col-xs-6" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
-            <div class="col-xs-7" id="activity-preview-negotiator">{{vm.offer.negotiator.getName()}} </div>
+            <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
+            <div class="col-xs-6" id="activity-preview-negotiator">{{vm.offer.negotiator.getName()}} </div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
-            <div class="col-xs-7" id="activity-preview-created-date">{{vm.offer.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+            <div class="col-xs-6" id="activity-preview-created-date">{{vm.offer.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
-            <div class="col-xs-7" id="activity-preview-vendors">
+            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+            <div class="col-xs-6" id="activity-preview-vendors">
                 <div class="row">
                     <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.offer.activity.contacts track by $id(contact)">
                         {{contact.getName()}}
@@ -181,8 +181,8 @@
             </div>
         </div>
         <div class="row section-row">
-            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.TYPE"></div>
-            <div class="col-xs-7" id="activity-preview-type">{{vm.offer.activity.activityTypeId | dynamicTranslate}} </div>
+            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.TYPE"></div>
+            <div class="col-xs-6" id="activity-preview-type">{{vm.offer.activity.activityTypeId | dynamicTranslate}} </div>
         </div>
     </side-panel-content>
 </side-panel>

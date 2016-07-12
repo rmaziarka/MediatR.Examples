@@ -4,6 +4,7 @@ module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import Commands = Common.Models.Commands;
 
     enum PageMode {
         Add,
@@ -12,7 +13,7 @@ module Antares.Activity {
 
     export class ActivityEditController {
         public config: IActivityEditViewConfig;
-        public activity: ActivityEditModel;
+        public activity: Business.ActivityEditModel;
         public userData: Dto.ICurrentUser;
 
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
@@ -224,7 +225,7 @@ module Antares.Activity {
             controlId: 'otherCondition',
             translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
             fieldName: 'otherCondition',
-            formName: 'otherConditionForm',
+            formName: 'otherConditionForm'
 
         }
 
@@ -351,7 +352,7 @@ module Antares.Activity {
             controlId: 'longMatchFlexMonthValue',
             translationKey: '',
             formName: 'longMatchFlexMonthValueForm',
-            fieldName: 'longMatchFlexMonthValue',
+            fieldName: 'longMatchFlexMonthValue'
         }
 
         longMatchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
@@ -361,26 +362,14 @@ module Antares.Activity {
             fieldName: 'longMatchFlexPercentage',
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
-
-        configMocked: any = {
-            attendees: {
-                attendees: {
-                    active: true
-                }
-            }
-        }
-
-        configAppraisalMeetingDateMocked: any = {
-            appraisalMeetingDate: { start: { active: true, required: true }, end: { active: true, required: true } }
-        }
-
+        
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
             private $q: ng.IQService,
             public kfMessageService: Services.KfMessageService,
             private configService: Services.ConfigService,
-            private activityService: Activity.ActivityService,
+            private activityService: Services.ActivityService,
             private latestViewsProvider: Providers.LatestViewsProvider,
             private eventAggregator: Core.EventAggregator,
             private enumProvider: Providers.EnumProvider) {
@@ -436,16 +425,16 @@ module Antares.Activity {
             this.reloadConfig(this.activity);
         }
 
-        public reloadConfig = (activity: Activity.ActivityEditModel) => {
-            var entity: Commands.ActivityBaseCommand;
+        public reloadConfig = (activity: Business.ActivityEditModel) => {
+            var entity: Commands.Activity.ActivityBaseCommand;
             var pageTypeEnum: Enums.PageTypeEnum;
 
             if (this.isAddMode()) {
-                entity = new Commands.ActivityAddCommand(this.activity);
+                entity = new Commands.Activity.ActivityAddCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Create;
             }
             else {
-                entity = new Commands.ActivityEditCommand(this.activity);
+                entity = new Commands.Activity.ActivityEditCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Update;
             }
 
@@ -477,7 +466,7 @@ module Antares.Activity {
             }
 
             if (this.isAddMode()) {
-                var addCommand = new Commands.ActivityAddCommand(this.activity);
+                var addCommand = new Commands.Activity.ActivityAddCommand(this.activity);
 
                 this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
                     this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
@@ -489,7 +478,7 @@ module Antares.Activity {
                 });
             }
             else {
-                var editCommand = new Commands.ActivityEditCommand(this.activity);
+                var editCommand = new Commands.Activity.ActivityEditCommand(this.activity);
 
                 this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) => {
                     this.$state.go('app.activity-view', { id: activityDto.id });
@@ -551,22 +540,22 @@ module Antares.Activity {
         }
 
         public isOtherSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.decoration != null && this.config.editConfig.otherCondition != null;
+            return this.config && this.config.editConfig && this.config.editConfig.decoration != null && this.config.editConfig.otherCondition != null;
         }
 
         public isValuationInfoSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.kfValuationPrice != null && this.config.editConfig.vendorValuationPrice != null &&
+            return this.config && this.config.editConfig && this.config.editConfig.kfValuationPrice != null && this.config.editConfig.vendorValuationPrice != null &&
                 this.config.editConfig.agreedInitialMarketingPrice != null;
         }
 
         public isValuationInfoShortLongSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.shortKfValuationPrice != null && this.config.editConfig.longKfValuationPrice != null &&
+            return this.config && this.config.editConfig && this.config.editConfig.shortKfValuationPrice != null && this.config.editConfig.longKfValuationPrice != null &&
                 this.config.editConfig.shortVendorValuationPrice != null && this.config.editConfig.longVendorValuationPrice != null &&
                 this.config.editConfig.shortAgreedInitialMarketingPrice != null && this.config.editConfig.longAgreedInitialMarketingPrice != null;
         }
 
         public isChargesSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig.serviceChargeAmount != null && this.config.editConfig.groundRentAmount != null && this.config.editConfig.groundRentNote != null;
+            return this.config && this.config.editConfig && this.config.editConfig.serviceChargeAmount != null && this.config.editConfig.groundRentAmount != null && this.config.editConfig.groundRentNote != null;
         }
 
         private get pageMode(): PageMode {
@@ -664,20 +653,20 @@ module Antares.Activity {
         }
 
         public isValuationPricesSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.askingPrice != null || this.config.editConfig.shortLetPricePerWeek != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.askingPrice != null || this.config.editConfig.shortLetPricePerWeek != null);
         }
 
         public isBasicInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.property != null || this.config.editConfig.disposalType != null || this.config.editConfig.source != null ||
+            return this.config && this.config.editConfig && (this.config.editConfig.property != null || this.config.editConfig.disposalType != null || this.config.editConfig.source != null ||
                 this.config.editConfig.sourceDescription != null || this.config.editConfig.sellingReason != null || this.config.editConfig.pitchingThreats != null);
         }
 
         public isAdditionalInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.keyNumber != null || this.config.editConfig.accessArrangements != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.keyNumber != null || this.config.editConfig.accessArrangements != null);
         }
 
         public isAppraisalMeetingSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.editConfig.appraisalMeetingDate != null ||
+            return this.config && this.config.editConfig && (this.config.editConfig.appraisalMeetingDate != null ||
                 this.config.editConfig.appraisalMeetingAttendees != null || this.config.editConfig.appraisalMeetingInvitation != null);
         }
 
