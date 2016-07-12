@@ -2,7 +2,11 @@
 
 module Antares.Common.Component {
     export class SearchOptions {
+        isRequired = false;
         isEditable = false;
+        nullOnSelect = true;
+        showCancelButton = true;
+        maxLength: number;
         minLength = 3;
         modelOptions = {
             debounce: {

@@ -35,6 +35,8 @@
                     return this.kernel.Get<RequirementLatestViewDataProvider>();
                 case EntityTypeEnum.Company:
                     return this.kernel.Get<CompanyLatestViewDataProvider>();
+                case EntityTypeEnum.Contact:
+                    return this.kernel.Get<ContactLatestViewDataProvider>();
             }
 
             throw new NotImplementedException();

@@ -285,7 +285,7 @@
         {
             List<string> applicants = this.page.Applicants;
             List<string> expectedApplicants =
-                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
+                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.LastName).ToList();
 
             Assert.Equal(expectedApplicants, applicants);
         }

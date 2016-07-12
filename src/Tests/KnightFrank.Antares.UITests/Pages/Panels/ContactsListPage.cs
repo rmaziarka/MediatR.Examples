@@ -26,9 +26,9 @@
             return this;
         }
 
-        public ContactsListPage SelectContact(string firstName, string surname)
+        public ContactsListPage SelectContact(string firstName, string lastName)
         {
-            string contactDetails = firstName + " " + surname;
+            string contactDetails = firstName + " " + lastName;
 
             if (!this.Driver.GetElements(this.contact.Format(contactDetails)).Last().Selected)
             {

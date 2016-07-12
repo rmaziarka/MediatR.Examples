@@ -78,8 +78,7 @@
             this.scenarioContext.Set(users, "User List");
         }
 
-       
-        [When(@"User inputs (.*) query")]
+       [When(@"User inputs (.*) query")]
         public void GetContactDetailsUsingId(string query)
         {
             string requestUrl = $"{ApiUrl}?partialName={query}";

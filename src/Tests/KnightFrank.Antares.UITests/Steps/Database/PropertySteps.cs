@@ -175,8 +175,8 @@
                         UserTypeId =
                             this.dataContext.EnumTypeItems.Single(
                                 e =>
-                                    e.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                    e.Code.Equals(nameof(ActivityUserType.LeadNegotiator))).Id,
+                                    e.EnumType.Code.Equals(nameof(UserType)) &&
+                                    e.Code.Equals(nameof(UserType.LeadNegotiator))).Id,
                         CallDate = this.date.AddDays(14)
                     }
                 },
@@ -239,8 +239,8 @@
                         UserTypeId =
                             this.dataContext.EnumTypeItems.Single(
                                 e =>
-                                    e.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                    e.Code.Equals(nameof(ActivityUserType.LeadNegotiator))).Id,
+                                    e.EnumType.Code.Equals(nameof(UserType)) &&
+                                    e.Code.Equals(nameof(UserType.LeadNegotiator))).Id,
                         CallDate = this.date.AddDays(14)
                     },
                     new ActivityUser
@@ -249,8 +249,8 @@
                         UserTypeId =
                             this.dataContext.EnumTypeItems.Single(
                                 e =>
-                                    e.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                    e.Code.Equals(nameof(ActivityUserType.SecondaryNegotiator))).Id
+                                    e.EnumType.Code.Equals(nameof(UserType)) &&
+                                    e.Code.Equals(nameof(UserType.SecondaryNegotiator))).Id
                     },
                     new ActivityUser
                     {
@@ -258,8 +258,8 @@
                         UserTypeId =
                             this.dataContext.EnumTypeItems.Single(
                                 e =>
-                                    e.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                    e.Code.Equals(nameof(ActivityUserType.SecondaryNegotiator))).Id
+                                    e.EnumType.Code.Equals(nameof(UserType)) &&
+                                    e.Code.Equals(nameof(UserType.SecondaryNegotiator))).Id
                     },
                     new ActivityUser
                     {
@@ -268,8 +268,8 @@
                         UserTypeId =
                             this.dataContext.EnumTypeItems.Single(
                                 e =>
-                                    e.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                    e.Code.Equals(nameof(ActivityUserType.SecondaryNegotiator))).Id
+                                    e.EnumType.Code.Equals(nameof(UserType)) &&
+                                    e.Code.Equals(nameof(UserType.SecondaryNegotiator))).Id
                     }
                 },
                 ActivityDepartments = new List<ActivityDepartment>

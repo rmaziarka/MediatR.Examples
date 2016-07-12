@@ -5,7 +5,7 @@ module Antares.Common.Models.Business {
 
         id: string;
         firstName: string;
-        surname: string;
+        lastName: string;
         title: string;
         selected: boolean = false;
 
@@ -14,7 +14,7 @@ module Antares.Common.Models.Business {
         }
 
         public getName() {
-            return this.firstName + ' ' + this.surname;
+            return this.firstName + ' ' + this.lastName;
         }
     }
 }

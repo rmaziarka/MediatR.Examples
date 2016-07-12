@@ -112,3 +112,13 @@ Decoration;Unmodernised;en;Unmodernised
 Decoration;Fair;en;Fair
 Decoration;Good;en;Good
 Decoration;VeryGood;en;Very Good
+MailingSalutation;MailingFormal;en;Formal
+MailingSalutation;MailingSemiformal;en;Semiformal
+MailingSalutation;MailingInformal;en;Informal
+MailingSalutation;MailingPersonal;en;Personal
+EventSalutation;EventInvite;en;Invite
+EventSalutation;EventSemiformal;en;Semiformal
+EventSalutation;EventInformal;en;Informal
+EventSalutation;EventPersonal;en;Personal
+UserType;LeadNegotiator;en;Lead Negotiator
+UserType;SecondaryNegotiator;en;Secondary Negotiator
