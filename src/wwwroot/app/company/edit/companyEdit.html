@@ -17,16 +17,13 @@
                 </div>
 
                 <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
-
+                    <label for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="website" translate="COMPANY.WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
                             <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div ng-messages="editCompanyForm.website.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.website.$dirty">
@@ -35,15 +32,13 @@
                 </div>
 
                 <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
+                    <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
                             <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
@@ -51,11 +46,10 @@
                     </div>
                 </div>
 
-
                 <div class="form-group">
+                    <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                             <enum-select id="client-care-status" name="status" ng-model="vm.company.clientCareStatusId" enum-type-code="{{vm.enumTypeclientCareStatus}}"></enum-select>
                         </div>
                     </div>

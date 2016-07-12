@@ -98,6 +98,11 @@
     "WEBSITE": "Website",
     "CLIENT_CARE_WEBSITE": "Client care page",
     "CLIENT_CARE_STATUS": "Client care status",
+    "CATEGORY": "Category",
+    "TYPE": "Company type",
+    "DESCRIPTION": "Company description",
+    "IS_VALID": "Valid",
+    "IS_VALID_YES": "Yes",
     "VIEW_COMPANY": "View company"
   },
   "CONTACT": {

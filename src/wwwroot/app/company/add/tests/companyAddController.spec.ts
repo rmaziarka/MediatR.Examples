@@ -24,14 +24,23 @@ module Antares {
             clientCarePageSelector : "input#clientcareurl"
         };
 
+        const enumProviderMockedValues = <Dto.IEnumDictionary>{
+            companyCategory: [{ id: "123", "code": "big" }],
+            companyType: [{ id: "1234", "code": "red" }]
+        };
+
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService,
-            $state: ng.ui.IStateService) => {
+            $state: ng.ui.IStateService,
+            enumProvider: Providers.EnumProvider) => {
 
             $http = $httpBackend;
             state = $state;
+
+            enumProvider.enums = enumProviderMockedValues;
+
             scope = $rootScope.$new();
             element = $compile('<company-add></company-add>')(scope);
             scope.$apply();
@@ -121,7 +130,7 @@ module Antares {
 
             spyOn(state, 'go');
             controller.company = company;
-            controller.selectedStatus = { id : 1, code : "test" };
+            controller.selectedCareStatusId = "123";
 
             $http.expectPOST(/\/api\/companies/, (data: string) =>{
                 requestData = JSON.parse(data);
@@ -139,7 +148,7 @@ module Antares {
             expect(requestData.name).toEqual(company.name);
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
-            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
+            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatus.id);
             expect(angular.equals(requestData.contactIds, expectedContactIds)).toBe(true);
         });
 

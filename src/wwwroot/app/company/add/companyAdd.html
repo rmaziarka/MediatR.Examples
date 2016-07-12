@@ -16,16 +16,36 @@
                     </div>
                 </div>
 
+                <!-- category -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.category.$dirty) && addCompanyForm.category.$invalid}">
+                    <enum-select id="category" ng-model="vm.selectedCategoryId" enum-type-code="companyCategory"></enum-select>
+                </div>
+
+                <!-- type -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.type.$dirty) && addCompanyForm.type.$invalid}">
+                    <enum-select id="type" name="type" ng-model="vm.selectedTypeId" enum-type-code="companyType"></enum-select>
+                </div>
+
+                <!-- description -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.description.$dirty) && addCompanyForm.description.$invalid}">
+                    <label for="description" translate="COMPANY.DESCRIPTION"></label>
+                    <span class="pull-right character-limit">{{addCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
+                    <textarea id="description" kf-max-count="vm.descriptionMaxLength" rows="8" class="form-control" ng-required="false"
+                              name="description" ng-model="vm.company.description"></textarea>
+                    <div ng-messages="addCompanyForm.description.$error" ng-show="addCompanyForm.$submitted ||addCompanyForm.description.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <!-- website -->
                 <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
+                    <label class="control-label" for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="control-label" for="website" translate="COMPANY.WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
                             <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
@@ -33,11 +53,10 @@
                     </div>
                 </div>
 
+                <!-- clientCarePageUrl -->
                 <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                    <label class="control-label" for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
-                        <div class="col-md-12">
-                            <label class="control-label" for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
-                        </div>
                         <div class="col-md-12">
                             <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
                             <div class="form-control-feedback">
@@ -49,16 +68,23 @@
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
-       
 
+                <!-- selectedCareStatusId -->
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
-                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id"
-                                    ng-model="vm.selectedStatus">
-                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                            </select></div>
+                            <enum-select id="client-care-status" name="selectedCareStatusId" ng-model="vm.selectedCareStatusId" enum-type-code="clientCareStatus"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- isValid -->
+                <div class="form-group">
+                    <label for="comapny-is-valid" translate="COMPANY.IS_VALID"></label>
+                    <div>
+                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.isValid" >
+                        <span translate="COMPANY.IS_VALID_YES"></span>
                     </div>
                 </div>
             </fieldset>

@@ -12,22 +12,22 @@
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.WEBSITE"></label></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-6 section-title" translate="COMPANY.WEBSITE"></div>
+                    <div class="col-xs-6">
                         <external-link id="websiteUrl" url="vm.company.websiteUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_WEBSITE"></label></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_WEBSITE"></div>
+                    <div class="col-xs-6">
                         <external-link id="clientCarePageUrl" url="vm.company.clientCarePageUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_STATUS"></label></div>
-                    <div class="col-xs-8" id="clientCareStatus" ng-show="vm.company.clientCareStatusId != null">{{vm.company.clientCareStatusId | dynamicTranslate}}</div>
+                    <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_STATUS"></div>
+                    <div class="col-xs-6" id="clientCareStatus" ng-show="vm.company.clientCareStatusId != null">{{vm.company.clientCareStatusId | dynamicTranslate}}</div>
                 </div>
             </div>
             <div class="col-md-4">

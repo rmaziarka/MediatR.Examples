@@ -144,7 +144,7 @@ module Antares {
             expect(requestData.name).toEqual(company.name);
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
-            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
+            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatus.id);
             expect(angular.equals(requestData.contacts, expectedContacts)).toBe(true);
         });
 

@@ -8,8 +8,11 @@ module Antares.Company {
     export class CompanyAddController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
-        clientCareStatuses: any;
-        selectedStatus: any;
+        selectedCareStatusId: string = null;
+        selectedCategoryId: string = null;
+        selectedTypeId: string = null;
+
+        private descriptionMaxLength: number = 4000;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -22,13 +25,9 @@ module Antares.Company {
             super(componentRegistry, $scope);
 
             this.company = new Business.Company();
-            this.companyResource = dataAccessService.getCompanyResource();
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
-        }
 
-        onEnumLoaded = (result: any) =>{
-            this.clientCareStatuses = result[Dto.EnumTypeCode.ClientCareStatus];
-         }
+            this.companyResource = dataAccessService.getCompanyResource();
+        }
 
         hasCompanyContacts = (): boolean => {
             return this.company.contacts != null && this.company.contacts.length > 0;
@@ -55,7 +54,7 @@ module Antares.Company {
             this.components.sidePanels.contact().hide();
         }
      
-        formatUrlWithProtocol = (url:string):string=> {
+        formatUrlWithProtocol = (url:string):string=> { //todo!!! extract into helper
             //regular expression for url with a protocol (case insensitive)
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
             if (url && url.length > 0) {
@@ -67,13 +66,16 @@ module Antares.Company {
         }
    
         createCompany = () => {
-            this.company.clientCareStatusId = this.selectedStatus != null? this.selectedStatus.id:"";
+            this.company.setClientCareStatus(this.selectedCareStatusId);
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
             this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
+            this.company.setCategoryById(this.selectedCategoryId);
+            this.company.setTypeById(this.selectedTypeId);
+
             this.companyResource
                 .save(new Business.CreateCompanyResource(this.company))
                 .$promise
-                .then((company: Dto.ICompany) => {                
+                .then((company: Dto.ICompany) => {
                    this.company = new Business.Company();
                     var form = this.$scope["addCompanyForm"];
                     form.$setPristine();
