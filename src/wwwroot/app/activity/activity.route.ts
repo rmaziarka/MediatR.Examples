@@ -56,7 +56,10 @@ module Antares.Activity {
                             entity);
                     },
                     config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig, activityConfigUtils: ActivityConfigUtils) =>{
-                        return activityConfigUtils.merge(editConfig, viewConfig);
+                        return <IActivityEditViewConfig>{
+                            editConfig: editConfig,
+                            viewConfig: viewConfig
+                        };
                     }
                 }
             })

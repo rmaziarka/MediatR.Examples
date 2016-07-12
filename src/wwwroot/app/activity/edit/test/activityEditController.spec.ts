@@ -51,7 +51,10 @@ module Antares {
             controller.activity = new Activity.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
-            controller.config = TestHelpers.ConfigGenerator.generateActivityEditConfig();
+            controller.config = <Activity.IActivityEditViewConfig>{
+                editConfig: TestHelpers.ConfigGenerator.generateActivityEditConfig(),
+                viewConfig: {}
+            };
         }));
 
         describe('when departmentIsRelatedWithNegotiator is called', () => {
@@ -491,8 +494,8 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where askingPrice is ${data[0]} and shortLetPricePerWeek is ${data[1]} then isValuationPricesSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.askingPrice = data[0];
-                    controller.config.shortLetPricePerWeek = data[1];
+                    controller.config.editConfig.askingPrice = data[0];
+                    controller.config.editConfig.shortLetPricePerWeek = data[1];
 
                     // act & assert
                     expect(controller.isValuationPricesSectionVisible()).toBe(data[2]);
@@ -514,12 +517,12 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where property is ${data[0]} and source is ${data[1]} and sourceDescription is ${data[2]} and sellingReason is ${data[3]} and pitchingThreats is ${data[4]} and disposalType is ${data[5]} then isBasicInformationSectionVisible must return ${data[6]}`)
                 .run((data: TestCase) => {
-                    controller.config.property = data[0];
-                    controller.config.source = data[1];
-                    controller.config.sourceDescription = data[2];
-                    controller.config.sellingReason = data[3];
-                    controller.config.pitchingThreats = data[4];
-                    controller.config.disposalType = data[5];
+                    controller.config.editConfig.property = data[0];
+                    controller.config.editConfig.source = data[1];
+                    controller.config.editConfig.sourceDescription = data[2];
+                    controller.config.editConfig.sellingReason = data[3];
+                    controller.config.editConfig.pitchingThreats = data[4];
+                    controller.config.editConfig.disposalType = data[5];
                     
                     // act & assert
                     expect(controller.isBasicInformationSectionVisible()).toBe(data[6]);
@@ -537,8 +540,8 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where keyNumber is ${data[0]} and accessArrangements is ${data[1]} then isAdditionalInformationSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.keyNumber = data[0];
-                    controller.config.accessArrangements = data[1];
+                    controller.config.editConfig.keyNumber = data[0];
+                    controller.config.editConfig.accessArrangements = data[1];
 
                     // act & assert
                     expect(controller.isAdditionalInformationSectionVisible()).toBe(data[2]);
@@ -557,9 +560,9 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where appraisalMeetingDate is ${data[0]} and appraisalMeetingAttendees is ${data[1]} and appraisalMeetingInvitation is ${data[2]} then isAppraisalMeetingSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.appraisalMeetingDate = data[0];
-                    controller.config.appraisalMeetingAttendees = data[1];
-                    controller.config.appraisalMeetingInvitation = data[2];
+                    controller.config.editConfig.appraisalMeetingDate = data[0];
+                    controller.config.editConfig.appraisalMeetingAttendees = data[1];
+                    controller.config.editConfig.appraisalMeetingInvitation = data[2];
 
                     // act & assert
                     expect(controller.isAppraisalMeetingSectionVisible()).toBe(data[3]);
@@ -577,8 +580,8 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.decoration = data[0];
-                    controller.config.otherCondition = data[1];
+                    controller.config.editConfig.decoration = data[0];
+                    controller.config.editConfig.otherCondition = data[1];
 
                     // act & assert
                     expect(controller.isOtherSectionVisible()).toBe(data[2]);
@@ -597,9 +600,9 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isValuationInfoSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.kfValuationPrice = data[0];
-                    controller.config.vendorValuationPrice = data[1];
-                    controller.config.agreedInitialMarketingPrice = data[2];
+                    controller.config.editConfig.kfValuationPrice = data[0];
+                    controller.config.editConfig.vendorValuationPrice = data[1];
+                    controller.config.editConfig.agreedInitialMarketingPrice = data[2];
 
                     // act & assert
                     expect(controller.isValuationInfoSectionVisible()).toBe(data[3]);
@@ -621,12 +624,12 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} and 4th is ${data[3]} and 5th is ${data[4]} and 6th is ${data[5]} then isValuationInfoShortLongSectionVisible must return ${data[6]}`)
                 .run((data: TestCase) => {
-                    controller.config.shortKfValuationPrice = data[0];
-                    controller.config.longKfValuationPrice = data[1];
-                    controller.config.shortVendorValuationPrice = data[2];
-                    controller.config.longVendorValuationPrice = data[3];
-                    controller.config.shortAgreedInitialMarketingPrice = data[4];
-                    controller.config.longAgreedInitialMarketingPrice = data[5];
+                    controller.config.editConfig.shortKfValuationPrice = data[0];
+                    controller.config.editConfig.longKfValuationPrice = data[1];
+                    controller.config.editConfig.shortVendorValuationPrice = data[2];
+                    controller.config.editConfig.longVendorValuationPrice = data[3];
+                    controller.config.editConfig.shortAgreedInitialMarketingPrice = data[4];
+                    controller.config.editConfig.longAgreedInitialMarketingPrice = data[5];
 
                     // act & assert
                     expect(controller.isValuationInfoShortLongSectionVisible()).toBe(data[6]);
@@ -645,9 +648,9 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isChargesSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.serviceChargeAmount = data[0];
-                    controller.config.groundRentAmount = data[1];
-                    controller.config.groundRentNote = data[2];
+                    controller.config.editConfig.serviceChargeAmount = data[0];
+                    controller.config.editConfig.groundRentAmount = data[1];
+                    controller.config.editConfig.groundRentNote = data[2];
 
                     // act & assert
                     expect(controller.isChargesSectionVisible()).toBe(data[3]);
