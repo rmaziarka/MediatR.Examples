@@ -273,6 +273,10 @@ module Antares.Requirement.View {
             this.offerPanelMode = OfferPanelMode.Edit;
         }
 
+        showTenancyAddPage = (offerModel: Dto.IOffer) => {
+            this.$state.go('app.tenancy-add', { requirementId: this.requirement.id, activityId: offerModel.activityId });
+        }
+
         onSaveNewOffer = (offerModel: Dto.IOffer) =>{
             var offer = new Business.Offer(offerModel);
             this.requirement.offers.push(offer);

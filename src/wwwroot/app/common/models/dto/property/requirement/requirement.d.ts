@@ -21,5 +21,7 @@
         attachments: IAttachment[];
         solicitor: IContact;
         solicitorCompany: ICompany;
+
+        tenancy: ITenancy;
     }
 }

@@ -41,6 +41,8 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 .WithMany()
                 .HasForeignKey(p => p.SolicitorCompanyId)
                 .WillCascadeOnDelete(false);
+
+            this.HasOptional(x => x.Tenancy).WithMany().HasForeignKey(x => x.TenancyId);
         }
     }
 }

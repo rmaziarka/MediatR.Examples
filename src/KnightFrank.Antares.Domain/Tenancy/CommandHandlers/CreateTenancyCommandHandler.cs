@@ -19,7 +19,7 @@
 
     using MediatR;
     using Enums = Common.Enums;
-    
+
     public class CreateTenancyCommandHandler : IRequestHandler<CreateTenancyCommand, Guid>
     {
         private readonly IEntityValidator entityValidator;
@@ -31,11 +31,11 @@
         private readonly IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository;
 
         public CreateTenancyCommandHandler(
-            IEntityValidator entityValidator, 
-            IGenericRepository<Tenancy> tenancyGenericRepository, 
-            ITenancyReferenceMapper<TenancyTerm> termMapper, 
-            IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator, 
-            IGenericRepository<Requirement> requirementRepository, 
+            IEntityValidator entityValidator,
+            IGenericRepository<Tenancy> tenancyGenericRepository,
+            ITenancyReferenceMapper<TenancyTerm> termMapper,
+            IAttributeValidator<Tuple<Enums.TenancyType, Enums.RequirementType>> attributeValidator,
+            IGenericRepository<Requirement> requirementRepository,
             IGenericRepository<Dal.Model.Tenancy.TenancyType> tenancyTypeRepository,
             IReferenceMapper<CreateTenancyCommand, Tenancy, Contact> tenancyContactsMapper)
         {
@@ -50,8 +50,10 @@
 
         public Guid Handle(CreateTenancyCommand message)
         {
+            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
+
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
-            this.entityValidator.EntityExists<Requirement>(message.RequirementId);
+            this.entityValidator.EntityExists(requirement, message.RequirementId);
 
             this.entityValidator.EntitiesExist<Contact>(message.LandlordContacts);
             this.entityValidator.EntitiesExist<Contact>(message.TenantContacts);
@@ -69,6 +71,8 @@
                 ActivityId = message.ActivityId,
                 TenancyTypeId = tenancyType.Id
             };
+
+            requirement.Tenancy = tenancy;
 
             this.termMapper.ValidateAndAssign(message, tenancy);
             this.tenancyContactsMapper.ValidateAndAssign(message, tenancy);

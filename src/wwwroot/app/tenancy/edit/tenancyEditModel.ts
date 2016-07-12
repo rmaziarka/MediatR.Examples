@@ -9,8 +9,15 @@ module Antares.Tenancy {
         requirement: Business.RequirementPreviewModel;
         landlords: Business.Contact[];
         tenants: Business.Contact[];
-        startDate: Date | string = null;
-        ednDate: Date | string = null;
+        startDate: Date  = null;
+        ednDate: Date  = null;
         rent: number; 
+
+        constructor(dto?: Antares.Common.Models.Dto.ITenancy) {
+            if (dto) {
+                this.id = dto.id;
+
+            }
+        }
     }
 }

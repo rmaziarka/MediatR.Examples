@@ -20,18 +20,18 @@ module Antares.Tenancy {
                 controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity) => {
                     var activityPreview = new Business.ActivityPreviewModel(activity);
                     var requirementPreview = new Business.RequirementPreviewModel(requirement);
-                    
+
                     var tenancy = new Tenancy.TenancyEditModel();
                     tenancy.activity = activityPreview;
                     tenancy.landlords = activityPreview.landlords;
-                    
+
                     tenancy.requirement = requirementPreview;
                     tenancy.tenants = requirementPreview.contacts;
-                    
+
                     $scope['tenancy'] = tenancy;
                 },
-                resolve: {       
-                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => { 
+                resolve: {
+                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var activityId: string = $stateParams['activityId'];
 
                         return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
@@ -41,6 +41,33 @@ module Antares.Tenancy {
                         return dataAccessService.getRequirementResource().get({ id: requirementId }).$promise;
                     }
                 }
-            });
+            }).state('app.tenancy-add', {
+                url: '/activity/:activityId/requirement/:requirementId/tenancy/edit',
+                template: "<tenancy-edit tenancy='tenancy'></tenancy-edit>",
+                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity) => {
+                    var activityPreview = new Business.ActivityPreviewModel(activity);
+                    var requirementPreview = new Business.RequirementPreviewModel(requirement);
+
+                    var tenancy = new Tenancy.TenancyEditModel();
+                    tenancy.activity = activityPreview;
+                    tenancy.landlords = activityPreview.landlords;
+
+                    tenancy.requirement = requirementPreview;
+                    tenancy.tenants = requirementPreview.contacts;
+
+                    $scope['tenancy'] = tenancy;
+                },
+                resolve: {
+                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
+                        var activityId: string = $stateParams['activityId'];
+
+                        return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
+                    },
+                    requirement: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
+                        var requirementId = $stateParams['requirementId'];
+                        return dataAccessService.getRequirementResource().get({ id: requirementId }).$promise;
+                    }
+                }
+            });;
     }
 }

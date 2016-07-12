@@ -36,6 +36,7 @@
       "RECENTREQUIREMENTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
+    "CREATE_TENANCY": "Create tenancy",
     "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
     "SETASMANAGING": "Set as managing"

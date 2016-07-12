@@ -17,7 +17,8 @@ module Antares.TestHelpers {
                 offers : [],
                 attachments: [],
                 solicitor: <Dto.IContact>{},
-                solicitorCompany: <Dto.ICompany>{}
+                solicitorCompany: <Dto.ICompany>{},
+                tenancy: null
         }
 
             return angular.extend(requirement, specificData || {});

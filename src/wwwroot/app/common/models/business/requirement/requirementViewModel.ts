@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class Requirement implements Dto.IRequirement {
+    export class RequirementViewModel  {
         [index: string]: any;
 
         id: string = null;
@@ -20,7 +20,7 @@ module Antares.Common.Models.Business {
         solicitor: Contact = null;
         solicitorCompany: Company = null;
         solicitorCompanyContact: CompanyContactRelation = null;
-        tenancy: Dto.ITenancy;
+        tenancy: TenancyPreviewModel = null;
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -46,7 +46,7 @@ module Antares.Common.Models.Business {
                     this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
-                this.tenancy = requirement.tenancy;
+                this.tenancy = requirement.tenancy ? new TenancyPreviewModel(requirement.tenancy) : null;
             }
         }
 

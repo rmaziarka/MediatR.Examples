@@ -109,6 +109,10 @@ module Antares.Common.Models.Business {
             }
         }
 
+        canTenancyBeNegotiated = (): boolean => {
+            return this.status.code === Antares.Common.Models.Enums.OfferStatus[Antares.Common.Models.Enums.OfferStatus.Accepted];
+        }
+
         clearProgressData() {
             this.mortgageStatusId = null;
             this.mortgageSurveyStatusId = null;

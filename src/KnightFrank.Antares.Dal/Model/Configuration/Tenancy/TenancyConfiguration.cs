@@ -15,6 +15,8 @@
                 .WithMany()
                 .HasForeignKey(x => x.TenancyTypeId)
                 .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Requirement).WithMany().HasForeignKey(x => x.RequirementId);
         }
     }
 }
