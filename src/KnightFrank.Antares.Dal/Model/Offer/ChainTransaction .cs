@@ -78,7 +78,5 @@
         public DateTime CreatedDate { get; set; }
 
         public DateTime LastModifiedDate { get; set; }
-
-        public bool IsKnightFrankAgent { get; set; }
     }
 }

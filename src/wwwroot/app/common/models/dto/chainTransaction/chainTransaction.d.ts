@@ -32,6 +32,5 @@
         contractAgreedId: string;
         contractAgreed: Dto.IEnumTypeItem;
         surveyDate?: Date | string;
-        isKnightFrankAgent: string;
     }
 }
