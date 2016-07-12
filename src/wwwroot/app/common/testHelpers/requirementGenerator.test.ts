@@ -6,9 +6,15 @@ module Antares.TestHelpers {
 
     export class RequirementGenerator {
         public static generateDto(specificData?: any): Dto.IRequirement{
+            var requirementTypeId = StringGenerator.generate();
+
             var requirement: Dto.IRequirement = {
-                id: RequirementGenerator.makeRandom('id'),
-                requirementTypeId: RequirementGenerator.makeRandom('requirementTypeid'),
+                id: StringGenerator.generate(),
+                requirementTypeId: requirementTypeId,
+                requirementType: {
+                    id: requirementTypeId,
+                    enumCode: Antares.Common.Models.Enums.RequirementType[Antares.Common.Models.Enums.RequirementType.ResidentialLetting]
+                },
                 contacts : [],
                 address : null,
                 createDate : new Date(),
@@ -34,10 +40,6 @@ module Antares.TestHelpers {
 
         public static generate(specificData?: any): Business.Requirement {
             return new Business.Requirement(RequirementGenerator.generateDto(specificData));
-        }
-
-        private static makeRandom(text: string): string {
-            return text + _.random(1, 1000000);
         }
     }
 }

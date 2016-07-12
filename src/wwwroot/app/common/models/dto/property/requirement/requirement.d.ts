@@ -4,6 +4,7 @@
 
         id: string;
         requirementTypeId: string;
+        requirementType: Dto.IResourceType;
 
         contacts: IContact[];
         address: IAddress;

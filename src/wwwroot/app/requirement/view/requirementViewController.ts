@@ -9,7 +9,7 @@ module Antares.Requirement.View {
     import Attachment = Common.Component.Attachment;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
-        requirement: Business.Requirement;
+        requirement: Business.RequirementViewModel;
 
         isAttachmentsUploadPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isAttachmentsPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -59,11 +59,11 @@ module Antares.Requirement.View {
                 this.hideNewPanels();
             });
 
-            this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
+            this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) => {
                 this.onSaveNewOffer(msg.addedOffer);
             });
 
-            this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) =>{
+            this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) => {
                 this.onUpdateOffer(msg.updatedOffer);
             });
 
@@ -123,23 +123,23 @@ module Antares.Requirement.View {
                 .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
-        showNotesPanel = () =>{
+        showNotesPanel = () => {
             this.components.noteAdd().clearNote();
             this.showPanel(this.components.panels.notes);
         }
 
-        showActivitiesPanel = () =>{
+        showActivitiesPanel = () => {
             this.loadingActivities = true;
             this.components.activitiesList()
                 .loadActivitiesForRequirement(this.requirement.requirementTypeId, "GB")
-                .finally(() =>{ this.loadingActivities = false; });
+                .finally(() => { this.loadingActivities = false; });
 
             this.components.viewingAdd().clearViewingAdd();
             this.showPanel(this.components.panels.configureViewings);
             this.viewingAddPanelVisible = false;
         }
 
-        showViewingAddPanel = () =>{
+        showViewingAddPanel = () => {
             var selectedActivity: Dto.IActivityQueryResult = this.components
                 .activitiesList()
                 .getSelectedActivity();
@@ -156,95 +156,95 @@ module Antares.Requirement.View {
             this.showPanel(this.components.panels.configureViewings);
         }
 
-        showViewingPreviewPanel = () =>{
+        showViewingPreviewPanel = () => {
             this.showPanel(this.components.panels.previewViewings);
         }
 
-        cancelConfigureViewings(){
+        cancelConfigureViewings() {
             this.components.panels.configureViewings().hide();
         }
 
-        cancelViewingAdd(){
+        cancelViewingAdd() {
             this.viewingAddPanelVisible = false;
         }
 
-        goBackToPreviewViewing(){
+        goBackToPreviewViewing() {
             this.viewingPreviewPanelVisible = true;
         }
 
-        cancelViewingPreview(){
+        cancelViewingPreview() {
             this.hidePanels();
         }
 
-        defineComponentIds(): void{
+        defineComponentIds(): void {
             this.componentIds = {
-                noteAddId : 'requirementView:requirementNoteAddComponent',
-                noteListId : 'requirementView:requirementNoteListComponent',
-                notesSidePanelId : 'requirementView:notesSidePanelComponent',
-                activitiesListId : 'addRequirement:activitiesListComponent',
-                viewingAddId : 'addRequirement:viewingAddComponent',
-                viewingEditId : 'requirementView:viewingEditComponent',
-                viewingPreviewId : 'addRequirement:viewingPreviewComponent',
-                configureViewingsSidePanelId : 'addRequirement:configureViewingsSidePanelComponent',
-                previewViewingSidePanelId : 'addRequirement:previewViewingSidePanelComponent',
+                noteAddId: 'requirementView:requirementNoteAddComponent',
+                noteListId: 'requirementView:requirementNoteListComponent',
+                notesSidePanelId: 'requirementView:notesSidePanelComponent',
+                activitiesListId: 'addRequirement:activitiesListComponent',
+                viewingAddId: 'addRequirement:viewingAddComponent',
+                viewingEditId: 'requirementView:viewingEditComponent',
+                viewingPreviewId: 'addRequirement:viewingPreviewComponent',
+                configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
+                previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent',
             }
         }
 
-        defineComponents(): void{
+        defineComponents(): void {
             this.components = {
-                noteAdd : () =>{ return this.componentRegistry.get(this.componentIds.noteAddId); },
-                noteList : () =>{ return this.componentRegistry.get(this.componentIds.noteListId); },
-                activitiesList : () =>{ return this.componentRegistry.get(this.componentIds.activitiesListId); },
-                viewingAdd : () =>{ return this.componentRegistry.get(this.componentIds.viewingAddId); },
-                viewingEdit : () =>{ return this.componentRegistry.get(this.componentIds.viewingEditId); },
-                viewingPreview : () =>{ return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
-                panels : {
-                    notes : () =>{ return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
-                    configureViewings : () =>{ return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
-                    previewViewings : () =>{ return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
+                noteAdd: () => { return this.componentRegistry.get(this.componentIds.noteAddId); },
+                noteList: () => { return this.componentRegistry.get(this.componentIds.noteListId); },
+                activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
+                viewingAdd: () => { return this.componentRegistry.get(this.componentIds.viewingAddId); },
+                viewingEdit: () => { return this.componentRegistry.get(this.componentIds.viewingEditId); },
+                viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
+                panels: {
+                    notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
+                    configureViewings: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
+                    previewViewings: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
                 }
             }
         }
 
-        showViewingPreview = (viewing: Common.Models.Business.Viewing) =>{
+        showViewingPreview = (viewing: Common.Models.Business.Viewing) => {
             this.selectedViewing = viewing;
             this.showPanel(this.components.panels.previewViewings);
             this.viewingPreviewPanelVisible = true;
         }
 
-        showViewingEdit = () =>{
+        showViewingEdit = () => {
             this.components.viewingEdit().setViewing(this.selectedViewing);
             this.viewingPreviewPanelVisible = false;
         }
 
-        saveViewing(){
+        saveViewing() {
             this.saveViewingBusy = true;
             this.components.viewingAdd()
                 .saveViewing()
-                .then((viewing: Common.Models.Dto.IViewing) =>{
+                .then((viewing: Common.Models.Dto.IViewing) => {
                     var viewingModel = new Business.Viewing(viewing);
                     this.requirement.viewings.push(viewingModel);
                     this.requirement.groupViewings(this.requirement.viewings);
                     this.hidePanels();
-                }).finally(() =>{
+                }).finally(() => {
                     this.saveViewingBusy = false;
                 });
         }
 
-        saveEditedViewing(){
+        saveEditedViewing() {
             this.saveViewingBusy = true;
             this.components.viewingEdit()
                 .saveViewing()
-                .then((viewing: Common.Models.Dto.IViewing) =>{
+                .then((viewing: Common.Models.Dto.IViewing) => {
                     angular.copy<Dto.IViewing>(new Business.Viewing(viewing), this.selectedViewing);
                     this.requirement.groupViewings(this.requirement.viewings);
                     this.viewingPreviewPanelVisible = true;
-                }).finally(() =>{
+                }).finally(() => {
                     this.saveViewingBusy = false;
                 });
         }
 
-        showOfferDetailsView = (offer: Dto.IOffer) =>{
+        showOfferDetailsView = (offer: Dto.IOffer) => {
             this.$state.go('app.offer-view', { id: offer.id });
         }
 
@@ -254,7 +254,7 @@ module Antares.Requirement.View {
             this.isOfferAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
-        showOfferPreviewPanel = (offer: Dto.IOffer) =>{
+        showOfferPreviewPanel = (offer: Dto.IOffer) => {
             if (this.isOfferEditPreviewPanelVisible !== Enums.SidePanelState.Opened) {
                 this.hidePanels();
             }
@@ -264,7 +264,7 @@ module Antares.Requirement.View {
             this.offerPanelMode = OfferPanelMode.Preview;
         }
 
-        showOfferEditPanel = (offer: Dto.IOffer) =>{
+        showOfferEditPanel = (offer: Dto.IOffer) => {
             if (!this.isOfferEditPreviewPanelVisible) {
                 this.hidePanels();
             }
@@ -277,18 +277,18 @@ module Antares.Requirement.View {
             this.$state.go('app.tenancy-add', { requirementId: this.requirement.id, activityId: offerModel.activityId });
         }
 
-        onSaveNewOffer = (offerModel: Dto.IOffer) =>{
+        onSaveNewOffer = (offerModel: Dto.IOffer) => {
             var offer = new Business.Offer(offerModel);
             this.requirement.offers.push(offer);
         }
 
         canTenancyBeNegotiated = (offerModel: Business.Offer) => {
-            return offerModel.canTenancyBeNegotiated() && this.requirement.tenancy === null;
+            return offerModel.canTenancyBeNegotiated() && this.requirement.tenancy === null && this.requirement.isLettingType();
         }
 
-        onUpdateOffer = (offerModel: Dto.IOffer) =>{
+        onUpdateOffer = (offerModel: Dto.IOffer) => {
             var offer = new Business.Offer(offerModel);
-            var existingOfferIndex = _.findIndex(this.requirement.offers, { id : offer.id });
+            var existingOfferIndex = _.findIndex(this.requirement.offers, { id: offer.id });
             if (existingOfferIndex > -1) {
                 this.requirement.offers[existingOfferIndex] = offer;
             }

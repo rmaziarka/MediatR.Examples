@@ -6,6 +6,7 @@ module Antares.Common.Models.Business {
 
         id: string = null;
         requirementTypeId: string = null;
+        requirementType: Dto.IResourceType = null;
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
@@ -46,6 +47,7 @@ module Antares.Common.Models.Business {
                     this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
+                this.requirementType = requirement.requirementType;
                 this.tenancy = requirement.tenancy ? new TenancyPreviewModel(requirement.tenancy) : null;
             }
         }
@@ -58,6 +60,10 @@ module Antares.Common.Models.Business {
 
         public getContactNames() {
             return this.contacts.map((c: Contact) => { return c.getName() }).join(", ");
+        }
+
+        public isLettingType = (): boolean => {
+            return this.requirementType.enumCode === Antares.Common.Models.Enums.RequirementType[Antares.Common.Models.Enums.RequirementType.ResidentialLetting];
         }
     }
 }

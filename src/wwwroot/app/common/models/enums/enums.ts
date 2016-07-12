@@ -24,6 +24,9 @@ module Antares.Common.Models.Enums
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
+	 	DisposalType,
+	 	Decoration,
+	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 }
@@ -152,22 +155,6 @@ module Antares.Common.Models.Enums
 		JohnSmithEsq,
 	}
 
-	export enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	export enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
-	}
-
 	export enum ActivitySource
 	{
 		KFContactsRegister,
@@ -212,4 +199,48 @@ module Antares.Common.Models.Enums
 		Retiring,
 		SurpliceToRequirement,
 	}
+
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	export enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
+
+	export enum TenancyContactType
+	{
+		Landlord,
+		Tenant,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
+	}
+
+	export enum RequirementType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
 }
