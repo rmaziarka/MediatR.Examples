@@ -9,7 +9,7 @@ module Antares.Common.Models.Business {
         clientCareStatusId: string = null;
         clientCareStatus: Business.EnumTypeItem;
         contacts: Contact[] = [];
-        companiesContacts: Models.Dto.ICompanyContact[];
+        companiesContacts: Models.Dto.ICompanyContact[] = [];
 
         constructor(company?: Dto.ICompany) {
 
@@ -17,11 +17,11 @@ module Antares.Common.Models.Business {
                 angular.extend(this, company);
 
                 //TODO: check if can be removed
-                if (company.contacts) {
+                if (company.contacts && !company.companiesContacts) {
                     this.contacts = company.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
                 }
 
-                if (company.companiesContacts) {
+                if (company.companiesContacts && !company.contacts) {
                     this.contacts = company.companiesContacts.map((item) =>{ return new Contact(item.contact) });
                 }
             }

@@ -113,6 +113,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\EditContactPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
     <Compile Include="Pages\EditCompanyPage.cs" />
     <Compile Include="Pages\ViewCompanyPage.cs" />
@@ -136,9 +137,10 @@
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\SelectableContactsListPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
-    <Compile Include="Pages\EditPreferencesPage.cs" />
+    <Compile Include="Pages\PreferencesPage.cs" />
     <Compile Include="Pages\SearchPropertyPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
+    <Compile Include="Pages\ViewContactPage.cs" />
     <Compile Include="Pages\ViewOfferPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\Panels\ActivityPreviewPage.cs" />
@@ -149,6 +151,8 @@
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\EditCompanySteps.cs" />
+    <Compile Include="Steps\EditContactSteps.cs" />
+    <Compile Include="Steps\PreferencesSteps.cs" />
     <Compile Include="Steps\ViewCompanySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
@@ -163,9 +167,9 @@
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\EditOfferSteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
-    <Compile Include="Steps\EditPreferencesSteps.cs" />
     <Compile Include="Steps\SearchPropertySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
+    <Compile Include="Steps\ViewContactSteps.cs" />
     <Compile Include="Steps\ViewOfferSteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
@@ -337,7 +341,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" />
+  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" Condition="Exists('..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets')" />
   <Import Project="..\..\packages\Selenium.WebDriver.ChromeDriver.2.22.0.0\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\..\packages\Selenium.WebDriver.ChromeDriver.2.22.0.0\build\Selenium.WebDriver.ChromeDriver.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

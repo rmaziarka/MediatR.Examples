@@ -18,11 +18,14 @@
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
         // Vendor
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
-        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.Id, "vendorSolicitor-edit");
+        private readonly ElementLocator editVendorSolicitor = new ElementLocator(Locator.Id, "vendorSolicitor-edit");
+        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
         // Applicant
-        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.Id, "applicantSolicitor-edit");
+        private readonly ElementLocator editApplicantSolicitor = new ElementLocator(Locator.Id, "applicantSolicitor-edit");
+        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
         // Basic information
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
+        private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.Id, "offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-date");
         private readonly ElementLocator specialConditions = new ElementLocator(Locator.Id, "offer-special-conditions");
         private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-exchange-date");
@@ -58,12 +61,16 @@
         public SelectableContactsListPage ContactsList => new SelectableContactsListPage(this.DriverContext);
 
         public List<string> Broker => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
-        
+
         public List<string> Lender => this.Driver.GetElements(this.lender).Select(el => el.Text).ToList();
 
         public List<string> MortgageSurveyor => this.Driver.GetElements(this.mortgageSurveyor).Select(el => el.Text).ToList();
 
         public List<string> AdditionalSurveyor => this.Driver.GetElements(this.additionalSurveyor).Select(el => el.Text).ToList();
+
+        public List<string> VendorSolicitor => this.Driver.GetElements(this.vendorSolicitor).Select(el => el.Text).ToList();
+
+        public List<string> ApplicantSolicitor => this.Driver.GetElements(this.applicantSolicitor).Select(el => el.Text).ToList();
 
         public EditOfferPage OpenEditOfferPageWithId(string id)
         {
@@ -81,6 +88,12 @@
         public EditOfferPage SetOffer(string price)
         {
             this.Driver.SendKeys(this.offer, price);
+            return this;
+        }
+
+        public EditOfferPage SetOfferPerWeek(string price)
+        {
+            this.Driver.SendKeys(this.offerPerWeek, price);
             return this;
         }
 
@@ -239,13 +252,13 @@
 
         public EditOfferPage EditVendorSolicitor()
         {
-            this.Driver.Click(this.vendorSolicitor);
+            this.Driver.Click(this.editVendorSolicitor);
             return this;
         }
 
         public EditOfferPage EditApplicantSolicitor()
         {
-            this.Driver.Click(this.applicantSolicitor);
+            this.Driver.Click(this.editApplicantSolicitor);
             return this;
         }
     }

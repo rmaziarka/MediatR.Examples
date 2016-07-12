@@ -1,4 +1,4 @@
-// Card component
+// Cards
 
 .card {
   background-color: $color-white;
@@ -14,12 +14,6 @@
 
 .card-selectable {
   cursor: pointer;
-}
-
-.card-no-menu {
-  .card-body {
-    width: 100%;
-  }
 }
 
 .card-details {
@@ -164,6 +158,61 @@
   }
 }
 
+// Cards with header
+
+.card-with-header {
+  .card-body {
+    padding: 0;
+    width: 100%;
+  }
+
+  .card-header {
+    border-bottom: 1px solid $color-nobel;
+    position: relative;
+
+    .card-header-content {
+      padding: 12px;
+      width: calc(100% - 47px);
+    }
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .card-columns {
+    h4 {
+      bottom: 0;
+      color: $color-gray;
+      font: {
+        size: 10px;
+        weight: bold;
+      }
+      position: absolute;
+      text-transform: uppercase;
+    }
+
+    .card-columns-header {
+      min-height: 30px;
+      position: relative;
+    }
+  }
+}
+
+// Cards with no menu
+
+.card-no-menu {
+  .card-body {
+    width: 100%;
+  }
+
+  .card-header {
+    > .card-header-content {
+      width: 100%;
+    }
+  }
+}
+
 // Old cards
 
 .panel {
@@ -175,7 +224,6 @@
 }
 
 .panel-body {
-  word-wrap: break-word;
 
   .checkbox,
   .radio {

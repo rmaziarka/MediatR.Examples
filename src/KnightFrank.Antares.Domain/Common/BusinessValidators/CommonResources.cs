@@ -173,10 +173,45 @@
         // ReSharper disable once InconsistentNaming
         Missing_Activity_Departments_Id,
         /// <summary>
+        /// Key value : One or more chain transactions do not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_ChainTransaction_Id,
+        /// <summary>
         /// Key value : One or more negotiators do not exist.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Missing_Activity_Negotiators_Id
+        Missing_Activity_Negotiators_Id,
+        /// <summary>
+        /// Key value : One or more negotiators are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Negotiators_Not_Unique,
+        /// <summary>
+        /// Key value : More then one chain transaction is marked as last chain transaction.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_ChainTransactions_IsEndCountMoreThenOne,
+        /// <summary>
+        /// Key value : Only last chain transaction can be marked as end transaction.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionEnd_InvalidValue,
+        /// <summary>
+        /// Key value : Vendor value is longer than 128 characters.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityVendor_ValueToLong,
+        /// <summary>
+        /// Key value : 3rd party Agent has been selected, cannot use Knight Frank Agent.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionAgentContact_InvalidValue,
+        /// <summary>
+        /// Key value : Knight Frank Agent has been selected, cannot use 3rd party Agent.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionAgentUser_InvalidValue
     }
 }
 

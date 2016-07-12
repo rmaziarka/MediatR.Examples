@@ -6,8 +6,8 @@
         Property = 1,
         Requirement = 2,
         Activity = 3,
-        Company = 4
-        //Contact = 5,
+        Company = 4,
+        Contact = 5
         //Offer = 6
     }
 }

@@ -70,6 +70,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More then one chain transaction is marked as last chain transaction..
+        /// </summary>
+        internal static string Activity_ChainTransactions_IsEndCountMoreThenOne {
+            get {
+                return ResourceManager.GetString("Activity_ChainTransactions_IsEndCountMoreThenOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more contacts are duplicated..
         /// </summary>
         internal static string Activity_Contacts_Not_Unique {
@@ -124,6 +133,33 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 3rd party Agent has been selected, cannot use Knight Frank Agent..
+        /// </summary>
+        internal static string ActivityChainTransactionAgentContact_InvalidValue {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionAgentContact_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Knight Frank Agent has been selected, cannot use 3rd party Agent..
+        /// </summary>
+        internal static string ActivityChainTransactionAgentUser_InvalidValue {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionAgentUser_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only last chain transaction can be marked as end transaction..
+        /// </summary>
+        internal static string ActivityChainTransactionEnd_InvalidValue {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionEnd_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value of ActivityDepartment is invalid..
         /// </summary>
         internal static string ActivityDepartment_Invalid_Value {
@@ -147,6 +183,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string ActivityUser_Is_Assigned_To_Other_Activity {
             get {
                 return ResourceManager.GetString("ActivityUser_Is_Assigned_To_Other_Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor value is longer than 128 characters..
+        /// </summary>
+        internal static string ActivityVendor_ValueToLong {
+            get {
+                return ResourceManager.GetString("ActivityVendor_ValueToLong", resourceCulture);
             }
         }
         
@@ -241,6 +286,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more chain transactions do not exist..
+        /// </summary>
+        internal static string Missing_Activity_ChainTransaction_Id {
+            get {
+                return ResourceManager.GetString("Missing_Activity_ChainTransaction_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more contacts do not exist..
         /// </summary>
         internal static string Missing_Activity_Contacts_Id {
@@ -300,6 +354,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string MortgageSurveyDateGreaterOrEqualToCreateDate {
             get {
                 return ResourceManager.GetString("MortgageSurveyDateGreaterOrEqualToCreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more negotiators are duplicated..
+        /// </summary>
+        internal static string Negotiators_Not_Unique {
+            get {
+                return ResourceManager.GetString("Negotiators_Not_Unique", resourceCulture);
             }
         }
         

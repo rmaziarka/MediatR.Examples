@@ -70,8 +70,16 @@ module Antares.Attributes.Offer.OfferChain {
             }
         }
 
+        constructor(
+            private $state: ng.ui.IStateService) {
+        }
+
         edit = () => {
             this.onEdit();
+        }
+
+        navigateToProperty = (property: Dto.IProperty) => {
+            this.$state.go('app.property-view', { id: property.id });
         }
     }
 

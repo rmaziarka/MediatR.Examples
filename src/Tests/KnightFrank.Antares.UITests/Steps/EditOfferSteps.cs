@@ -48,8 +48,8 @@
             this.page = new EditOfferPage(this.driverContext).OpenEditOfferPageWithId(offerId.ToString());
         }
 
-        [When(@"User fills in offer details on edit offer page")]
-        public void FillOfferDetails(Table table)
+        [When(@"User fills in sale offer details on edit offer page")]
+        public void FillSaleOfferDetails(Table table)
         {
             var details = table.CreateInstance<OfferData>();
 
@@ -77,6 +77,43 @@
 
             this.page.SelectStatus(details.Status)
                 .SetOffer(details.Offer)
+                .SetOfferDate(details.OfferDate)
+                .SetSpecialConditions(details.SpecialConditions)
+                .SetProposedExchangeDate(details.ExchangeDate)
+                .SetProposedCompletionDate(details.CompletionDate);
+
+            this.scenarioContext.Set(details, "Offer");
+        }
+
+        [When(@"User fills in letting offer details on edit offer page")]
+        public void FillLettingOfferDetails(Table table)
+        {
+            var details = table.CreateInstance<OfferData>();
+
+            if (this.scenarioContext.ContainsKey("Offer"))
+            {
+                string offerScenarioType = this.scenarioContext.Single(el => el.Key.Equals("Offer")).Value.GetType().Name;
+                if (offerScenarioType.Equals(typeof(Offer).Name))
+                {
+                    details.OfferDate = this.scenarioContext.Get<Offer>("Offer").OfferDate.AddDays(-1).ToString(Format);
+                }
+                else if (offerScenarioType.Equals(typeof(OfferData).Name))
+                {
+                    DateTime offerDate = DateTime.ParseExact(this.scenarioContext.Get<OfferData>("Offer").OfferDate, Format,
+                        CultureInfo.InvariantCulture);
+                    details.OfferDate = offerDate.AddDays(-1).ToString(Format);
+                }
+            }
+            else
+            {
+                details.OfferDate = this.date.ToString(Format);
+            }
+
+            details.ExchangeDate = this.date.AddDays(1).ToString(Format);
+            details.CompletionDate = this.date.AddDays(2).ToString(Format);
+
+            this.page.SelectStatus(details.Status)
+                .SetOfferPerWeek(details.OfferPerWeek)
                 .SetOfferDate(details.OfferDate)
                 .SetSpecialConditions(details.SpecialConditions)
                 .SetProposedExchangeDate(details.ExchangeDate)
@@ -208,6 +245,18 @@
                 () => Assert.Equal(expectedUsers.SurveyorCompany, currentMortgageSurveyor.Last()),
                 () => Assert.Equal(expectedAdditionalUsers.AdditionalSurveyor, currentAdditionalSurveyor.First()),
                 () => Assert.Equal(expectedAdditionalUsers.AdditionalSurveyorCompany, currentAdditionalSurveyor.Last()));
+        }
+
+        [Then(@"Following solicitors should be displayed on edit offer page")]
+        public void CheckSolicitors(Table table)
+        {
+            var expectedSolicitors = table.CreateInstance<SolicitorsData>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedSolicitors.Vendor, this.page.VendorSolicitor.First()),
+                () => Assert.Equal(expectedSolicitors.VendorCompany, this.page.VendorSolicitor.Last()),
+                () => Assert.Equal(expectedSolicitors.Applicant, this.page.ApplicantSolicitor.First()),
+                () => Assert.Equal(expectedSolicitors.ApplicantCompany, this.page.ApplicantSolicitor.Last()));
         }
     }
 }

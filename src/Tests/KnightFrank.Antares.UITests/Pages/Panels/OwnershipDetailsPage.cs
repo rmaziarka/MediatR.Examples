@@ -82,7 +82,7 @@
 
         public string ContactName { get; set; }
 
-        public string ContactSurname { get; set; }
+        public string ContactLastName { get; set; }
 
         public string Type { get; set; }
 

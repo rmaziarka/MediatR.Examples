@@ -42,8 +42,8 @@ module Antares {
 
         var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
             contacts: [
-                { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
-                { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
+                { id: '1', firstName: 'John', lastName: 'Doe', title: 'Mr.' },
+                { id: '2', firstName: 'Jane', lastName: 'Doe', title: 'Mrs.' }
             ]
         });
 

@@ -7,8 +7,8 @@ Scenario Outline: Create ownership
 		| PropertyType | Division    |
 		| House        | Residential |
         And Contacts exists in database
-		    | FirstName | Surname | Title |
-		    | Michael   | Angel   | cheef |
+		    | FirstName | LastName | Title |
+		    | Michael   | Angel    | cheef |
 	When User creates Freeholder ownership using api
 		| PurchaseDate   | SellDate   | BuyPrice   | SellPrice   |
 		| <purchaseDate> | <sellDate> | <buyPrice> | <sellPrice> |
@@ -28,8 +28,8 @@ Scenario Outline: Create ownership with mandatory fields
 		| PropertyType | Division    |
 		| House        | Residential |
         And Contacts exists in database
-		    | FirstName | Surname | Title |
-		    | Michael   | Angel   | cheef |
+		    | FirstName | LastName | Title |
+		    | Michael   | Angel    | cheef |
 	When User creates <ownershipType> ownership with mandatory fields using api
 	Then User should get OK http status code
         And Created Ownership is saved in database
@@ -47,8 +47,8 @@ Scenario: Create ownership where dates are overlapping
 		| PropertyType | Division    |
 		| House        | Residential |
         And Contacts exists in database
-		    | FirstName | Surname | Title |
-		    | Michael   | Angel   | cheef |
+		    | FirstName | LastName | Title |
+		    | Michael   | Angel    | cheef |
 	    And Ownership Freeholder exists in database
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2010   | 01-04-2012 | 1000000  | 1200000   |

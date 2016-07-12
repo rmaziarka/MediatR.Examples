@@ -13,19 +13,26 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	RequirementDocumentType,
 	 	PropertyDocumentType,
 	 	OfferStatus,
-	 	ActivityUserType,
+	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ChainMortgageStatus,
 	 	ClientCareStatus,
 	 	MortgageSurveyStatus,
+	 	ChainMortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
+	 	ChainSearchStatus,
 	 	Enquiries,
+	 	ChainEnquiries,
+	 	ChainContractAgreedStatus,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	MailingSalutation,
+	 	EventSalutation,
 	 }
 
 	
@@ -88,7 +95,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Accepted,
 	}
 
-	public enum ActivityUserType
+	public enum UserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,
@@ -102,11 +109,19 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 
 	public enum MortgageStatus
 	{
+		Agreed,
 		Unknown,
 		NotRequiredCashFromSale,
 		NotRequiredCashInBank,
 		InProgress,
-		Agreed,
+	}
+
+	public enum ChainMortgageStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
 	}
 
 	public enum ClientCareStatus
@@ -124,6 +139,14 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Outstanding,
 	}
 
+	public enum ChainMortgageSurveyStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
+	}
+
 	public enum AdditionalSurveyStatus
 	{
 		Unknown,
@@ -139,11 +162,29 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Complete,
 	}
 
+	public enum ChainSearchStatus
+	{
+		Complete,
+		Outstanding,
+	}
+
 	public enum Enquiries
 	{
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	public enum ChainEnquiries
+	{
+		Complete,
+		Outstanding,
+	}
+
+	public enum ChainContractAgreedStatus
+	{
+		Complete,
+		Outstanding,
 	}
 
 	public enum SalutationFormat
@@ -210,5 +251,21 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	public enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	public enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }

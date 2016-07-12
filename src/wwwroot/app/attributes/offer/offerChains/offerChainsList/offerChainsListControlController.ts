@@ -13,9 +13,9 @@ module Antares.Attributes.Offer {
         chains: ChainTransaction[];
         chainType: Enums.OfferChainsType;
         property: Property;
-        onChainEdit: (chain: ChainTransaction) => void;
-        onChainPreview: (chain: ChainTransaction) => void;
-        onChainRemove: (chain: ChainTransaction) => void;
+        onChainEdit: (obj: { chain: ChainTransaction }) => void;
+        onChainPreview: (obj: { chain: ChainTransaction }) => void;
+        onChainRemove: (obj: { chain: ChainTransaction }) => void;
 
         constructor(private eventAggregator: Core.EventAggregator,
             private activityService: ActivityService,
@@ -23,15 +23,15 @@ module Antares.Attributes.Offer {
             private kfModalService: KfModalService) { }
 
         deleteChain = (chain: ChainTransaction) => {
-            this.onChainRemove(chain);
+            this.onChainRemove({ chain: chain });
         }
 
         editChain = (chain: ChainTransaction) => {
-            this.onChainEdit(chain);
+            this.onChainEdit({ chain: chain });
         }
 
         previewChain = (chain: ChainTransaction) => {
-            this.onChainPreview(chain);
+            this.onChainPreview({ chain: chain });
         }
     }
 
