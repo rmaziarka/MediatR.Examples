@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="TENANCY.CREATE_TENANCY"></h2>
+        <form action="#">
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+
+                    <!-- Basic information -->
+                    <section>
+                        <h3 class="page-header" translate="TENANCY.COMMON.BASIC_INFORMATION"></h3>
+                        <div>
+                            <h5 translate="COMMON.ACTIVITY"></h5>
+                            <card-list-item>
+                                <card show-context-menu="true" display-new-control="true" card-template-url="'app/tenancy/edit/tenancyActivityCard.html'"
+                                    item="tevm.tenancy.activity">
+                                    <card-context-menu>
+                                        <context-menu-item type="details" item="tevm.tenancy.activity" action="tevm.navigateToActivity"></context-menu-item>
+                                    </card-context-menu>
+                                </card>
+                            </card-list-item>
+                        </div>
+                        <!--<activity-card activity="tevm.tenancy.activity" />-->
+                        <div>
+                            <h5 translate="COMMON.REQUIREMENT"></h5>
+                            <card-list-item>
+                                <card show-context-menu="true" display-new-control="true" card-template-url="'app/tenancy/edit/tenancyRequirementCard.html'"
+                                    item="tevm.tenancy.requirement">
+                                    <card-context-menu>
+                                        <context-menu-item type="details" item="tevm.tenancy.requirement" action="tevm.navigateToRequirement"></context-menu-item>
+                                    </card-context-menu>
+                                </card>
+                            </card-list-item>
+                        </div>
+                    </section>
+                    <!-- // Basic information -->
+                    <section>
+                        <list id="tenancy-tenants-edit">
+                            <list-header>
+                                <h3 class="page-header" translate="TENANCY.COMMON.TENANTS"></h3>
+                            </list-header>
+                            <list-item id="list-item-{{tenant.id}}" ng-repeat="tenant in tevm.tenancy.tenants">
+                                {{tenant.getName()}}
+                            </list-item>
+                        </list>
+                    </section>
+                    <section>
+                        <list id="tenancy-landlords-edit">
+                            <list-header>
+                                <h3 class="page-header" translate="TENANCY.COMMON.LANDLORDS"></h3>
+                            </list-header>
+                            <list-item id="list-item-{{landlord.id}}" ng-repeat="landlord in tevm.tenancy.landlords">
+                                {{landlord.getName()}}
+                            </list-item>
+                        </list>
+                    </section>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <!-- Terms -->
+                    <fieldset>
+                        <h3 class="page-header" translate="TENANCY.COMMON.TERMS"></h3>
+
+                        <div class="row">
+                            <div class="col-sm-8 col-md-6">
+                                <div class="form-group"><!-- has-error -->
+                                    <label for="start-date" class="required" translate="TENANCY.COMMON.START_DATE"></label>
+                                    <div class="input-group">
+                                        <input type="text" id="start-date" ng-model="tevm.tenancy.startDate" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                    <!--<p class="help-block">Field is required</p>-->
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-6">
+                                <div class="form-group">
+                                    <label for="end-date" class="required" translate="TENANCY.COMMON.END_DATE"></label>
+                                    <div class="input-group">
+                                        <input type="text" id="end-date" ng-model="tevm.tenancy.endDate" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 col-md-6">
+                                <div class="form-group">
+                                    <label for="rent-weekly" class="required" translate="TENANCY.COMMON.RENT"></label>
+                                    <div class="input-group">
+                                        <input type="number" id="rent-weekly" ng-model="tevm.tenancy.rent" class="form-control">
+                                        <div class="input-group-addon">
+                                            GBP / week
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- // Terms -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button class="btn btn-default" type="button" ng-click="tevm.cancel()">
+                            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
