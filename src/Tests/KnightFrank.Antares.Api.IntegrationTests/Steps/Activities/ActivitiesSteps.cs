@@ -57,8 +57,6 @@
         {
             string activityStatus = table.Rows[0]["ActivityStatus"];
             string activityType = table.Rows[0]["ActivityType"];
-            const string activitySource = "DirectEmail";
-            const string activitySellingReason ="Relocation";
 
             Guid activityStatusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
@@ -67,10 +65,12 @@
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
             Guid activitySourceId =
                 this.fixture.DataContext.EnumTypeItems.Single(
-                    i => i.EnumType.Code.Equals(nameof(ActivitySource)) && i.Code.Equals(activitySource)).Id;
+                    i => i.EnumType.Code.Equals(nameof(ActivitySource)) && i.Code.Equals(nameof(ActivitySource.DirectEmail))).Id;
             Guid activitySellingReasonId =
                 this.fixture.DataContext.EnumTypeItems.Single(
-                    i => i.EnumType.Code.Equals(nameof(ActivitySellingReason)) && i.Code.Equals(activitySellingReason)).Id;
+                    i =>
+                        i.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                        i.Code.Equals(nameof(ActivitySellingReason.Relocation))).Id;
 
             this.leadNegotiator = this.fixture.DataContext.Users.First();
 
@@ -164,7 +164,11 @@
                 SourceId = sourceId,
                 SellingReasonId = sellingReasonId,
                 LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today.AddDays(3) },
-                Departments = new List<UpdateActivityDepartment> { new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId } },
+                Departments =
+                    new List<UpdateActivityDepartment>
+                    {
+                        new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId }
+                    },
                 AppraisalMeetingStart = DateTime.Now.AddHours(24),
                 AppraisalMeetingEnd = DateTime.Now.AddHours(26)
             };
@@ -176,8 +180,6 @@
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
         public void UpdateActivitySaleValuation(string id, string status, Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Activity");
 
@@ -185,7 +187,6 @@
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
             updateActivityCommand.SourceId = activityFromDatabase.SourceId;
             updateActivityCommand.SellingReasonId = activityFromDatabase.SellingReasonId;
-
 
             updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(24);
             updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(26);
@@ -227,19 +228,18 @@
                 LongAgreedInitialMarketingPrice = updateActivityCommand.LongAgreedInitialMarketingPrice,
                 LongKfValuationPrice = updateActivityCommand.LongKfValuationPrice,
                 LongVendorValuationPrice = updateActivityCommand.LongVendorValuationPrice,
-                DisposalTypeId =  updateActivityCommand.DisposalTypeId,
+                DisposalTypeId = updateActivityCommand.DisposalTypeId,
                 ServiceChargeAmount = updateActivityCommand.ServiceChargeAmount,
                 ServiceChargeNote = updateActivityCommand.ServiceChargeNote,
                 GroundRentAmount = updateActivityCommand.GroundRentAmount,
                 GroundRentNote = updateActivityCommand.GroundRentNote,
                 OtherCondition = updateActivityCommand.OtherCondition,
-                DecorationId = updateActivityCommand.DecorationId,
+                DecorationId = updateActivityCommand.DecorationId
             };
 
             this.scenarioContext["Activity"] = activityFromDatabase;
 
-            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.UpdateActivity(updateActivityCommand);
         }
 
         [When(@"User gets activity with (.*) id")]
@@ -387,6 +387,14 @@
             string requestUrl = $"{ApiUrl}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        private void UpdateActivity(UpdateActivityCommand updateActivityCommand)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
