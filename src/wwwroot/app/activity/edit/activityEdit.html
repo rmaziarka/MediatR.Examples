@@ -79,8 +79,7 @@
         </div>
 
         <div class="col-md-6 col-lg-4">
-
-            <fieldset id="activity-price">
+            <fieldset id="activity-price" ng-if="vm.config.priceType">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.PRICE"></h3>
                 <div class="row">
                     <div class="col-xs-6">
@@ -102,6 +101,46 @@
                 </div>
             </fieldset>
 
+            <fieldset id="activity-price" ng-if="vm.config.rentPaymentPeriod">
+                <h3 class="page-header" translate="ACTIVITY.COMMON.RENT"></h3>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <enum-item-edit-control on-selected-item-changed="vm.rentPaymentPeriodChanged(id)" ng-model="vm.activity.rentPaymentPeriodId" config="vm.config.rentPaymentPeriod" schema="vm.rentPaymentPeriodSchema"></enum-item-edit-control>
+                    </div>
+                </div>
+                <div class="row" ng-if="vm.config.shortAskingWeekRent || vm.config.shortAskingMonthRent">
+                    <label class="col-xs-4" translate="ACTIVITY.COMMON.ASKING_RENT_SHORT_LET"></label>
+                    <label class="col-xs-8" translate="ACTIVITY.COMMON.MATCH_FLEXIBILITY"></label>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.shortAskingWeekRent" schema="vm.shortAskingWeekRentSchema" ng-model="vm.activity.shortAskingWeekRent"></price-edit-control>
+                        <price-edit-control config="vm.config.shortAskingMonthRent" schema="vm.shortAskingMonthRentSchema" ng-model="vm.activity.shortAskingMonthRent"></price-edit-control>
+                    </div>
+                    <div class="col-xs-4">
+                        <enum-item-edit-control on-selected-item-changed="vm.shortMatchFlexibilityChanged(id)" ng-model="vm.activity.shortMatchFlexibilityId" config="vm.config.shortMatchFlexibility" schema="vm.shortMatchFlexibilitySchema"></enum-item-edit-control>
+                    </div>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.shortMatchFlexWeekValue" schema="vm.shortMatchFlexWeekValueSchema" ng-model="vm.activity.shortMatchFlexWeekValue"></price-edit-control>
+                        <price-edit-control config="vm.config.shortMatchFlexMonthValue" schema="vm.shortMatchFlexMonthValueSchema" ng-model="vm.activity.shortMatchFlexMonthValue"></price-edit-control>
+                        <price-edit-control config="vm.config.shortMatchFlexPercentage" schema="vm.shortMatchFlexPercentageSchema" ng-model="vm.activity.shortMatchFlexPercentage"></price-edit-control>
+                    </div>
+                </div>
+                <div class="row" ng-if="vm.config.longAskingWeekRent || vm.config.longAskingMonthRent">
+                    <label class="col-xs-4" translate="ACTIVITY.COMMON.ASKING_RENT_LONG_LET"></label>
+                    <label class="col-xs-8" translate="ACTIVITY.COMMON.MATCH_FLEXIBILITY"></label>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.longAskingWeekRent" schema="vm.longAskingWeekRentSchema" ng-model="vm.activity.longAskingWeekRent"></price-edit-control>
+                        <price-edit-control config="vm.config.longAskingMonthRent" schema="vm.longAskingMonthRentSchema" ng-model="vm.activity.longAskingMonthRent"></price-edit-control>
+                    </div>
+                    <div class="col-xs-4">
+                        <enum-item-edit-control on-selected-item-changed="vm.longMatchFlexibilityChanged(id)" ng-model="vm.activity.longMatchFlexibilityId" config="vm.config.longMatchFlexibility" schema="vm.longMatchFlexibilitySchema"></enum-item-edit-control>
+                    </div>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.longMatchFlexWeekValue" schema="vm.longMatchFlexWeekValueSchema" ng-model="vm.activity.longMatchFlexWeekValue"></price-edit-control>
+                        <price-edit-control config="vm.config.longMatchFlexMonthValue" schema="vm.longMatchFlexMonthValueSchema" ng-model="vm.activity.longMatchFlexMonthValue"></price-edit-control>
+                        <price-edit-control config="vm.config.longMatchFlexPercentage" schema="vm.longMatchFlexPercentageSchema" ng-model="vm.activity.longMatchFlexPercentage"></price-edit-control>
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset id="activity-edit-prices" ng-if="vm.isValuationInfoSectionVisible()">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>

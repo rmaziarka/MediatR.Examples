@@ -35,12 +35,12 @@
 
         private bool StatusToLetUnavailableAndShortFlexAndPeriod(dynamic command, Guid matchFlexibility, Guid rentPeriod)
         {
-            return command.ActivityStatusId != this.activityStatusToLetUnavailableId && command.ShortMatchFlexibilityId != matchFlexibility && command.RentPaymentPeriodId != rentPeriod;
+            return command.ActivityStatusId != this.activityStatusToLetUnavailableId || command.ShortMatchFlexibilityId != matchFlexibility || command.RentPaymentPeriodId != rentPeriod;
         }
 
         private bool StatusToLetUnavailableAndLongFlexAndPeriod(dynamic command, Guid matchFlexibility, Guid rentPeriod)
         {
-            return command.ActivityStatusId != this.activityStatusToLetUnavailableId && command.LongMatchFlexibilityId != matchFlexibility && command.RentPaymentPeriodId != rentPeriod;
+            return command.ActivityStatusId != this.activityStatusToLetUnavailableId || command.LongMatchFlexibilityId != matchFlexibility || command.RentPaymentPeriodId != rentPeriod;
         }
 
         public ActivityControlsConfiguration(IGenericRepository<EnumTypeItem> enumTypeItemRepository)
@@ -448,8 +448,8 @@
                     ControlCode.LongAskingWeekRent,
                 },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodWeekId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodWeekId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.RentPaymentPeriodId != rentPaymentPeriodWeekId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.RentPaymentPeriodId != rentPaymentPeriodWeekId);
 
             this.Use(
                 new List<ControlCode>
@@ -458,7 +458,7 @@
                     ControlCode.LongAskingWeekRent,
                 },
                 this.When(openMarketLetting, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodWeekId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId);
 
             this.Use(
                 new List<ControlCode>
@@ -467,8 +467,8 @@
                     ControlCode.LongAskingMonthRent
                 },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodMonthId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodMonthId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.RentPaymentPeriodId != rentPaymentPeriodMonthId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.RentPaymentPeriodId != rentPaymentPeriodMonthId);
 
             this.Use(
                 new List<ControlCode>
@@ -477,7 +477,7 @@
                     ControlCode.LongAskingMonthRent
                 },
                 this.When(openMarketLetting, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.RentPaymentPeriodId != rentPaymentPeriodMonthId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.ShortMatchFlexWeekValue },
@@ -504,13 +504,13 @@
             this.Use(
                 new List<ControlCode> { ControlCode.ShortMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.ShortMatchFlexibilityId != matchFlexRentPercentageId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.ShortMatchFlexibilityId != matchFlexRentPercentageId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.ShortMatchFlexibilityId != matchFlexRentPercentageId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.ShortMatchFlexibilityId != matchFlexRentPercentageId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.ShortMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.ShortMatchFlexibilityId != matchFlexRentPercentageId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.ShortMatchFlexibilityId != matchFlexRentPercentageId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.LongMatchFlexWeekValue },
@@ -537,13 +537,13 @@
             this.Use(
                 new List<ControlCode> { ControlCode.LongMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.LongMatchFlexibilityId != matchFlexRentPercentageId)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.LongMatchFlexibilityId != matchFlexRentPercentageId);
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.LongMatchFlexibilityId != matchFlexRentPercentageId)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.LongMatchFlexibilityId != matchFlexRentPercentageId);
 
             this.Use(
                 new List<ControlCode> { ControlCode.LongMatchFlexPercentage },
                 this.When(openMarketLetting, PageType.Details))
-                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId && x.LongMatchFlexibilityId != matchFlexRentPercentageId);
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != this.activityStatusToLetUnavailableId || x.LongMatchFlexibilityId != matchFlexRentPercentageId);
         }
     }
 }
