@@ -5,7 +5,7 @@ module Antares.Attributes.Offer {
     import RequirementService = Requirement.RequirementService;
     import KfModalService = Services.KfModalService;
     import ActivityService = Antares.Services.ActivityService;
-    import ChainTransaction = Common.Models.Dto.IChainTransaction;
+    import ChainTransaction = Common.Models.Business.ChainTransaction;
     import Property = Common.Models.Dto.IProperty;
 
     export class OfferChainsListControlController {

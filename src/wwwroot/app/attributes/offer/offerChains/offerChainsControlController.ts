@@ -5,6 +5,7 @@ module Antares.Attributes.Offer {
     import RequirementService = Antares.Requirement.RequirementService;
     import KfModalService = Antares.Services.KfModalService;
     import ActivityService = Services.ActivityService;
+    import ChainTransaction = Common.Models.Business.ChainTransaction;
 
     export class OfferChainsControlController {
         // bindings
@@ -15,7 +16,7 @@ module Antares.Attributes.Offer {
         chainType: Enums.OfferChainsType;
 
         //fields
-        currentChain: any;
+        currentChain: ChainTransaction;
         panelInPreviewMode: boolean = false;
         titleCode: string = "OFFER.VIEW.DELETE_CHAIN_TITLE";
         messageCode: string = "OFFER.VIEW.DELETE_CHAIN_MESSAGE";
@@ -27,32 +28,32 @@ module Antares.Attributes.Offer {
             private kfModalService: KfModalService) { }
 
         addChain = () =>{
-            this.currentChain = {};
+            this.currentChain = new ChainTransaction();
             this.panelInPreviewMode = false;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
         }
 
-        editChain = (chain: any) => {
+        editChain = (chain: ChainTransaction) => {
             this.currentChain = chain;
             this.panelInPreviewMode = false;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
         }
 
-        previewChain = (chain: any) => {
-            this.currentChain = chain;
+        previewChain = (chain: ChainTransaction) => {
+            this.currentChain = chain
             this.panelInPreviewMode = true;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
         }
 
-        removeChain = (chain: any) =>{
+        removeChain = (chain: ChainTransaction) =>{
             var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             // publish event
         }
 
-        updateChain = (chain: any) =>{
+        updateChain = (chain: ChainTransaction) =>{
             
         }
 
