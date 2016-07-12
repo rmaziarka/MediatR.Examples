@@ -13,6 +13,7 @@ module Antares.Common.Models.Business {
         roles: string[];
         salutationFormatId: string;
         department: Department;
+        locale: Locale;
 
         constructor(user?: Dto.ICurrentUser){
             if (user) {

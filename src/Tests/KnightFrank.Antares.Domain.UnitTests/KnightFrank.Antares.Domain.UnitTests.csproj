@@ -171,6 +171,8 @@
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Company\Queries\CompanyQueryValidatorTests.cs" />
     <Compile Include="Company\QueryHandlers\CompanyQueryHandlerTests.cs" />
+    <Compile Include="Contact\CommandHandlers\UpdateContactCommandHandlerTests.cs" />
+    <Compile Include="Contact\Commands\UpdateContactCommandValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidatorTests.cs" />

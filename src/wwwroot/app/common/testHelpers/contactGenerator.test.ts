@@ -3,16 +3,30 @@
 module Antares.TestHelpers {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 
     export class ContactGenerator {
-        public static generateDto(): Dto.IContact {
+        public static generateDto(): Dto.IContact{
 
-            var contact: Dto.IContact = {
-                firstName: ContactGenerator.makeRandom('firstName'),
-                surname: ContactGenerator.makeRandom('surname'),
-                id: ContactGenerator.makeRandom('id'),
-                title: ContactGenerator.makeRandom('title')
-            }
+	        var contact: Dto.IContact = {
+		        firstName : ContactGenerator.makeRandom('firstName'),
+		        lastName : ContactGenerator.makeRandom('lastName'),
+		        id : ContactGenerator.makeRandom('id'),
+		        title : ContactGenerator.makeRandom('title'),
+		        mailingFormalSalutation : ContactGenerator.makeRandom('mailingFormalSalutation'),
+		        mailingSemiformalSalutation : ContactGenerator.makeRandom('mailingSemiformalSalutation'),
+		        mailingInformalSalutation : ContactGenerator.makeRandom('mailingInformalSalutation'),
+		        mailingPersonalSalutation : ContactGenerator.makeRandom('mailingPersonalSalutation'),
+		        mailingEnvelopeSalutation : ContactGenerator.makeRandom('mailingEnvelopeSalutation'),
+		        defaultMailingSalutationId : ContactGenerator.makeRandom('defaultMailingSalutationId'),
+		        eventInviteSalutation : ContactGenerator.makeRandom('eventInviteSalutation'),
+		        eventSemiformalSalutation : ContactGenerator.makeRandom('eventSemiformalSalutation'),
+		        eventInformalSalutation : ContactGenerator.makeRandom('eventInformalSalutation'),
+		        eventPersonalSalutation : ContactGenerator.makeRandom('eventPersonalSalutation'),
+		        eventEnvelopeSalutation : ContactGenerator.makeRandom('eventEnvelopeSalutation'),
+		        defaultEventSalutationId : ContactGenerator.makeRandom('defaultEventSalutationId'),
+		        contactUsers : []
+        }
 
             return contact;
         }

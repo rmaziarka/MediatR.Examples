@@ -74,7 +74,7 @@
         [Then(@"Company contacts should have following contacts on view company page")]
         public void CheckCompanyContacts(Table table)
         {
-            List<string> contacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.Surname).ToList();
+            List<string> contacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.LastName).ToList();
             List<string> expectedContacts = this.page.Contacts;
 
             expectedContacts.ShouldBeEquivalentTo(contacts);

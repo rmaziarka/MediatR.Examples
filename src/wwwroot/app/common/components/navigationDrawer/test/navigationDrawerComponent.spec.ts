@@ -101,4 +101,62 @@ module Antares {
             expect(recentItems.length).toBe(1);
         });
     });
+
+    describe('Given contact navigation drawer component loaded 10 elements', () => {
+
+        var scope: ng.IScope,
+            compile: ng.ICompileService,
+            element: ng.IAugmentedJQuery,
+            controller: NavigationDrawerController;
+
+        var latestViews: LatestListEntry[] = [];
+
+        var mockedContactNagivationDrawerComponent = '<navigation-drawer type="contact"></navigation-drawer>';
+
+        beforeEach(inject((
+            $rootScope: ng.IRootScopeService,
+            latestViewsProvider: LatestViewsProvider,
+            $compile: ng.ICompileService) => {
+
+            latestViews = <LatestListEntry[]>[];
+            for (var i = 0; i < 10; i++) {
+                latestViews.push(<LatestListEntry>{
+                    id: "37fea3ab-5829-e611-84bb-34e6d744328" + i,
+                    name: "contact name " + i,
+                    url: "contact url " + i
+                });
+            }
+
+            latestViewsProvider.contacts = latestViews;
+
+            // init
+            scope = $rootScope.$new();
+            compile = $compile;
+
+            element = compile(mockedContactNagivationDrawerComponent)(scope);
+            controller = element.controller('navigationDrawer');
+
+            scope.$apply();
+        }));
+
+        it('then 10 recent viewed contacts are displayed', () => {
+            var recentItems = element
+                .find(pageObjectElements.recentRoot)
+                .find(pageObjectElements.recentItem);
+
+            expect(recentItems.length).toBe(10);
+        });
+
+        it('then recent contact drawer component displays correct data', () => {
+            var recentItems = element
+                .find(pageObjectElements.recentRoot)
+                .find(pageObjectElements.recentItem);
+
+            var expectedUrl = recentItems.first().find('a').attr('href');
+            var expectedName = recentItems.first().find('a').text();
+
+            expect(expectedUrl).toEqual(latestViews[0].url);
+            expect(expectedName).toEqual(latestViews[0].name);
+        });
+    });
 }

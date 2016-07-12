@@ -6,7 +6,7 @@ Scenario Outline: Create activity with invalid data
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| <activityStatusId>     | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 			| ActivitySource         | DirectEmail      |
 			| ActivitySellingReason  | Relocation       |
@@ -28,7 +28,7 @@ Scenario: Create Activity
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 			| ActivitySource         | DirectEmail      |
 			| ActivitySellingReason  | Relocation       |
@@ -36,7 +36,7 @@ Scenario: Create Activity
 			| PropertyType | Division    |
 			| House        | Residential |
 		And Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | Lastname | Title |
 			| Michael   | Angel   | cheef |
 			| Michael   | Angel   | cook  |
 		And Ownership Freeholder exists in database
@@ -123,7 +123,7 @@ Scenario: Get Activity with viewing and offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | Lastname | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Company exists in database
 		And Requirement of type ResidentialSale exists in database
