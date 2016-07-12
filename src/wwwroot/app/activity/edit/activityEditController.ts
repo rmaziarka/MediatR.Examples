@@ -27,6 +27,8 @@ module Antares.Activity {
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
         private defaultActivityStatusCode: string = 'PreAppraisal';
+        private weeklyCode: string = 'Weekly';
+        private monthlyhCode: string = 'Monthly';
 
         //controls
         controlSchemas: any = {
@@ -420,6 +422,7 @@ module Antares.Activity {
 
         public rentPaymentPeriodChanged = (id: string) => {
             this.activity.rentPaymentPeriodId = id;
+            this.copyRentValues();
             this.reloadConfig(this.activity);
         }
 
@@ -466,6 +469,11 @@ module Antares.Activity {
             if (!valid) {
                 this.kfMessageService.showErrorByCode(this.departmentErrorMessageCode, this.departmentErrorTitleCode);
                 return;
+            }
+
+            if (this.activity.rentPaymentPeriodId != null) {
+
+                this.calculateRentPayments();
             }
 
             if (this.isAddMode()) {
@@ -671,6 +679,81 @@ module Antares.Activity {
         public isAppraisalMeetingSectionVisible = (): Boolean => {
             return this.config != null && (this.config.editConfig.appraisalMeetingDate != null ||
                 this.config.editConfig.appraisalMeetingAttendees != null || this.config.editConfig.appraisalMeetingInvitation != null);
+        }
+
+        private copyRentValues = () => {
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
+                this.copyRentMonthValuesToWeekValues();
+            }
+
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.monthlyhCode)) {
+                this.copyRentWeekValuesToMonthValues();
+            }
+        }
+
+        private copyRentMonthValuesToWeekValues = () => {
+            this.activity.shortAskingWeekRent = this.activity.shortAskingMonthRent;
+            this.activity.shortMatchFlexWeekValue = this.activity.shortMatchFlexMonthValue;
+            this.activity.longAskingWeekRent = this.activity.longAskingMonthRent;
+            this.activity.longMatchFlexWeekValue = this.activity.longMatchFlexMonthValue;
+        }
+
+        private copyRentWeekValuesToMonthValues = () => {
+            this.activity.shortAskingMonthRent = this.activity.shortAskingWeekRent;
+            this.activity.shortMatchFlexMonthValue = this.activity.shortMatchFlexWeekValue;
+            this.activity.longAskingMonthRent = this.activity.longAskingWeekRent;
+            this.activity.longMatchFlexMonthValue = this.activity.longMatchFlexWeekValue;
+        }
+
+
+        private calculateRentPayments = () => {
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
+                this.updateMonthValues();
+            }
+
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.monthlyhCode)) {
+                this.updateWeekValues();
+            }
+        }
+
+        private updateWeekValues = () => {
+            this.activity.shortAskingWeekRent = this.convertPerMonthValueToPerWeekValue(this.activity.shortAskingMonthRent);
+            this.activity.shortMatchFlexWeekValue = this.convertPerMonthValueToPerWeekValue(this.activity.shortMatchFlexMonthValue);
+            this.activity.longAskingWeekRent = this.convertPerMonthValueToPerWeekValue(this.activity.longAskingMonthRent);
+            this.activity.longMatchFlexWeekValue = this.convertPerMonthValueToPerWeekValue(this.activity.longMatchFlexMonthValue);
+        }
+
+        private updateMonthValues = () => {
+            this.activity.shortAskingMonthRent = this.convertPerWeekValueToPerMonthValue(this.activity.shortAskingWeekRent);
+            this.activity.shortMatchFlexMonthValue = this.convertPerWeekValueToPerMonthValue(this.activity.shortMatchFlexWeekValue);
+            this.activity.longAskingMonthRent = this.convertPerWeekValueToPerMonthValue(this.activity.longAskingWeekRent);
+            this.activity.longMatchFlexMonthValue = this.convertPerWeekValueToPerMonthValue(this.activity.longMatchFlexWeekValue);
+        }
+
+        private getRentPaymentPeriodId = (rentPaymentPeriodCode: string): string => {
+            var selectedRentPaymentPeriod: any = <Dto.IEnumTypeItem>_.find(this.enumProvider.enums[Dto.EnumTypeCode.RentPaymentPeriod], (item: Dto.IEnumTypeItem) => {
+                return item.code === rentPaymentPeriodCode;
+            });
+
+            return selectedRentPaymentPeriod.id;
+        }
+
+        public convertPerWeekValueToPerMonthValue(weekValue: number): number {
+            if (weekValue == null) {
+                return null;
+            }
+            else {
+                return Math.round((weekValue * 52.0) / 12.0);
+            }
+        }
+
+        public convertPerMonthValueToPerWeekValue(monthValue: number): number {
+            if (monthValue == null) {
+                return null;
+            }
+            else {
+                return Math.round((monthValue * 12.0) / 52.0);
+            }
         }
     }
 
