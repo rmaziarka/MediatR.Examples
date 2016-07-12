@@ -17,6 +17,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
+	 	CompanyType,
+	 	CompanyCategory,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -28,7 +30,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	Decoration,
 	 	MailingSalutation,
 	 	EventSalutation,
-	 	CompanyType,
 	 }
 
 	
@@ -117,6 +118,61 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		MassiveActionClient,
 		PrincipalClient,
 		KeyClient,
+	}
+
+	public enum CompanyType
+	{
+		KnightFrankGroup,
+		KnightFrankAffiliates,
+	}
+
+	public enum CompanyCategory
+	{
+		Accountants,
+		AgriculturalAndFarming,
+		Apparel,
+		ArchitectsDesign,
+		AssetManagement,
+		Banks,
+		BooksStationery,
+		BuildingAndConstruction,
+		BusinessServices,
+		BuyingAgent,
+		CareHome,
+		CharitiesAndChurches,
+		Chemist,
+		DeptVariety,
+		EateriesBars,
+		Education,
+		ElectricalTelephones,
+		EmploymentAgency,
+		EquestrianStud,
+		FamilyOffice,
+		Finance,
+		FoodDrinkRetailers,
+		GeneralServices,
+		Hotel,
+		Industrial,
+		Insurance,
+		InvestorsFundManagers,
+		Legal,
+		LocalAuthorityGovernment,
+		MediaAndPublishing,
+		MedicalHealthcare,
+		MultiFamilyOffice,
+		OilAndGas,
+		Other,
+		PropertyCompany,
+		PropertyConsultantsSurveyors,
+		RenewablesSustainability,
+		Retailers,
+		Supermarkets,
+		TelecommunicationsTechnology,
+		TourismLeisure,
+		Transport,
+		TravelAgents,
+		Utilities,
+		Wholesale,
 	}
 
 	public enum MortgageSurveyStatus
@@ -229,11 +285,5 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		EventSemiformal,
 		EventInformal,
 		EventPersonal,
-	}
-
-	public enum CompanyType
-	{
-		KnightFrankGroup,
-		KnightFrankAffiliates,
 	}
 }

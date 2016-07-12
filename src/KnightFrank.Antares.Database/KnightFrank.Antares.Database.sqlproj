@@ -279,8 +279,6 @@
     <None Include="Scripts\Views\ElasticSearchProperty.sql" />
     <None Include="Scripts\SQL\OfferType.sql" />
     <None Include="Scripts\SQL\OfferTypeLocalised.sql" />
-    <None Include="Scripts\SQL\CompanyCategory.sql" />
-    <None Include="Scripts\SQL\CompanyCategoryTypeLocalised.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\SQL\ContactTitle.sql" />

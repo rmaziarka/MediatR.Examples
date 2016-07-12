@@ -213,11 +213,6 @@
     <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
-    <Compile Include="Common\Enums\CompanyCategory.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CompanyCategory.tt</DependentUpon>
-    </Compile>
     <Compile Include="Common\Enums\DivisionEnum.cs" />
     <Compile Include="Common\Enums\EnumMapper.cs" />
     <Compile Include="Common\Enums\EnumParser.cs" />
@@ -449,10 +444,6 @@
     <Content Include="Common\BusinessValidators\CommonResources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonResources.cs</LastGenOutput>
-    </Content>
-    <Content Include="Common\Enums\CompanyCategory.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CompanyCategory.cs</LastGenOutput>
     </Content>
     <Content Include="Common\Enums\GenerateEnumTypeItems.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

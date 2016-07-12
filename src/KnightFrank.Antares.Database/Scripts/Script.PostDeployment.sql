@@ -2,8 +2,6 @@
 :r .\SQL\ContactTitle.sql
 :r .\SQL\Country.sql
 :r .\SQL\CountryLocalised.sql
-:r .\SQL\CompanyCategory.sql
-:r .\SQL\CompanyCategoryTypeLocalised.sql
 :r .\SQL\Department.sql
 :r .\SQL\Business.sql
 :r .\SQL\EnumType.sql

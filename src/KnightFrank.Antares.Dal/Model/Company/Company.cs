@@ -12,7 +12,7 @@
         public string Description { get; set; }
         public bool? Valid { get; set; }
         public Guid? CompanyCategoryId { get; set; }
-        public CompanyCategory CompanyCategory { get; set; }
+        public EnumTypeItem CompanyCategory { get; set; }
         public Guid? CompanyTypeId { get; set; }
         public EnumTypeItem CompanyType { get; set; }
         public virtual ICollection<CompanyContact> CompaniesContacts { get; set; }
