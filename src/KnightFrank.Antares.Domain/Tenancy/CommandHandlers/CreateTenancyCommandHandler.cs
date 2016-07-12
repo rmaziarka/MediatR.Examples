@@ -50,7 +50,8 @@
 
         public Guid Handle(CreateTenancyCommand message)
         {
-            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
+            Requirement requirement =
+                this.requirementRepository.GetWithInclude(x => x.Id == message.RequirementId, x => x.RequirementType).Single();
 
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
             this.entityValidator.EntityExists(requirement, message.RequirementId);
@@ -58,7 +59,7 @@
             this.entityValidator.EntitiesExist<Contact>(message.LandlordContacts);
             this.entityValidator.EntitiesExist<Contact>(message.TenantContacts);
 
-            Enums.RequirementType requirementTypeEnum = this.GetRequirementTypeEnum(message.RequirementId);
+            Enums.RequirementType requirementTypeEnum = EnumExtensions.ParseEnum<Enums.RequirementType>(requirement.RequirementType.EnumCode);
             Enums.TenancyType tenancyTypeEnum = EnumMapper.GetEnum<Enums.RequirementType, Enums.TenancyType>(requirementTypeEnum);
 
             this.attributeValidator.Validate(PageType.Create, Tuple.Create(tenancyTypeEnum, requirementTypeEnum), message);
@@ -81,14 +82,6 @@
             this.tenancyGenericRepository.Save();
 
             return tenancy.Id;
-        }
-
-        private Enums.RequirementType GetRequirementTypeEnum(Guid requirementId)
-        {
-            Requirement requirement =
-                this.requirementRepository.GetWithInclude(x => x.Id == requirementId, x => x.RequirementType).Single();
-
-            return EnumExtensions.ParseEnum<Enums.RequirementType>(requirement.RequirementType.EnumCode);
         }
 
         private Dal.Model.Tenancy.TenancyType GetTenancyType(Enums.TenancyType tenancyTypeEnum)

@@ -15,30 +15,15 @@ module Antares.Tenancy {
                 template: "<tenancy-view></tenancy-view>"
             })
             .state('app.tenancy-edit', {
-                url: '/activity/:activityId/requirement/:requirementId/tenancy/edit',
+                url: '/tenancy/edit/:id',
                 template: "<tenancy-edit tenancy='tenancy'></tenancy-edit>",
-                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity) => {
-                    var activityPreview = new Business.ActivityPreviewModel(activity);
-                    var requirementPreview = new Business.RequirementPreviewModel(requirement);
-
-                    var tenancy = new Tenancy.TenancyEditModel();
-                    tenancy.activity = activityPreview;
-                    tenancy.landlords = activityPreview.landlords;
-
-                    tenancy.requirement = requirementPreview;
-                    tenancy.tenants = requirementPreview.contacts;
-
-                    $scope['tenancy'] = tenancy;
+                controller: ($scope: ng.IScope, tenancy: Dto.ITenancy) => {
+                    $scope['tenancy'] = new Tenancy.TenancyEditModel(tenancy);;
                 },
                 resolve: {
-                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
-                        var activityId: string = $stateParams['activityId'];
+                    tenancy: ($stateParams: ng.ui.IStateParamsService, tenancyService: Antares.Services.TenancyService) => {
+                        return tenancyService.getTenancy($stateParams['id']);
 
-                        return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
-                    },
-                    requirement: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
-                        var requirementId = $stateParams['requirementId'];
-                        return dataAccessService.getRequirementResource().get({ id: requirementId }).$promise;
                     }
                 }
             }).state('app.tenancy-add', {

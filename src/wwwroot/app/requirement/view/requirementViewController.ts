@@ -282,6 +282,10 @@ module Antares.Requirement.View {
             this.requirement.offers.push(offer);
         }
 
+        canTenancyBeNegotiated = (offerModel: Business.Offer) => {
+            return offerModel.canTenancyBeNegotiated() && this.requirement.tenancy === null;
+        }
+
         onUpdateOffer = (offerModel: Dto.IOffer) =>{
             var offer = new Business.Offer(offerModel);
             var existingOfferIndex = _.findIndex(this.requirement.offers, { id : offer.id });

@@ -63,7 +63,7 @@
 
             // Assert
             entityValidator.Verify(x => x.EntityExists<Activity>(command.ActivityId));
-            entityValidator.Verify(x => x.EntityExists<Requirement>(command.RequirementId));
+            entityValidator.Verify(x => x.EntityExists(requirement, command.RequirementId));
 
             entityValidator.Verify(x => x.EntitiesExist<Contact>(command.LandlordContacts));
             entityValidator.Verify(x => x.EntitiesExist<Contact>(command.TenantContacts));

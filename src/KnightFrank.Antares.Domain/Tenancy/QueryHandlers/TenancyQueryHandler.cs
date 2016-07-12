@@ -22,7 +22,10 @@
         {
             return this.tenancyRepository.Get()
                        .Include(x => x.Requirement)
+                       .Include(x => x.Requirement.Contacts)
                        .Include(x => x.Activity)
+                       .Include(x => x.Activity.Property)
+                       .Include(x => x.Activity.Property.Address)
                        .Include(x => x.Terms)
                        .Include(x => x.Contacts)
                        .Include(x => x.Contacts.Select(c => c.Contact))

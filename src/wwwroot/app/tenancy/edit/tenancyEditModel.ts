@@ -16,7 +16,8 @@ module Antares.Tenancy {
         constructor(dto?: Antares.Common.Models.Dto.ITenancy) {
             if (dto) {
                 this.id = dto.id;
-
+                this.activity = new Business.ActivityPreviewModel(dto.activity);
+                this.requirement = new Business.RequirementPreviewModel(dto.requirement);
             }
         }
     }
