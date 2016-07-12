@@ -73,7 +73,7 @@
 
             foreach (Contact contact in contacts)
             {
-                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.LastName);
             }
             this.page.ContactsList.ConfigureOwnership();
         }
@@ -259,7 +259,7 @@
                     expectdOwnershipDetails += " " + ownershipDetails.PurchaseDate + " - " + ownershipDetails.SellDate;
                 }
 
-                Assert.Equal(ownershipDetails.ContactName + " " + ownershipDetails.ContactSurname, contact);
+                Assert.Equal(ownershipDetails.ContactName + " " + ownershipDetails.ContactLastName, contact);
                 Assert.Equal(expectdOwnershipDetails, currentOwnershipDetails);
             }
         }

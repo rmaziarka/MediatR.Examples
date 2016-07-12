@@ -28,6 +28,10 @@ module Antares {
                     "requirement": {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTREQUIREMENTS",
                         fieldName: "requirements"
+                    },
+                    "contact": {
+                        titleKey: "COMMON.NAVIGATIONDRAWER.RECENTCONTACTS",
+                        fieldName: "contacts"
                     }
                 }
 

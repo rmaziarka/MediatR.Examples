@@ -33,7 +33,8 @@ module Antares.TestHelpers {
                 division: null,
                 roles: [],
                 salutationFormatId: null,
-                department: department
+                department: department,
+                locale: LocaleGenerator.generateDto('en')
             }
 
             return userData;

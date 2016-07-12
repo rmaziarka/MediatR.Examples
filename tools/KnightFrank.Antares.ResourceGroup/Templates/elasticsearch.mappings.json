@@ -8,7 +8,7 @@
         "Id": {
           "type": "string"
         },
-        "Surname": {
+        "LastName": {
           "type": "string"
         },
         "Title": {

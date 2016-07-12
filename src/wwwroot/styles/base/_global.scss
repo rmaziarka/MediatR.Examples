@@ -81,6 +81,11 @@ ol {
 .page-header {
   margin: 20px 0;
   padding-bottom: 5px;
+
+  .badge {
+    border-radius: 0;
+    display: inline;
+  }
 }
 
 .text-truncate {

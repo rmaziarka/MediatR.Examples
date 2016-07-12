@@ -13,6 +13,8 @@
     public class CreateOfferPage : ProjectPageBase
     {
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in address-form-view .ng-binding");
+        //TODO remove old details when new card will be introduced on create offer panel
+        private readonly ElementLocator oldDetails = new ElementLocator(Locator.CssSelector, ".slide-in #activity-details");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
@@ -26,6 +28,9 @@
         public CreateOfferPage(DriverContext driverContext) : base(driverContext)
         {
         }
+
+        //TODO remove old details when new card will be introduced on create offer panel
+        public string OldDetails => this.Driver.GetElement(this.oldDetails).Text;
 
         public CreateOfferPage SelectStatus(string text)
         {

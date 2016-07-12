@@ -1,20 +1,22 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
+    const pageObjectSelectors = {
+        requiredValidatorSelector: '[name="requiredValidationError"]',
+        minNumberValidationError: '[name="minNumberValidationError"]',
+        maxNumberValidationError: '[name="maxNumberValidationError"]',
+        numberGreaterThanValidationError: '[name="numberGreaterThanValidationError"]',
+        maxLengthValidatorSelector: '[name="maxLengthValidationError"], [name="kfMaxCountValidationError"]',
+        formatValidationError: '[name="formatValidationError"]',
+        dateFormatValidationError: '[name="dateValidationError"]',
+        numberFormatValidationError: '[name="numberValidationError"]',
+        dateGreaterThanValidationError: '[name="dateGreaterThanValidationError"]',
+        dateLowerThanValidationError: '[name="dateLowerThanValidationError"]',
+        anyValidationMessageError: 'ng-message'
+    };
+
     export class AssertValidators {
-        private pageObjectSelectors = {
-            requiredValidatorSelector : '[name="requiredValidationError"]',
-            minNumberValidationError: '[name="minNumberValidationError"]',
-            maxNumberValidationError: '[name="maxNumberValidationError"]',
-            numberGreaterThanValidationError: '[name="numberGreaterThanValidationError"]',
-            maxLengthValidatorSelector: '[name="maxLengthValidationError"], [name="kfMaxCountValidationError"]',
-            formatValidationError: '[name="formatValidationError"]',
-            dateFormatValidationError: '[name="dateValidationError"]',
-            numberFormatValidationError: '[name="numberValidationError"]',
-            dateGreaterThanValidationError: '[name="dateGreaterThanValidationError"]',
-            dateLowerThanValidationError: '[name="dateLowerThanValidationError"]',
-            anyValidationMessageError: 'ng-message'
-        };
+        private pageObjectSelectors = pageObjectSelectors;
 
         constructor(private element: ng.IAugmentedJQuery, private scope: ng.IScope){
             this.element = element;
@@ -23,6 +25,10 @@ module Antares.TestHelpers {
 
         public assertRequiredValidator = (inputValue: string | number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
             this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.requiredValidatorSelector, parentSelector);
+        }
+
+        public assertInputOnlyRequiredValidator = (inputValue: string | number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertInputOnlyValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.requiredValidatorSelector);
         }
 
         public assertMinValueValidator = (inputMinValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
@@ -37,6 +43,12 @@ module Antares.TestHelpers {
             var value = this.generateString(inputValueLength);
 
             this.assertValidator(value, expectedResult, inputSelector, this.pageObjectSelectors.maxLengthValidatorSelector, parentSelector);
+        }
+
+        public assertInputOnlyMaxLengthValidator = (inputValueLength: number, expectedResult: boolean, inputSelector: string) => {
+            var value = this.generateString(inputValueLength);
+
+            this.assertInputOnlyValidator(value, expectedResult, inputSelector, this.pageObjectSelectors.maxLengthValidatorSelector);
         }
 
         public assertNumberGreaterThenValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
@@ -63,7 +75,7 @@ module Antares.TestHelpers {
             this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.numberFormatValidationError, parentSelector);
         }
 
-        public assertValidAndNoMessages = (inputValue: string, inputSelector: string, parentSelector?: string) =>{
+        public assertValidWithoutMessages = (inputValue: string, inputSelector: string, parentSelector?: string) =>{
             var input = this.element.find(inputSelector);
             var pageObject: InputValidationAdapter =
                 new InputValidationAdapter(input, this.pageObjectSelectors.anyValidationMessageError, this.scope, parentSelector);
@@ -81,11 +93,38 @@ module Antares.TestHelpers {
 
             pageObject.writeValue(inputValue);
 
-            var isValidMessage = expectedResult ? "Input is invalid but is expected to be valid" : "Input is valid but is expected to be invalid";
-            var isValidationShownMessage = expectedResult ? "Validation message is shown but input is valid" : "Validation message is not shown or too many validation messages shown";
+            pageObject.assertIsInputValid(expectedResult);
+            pageObject.assertIsMessageInvisible(expectedResult);
+        }
 
-            expect(pageObject.isInputValid()).toBe(expectedResult, isValidMessage);
-            expect(pageObject.isValidationShown()).toBe(!expectedResult, isValidationShownMessage);
+        private assertInputOnlyValidator = (inputValue: any, expectedResult: boolean, inputSelector: string, errorSelector: string) => {
+            var input = this.element.find(inputSelector);
+
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(input, errorSelector, this.scope, null);
+
+            pageObject.writeValue(inputValue);
+
+            pageObject.assertIsInputValid(expectedResult);
+        }
+
+        public set(input: string | number, inputSelector: string, parentSelector?: string): InputValidationAdapter{
+            let inputValue: string;
+            if (typeof input === "number") {
+                inputValue = this.generateString(input);
+            }
+            else {
+                inputValue = <string>input;
+            }
+
+            var inputElement = this.element.find(inputSelector);
+
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(inputElement, null, this.scope, parentSelector);
+
+            pageObject.writeValue(inputValue);
+
+            return pageObject;
         }
 
         // TODO: method name not valid for what it does... use everywhere method below (assertElementHasHideClass)
@@ -104,7 +143,7 @@ module Antares.TestHelpers {
         }
     }
 
-   export class InputValidationAdapter {
+    class InputValidationAdapter {
         private pageObject = {
             inputValidCss : 'ng-valid'
         }
@@ -130,6 +169,48 @@ module Antares.TestHelpers {
         public writeValue(value: string){
             this.input.val(value).trigger('input').trigger('change').trigger('blur');
             this.scope.$apply();
+        }
+
+        public checkRequired() {
+            this.validatorSelector = pageObjectSelectors.requiredValidatorSelector;
+            return this;
+        }
+
+        public checkMinNumber() {
+            this.validatorSelector = pageObjectSelectors.minNumberValidationError;
+            return this;
+        }
+
+        public checkMaxNumber() {
+            this.validatorSelector = pageObjectSelectors.maxNumberValidationError;
+            return this;
+        }
+
+        public checkLength() {
+            this.validatorSelector = pageObjectSelectors.maxLengthValidatorSelector;
+            return this;
+        }
+
+        public assertValid(): void {
+            this.assertIsInputValid(true);
+            this.assertIsMessageInvisible(true);
+        }
+
+        public assertInvalid(): void {
+            this.assertIsInputValid(false);
+            this.assertIsMessageInvisible(false);
+        }
+
+        public assertIsInputValid(expectedResult: boolean): void{
+            var isValidMessage = expectedResult ? "Input is invalid but is expected to be valid" : "Input is valid but is expected to be invalid";
+            
+            expect(this.isInputValid()).toBe(expectedResult, isValidMessage);
+        }
+
+        public assertIsMessageInvisible(expectedResult: boolean): void {
+            var isValidationShownMessage = expectedResult ? "Validation message is shown but input is valid" : "Validation message is not shown or too many validation messages shown";
+            
+            expect(this.isValidationShown()).not.toBe(expectedResult, isValidationShownMessage);
         }
     }
 

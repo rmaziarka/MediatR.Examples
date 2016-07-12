@@ -358,6 +358,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more negotiators are duplicated..
+        /// </summary>
+        internal static string Negotiators_Not_Unique {
+            get {
+                return ResourceManager.GetString("Negotiators_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Offer Date must be less than or equal to {0}..
         /// </summary>
         internal static string OfferDateLessOrEqualToCreateDate {
