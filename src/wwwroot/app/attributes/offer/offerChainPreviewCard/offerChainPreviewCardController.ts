@@ -1,11 +1,12 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares.Attributes.Offer.OfferChain {
+    import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
     export class OfferChainPreviewCardController {
         // bindings
-        chain: Dto.IChainTransaction;
+        chain: Business.ChainTransaction;
         onEdit: () => void;
 
         // controls

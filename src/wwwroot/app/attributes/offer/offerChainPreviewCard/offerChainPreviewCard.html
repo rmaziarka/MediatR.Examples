@@ -4,17 +4,18 @@
             <h3 translate="OFFER.CHAIN.PREVIEW.CHAIN_PREVIEW"></h3>
         </side-panel-header>
         <side-panel-content>
-
-            <div class="side-panel-nav">
-                <a href="#" class="side-panel-prev text-small">Previous</a>
-                <a href="#" class="side-panel-next pull-right">Next</a>
-            </div>
+        <!--
+        <div class="side-panel-nav">
+            <a href="#" class="side-panel-prev text-small">Previous</a>
+            <a href="#" class="side-panel-next pull-right">Next</a>
+        </div>
+         -->
 
             <div class="section-details">
                 <h5 translate="OFFER.CHAIN.PREVIEW.PROPERTY"></h5>
-                <card-list-item class="offer-view-activity">
+                <card-list-item>
                     <card show-context-menu="true" display-new-control="true"
-                          card-template-url="'app/attributes/offer/offerChainPreviewCard/offerChainProperty.html'" item="vm.offer">
+                          card-template-url="'app/attributes/offer/offerChainPreviewCard/offerChainProperty.html'" item="vm.chain.property">
                         <card-context-menu>
                             <context-menu-item type="details" item="vm.chain.property" action="vm.navigateToProperty"></context-menu-item>
                         </card-context-menu>

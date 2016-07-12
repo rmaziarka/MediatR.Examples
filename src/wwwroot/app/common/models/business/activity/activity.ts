@@ -126,7 +126,8 @@ module Antares.Common.Models.Business {
                 propertyName : "West Forum",
                 propertyNumber : "142",
                 line2 : "Strzegomska",
-                postcode : "123"
+                postcode: "123",
+                countryId: "B17DDE86-0348-E611-8115-00155D038C01"
                 }
             parent.property.address = new Business.Address(parent.property.address);
             parent.vendor = 'Mark Bower';
@@ -138,7 +139,7 @@ module Antares.Common.Models.Business {
             parent.solicitorContact = <Business.Contact> {
                 id: "{D1152CD5-DB0A-4F7F-97BB-A1CA28661191}",
                 firstName: "Kim",
-                surname: "West",
+                lastName: "West",
                 title: "Mr"
             };
             parent.solicitorCompany = <Business.Company> {
@@ -172,14 +173,14 @@ module Antares.Common.Models.Business {
                     propertyNumber: "123",
                     line2: "Powstancow Slaskich",
                     postcode: "1232",
-                    countryId: "285C0E65-F447-E611-8115-00155D038C01"
+                    countryId: "B17DDE86-0348-E611-8115-00155D038C01"
                 }
             child.property.address = new Business.Address(child.property.address);
             child.vendor = 'Gilberto Lyons';
             child.agentContact = <Business.Contact>{
                 id: "{CCF43460-41DB-42A3-8DE8-6D7D71BCBFF1}",
                 firstName: "Krista",
-                surname: "Porter",
+                lastName: "Porter",
                 title: "Mr"
             };
             child.agentCompany = <Business.Company>{
@@ -189,7 +190,7 @@ module Antares.Common.Models.Business {
             child.solicitorContact = <Business.Contact>{
                 id: "{767460B5-191A-49DD-9F8F-5FB268237AC5}",
                 firstName: "Tyhtrone",
-                surname: "Jonston",
+                lastName: "Jonston",
                 title: "Mr"
             };
             child.solicitorCompany = <Business.Company>{
@@ -221,7 +222,8 @@ module Antares.Common.Models.Business {
                     propertyName: "Water Tower",
                     propertyNumber: "1",
                     line2: "Aleja Wisniowa",
-                    postcode: "12"
+                    postcode: "12",
+                    countryId: "B17DDE86-0348-E611-8115-00155D038C01"
                 }
             child2.property.address = new Business.Address(child2.property.address);
             child2.vendor = 'Faye Castro';
@@ -233,7 +235,7 @@ module Antares.Common.Models.Business {
             child2.solicitorContact = <Business.Contact>{
                 id: "{9CD195CE-B516-4C56-BEB8-632B04162443}",
                 firstName: "Casey",
-                surname: "Delgado",
+                lastName: "Delgado",
                 title: "Mr"
             };
             child2.solicitorCompany = <Business.Company>{

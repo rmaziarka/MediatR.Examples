@@ -16,15 +16,14 @@
 
     public class ActivityChainMapper : IActivityReferenceMapper<ChainTransaction>
     {
-        private readonly ICollectionValidator collectionValidator;
+        
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<ChainTransaction> chainTransactionRepository;
 
-        public ActivityChainMapper(ICollectionValidator collectionValidator,
+        public ActivityChainMapper(
             IEntityValidator entityValidator,
             IGenericRepository<ChainTransaction> chainTransactionRepository)
         {
-            this.collectionValidator = collectionValidator;
             this.entityValidator = entityValidator;
             this.chainTransactionRepository = chainTransactionRepository;
         }
@@ -62,24 +61,24 @@
 
             foreach (ChainTransaction chainTransaction in message.ChainTransactions)
             {
-                this.entityValidator.EntityExists<Property>(chainTransaction.PropertyId);                                
+                this.entityValidator.EntityExists<Property>(chainTransaction.PropertyId);
                 this.entityValidator.EntityExists<Company>(chainTransaction.SolicitorCompanyId);
                 this.entityValidator.EntityExists<Contact>(chainTransaction.SolicitorContactId);
-                if (chainTransaction.IsKnightFrankAgent)
+                if (chainTransaction.AgentUserId.HasValue)
+                {
+                    this.entityValidator.EntityExists<User>(chainTransaction.AgentUserId);
+                    if (chainTransaction.AgentContactId.HasValue || chainTransaction.AgentCompanyId.HasValue)
+                    {
+                        throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAgentContact_InvalidValue);
+                    }
+                }
+                else
                 {
                     this.entityValidator.EntityExists<Company>(chainTransaction.AgentCompanyId);
                     this.entityValidator.EntityExists<Contact>(chainTransaction.AgentContactId);
                     if (chainTransaction.AgentUserId != null)
                     {
                         throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAgentUser_InvalidValue);
-                    }
-                }
-                else
-                {
-                    this.entityValidator.EntityExists<User>(chainTransaction.AgentUserId);
-                    if (chainTransaction.AgentContactId != null)
-                    {
-                        throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAgentContact_InvalidValue);
                     }
                 }
 

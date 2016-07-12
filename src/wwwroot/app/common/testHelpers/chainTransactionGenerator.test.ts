@@ -21,8 +21,7 @@ module Antares.TestHelpers {
                 enquiriesId: this.makeRandom("enquiriesId"),
                 enquiries: null,
                 contractAgreedId: this.makeRandom("contractAgreedId"),
-                contractAgreed: null,
-                isKnightFrankAgent: true
+                contractAgreed: null
             };
 
             return angular.extend(chain, specificData || {});
