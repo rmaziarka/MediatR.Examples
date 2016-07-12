@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -11,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
     using KnightFrank.Antares.Domain.Tenancy.Queries;
+    using KnightFrank.Antares.Domain.Tenancy.QueryResults;
 
     using MediatR;
 
@@ -75,6 +77,20 @@
             Guid tenancyId = this.mediator.Send(command);
 
             return this.GetTenancy(tenancyId);
+        }
+
+
+        /// <summary>
+        /// Gets the tenancy types.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("types")]
+        public IList<TenancyTypeQueryResult> GetTenancyTypes([FromUri] TenancyTypeQuery query)
+        {
+            query = query ?? new TenancyTypeQuery();
+            return this.mediator.Send(query);
         }
     }
 }

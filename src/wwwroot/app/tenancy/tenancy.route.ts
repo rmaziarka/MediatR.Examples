@@ -27,9 +27,9 @@ module Antares.Tenancy {
                     }
                 }
             }).state('app.tenancy-add', {
-                url: '/activity/:activityId/requirement/:requirementId/tenancy/edit',
+                url: '/activity/:activityId/requirement/:requirementId/tenancy/add',
                 template: "<tenancy-edit tenancy='tenancy' config='config'></tenancy-edit>",
-                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity) => {
+                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity, enumProvider: Providers.EnumProvider) => {
                     var activityPreview = new Business.ActivityPreviewModel(activity);
                     var requirementPreview = new Business.RequirementPreviewModel(requirement);
 
@@ -43,6 +43,9 @@ module Antares.Tenancy {
                     $scope['tenancy'] = tenancy;
                 },
                 resolve: {
+                    tenancyTypes: (tenancyService: Antares.Services.TenancyService) => {
+                        return tenancyService.getTenancyTypes();
+                    },  
                     activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var activityId: string = $stateParams['activityId'];
 
@@ -52,11 +55,13 @@ module Antares.Tenancy {
                         var requirementId = $stateParams['requirementId'];
                         return dataAccessService.getRequirementResource().get({ id: requirementId }).$promise;
                     },
-                    config: (configService: Services.ConfigService, requirement: Dto.IRequirement) =>{
+                    config: (configService: Services.ConfigService, requirement: Dto.IRequirement, tenancyTypes: Dto.IResourceType[]) => {
+                        var lettingType =_.find(tenancyTypes, (type: Dto.IResourceType) => { return type.enumCode === Antares.Common.Models.Enums.TenancyType[Antares.Common.Models.Enums.TenancyType.ResidentialLetting]; });
+
                         var entity = new Common.Models.Commands.Tenancy.TenancyAddCommand();
                         return configService.getTenancy(PageTypeEnum.Create,
                             requirement.requirementTypeId,
-                            null,
+                            lettingType.id,
                             entity);
                     },
                 }

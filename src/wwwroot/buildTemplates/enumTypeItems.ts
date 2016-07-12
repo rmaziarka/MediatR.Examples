@@ -243,4 +243,11 @@ module Antares.Common.Models.Enums
 		ResidentialLetting,
 	}
 
+	export enum TenancyType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
+
 }

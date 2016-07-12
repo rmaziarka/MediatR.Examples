@@ -332,11 +332,14 @@
     <Compile Include="Tenancy\Commands\UpdateTenancyCommand.cs" />
     <Compile Include="Tenancy\Commands\CreateTenancyCommand.cs" />
     <Compile Include="Tenancy\Commands\UpdateTenancyTerm.cs" />
+    <Compile Include="Tenancy\Queries\TenancyTypeQuery.cs" />
     <Compile Include="Tenancy\Queries\TenancyQuery.cs" />
     <Compile Include="Tenancy\QueryHandlers\TenancyQueryHandler.cs" />
     <Compile Include="Tenancy\CommandHandlers\Relations\ITenancyReferenceMapper.cs" />
     <Compile Include="Tenancy\CommandHandlers\Relations\TenancyContactMapper.cs" />
     <Compile Include="Tenancy\CommandHandlers\Relations\TenancyTermsMapper.cs" />
+    <Compile Include="Tenancy\QueryHandlers\TenancyTypeQueryHandler.cs" />
+    <Compile Include="Tenancy\QueryResults\TenancyTypeQueryResult.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
     <Compile Include="User\Commands\UserCommandProfile.cs" />
     <Compile Include="User\Commands\UpdateUserCommand.cs" />

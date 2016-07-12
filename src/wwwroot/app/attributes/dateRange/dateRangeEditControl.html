@@ -1,32 +1,46 @@
-﻿<ng-form name="{{vm.schema.formName}}" ng-if="vm.config">
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
 
     <div class="row">
         <div class="col-sm-8 col-md-6">
-            <div class="form-group">
-                <label for="start-date" class="required" translate="TENANCY.COMMON.START_DATE"></label>
+            <div class="form-group" show-errors>
+                <label for="start-date" class="required" translate="{{vm.schema.dateFromTranslationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
                 <div class="input-group">
-                    <input type="text" class="form-control" name="dateFrom" id="{{vm.schema.dateFromControlId}}" ng-model="vm.dateFrom" is-open="vm.isDateFromOpened" uib-datepicker-popup="dd-MM-yyyy" close-text="Close" placeholder="dd-mm-yyyy" >
+                    <input type="text" class="form-control" name="dateFrom" id="{{vm.schema.dateFromControlId}}"
+                           ng-model="vm.dateFrom"
+                           ng-required="vm.config[vm.schema.fieldName].required"
+                           ng-disabled="!vm.config[vm.schema.fieldName].active"
+                           is-open="vm.isDateFromOpened"
+                           uib-datepicker-popup="dd-MM-yyyy"
+                           close-text="Close"
+                           placeholder="dd-mm-yyyy">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openDateFromCalendar()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
-                <div ng-messages="{{vm.schema.formName}}.dateFrom.$error" ng-show="{{vm.schema.formName}}.$submitted || {{vm.schema.formName}}.dateFrom.$dirty">
+                <div ng-messages="vm[vm.schema.formName].dateFrom.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].dateFrom.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
         </div>
         <div class="col-sm-8 col-md-6">
-            <div class="form-group" >
-                <label for="start-date" class="required" translate="TENANCY.COMMON.END_DATE"></label>
+            <div class="form-group" show-errors>
+                <label for="start-date" class="required" translate="{{vm.schema.dateToTranslationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
                 <div class="input-group">
-                    <input type="text" class="form-control" name="dateTo" id="{{vm.schema.dateToControlId}}" ng-model="vm.dateTo" date-greater-than="{{vm.dateFrom}}"
-                           is-open="vm.isDateToOpened" uib-datepicker-popup="dd-MM-yyyy" close-text="Close" placeholder="dd-mm-yyyy">
+                    <input type="text" class="form-control" name="dateTo" id="{{vm.schema.dateToControlId}}"
+                           ng-model="vm.dateTo"
+                           ng-required="vm.config[vm.schema.fieldName].required"
+                           ng-disabled="!vm.config[vm.schema.fieldName].active"
+                           date-greater-than="{{vm.dateFrom}}"
+                           is-open="vm.isDateToOpened"
+                           uib-datepicker-popup="dd-MM-yyyy"
+                           close-text="Close"
+                           placeholder="dd-mm-yyyy">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openDateToCalendar()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
-                <div ng-messages="{{vm.schema.formName}}.dateTo.$error" ng-show="{{vm.schema.formName}}.$submitted || {{vm.schema.formName}}.dateTo.$dirty">
-                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                <div ng-messages="vm[vm.schema.formName].dateTo.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].dateTo.$dirty">
+                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_START_DATE"></p>
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
 

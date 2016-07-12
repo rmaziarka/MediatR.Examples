@@ -7,5 +7,6 @@ declare module Antares.Attributes {
         formName: string,
         dateFromTranslationKey: string;
         dateToTranslationKey: string;
+        fieldName: string;
     }
 }

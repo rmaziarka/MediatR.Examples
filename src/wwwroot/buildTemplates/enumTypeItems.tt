@@ -41,6 +41,18 @@ module Antares.Common.Models.Enums
 	<#  } #>
 }
 
+<#
+	string tenancyTypefileName = this.Host.ResolvePath("..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\tenancytype.csv");
+	var tenancyTypes = ParseResourceFile(requirementTypefileName);
+#>
+	export enum TenancyType
+	{
+	<#foreach (var enumTypeItemName in tenancyTypes) { #>
+	<#=enumTypeItemName#>,
+	<#  } #>
+}
+
+
 }
 <#+
 	public Dictionary<string,List<string>> ParseFile( string path) {

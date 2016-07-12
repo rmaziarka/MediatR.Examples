@@ -16,6 +16,11 @@ module Antares.Services {
             return this.$http.get(this.appConfig.rootUrl + this.url + id)
                 .then<Dto.ITenancy>((result: ng.IHttpPromiseCallbackArg<Dto.ITenancy>) => result.data);
         }
+
+        getTenancyTypes = (): ng.IHttpPromise<Dto.IResourceType[]> => {
+            return this.$http.get(this.appConfig.rootUrl + this.url + 'types')
+                .then<Dto.IResourceType[]>((result: ng.IHttpPromiseCallbackArg<Dto.IResourceType[]>) => result.data);
+        }
     }
 
     angular.module('app').service('tenancyService', TenancyService);

@@ -3,7 +3,7 @@
 module Antares.Tenancy {
     angular.module('app').component('tenancyEdit', {
         templateUrl: 'app/tenancy/edit/tenancyEdit.html',
-        controllerAs: 'tevm',
+        controllerAs: 'vm',
         controller: 'TenancyEditController',
         bindings: {
             tenancy: '<',
