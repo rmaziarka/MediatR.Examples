@@ -14,7 +14,7 @@
     </div>
     <div class="col-sm-4 col-md-2 col-lg-2">
         <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.PROPOSED_EXCHANGE"></h4></div>
-        <time>{{(vm.item.exchangeDate | date : 'dd-MM-yyyy') || '-'}}</time>
+        <time>{{(vm.item.exchangeDate | date : 'dd-MM-yyyy') | defaultValue}}</time>
     </div>
     <!--<div class="col-sm-12 col-md-5 col-lg-6">
         <div class="card-columns-header"><h4 translate="ACTIVITY.VIEW.OFFERS.DETAILS.LATEST_NOTE"></h4></div>
