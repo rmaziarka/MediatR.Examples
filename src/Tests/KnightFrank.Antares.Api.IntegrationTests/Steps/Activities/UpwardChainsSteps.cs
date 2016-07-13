@@ -87,7 +87,10 @@
                         e =>
                             e.EnumType.Code.Equals(nameof(ChainContractAgreedStatus)) &&
                             e.Code.Equals(nameof(ChainContractAgreedStatus.Outstanding))).Id,
-                ParentId = null
+                ParentId =
+                    this.scenarioContext.ContainsKey("ChainTransaction")
+                        ? this.scenarioContext.Get<ChainTransaction>("ChainTransaction").Id
+                        : (Guid?)null
             };
 
             activity.ChainTransactions.Add(chainTransaction);
@@ -95,6 +98,7 @@
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(activity, "Activity");
+            this.scenarioContext["ChainTransaction"] = chainTransaction;
         }
 
         [When(@"User updates activity with upward chain")]
