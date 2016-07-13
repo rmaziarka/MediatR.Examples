@@ -161,7 +161,7 @@
             ChainTransaction nextChain = null;
             do
             {
-                nextChain = chains.SingleOrDefault(c => c.Id == lastChain.ParentId);
+                nextChain = chains.SingleOrDefault(c => c.ParentId == lastChain.Id);
                 if (nextChain != null)
                     lastChain = nextChain;
             }
