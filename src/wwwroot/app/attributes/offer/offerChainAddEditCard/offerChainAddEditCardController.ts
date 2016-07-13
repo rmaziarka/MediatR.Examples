@@ -14,10 +14,10 @@ module Antares.Attributes.Offer.OfferChain {
         chain: Business.ChainTransaction;
         config: any;
         onEdit: () => void;
-        onSave: (obj: { chain: Business.ChainTransaction }) => void;
         onCancel: () => void;
         onReloadConfig: (chain: Business.ChainTransaction) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
+        onSave: (obj: { chain: Business.ChainTransaction }) => void;
 
         //properties
         offerChainAddEditCardForm: ng.IFormController;
@@ -26,7 +26,7 @@ module Antares.Attributes.Offer.OfferChain {
         public isThirdPartyAgentInEditMode: boolean = true;
         public thirdPartyAgentSearchOptions: SearchOptions = new SearchOptions();
         public usersSearchMaxCount: number = 100;
-        public isKnightFrankAgent: boolean;
+        public isKnightFrankAgent: boolean = true;
 
         isThirdPartyAgentEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         public companyContactType = Common.Models.Enums.CompanyContactType;
@@ -53,21 +53,19 @@ module Antares.Attributes.Offer.OfferChain {
                 formName: "thirdPartyAgentControlForm",
                 controlId: "offer-chain-edit-agent-user",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT",
+                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
                 fieldName: "thirdPartyAgent"
             },
             agentUser: <any>{
                 controlId: "offer-chain-edit-agent-user",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT"
             },
-            agentCompanyContact: <Attributes.ICompanyContactViewControlSchema>{
-                controlId: "offer-chain-edit-agent-contact",
-                translationKey: "OFFER.CHAIN.EDIT.AGENT",
-                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT"
-            },
             solicitorCompanyContact: <Attributes.ICompanyContactViewControlSchema>{
+                formName: "solicitorCompanyContactControlForm",
                 controlId: "offer-chain-edit-solicitor",
                 translationKey: "OFFER.CHAIN.EDIT.SOLICITOR",
-                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_SOLICITOR"
+                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_SOLICITOR",
+                fieldName: "solicitorCompanyContact"
             },
             mortgage: <Attributes.IEnumItemControlSchema>{
                 formName: "mortgageControlForm",
@@ -129,12 +127,6 @@ module Antares.Attributes.Offer.OfferChain {
             this.onEditCompanyContact({ companyContact: companyContact, type: type });
         }
 
-        public save = () => {
-            this.onSave({
-                chain: this.chain
-            });
-        }
-
         public cancel = () => {
             this.onCancel();
         }
@@ -150,6 +142,10 @@ module Antares.Attributes.Offer.OfferChain {
 
         public cancelChangeThirdPartyAgent = () => {
             this.isThirdPartyAgentInEditMode = false;
+        }
+
+        public save = () => {
+            this.onSave({ chain: angular.copy(this.chain) });
         }
 
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {

@@ -34,9 +34,7 @@
             {
                 ChainTransactions = new List<ChainTransaction>
                 {
-                    new ChainTransaction { Id = guid },
-                    new ChainTransaction { Id = Guid.NewGuid() },
-                    new ChainTransaction()
+                    new ChainTransaction { Id = guid }
                 }
             };
             var activity = new Activity
@@ -44,9 +42,7 @@
                 ChainTransactions = new List<ChainTransaction>
                 {
                     new ChainTransaction { Id = guid },
-                    new ChainTransaction { Id = Guid.NewGuid() },
-                    new ChainTransaction { Id = Guid.NewGuid() },
-                    new ChainTransaction { Id = Guid.NewGuid() }
+                    new ChainTransaction { Id = Guid.NewGuid(), ParentId = guid}
                 }
             };
 
@@ -57,7 +53,8 @@
             mapper.ValidateAndAssign(command, activity);
 
             // Assert
-            chainTransactionRepository.Verify(r => r.Delete(It.IsAny<ChainTransaction>()), Times.Exactly(3));
+            chainTransactionRepository.Verify(r => r.Delete(It.IsAny<ChainTransaction>()), Times.Exactly(1));
+
             activity.ChainTransactions.ShouldBeEquivalentTo(command.ChainTransactions);
         }
 

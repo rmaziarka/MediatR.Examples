@@ -255,4 +255,7 @@
   <data name="ActivityChainTransactionRemove_InvalidId" xml:space="preserve">
     <value>Removed transaction chain must be last transaction chain.</value>
   </data>
+  <data name="ActivityChainTransactionAddRemove_AtSameTime" xml:space="preserve">
+    <value>You cannot add and remove chain and the same time.</value>
+  </data>
 </root>

@@ -106,9 +106,26 @@
                     throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionEnd_InvalidValue);
                 }
             }
-
+            this.ValidateAddRemove(message, activity);
             this.ValidateAddedChains(message, activity);
             this.ValidateRemovedChains(message, activity);
+        }
+
+        private void ValidateAddRemove(ActivityCommandBase message, Activity activity)
+        {
+            var chainsToAdd = message.ChainTransactions
+                                .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
+                                .ToList();
+
+            var chainsToRemove = activity.ChainTransactions
+                                      .Where(x => message.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
+                                      .ToList();
+
+            if (chainsToAdd.Count > 0 && chainsToRemove.Count > 0)
+            {
+                throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAddRemove_AtSameTime);
+            }
+
         }
 
         private void ValidateAddedChains(ActivityCommandBase message, Activity activity)
@@ -122,9 +139,6 @@
 
             if(chainsToAdd.Count > 1)
                 throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAdd_MoreThanOne);
-
-            if (activity.ChainTransactions.Count == 0)
-                return;
 
             var chainToAdd = chainsToAdd.Single();
             var lastChain = this.FindLastChain(activity.ChainTransactions);
@@ -164,7 +178,7 @@
             ChainTransaction nextChain = null;
             do
             {
-                nextChain = chains.SingleOrDefault(c => c.Id == lastChain.ParentId);
+                nextChain = chains.SingleOrDefault(c => c.ParentId == lastChain.Id);
                 if (nextChain != null)
                     lastChain = nextChain;
             }

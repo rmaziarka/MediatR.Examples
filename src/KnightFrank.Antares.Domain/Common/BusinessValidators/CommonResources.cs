@@ -231,7 +231,12 @@
         /// Key value : Removed transaction chain must be last transaction chain.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        ActivityChainTransactionRemove_InvalidId
+        ActivityChainTransactionRemove_InvalidId,
+        /// <summary>
+        /// Key value : You cannot add and remove chain and the same time.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionAddRemove_AtSameTime
     }
 }
 

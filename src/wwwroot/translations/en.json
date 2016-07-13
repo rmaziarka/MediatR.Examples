@@ -600,6 +600,9 @@
       "EDIT": {
         "CHAIN_TRANSACTION": "Chain transaction",
         "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
         "PROGRESS": "Progress",
         "MORTGAGE": "Mortgage",
         "SURVEY": "Survey",
@@ -610,7 +613,8 @@
         "KNIGHT_FRANK": "Knight Frank",
         "THIRD_PARTY": "3rd party",
         "VENDOR": "Vendor",
-        "IS_END": "End of chain"
+        "IS_END": "End of chain",
+        "FIND_AGENT": "Find an agent"
       }
     }
   },

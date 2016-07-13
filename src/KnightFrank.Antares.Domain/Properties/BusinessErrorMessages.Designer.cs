@@ -151,6 +151,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot add and remove chain and the same time..
+        /// </summary>
+        internal static string ActivityChainTransactionAddRemove_AtSameTime {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionAddRemove_AtSameTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 3rd party Agent has been selected, cannot use Knight Frank Agent..
         /// </summary>
         internal static string ActivityChainTransactionAgentContact_InvalidValue {
