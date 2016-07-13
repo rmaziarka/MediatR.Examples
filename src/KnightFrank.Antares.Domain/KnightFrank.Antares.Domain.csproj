@@ -313,6 +313,8 @@
     <Compile Include="Offer\QueryResults\OfferTypeQueryResult.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
+    <Compile Include="Property\Queries\PropertiesQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertiesQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />

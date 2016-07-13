@@ -24,9 +24,13 @@ module Antares.Attributes.Offer.OfferChain {
         companyContacts: Business.CompanyContact[] = [];
         initialySelectedCompanyContact: Business.CompanyContactRelation;
 
+        properties: Business.PreviewPropertyWithSelection[] = [];
+        initiallySelectedPropertyId: string;
+
         constructor(
             private eventAggregator: Core.EventAggregator,
             private chainTransationsService: Services.ChainTransationsService,
+            private propertyService: Services.PropertyService,
             private dataAccessService: any) {
             super();
         }
@@ -58,6 +62,12 @@ module Antares.Attributes.Offer.OfferChain {
             this.loadCompanyContacts();
             this.panelMode = OfferChainPanelMode.CompanyContactList;
             this.companyContactType = type;
+        }
+
+        openPropertyEditCard = (propertyId: string) => {
+            this.initiallySelectedPropertyId = propertyId;
+            this.loadProperties();
+            this.panelMode = OfferChainPanelMode.Property;
         }
 
         public save = (chain: Business.ChainTransaction) => {
@@ -116,6 +126,22 @@ module Antares.Attributes.Offer.OfferChain {
                 }).finally(() => {
                     this.isBusy = false;
                 });
+        }
+
+        loadProperties = () => {
+            this.isBusy = true;
+            this.propertyService.getProperties()
+            .then((data: Dto.IPreviewProperty[]) => {
+                this.properties = data.map((dataItem: Dto.IPreviewProperty) => {
+                    var property = new Business.PreviewPropertyWithSelection(dataItem);
+                    if(property.id == this.initiallySelectedPropertyId){
+                        property.selected = true;
+                    }
+                    return property;
+                });
+            }).finally(() => {
+                this.isBusy = false;
+            });
         }
 
         private defineControlConfig = (chain: Business.ChainTransaction) => {

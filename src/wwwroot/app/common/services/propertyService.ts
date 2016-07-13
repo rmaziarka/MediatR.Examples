@@ -23,6 +23,14 @@ module Antares.Services {
 
             return this.$http.post(this.appConfig.rootUrl + url, propertyAttachment);
         }
+
+        getProperties = (): ng.IHttpPromise<Dto.IPreviewProperty[]> => {
+            var url = `${this.apiUrl}`;
+
+            return this.$http
+                .get(this.appConfig.rootUrl + url)
+                .then<Array<Dto.IPreviewProperty[]>>((result: ng.IHttpPromiseCallbackArg<Array<Dto.IPreviewProperty[]>>) => result.data);
+        }
     }
 
     angular.module('app').service('propertyService', PropertyService);
