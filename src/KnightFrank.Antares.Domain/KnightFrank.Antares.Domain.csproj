@@ -254,6 +254,8 @@
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\CommandHandlers\UpdateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CompanyCommandProfile.cs" />
+    <Compile Include="Company\CustomValidators\ICompanyCommandCustomValidator.cs" />
+    <Compile Include="Company\CustomValidators\CompanyCommandCustomValidator.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandValidator.cs" />
     <Compile Include="Company\Commands\UpdateCompanyCommand.cs" />

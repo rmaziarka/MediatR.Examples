@@ -9,9 +9,8 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Company.Commands;
+    using KnightFrank.Antares.Domain.Company.CustomValidators;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
@@ -27,17 +26,20 @@
 		[Theory]
 		[AutoMoqData]
 		public void Given_CorrectUpdateCompanyCommand_When_Validating_Then_NoValidationErrors(
-			[Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
+            [Frozen] Mock<ICompanyCommandCustomValidator> customCompanyCommandValidatorMock,
 			UpdateCompanyCommandValidator validator,
 			UpdateCompanyCommand cmd)
 		{
-			// Act
-			ValidationResult result = validator.Validate(cmd);
+            //Arrange
+            customCompanyCommandValidatorMock.Setup(x => x.IsClientCareEnumValid(It.IsAny<Guid?>())).Returns(true);
+            customCompanyCommandValidatorMock.Setup(x => x.IsCompanyCategoryEnumValid(It.IsAny<Guid?>())).Returns(true);
+            customCompanyCommandValidatorMock.Setup(x => x.IsCompanyTypeEnumValid(It.IsAny<Guid?>())).Returns(true);
+
+            // Act
+            ValidationResult result = validator.Validate(cmd);
 
 			// Assert
 			result.IsValid.Should().BeTrue();
-			enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.ClientCareStatus, (Guid) cmd.ClientCareStatusId),
-				Times.Once);
 		}
 
 		[Theory]
