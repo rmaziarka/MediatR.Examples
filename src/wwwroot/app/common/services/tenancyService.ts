@@ -17,7 +17,7 @@ module Antares.Services {
                 .then<Dto.ITenancy>((result: ng.IHttpPromiseCallbackArg<Dto.ITenancy>) => result.data);
         }
 
-        updateActivity = (tenancyCommand: Commands.Tenancy.TenancyEditCommand): ng.IHttpPromise<Dto.ITenancy> => {
+        updateTenancy = (tenancyCommand: Commands.Tenancy.TenancyEditCommand): ng.IHttpPromise<Dto.ITenancy> => {
             return this.$http.put(this.appConfig.rootUrl + this.url, tenancyCommand)
                 .then<Dto.ITenancy>((result: ng.IHttpPromiseCallbackArg<Dto.ITenancy>) => result.data);
         }

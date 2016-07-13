@@ -9,6 +9,9 @@ module Antares.Tenancy {
         config: Antares.Tenancy.ITenancyEditConfig;
 
         constructor(private $state: ng.ui.IStateService, private tenancyService: Antares.Services.TenancyService) {
+        }
+
+        $onInit = () => {
             this.setDefaultContacts();
         }
 
@@ -43,7 +46,7 @@ module Antares.Tenancy {
 
         save = () => {
             if (this.isEditMode()) {
-                this.tenancyService.updateActivity(new Antares.Common.Models.Commands.Tenancy.TenancyEditCommand(this.tenancy)).then((dto: Antares.Common.Models.Dto.ITenancy) => {
+                this.tenancyService.updateTenancy(new Antares.Common.Models.Commands.Tenancy.TenancyEditCommand(this.tenancy)).then((dto: Antares.Common.Models.Dto.ITenancy) => {
                     this.navigateToTenancyView(dto.id);
                 });
             }
