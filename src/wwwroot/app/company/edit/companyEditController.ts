@@ -1,7 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Company {
-
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
@@ -9,7 +8,9 @@ module Antares.Company {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
 
-        private descriptionMaxLength: number = 4000;
+        private descriptionMaxLength: number = CompanyControls.descriptionMaxLength;
+        private config = CompanyControls.config;
+        private controlSchemas = CompanyControls.controlSchemas;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -48,25 +49,14 @@ module Antares.Company {
             this.company.contacts = selectedContacts.map((contact: Dto.IContact) => { return new Business.Contact(contact) });
             this.components.sidePanels.contact().hide();
         }
-     
-        formatUrlWithProtocol = (url: string): string => {
-            //regular expression for url with a protocol (case insensitive)
-            var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (url && url.length > 0) {
-                if (!r.test(url)) {
-                    return `http://${url}`;
-                }
-             }
-            return url;
-        }
 
         cancelEditCompany= () =>{
             this.$state.go('app.company-view', this.company);
         }
 
         updateCompany = () =>{
-            this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
-            this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
+            this.company.websiteUrl = CompanyControls.formatUrlWithProtocol(this.company.websiteUrl);
+            this.company.clientCarePageUrl = CompanyControls    .formatUrlWithProtocol(this.company.clientCarePageUrl);
 
             var updatedCompany: Dto.IEditCompanyResource = new Business.EditCompanyResource(this.company); 
 

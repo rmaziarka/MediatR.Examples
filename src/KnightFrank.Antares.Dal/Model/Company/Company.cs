@@ -21,7 +21,7 @@
         public virtual ICollection<CompanyContact> CompaniesContacts { get; set; }
         public Guid? ClientCareStatusId { get; set; }
         public EnumTypeItem ClientCareStatus { get; set; }
-        public Guid? RelationshipMangerId { get; set; }
-        public virtual User RelationshipManger { get; set; }
+        public Guid? RelationshipManagerId { get; set; }
+        public virtual User RelationshipManager { get; set; }
     }
 }

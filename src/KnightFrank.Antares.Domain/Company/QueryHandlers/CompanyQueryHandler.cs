@@ -20,7 +20,7 @@
         public Company Handle(CompanyQuery message)
         {
             Company company = this.companyRepository
-                .GetWithInclude(x => x.CompaniesContacts.Select(y => y.Contact), x => x.ClientCareStatus, x => x.CompanyType, x => x.CompanyCategory, x => x.RelationshipManger)
+                .GetWithInclude(x => x.CompaniesContacts.Select(y => y.Contact), x => x.ClientCareStatus, x => x.CompanyType, x => x.CompanyCategory, x => x.RelationshipManager)
                 .SingleOrDefault(com => com.Id == message.Id);
 
             return company;

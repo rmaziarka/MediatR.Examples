@@ -9,7 +9,9 @@ module Antares.Company {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
 
-        private descriptionMaxLength: number = 4000;
+        private descriptionMaxLength: number = CompanyControls.descriptionMaxLength;
+        private config = CompanyControls.config;
+        private controlSchemas = CompanyControls.controlSchemas;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -50,21 +52,10 @@ module Antares.Company {
             this.company.contacts = selectedContacts.map((contact: Dto.IContact) => { return new Business.Contact(contact) });
             this.components.sidePanels.contact().hide();
         }
-     
-        formatUrlWithProtocol = (url:string):string=> { //todo!!! extract into helper
-            //regular expression for url with a protocol (case insensitive)
-            var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (url && url.length > 0) {
-                if (!r.test(url)) {
-                    return `http://${url}`;
-                }
-             }
-            return url;
-        }
    
         createCompany = () => {
-            this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
-            this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
+            this.company.websiteUrl = CompanyControls.formatUrlWithProtocol(this.company.websiteUrl);
+            this.company.clientCarePageUrl = CompanyControls.formatUrlWithProtocol(this.company.clientCarePageUrl);
 
             this.companyResource
                 .save(new Business.CreateCompanyResource(this.company))

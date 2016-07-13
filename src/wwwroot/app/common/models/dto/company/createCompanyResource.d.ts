@@ -9,6 +9,6 @@ declare module Antares.Common.Models.Dto {
         companyCategoryId: string;
         companyTypeId: string;
         valid: boolean;
-        relationshipManageruserId: string;
+        relationshipManagerId: string;
       }
 }
