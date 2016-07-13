@@ -16,7 +16,7 @@
             </card-list-item>
         </div>
     </div>
-    <company-contacts-add-panel is-visible="vm.isPanelVisible" on-save="vm.onContactSelected" allow-multiple-select="false"
+    <company-contacts-add-panel is-visible="vm.isPanelVisible" on-save="vm.onContactSelected(contacts)" allow-multiple-select="false"
                                 initialy-selected-company-contacts="vm.selectedCompanyContacts">
     </company-contacts-add-panel>
 </ng-form>

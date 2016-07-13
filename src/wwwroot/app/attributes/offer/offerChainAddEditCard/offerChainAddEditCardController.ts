@@ -11,12 +11,13 @@ module Antares.Attributes.Offer.OfferChain {
 
     export class OfferChainAddEditCardController {
         // bindings
-        chain: Dto.IChainTransaction;
+        chain: Business.ChainTransaction;
         config: any;
         onEdit: () => void;
+        onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
 
         //properties
-        configAgentType:Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
+        configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
 
         public isThirdPartyAgentInEditMode: boolean = true;
         public thirdPartyAgentSearchOptions: SearchOptions = new SearchOptions();
@@ -118,22 +119,17 @@ module Antares.Attributes.Offer.OfferChain {
         constructor(
             private dataAccessService: Services.DataAccessService,
             private eventAggregator: Core.EventAggregator) {
-            eventAggregator.with(this).subscribe(OpenCompanyContactEditPanelEvent, this.openCompanyContactEditPanel);
         }
 
-        openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
-            switch (event.type) {
-                case CompanyContactType.ThirdPartyAgent:
-                    this.isThirdPartyAgentEditPanelVisible = Enums.SidePanelState.Opened;
-                    break;
-            }
+        public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {
+            this.onEditCompanyContact({ companyContact: companyContact, type: type });
         }
 
         public editThirdPartyAgent = () => {
             this.isThirdPartyAgentInEditMode = true;
         }
 
-        public changeThirdPartyAgent = (user: Dto.IUser) => {
+        public changeThirdPartyAgent = (user: Business.User) => {
             this.chain.agentUser = user;
             this.isThirdPartyAgentInEditMode = false;
         }

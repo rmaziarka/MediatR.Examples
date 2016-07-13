@@ -1,6 +1,7 @@
 module Antares.Attributes.Offer.OfferChain {
     export enum OfferChainPanelMode {
         AddEdit,
-        Preview
+        Preview,
+        CompanyContactList
     }
 }

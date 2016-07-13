@@ -8,7 +8,7 @@ module Antares.Ownership {
         transclude: true,
         bindings: {
             isVisible: '<',
-            onSave: '<',
+            onSave: '&',
             allowMultipleSelect: '<',
             initialySelectedCompanyContacts: '<'
         }

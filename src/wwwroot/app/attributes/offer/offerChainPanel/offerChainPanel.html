@@ -1,20 +1,26 @@
 ﻿﻿<kf-side-panel>
     <side-panel-cards>
-        <offer-chain-preview-card
-            chain="vm.chain"
-            config="vm.config" 
-            on-edit="vm.edit()"
-            ng-if="vm.panelMode == vm.offerChainPanelMode.Preview">
+        <offer-chain-preview-card chain="vm.chain"
+                                  config="vm.config"
+                                  on-edit="vm.edit()"
+                                  ng-if="vm.panelMode == vm.offerChainPanelMode.Preview">
         </offer-chain-preview-card>
-        <offer-chain-add-edit-card
-            chain="vm.chain"
-            config="vm.config"
-            on-save="vm.save(chain)"
-            on-cancel="vm.cancel()"
-            on-reload-config="vm.reloadConfig(chain)"
-            back-to-preview="vm.backToPreview"
-            pristine-flag="vm.cardPristine"
-            ng-if="vm.panelMode == vm.offerChainPanelMode.AddEdit">
+        <offer-chain-add-edit-card chain="vm.chain"
+                                   config="vm.config"
+                                   on-save="vm.save(chain)"
+                                   on-cancel="vm.cancel()"
+                                   on-reload-config="vm.reloadConfig(chain)"
+                                   on-edit-company-contact="vm.openCompanyContactEditCard(companyContact, type)"
+                                   back-to-preview="vm.backToPreview"
+                                   pristine-flag="vm.cardPristine"
+                                   ng-if="vm.panelMode == vm.offerChainPanelMode.AddEdit">
         </offer-chain-add-edit-card>
+        <company-contact-list-card contacts="vm.companyContacts"
+                                   is-loading="vm.isLoading"
+                                   ng-if="vm.panelMode == vm.offerChainPanelMode.CompanyContactList"
+                                   allow-multiple-select="false"
+                                   on-save="vm.onCompanyContactSelected(contacts)"
+                                   on-cancel="vm.onCompanyContactListCancel()">
+        </company-contact-list-card>
     </side-panel-cards>
 </kf-side-panel>

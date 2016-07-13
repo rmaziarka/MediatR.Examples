@@ -6,6 +6,7 @@ module Antares.Common.Models.Enums {
         AdditionalSurveyor = <any>'AdditionalSurveyor',
         ActivitySolicitor = <any>'ActivitySolicitor',
         RequirementSolicitor = <any>'RequirementSolicitor',
-        ThirdPartyAgent = <any>'ThirdPartyAgent'
+        ThirdPartyAgent = <any>'ThirdPartyAgent',
+        Solicitor = <any>'Solicitor'
     }
 }

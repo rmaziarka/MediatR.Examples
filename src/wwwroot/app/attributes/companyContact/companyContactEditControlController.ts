@@ -3,6 +3,7 @@
 module Antares.Attributes {
     import Business = Common.Models.Business;
     import CompanyContactType = Antares.Common.Models.Enums.CompanyContactType;
+    import ICompanyContact = Antares.Common.Models.Dto.ICompanyContact;
 
     export class CompanyContactEditControlController {
         // binding
@@ -10,6 +11,7 @@ module Antares.Attributes {
         schema: ICompanyContactEditControlSchema;
         config: ICompanyContactControlConfig;
         type: CompanyContactType;
+        onEdit: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType}) => void;
 
         //fields
         selectedCompanyContacts: Business.CompanyContact[];
@@ -28,13 +30,18 @@ module Antares.Attributes {
             }
         }
 
-        showSelectPanel = () =>{
-            this.eventAggregator.publish(new OpenCompanyContactEditPanelEvent(this.type));
+        showSelectPanel = () => {
+            if (this.onEdit) {
+                this.onEdit({ companyContact: this.companyContact, type: this.type});
+            }
+            else {
+                this.eventAggregator.publish(new OpenCompanyContactEditPanelEvent(this.type));
+            }
         }
 
-        onContactSelected = (companyContacts: Business.CompanyContact[]) => {
-            if (companyContacts.length > 0) {
-                var model = companyContacts[0];
+        onContactSelected = (contacts: Business.CompanyContact[]) => {
+            if (contacts.length > 0) {
+                var model = contacts[0];
                 this.companyContact = new Antares.Common.Models.Business.CompanyContactRelation(model.contact, model.company);
             }
             else {
