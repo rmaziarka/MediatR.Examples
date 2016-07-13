@@ -27,7 +27,7 @@
                 <div class="col-md-12 col-lg-10">
                     <div class="input-group">
                         <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="vm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                               is-open="vm.nagotiatorCallDateOpened[vm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{vm.getNextCallDateValidDate()}}" autocomplete="off" />
+                               is-open="vm.nagotiatorCallDateOpened[vm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{vm.getNextCallDateValidDate(vm.negotiatorsForm)}}" autocomplete="off" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="vm.openNegotiatorCallDate(vm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
                         </span>
@@ -85,7 +85,7 @@
                         <div class="col-md-12 col-lg-10">
                             <div class="input-group">
                                 <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ vm.today }}" date-validate-when-changed="" autocomplete="off" />
+                                       is-open="vm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{vm.getNextCallDateValidDate(secondaryNegotiatorsForm)}}" date-validate-when-changed="" autocomplete="off" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
                                 </span>
