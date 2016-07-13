@@ -11,6 +11,31 @@
             <div class="col-md-4">
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
+                <!-- category -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.CATEGORY"></div>
+                    <div class="col-xs-6">
+                        {{ vm.company.companyCategoryId | dynamicTranslate }}
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.TYPE"></div>
+                    <div class="col-xs-6">
+                        {{ (vm.company.companyTypeId | dynamicTranslate) }}
+                    </div>
+                </div>
+
+                <!-- descripton -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.DESCRIPTION"></div>
+                    <div class="col-xs-6">
+                        {{ vm.company.description }}
+                    </div>
+                </div>
+
+                <!-- websiteUrl -->
                 <div class="section-row row">
                     <div class="col-xs-6 section-title" translate="COMPANY.WEBSITE"></div>
                     <div class="col-xs-6">
@@ -18,6 +43,7 @@
                     </div>
                 </div>
 
+                <!-- clientCarePageUrl -->
                 <div class="section-row row">
                     <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_WEBSITE"></div>
                     <div class="col-xs-6">
@@ -28,6 +54,21 @@
                 <div class="section-row row">
                     <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_STATUS"></div>
                     <div class="col-xs-6" id="clientCareStatus" ng-show="vm.company.clientCareStatusId != null">{{vm.company.clientCareStatusId | dynamicTranslate}}</div>
+                </div>
+
+                <!-- relationship manager -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.RELATIONSHIP_MANAGER"></div>
+                    <div class="col-xs-6">
+                        {{ vm.company.relationshipManager.getName() }}
+                    </div>
+                </div>
+
+                <!-- is valid -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.IS_VALID"></div>
+                    <div class="col-xs-6" translate="{{ vm.getCompanyIsValidTranslationKey() }}">
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">

@@ -8,6 +8,7 @@
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
+                <!-- name -->
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
@@ -18,12 +19,22 @@
 
                 <!-- category -->
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.category.$dirty) && addCompanyForm.category.$invalid}">
-                    <enum-select id="category" ng-model="vm.selectedCategoryId" enum-type-code="companyCategory"></enum-select>
+                    <label for="name" translate="COMPANY.CATEGORY"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory"></enum-select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- type -->
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.type.$dirty) && addCompanyForm.type.$invalid}">
-                    <enum-select id="type" name="type" ng-model="vm.selectedTypeId" enum-type-code="companyType"></enum-select>
+                    <label for="name" translate="COMPANY.TYPE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType"></enum-select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- description -->
@@ -69,12 +80,12 @@
                     </div>
                 </div>
 
-                <!-- selectedCareStatusId -->
+                <!-- clientCareStatusId -->
                 <div class="form-group">
+                    <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
-                            <enum-select id="client-care-status" name="selectedCareStatusId" ng-model="vm.selectedCareStatusId" enum-type-code="clientCareStatus"></enum-select>
+                            <enum-select id="client-care-status" name="clientCareStatusId" ng-model="vm.company.clientCareStatusId" enum-type-code="clientCareStatus"></enum-select>
                         </div>
                     </div>
                 </div>
@@ -83,7 +94,7 @@
                 <div class="form-group">
                     <label for="comapny-is-valid" translate="COMPANY.IS_VALID"></label>
                     <div>
-                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.isValid" >
+                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.valid" >
                         <span translate="COMPANY.IS_VALID_YES"></span>
                     </div>
                 </div>

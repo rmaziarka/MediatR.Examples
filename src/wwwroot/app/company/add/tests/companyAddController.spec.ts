@@ -130,7 +130,6 @@ module Antares {
 
             spyOn(state, 'go');
             controller.company = company;
-            controller.selectedCareStatusId = "123";
 
             $http.expectPOST(/\/api\/companies/, (data: string) =>{
                 requestData = JSON.parse(data);
@@ -148,7 +147,7 @@ module Antares {
             expect(requestData.name).toEqual(company.name);
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
-            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatus.id);
+            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
             expect(angular.equals(requestData.contactIds, expectedContactIds)).toBe(true);
         });
 

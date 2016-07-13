@@ -6,17 +6,16 @@ module Antares.Common.Models.Business {
         name: string = null;    
         websiteUrl: string = null;
         clientCarePageUrl: string = null;
-        clientCareStatus: Business.EnumTypeItem = null;
+        clientCareStatusId: string = null;
         contacts: Contact[] = [];
         companiesContacts: Models.Dto.ICompanyContact[] = [];
         description: string = null;
-        category: Dto.IEnumTypeItem = null;        //todo! check
-        type: Dto.IEnumTypeItem = null;            //todo! check
-        isValid: boolean = false;
-        //relationshipManager: Contact = null;      //todo! check
+        companyCategoryId: string = null;
+        companyTypeId: string = null;
+        valid: boolean = false;
+        relationshipManager: User = null;
 
         constructor(company?: Dto.ICompany) {
-
             if (company) {
                 angular.extend(this, company);
 
@@ -29,32 +28,10 @@ module Antares.Common.Models.Business {
                     this.contacts = company.companiesContacts.map((item) =>{ return new Contact(item.contact) });
                 }
 
-                //this.relationshipManager = new Contact(company.relationshipManager);//todo! 
+                if (company.relationshipManager) {
+                    this.relationshipManager = new User(company.relationshipManager);
+                }
             }
-        }
-
-        getCategoryId(): string{
-            return (this.category ? this.category.id : null);
-        }
-
-        setCategoryById(id: string){
-            this.category = new EnumTypeItem({ id: id, code: null, enumTypeId: null });
-        }
-
-        getTypeId(): string {
-            return (this.type ? this.type.id : null);
-        }
-
-        setTypeById(id: string) {
-            this.type = new EnumTypeItem({ id: id, code: null, enumTypeId: null });
-        }
-
-        getClientCareStatus(id: string) {
-            return (this.clientCareStatus ? this.clientCareStatus.id : null);
-        }
-
-        setClientCareStatus(id: string){
-            this.clientCareStatus = new EnumTypeItem({ id: id, code: null, enumTypeId: null });
         }
     }
 }

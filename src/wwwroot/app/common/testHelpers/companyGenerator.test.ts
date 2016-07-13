@@ -12,9 +12,14 @@ module Antares.TestHelpers {
                 name: CompanyGenerator.makeRandom('name'),
                 websiteUrl: CompanyGenerator.makeRandom('website'),
                 clientCarePageUrl: CompanyGenerator.makeRandom('clientCarePageUrl'),
-                clientCareStatus: <Dto.IEnumTypeItem>{},
+                clientCareStatusId: CompanyGenerator.makeRandom('careStatus'),
                 contacts: ContactGenerator.generateMany(3),
-                companiesContacts: []
+                companiesContacts: [],
+                description: CompanyGenerator.makeRandom('desc'),
+                companyCategoryId: CompanyGenerator.makeRandom('categoryid'),
+                companyTypeId: CompanyGenerator.makeRandom('typeid'),
+                valid: false,
+                relationshipManager: UserGenerator.generateDto()
             }
 
             return company;

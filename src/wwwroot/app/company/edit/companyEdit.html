@@ -8,6 +8,7 @@
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
+                <!-- name -->
                 <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.name.$dirty) && editCompanyForm.name.$invalid}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
@@ -16,6 +17,38 @@
                     </div>
                 </div>
 
+                <!-- category -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.category.$dirty) && addCompanyForm.category.$invalid}">
+                    <label for="name" translate="COMPANY.CATEGORY"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.type.$dirty) && addCompanyForm.type.$invalid}">
+                    <label for="name" translate="COMPANY.TYPE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- description -->
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.description.$dirty) && addCompanyForm.description.$invalid}">
+                    <label for="description" translate="COMPANY.DESCRIPTION"></label>
+                    <span class="pull-right character-limit">{{addCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
+                    <textarea id="description" kf-max-count="vm.descriptionMaxLength" rows="8" class="form-control" ng-required="false"
+                              name="description" ng-model="vm.company.description"></textarea>
+                    <div ng-messages="addCompanyForm.description.$error" ng-show="addCompanyForm.$submitted ||addCompanyForm.description.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <!-- website -->
                 <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
                     <label for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
@@ -31,6 +64,7 @@
                     </div>
                 </div>
 
+                <!-- clientcareurl -->
                 <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
                     <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
@@ -46,12 +80,22 @@
                     </div>
                 </div>
 
+                <!-- clientCareStatusId -->
                 <div class="form-group">
                     <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <enum-select id="client-care-status" name="status" ng-model="vm.company.clientCareStatusId" enum-type-code="{{vm.enumTypeclientCareStatus}}"></enum-select>
+                            <enum-select id="client-care-status" name="clientCareStatus" ng-model="vm.company.clientCareStatusId" enum-type-code="clientCareStatus"></enum-select>
                         </div>
+                    </div>
+                </div>
+
+                <!-- isValid -->
+                <div class="form-group">
+                    <label for="comapny-is-valid" translate="COMPANY.IS_VALID"></label>
+                    <div>
+                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.valid">
+                        <span translate="COMPANY.IS_VALID_YES"></span>
                     </div>
                 </div>
             </fieldset>

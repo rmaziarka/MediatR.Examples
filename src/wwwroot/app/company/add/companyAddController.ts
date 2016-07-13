@@ -8,9 +8,6 @@ module Antares.Company {
     export class CompanyAddController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
-        selectedCareStatusId: string = null;
-        selectedCategoryId: string = null;
-        selectedTypeId: string = null;
 
         private descriptionMaxLength: number = 4000;
 
@@ -66,11 +63,8 @@ module Antares.Company {
         }
    
         createCompany = () => {
-            this.company.setClientCareStatus(this.selectedCareStatusId);
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
             this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
-            this.company.setCategoryById(this.selectedCategoryId);
-            this.company.setTypeById(this.selectedTypeId);
 
             this.companyResource
                 .save(new Business.CreateCompanyResource(this.company))

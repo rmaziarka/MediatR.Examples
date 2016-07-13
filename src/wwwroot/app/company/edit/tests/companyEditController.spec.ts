@@ -120,8 +120,7 @@ module Antares {
 
         it('when form filled and save then should be send data', () =>{
             // arrange
-            var button = element.find(pageObjectSelectors.companySaveBtnSelector);
-            var requestData: Dto.ICompany;
+            var requestData: Dto.IEditCompanyResource;
             var company = TestHelpers.CompanyGenerator.generate();
             var expectedContacts = company.contacts.map((contact: Dto.IContact) =>{ return contact });
 
@@ -144,7 +143,7 @@ module Antares {
             expect(requestData.name).toEqual(company.name);
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
-            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatus.id);
+            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
             expect(angular.equals(requestData.contacts, expectedContacts)).toBe(true);
         });
 

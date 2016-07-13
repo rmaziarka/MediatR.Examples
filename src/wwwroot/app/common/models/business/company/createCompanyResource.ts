@@ -7,11 +7,10 @@ module Antares.Common.Models.Business {
         clientCarePageUrl:  string = '';    
         clientCareStatusId: string = '';
         description: string = '';
-        categoryId: string = '';
-        typeId: string = '';            
-        isValid: boolean = false;
-        //relationshipManageruserId: string = null;      //todo! 
-
+        companyCategoryId: string = '';
+        companyTypeId: string = '';            
+        valid: boolean = false;
+        relationshipManageruserId: string = null;
         contactIds: string[] = [];
 
         constructor(company?: Dto.ICompany) {
@@ -19,12 +18,12 @@ module Antares.Common.Models.Business {
                 this.name = company.name;
                 this.websiteUrl = company.websiteUrl;
                 this.clientCarePageUrl = company.clientCarePageUrl;
-                this.clientCareStatusId = (company.clientCareStatus ? company.clientCareStatus.id : null);
-                this.categoryId = (company.category ? company.category.id : null);
-                this.typeId = (company.type ? company.type.id : null);
+                this.clientCareStatusId = company.clientCareStatusId;
+                this.companyCategoryId = company.companyCategoryId;
+                this.companyTypeId = company.companyTypeId;
                 this.description = company.description;
-                this.isValid = company.isValid;
-
+                this.valid = company.valid;
+                this.relationshipManageruserId = (company.relationshipManager ? company.relationshipManager.id : null);
                 this.contactIds = company.contacts.map((contact: Dto.IContact) => { return contact.id });
             }
         }
