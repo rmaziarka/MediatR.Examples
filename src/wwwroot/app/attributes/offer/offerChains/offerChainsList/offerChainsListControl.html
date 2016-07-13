@@ -1,5 +1,5 @@
 <card-list-item class="chain-list">
-    <card ng-repeat="chain in vm.chains" show-context-menu="true" show-item-details="vm.previewChain" display-new-control="true"
+    <card ng-repeat="chain in vm.chains.slice().reverse()" show-context-menu="true" show-item-details="vm.previewChain" display-new-control="true"
           card-template-url="'app/offer/templates/chainCard.html'" item="chain">
         <card-context-menu>
             <context-menu-item type="delete" item="chain" action="vm.deleteChain"></context-menu-item>

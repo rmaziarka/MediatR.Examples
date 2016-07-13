@@ -44,11 +44,13 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         onCompanyContactSelected = (contacts: Business.CompanyContact[]) => {
-            if (this.companyContactType === CompanyContactType.ThirdPartyAgent) {
-                this.chain.agentCompanyContact = contacts[0];
-            }
-            else if (this.companyContactType === CompanyContactType.Solicitor) {
-                this.chain.solicitorCompanyContact = contacts[0];
+            switch (this.companyContactType) {
+                case CompanyContactType.ChainAgent:
+                    this.chain.agentCompanyContact = contacts[0];
+                    break;
+                case CompanyContactType.ChainSolicitor:
+                    this.chain.solicitorCompanyContact = contacts[0];
+                    break;
             }
             this.panelMode = OfferChainPanelMode.AddEdit;
         }
@@ -72,14 +74,19 @@ module Antares.Attributes.Offer.OfferChain {
 
         public save = (chain: Business.ChainTransaction) => {
             this.isBusy = true;
-            if (chain.id == null) {
-                this.chainTransationsService.addChain(chain, this.chainCommand, this.chainType)
+
+            chain.propertyId = '0D58971F-0049-E611-8115-00155D038C01';
+
+            var chainCommand = this.createChainCommand(chain, this.chainCommand.chainTransactions);
+
+            if (chainCommand.id == null) {
+                this.chainTransationsService.addChain(chainCommand, this.chainCommand, this.chainType)
                     .then((model: Dto.IActivity | Dto.IRequirement) => {
                         this.onSuccessAddEditChain(chain, model);
                     })
                     .finally(() => { this.isBusy = false; });
             } else {
-                this.chainTransationsService.editChain(chain, this.chainCommand, this.chainType)
+                this.chainTransationsService.editChain(chainCommand, this.chainCommand, this.chainType)
                     .then((model: Dto.IActivity | Dto.IRequirement) => {
                         this.onSuccessAddEditChain(chain, model);
                     })
@@ -101,7 +108,9 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         protected onChanges = (changesObj: any) => {
-            this.reloadConfig(changesObj.chain.currentValue);
+            if (changesObj.chain && changesObj.chain.currentValue) {
+                this.reloadConfig(changesObj.chain.currentValue);
+            }
             this.resetState();
         }
 
@@ -159,6 +168,34 @@ module Antares.Attributes.Offer.OfferChain {
                 contractAgreed: { contractAgreedId: { required: true, active: true } },
                 surveyDate: { surveyDate: { required: false, active: true } }
             }
+        }
+
+        private createChainCommand = (chain: Business.ChainTransaction, chainTransactions: Dto.IChainTransaction[]): Business.ChainTransaction => {
+
+            // TODO: chang to use dedicated ChainTransactionCommand in IChainTransactionCommand
+            var command = angular.copy(chain);
+            command.activity = null;
+            command.requirement = null;
+            command.parent = null;
+            command.property = null;
+            command.agentUser = null;
+            command.agentContact = null;
+            command.agentCompany = null;
+            command.agentCompanyContact = null;
+            command.solicitorContact = null;
+            command.solicitorCompany = null;
+            command.solicitorCompanyContact = null;
+            command.mortgage = null;
+            command.survey = null;
+            command.searches = null;
+            command.enquiries = null;
+            command.contractAgreed = null;
+
+            if (command.id == null && chainTransactions != null && chainTransactions.length > 0) {
+                command.parentId = chainTransactions[chainTransactions.length - 1].id;
+            }
+
+            return command;
         }
 
         private onSuccessAddEditChain = (chain: Business.ChainTransaction, model: Dto.IActivity | Dto.IRequirement) => {

@@ -49,16 +49,18 @@ module Antares.Attributes.Offer.OfferChain {
                 translationKey: "OFFER.CHAIN.EDIT.VENDOR",
                 fieldName: "vendor"
             },
-            thirdPartyAgent: <any>{
-                formName: "thirdPartyAgentControlForm",
+            agentUser: <any>{
+                formName: "agentUserForm",
                 controlId: "offer-chain-edit-agent-user",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT",
-                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
-                fieldName: "thirdPartyAgent"
+                fieldName: "agentUserId"
             },
-            agentUser: <any>{
-                controlId: "offer-chain-edit-agent-user",
-                translationKey: "OFFER.CHAIN.EDIT.AGENT"
+            agentCompanyContact: <any>{
+                formName: "agentCompanyContactForm",
+                controlId: "offer-chain-edit-agent-company-contact",
+                translationKey: "OFFER.CHAIN.EDIT.AGENT",
+                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
+                fieldName: "agentCompanyContact"
             },
             solicitorCompanyContact: <Attributes.ICompanyContactViewControlSchema>{
                 formName: "solicitorCompanyContactControlForm",
@@ -135,12 +137,13 @@ module Antares.Attributes.Offer.OfferChain {
             this.isThirdPartyAgentInEditMode = true;
         }
 
-        public changeThirdPartyAgent = (user: Business.User) => {
+        public changeAgentUser = (user: Business.User) => {
             this.chain.agentUser = user;
+            this.chain.agentUserId = user.id;
             this.isThirdPartyAgentInEditMode = false;
         }
 
-        public cancelChangeThirdPartyAgent = () => {
+        public cancelChangeAgentUser = () => {
             this.isThirdPartyAgentInEditMode = false;
         }
 

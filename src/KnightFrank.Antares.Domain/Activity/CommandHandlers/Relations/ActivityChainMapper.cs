@@ -140,6 +140,9 @@
             if(chainsToAdd.Count > 1)
                 throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAdd_MoreThanOne);
 
+            if (activity.ChainTransactions.Count == 0)
+                return;
+
             var chainToAdd = chainsToAdd.Single();
             var lastChain = this.FindLastChain(activity.ChainTransactions);
 

@@ -2,19 +2,21 @@
 
 module Antares.Common.Models.Business {
     export class ChainTransaction implements Dto.IChainTransaction {
-        id: string = '';
-        propertyId: string = '';
-        mortgageId: string = '';
-        surveyId: string = '';
-        searchesId: string = '';
-        enquiriesId: string = '';
-        contractAgreedId: string = '';
+        id: string = null;
+        propertyId: string = null;
+        mortgageId: string = null;
+        surveyId: string = null;
+        searchesId: string = null;
+        enquiriesId: string = null;
+        contractAgreedId: string = null;
         activity: Business.Activity = null;
         requirement: Business.Requirement = null;
+        parentId: string = null;
         parent: ChainTransaction = null;
         isEnd: boolean = false;
         property: Business.PreviewProperty = null;
-        vendor: string = '';
+        vendor: string = null;
+        agentUserId: string = null;
         agentUser: Business.User = null;
         agentContact: Business.Contact = null;
         agentCompany: Business.Company = null;
