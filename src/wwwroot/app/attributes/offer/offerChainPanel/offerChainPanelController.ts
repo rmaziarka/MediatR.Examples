@@ -7,32 +7,54 @@ module Antares.Attributes.Offer.OfferChain {
 
     export class OfferChainPanelController extends Common.Component.BaseSidePanelController {
         // bindings
-        isPreviewMode: boolean;
+        inPreviewMode: boolean;
         chain: Business.ChainTransaction;
         isLastChain: boolean;
-        
+
         // properties
         config: any;
+        cardPristine: any;
+        isBusy: boolean = false;
+        panelMode: OfferChainPanelMode;
+        offerChainPanelMode: any = OfferChainPanelMode;
 
         constructor(
-            private eventAggregator: Core.EventAggregator) {
+            private eventAggregator: Core.EventAggregator,
+            private activityService: Services.ActivityService) {
             super();
         }
 
-        panelShown = () => {
+        public panelShown = () => {
+            if (this.inPreviewMode) {
+                this.panelMode = OfferChainPanelMode.Preview;
+            } else {
+                this.panelMode = OfferChainPanelMode.AddEdit;
+            }
+        }
+
+        public save = (chain: Business.ChainTransaction) => {
+            //TODO service updateChain
         }
 
         public edit = (chain: Business.ChainTransaction) => {
         }
 
-        cancel = () => {
+        public cancel = () => {
             this.isBusy = false;
             this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
         }
 
-        public $onChanges(changesObj: any) {
-            this.config = this.defineControlConfig(changesObj.chain.currentValue);
-            super.$onChanges(changesObj);
+        protected onChanges = (changesObj: any) => {
+            this.loadConfig(changesObj.chain.currentValue);
+            this.resetState();
+        }
+
+        private resetState = () => {
+            this.cardPristine = new Object();
+        }
+
+        private loadConfig(chain: Business.ChainTransaction) {
+            this.config = this.defineControlConfig(chain);
         }
 
         private defineControlConfig = (chain: Business.ChainTransaction) => {

@@ -8,7 +8,7 @@ module Antares.Attributes.Offer.OfferChain {
         transclude : true,
         bindings: {
             isVisible: '<',
-            isPreviewMode: '<',
+            inPreviewMode: '<',
             chain: '<',
             isLastChain: '<'
         }
