@@ -64,8 +64,6 @@
             this.AddControl(PageType.Details, ControlCode.Negotiators, Field<Activity>.Create(x => x.ActivityUsers));
             this.AddControl(PageType.Details, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts));
             this.AddControl(PageType.Details, ControlCode.Departments, Field<Activity>.Create(x => x.ActivityDepartments));
-            this.AddControl(PageType.Details, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice));
-            this.AddControl(PageType.Details, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek));
             this.AddControl(PageType.Details, ControlCode.CreationDate, Field<Activity>.Create(x => x.CreatedDate));
             this.AddControl(PageType.Details, ControlCode.Offers, Field<Activity>.Create(x => x.Offers));
             this.AddControl(PageType.Details, ControlCode.Viewings, Field<Activity>.Create(x => x.Viewings));
@@ -127,8 +125,6 @@
                 this.AddControl(pageType, ControlCode.ActivityType, Field<ActivityCommandBase>.Create(x => x.ActivityTypeId).Required());
                 this.AddControl(pageType, ControlCode.ActivityStatus, Field<ActivityCommandBase>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required());
                 this.AddControl(pageType, ControlCode.Departments, Field<ActivityCommandBase>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
-                this.AddControl(pageType, ControlCode.AskingPrice, Field<ActivityCommandBase>.Create(x => x.AskingPrice));
-                this.AddControl(pageType, ControlCode.ShortLetPricePerWeek, Field<ActivityCommandBase>.Create(x => x.ShortLetPricePerWeek));
                 this.AddControl(pageType, ControlCode.Vendors, Field<ActivityCommandBase>.Create(x => x.ContactIds));
                 this.AddControl(pageType, ControlCode.Landlords, Field<ActivityCommandBase>.Create(x => x.ContactIds));
                 this.AddControl(pageType, ControlCode.Negotiators,
@@ -237,10 +233,7 @@
 
             this.Use(ControlCode.AppraisalMeeting, this.When(allResidentials, PageType.Details));
 
-            this.Use(ControlCode.ShortLetPricePerWeek,
-                this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update));
-
-            this.Use(new[] { ControlCode.AskingPrice, ControlCode.SellingReason },
+            this.Use(new[] { ControlCode.SellingReason },
                 this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update));
 
             this.Use(

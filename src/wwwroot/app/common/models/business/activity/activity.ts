@@ -18,8 +18,6 @@ module Antares.Common.Models.Business {
         activityUsers: ActivityUser[] = [];
         activityDepartments: ActivityDepartment[] = [];
         offers: Offer[];
-        askingPrice: number = null;
-        shortLetPricePerWeek: number = null;
         solicitor: Contact = null;
         solicitorCompany: Company = null;
         solicitorCompanyContact: CompanyContactRelation = null;

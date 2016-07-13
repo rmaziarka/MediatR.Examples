@@ -255,9 +255,7 @@ module Antares.TestHelpers {
                 activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
-                vendors: ConfigGenerator.generateActivityVendorsConfig(),
-                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+                vendors: ConfigGenerator.generateActivityVendorsConfig()
             };
 
             return config;
@@ -297,8 +295,6 @@ module Antares.TestHelpers {
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
                 property: ConfigGenerator.generatePropertyViewControlConfig(),
@@ -326,22 +322,6 @@ module Antares.TestHelpers {
                 appraisalMeetingAttendees: {},
                 appraisalMeetingInvitation: {},
                 disposalType: {}
-            };
-
-            return config;
-        }
-
-        public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
-            var config: Attributes.IActivityAskingPriceControlConfig = {
-                askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
-            };
-
-            return config;
-        }
-
-        public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
-            var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
-                shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
             return config;

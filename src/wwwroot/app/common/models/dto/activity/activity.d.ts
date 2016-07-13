@@ -12,8 +12,6 @@ declare module Antares.Common.Models.Dto {
         activityUsers: IActivityUser[];
         activityDepartments: IActivityDepartment[];
         offers?: IOffer[];
-        askingPrice?: number;
-        shortLetPricePerWeek?: number;
         solicitor: IContact;
         solicitorCompany: ICompany;
         sourceId: string;

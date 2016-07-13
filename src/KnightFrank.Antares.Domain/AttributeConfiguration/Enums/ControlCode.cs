@@ -11,8 +11,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Negotiators,
         Landlords,
         Departments,
-        AskingPrice,
-        ShortLetPricePerWeek,
         CreationDate,
         KfValuationPrice,
         VendorValuationPrice,

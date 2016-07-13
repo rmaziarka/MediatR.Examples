@@ -45,11 +45,6 @@
             </section>
         </div>
         <div class="col-md-6 col-lg-4">
-            <fieldset id="activity-edit-prices" ng-if="vm.isValuationPricesSectionVisible()">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <price-edit-control config="vm.config.editConfig.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
-                <price-edit-control config="vm.config.editConfig.shortLetPricePerWeek" schema="vm.controlSchemas.shortLetPricePerWeek" ng-model='vm.activity.shortLetPricePerWeek'></price-edit-control>
-            </fieldset>
             <section id="activity-basic-info" ng-if="vm.isBasicInformationSectionVisible()">
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>

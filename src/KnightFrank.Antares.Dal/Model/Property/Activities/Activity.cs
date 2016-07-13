@@ -32,10 +32,6 @@
 
         public decimal? VendorValuationPrice { get; set; }
 
-        public decimal? ShortLetPricePerWeek { get; set; }
-
-        public decimal? AskingPrice { get; set; }
-
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();

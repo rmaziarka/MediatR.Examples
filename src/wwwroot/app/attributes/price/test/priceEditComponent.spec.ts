@@ -1,15 +1,13 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-	import ActivityAskingPriceControlConfig = Antares.Attributes.IActivityAskingPriceControlConfig;
-
 	describe('Given price edit control', () =>{
 		var scope: ng.IScope,
 		    element: ng.IAugmentedJQuery,
 		    assertValidator: TestHelpers.AssertValidators;
 
 	    var priceMock: number = 1;
-		var configMock: ActivityAskingPriceControlConfig = TestHelpers.ConfigGenerator.generateActivityAskingPriceConfig();
+        var configMock = { askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()};
 	    var schemaMock: Attributes.IPriceEditControlSchema =
 	    {
 		    controlId : "mock-price",

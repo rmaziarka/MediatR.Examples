@@ -504,25 +504,6 @@ module Antares {
             });
         });
 
-        describe('when isValuationPricesSectionVisible is called', () => {
-            type TestCase = [any, any, boolean];
-            runDescribe('with specific config')
-                .data<TestCase>([
-                    [{}, {}, true],
-                    [null, {}, true],
-                    [{}, null, true],
-                    [null, null, false]])
-                .dataIt((data: TestCase) =>
-                    `where askingPrice is ${data[0]} and shortLetPricePerWeek is ${data[1]} then isValuationPricesSectionVisible must return ${data[2]}`)
-                .run((data: TestCase) => {
-                    controller.config.editConfig.askingPrice = data[0];
-                    controller.config.editConfig.shortLetPricePerWeek = data[1];
-
-                    // act & assert
-                    expect(controller.isValuationPricesSectionVisible()).toBe(data[2]);
-                });
-        });
-
         describe('when isBasicInformationSectionVisible is called', () => {
             type TestCase = [any, any, any, any, any, any, boolean];
             runDescribe('with specific config')

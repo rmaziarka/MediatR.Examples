@@ -31,22 +31,6 @@ module Antares.Activity {
         private weeklyCode: string = 'Weekly';
         private monthlyhCode: string = 'Monthly';
 
-        //controls
-        controlSchemas: any = {
-            askingPrice: {
-                formName: "askingPriceControlForm",
-                controlId: "asking-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.ASKING_PRICE",
-                fieldName: "askingPrice"
-            },
-            shortLetPricePerWeek: {
-                formName: "shortLetPricePerWeekControlForm",
-                controlId: "short-let-price-per-week",
-                translationKey: "ACTIVITY.EDIT.PRICES.SHORT_LET_PRICE_PER_WEEK",
-                fieldName: "shortLetPricePerWeek"
-            }
-        };
-
         activitySourceSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'sourceId',
             translationKey: 'ACTIVITY.EDIT.SOURCE',
@@ -650,10 +634,6 @@ module Antares.Activity {
             activityDepartment.departmentTypeId = this.standardDepartmentType.id;
 
             return activityDepartment;
-        }
-
-        public isValuationPricesSectionVisible = (): Boolean => {
-            return this.config && this.config.editConfig && (this.config.editConfig.askingPrice != null || this.config.editConfig.shortLetPricePerWeek != null);
         }
 
         public isBasicInformationSectionVisible = (): Boolean => {
