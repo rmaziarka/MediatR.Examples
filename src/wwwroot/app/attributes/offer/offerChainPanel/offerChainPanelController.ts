@@ -43,7 +43,7 @@ module Antares.Attributes.Offer.OfferChain {
             if (this.companyContactType === CompanyContactType.ThirdPartyAgent) {
                 this.chain.agentCompanyContact = contacts[0];
             }
-            else if (this.companyContactType === CompanyContactType.ThirdPartyAgent) {
+            else if (this.companyContactType === CompanyContactType.Solicitor) {
                 this.chain.solicitorCompanyContact = contacts[0];
             }
             this.panelMode = OfferChainPanelMode.AddEdit;
@@ -107,10 +107,12 @@ module Antares.Attributes.Offer.OfferChain {
                 .$promise.then((data: any) => {
                     this.companyContacts = data.map((dataItem: Dto.ICompanyContact) => new Business.CompanyContact(dataItem));
 
-                    this.companyContacts.forEach((current: any) => {
-                        var shouldContactBeInitialySelected = current.companyId === this.initialySelectedCompanyContact.company.id && current.contactId === this.initialySelectedCompanyContact.contact.id;
-                        current.selected = shouldContactBeInitialySelected;
-                    });
+                    if (this.initialySelectedCompanyContact) {
+                        this.companyContacts.forEach((current: any) => {
+                            var shouldContactBeInitialySelected = current.companyId === this.initialySelectedCompanyContact.company.id && current.contactId === this.initialySelectedCompanyContact.contact.id;
+                            current.selected = shouldContactBeInitialySelected;
+                        });
+                    }
                 }).finally(() => {
                     this.isBusy = false;
                 });
@@ -123,7 +125,7 @@ module Antares.Attributes.Offer.OfferChain {
                 vendor: { vendor: { required: true, active: true } },
                 agentUser: chain != null && chain.agentUser != null ? { agentUserId: { required: true, active: true } } : null,
                 agentCompanyContact: chain == null || chain.agentUser != null ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
-                solicitorCompanyContact: { solicitorContactId: { required: true, active: true }, solicitorCompanyId: { required: true, active: true } },
+                solicitorCompanyContact: { solicitorContactId: { required: false, active: true }, solicitorCompanyId: { required: false, active: true } },
                 mortgage: { mortgageId: { required: true, active: true } },
                 survey: { surveyId: { required: true, active: true } },
                 searches: { searchesId: { required: true, active: true } },
