@@ -366,25 +366,6 @@
             this.hidePanels();
         }
 
-        public isRentSectionVisible = (): boolean =>{
-            return this.config != null &&
-                this.config.shortAskingMonthRent != null &&
-                this.config.shortAskingWeekRent != null &&
-                ((this.config.shortMatchFlexMonthValue != null && this.config.shortMatchFlexWeekValue != null) || this.config.shortMatchFlexPercentage != null) &&
-                this.config.longAskingMonthRent != null &&
-                this.config.longAskingWeekRent != null &&
-                ((this.config.longMatchFlexMonthValue != null && this.config.longMatchFlexWeekValue != null) || this.config.longMatchFlexPercentage != null);
-
-        }
-
-        public isPriceSectionVisible = (): boolean => {
-            return this.config != null &&
-                this.config.priceType != null &&
-                this.config.activityPrice != null &&
-                (this.config.matchFlexValue != null || this.config.matchFlexPercentage != null);
-
-        }
-
         goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         };

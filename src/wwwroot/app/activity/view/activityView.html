@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div id="activity-rent" ng-if="avvm.isRentSectionVisible()">
+                        <div id="activity-rent" ng-if="avvm.config.shortAskingMonthRent || avvm.config.longAskingMonthRent">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.RENT"></h3>
 
                             <price-view-control config="avvm.config.shortAskingMonthRent" schema="avvm.shortAskingMonthRentSchema" price="avvm.activity.shortAskingMonthRent"></price-view-control>
@@ -138,7 +138,7 @@
                             <range-view-control min="avvm.activity.longMatchFlexWeekValue" config="avvm.config.longMatchFlexWeekValue" schema="avvm.longMatchFlexWeekValueSchema"></range-view-control>
                             <price-view-control config="avvm.config.longMatchFlexPercentage" schema="avvm.longMatchFlexPercentageSchema" price="avvm.activity.longMatchFlexPercentage"></price-view-control>
                         </div>
-                        <div id="activity-price" ng-show="avvm.isPriceSectionVisible()">
+                        <div id="activity-price" ng-show="avvm.config.priceType">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.PRICE"></h3>
                             <enum-item-view-control ng-model="avvm.activity.priceTypeId" config="avvm.config.priceType" schema="avvm.priceTypeSchema"></enum-item-view-control>
                             <price-view-control config="avvm.config.activityPrice" schema="avvm.activityPriceSchema" price="avvm.activity.activityPrice"></price-view-control>
