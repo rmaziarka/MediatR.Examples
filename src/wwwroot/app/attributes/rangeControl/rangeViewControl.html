@@ -3,10 +3,10 @@
         <div class="section-title col-xs-6">{{vm.schema.translationKey | translate}}</div>
         <div class="range-value">
             <div class="col-xs-6" ng-if="vm.min != vm.max">
-                <span ng-if="vm.showMinPrefix">{{'COMMON.MIN' | translate | lowercase}}&nbsp;</span><span ng-attr-id="{{vm.min != vm.max && vm.schema.minControlId}}">{{vm.min | number}}</span><span ng-if="vm.showHyphen">-</span><span ng-if="vm.showMaxPrefix">{{'COMMON.MAX' | translate | lowercase}}&nbsp;</span><span id="{{vm.schema.maxControlId}}">{{vm.max | number}}</span><span>{{vm.schema.unit != null ? '&nbsp;' + vm.schema.unit : ""}}</span>
+                <span ng-if="vm.showMinPrefix">{{'COMMON.MIN' | translate | lowercase}}&nbsp;</span><span ng-attr-id="{{vm.min != vm.max && vm.schema.minControlId}}">{{vm.min | number}}</span><span ng-if="vm.showHyphen">-</span><span ng-if="vm.showMaxPrefix">{{'COMMON.MAX' | translate | lowercase}}&nbsp;</span><span id="{{vm.schema.maxControlId}}">{{vm.max | number}}</span><span>{{vm.schema.unit != null ? '&nbsp;' : ""}}{{vm.schema.unit | translate}}</span>
             </div>
             <div class="col-xs-6" ng-if="vm.min == vm.max">
-                <span ng-if="!vm.showHyphen" ng-attr-id="{{vm.min == vm.max && vm.schema.minControlId}}">{{vm.min | number}}{{vm.schema.unit != null ? '&nbsp;' + vm.schema.unit : ""}}</span><span ng-if="vm.showHyphen">-</span>
+                <span ng-if="!vm.showHyphen" ng-attr-id="{{vm.min == vm.max && vm.schema.minControlId}}">{{vm.min | number}}{{vm.schema.unit != null ? '&nbsp;' : ""}}{{vm.schema.unit | translate}}</span><span ng-if="vm.showHyphen">-</span>
             </div>
         </div>
     </div>
