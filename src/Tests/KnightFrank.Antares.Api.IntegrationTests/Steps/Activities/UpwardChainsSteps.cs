@@ -38,6 +38,63 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"Upward chain exists in database")]
+        public void CreateUpwardChainInDatabase()
+        {
+            var activity = this.scenarioContext.Get<Activity>("Activity");
+            var property = this.scenarioContext.Get<Property>("Property");
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+            var company = this.scenarioContext.Get<Company>("Company");
+
+            var chainTransaction = new ChainTransaction
+            {
+                ActivityId = activity.Id,
+                RequirementId = requirement.Id,
+                PropertyId = property.Id,
+                IsEnd = true,
+                Vendor = StringExtension.GenerateMaxAlphanumericString(128),
+                AgentCompanyId = company.CompaniesContacts.First().CompanyId,
+                AgentContactId = company.CompaniesContacts.First().ContactId,
+                AgentUserId = null,
+                SolicitorCompanyId = company.CompaniesContacts.First().CompanyId,
+                SolicitorContactId = company.CompaniesContacts.First().ContactId,
+                CreatedDate = this.date,
+                LastModifiedDate = this.date,
+                SurveyDate = this.date,
+                MortgageId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(ChainMortgageStatus)) &&
+                            e.Code.Equals(nameof(ChainMortgageStatus.Unknown))).Id,
+                SurveyId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(ChainMortgageSurveyStatus)) &&
+                            e.Code.Equals(nameof(ChainMortgageSurveyStatus.Unknown))).Id,
+                SearchesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(ChainSearchStatus)) &&
+                            e.Code.Equals(nameof(ChainSearchStatus.Outstanding))).Id,
+                EnquiriesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(ChainEnquiries)) && e.Code.Equals(nameof(ChainEnquiries.Outstanding)))
+                        .Id,
+                ContractAgreedId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(ChainContractAgreedStatus)) &&
+                            e.Code.Equals(nameof(ChainContractAgreedStatus.Outstanding))).Id,
+                ParentId = null
+            };
+
+            activity.ChainTransactions.Add(chainTransaction);
+
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(activity, "Activity");
+        }
+
         [When(@"User updates activity with upward chain")]
         public void UpdateActivityWithChainTransaction()
         {
@@ -121,7 +178,7 @@
                     chainTransaction
                 }
             };
-            
+
             this.UpdateActivity(updateActivityCommand);
         }
 
@@ -207,7 +264,7 @@
                     chainTransaction
                 }
             };
-            
+
             this.UpdateActivity(updateActivityCommand);
         }
 
