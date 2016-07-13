@@ -30,7 +30,11 @@
                     .Include(v => v.Requirement.ChainTransactions)
                     .Include(v => v.Negotiator)
                     .Include(v => v.Activity)
+                    .Include(v => v.Activity.ActivityDepartments)
                     .Include(v => v.Activity.Contacts)
+                    .Include(v => v.Activity.AppraisalMeetingAttendees)
+                    .Include(v => v.Activity.ActivityUsers.Select(a => a.UserType))
+                    .Include(v => v.Activity.ActivityUsers.Select(a => a.User))
                     .Include(v => v.Activity.Property.Address)
                     .Include(v => v.Activity.Solicitor)
                     .Include(v => v.Activity.SolicitorCompany)
@@ -43,6 +47,14 @@
                     .Include(v => v.SurveyorCompany)
                     .Include(v => v.AdditionalSurveyorCompany)
                     .Include(v => v.Activity.ChainTransactions)
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.AgentCompany))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.AgentContact))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.AgentUser))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.Property.Address))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.Property.Ownerships))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorCompany))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorContact))
+                    .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorContact))
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return offer;

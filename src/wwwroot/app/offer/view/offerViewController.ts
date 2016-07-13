@@ -6,13 +6,13 @@ module Antares.Component {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Commands = Common.Models.Commands;
     import Enums = Common.Models.Enums;
-    import OfferViewConfig = Offer.IOfferViewConfig;
-    import OpenChainPanelEvent = Antares.Attributes.Offer.OpenChainPanelEvent;
+    import Dto = Common.Models.Dto;
+    import Offer = Attributes.Offer;
 
     export class OfferViewController {
         // bindings
         offer: Business.Offer;
-        config: OfferViewConfig;
+        config: Antares.Offer.IOfferViewConfig;
 
         //fields
         private offerStatuses: Common.Models.Dto.IEnumItem[];
@@ -35,7 +35,9 @@ module Antares.Component {
             this.activityEditCommand = new Commands.Activity.ActivityEditCommand(activityEditModel);
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, this.hidePanels);
-            this.eventAggregator.with(this).subscribe(OpenChainPanelEvent, this.openChainPanel);
+            this.eventAggregator.with(this).subscribe(Offer.OpenChainPanelEvent, this.openChainPanel);
+            this.eventAggregator.with(this).subscribe(Offer.ActivityUpdatedOfferChainsEvent, this.activityChanged);
+            this.eventAggregator.with(this).subscribe(Offer.RequirementUpdatedOfferChainsEvent, this.requirementChanged);
         }
 
         hidePanels = () =>{
@@ -46,6 +48,18 @@ module Antares.Component {
         openChainPanel = () =>{
             this.hidePanels();
             this.isUpwardChainPanelVisible = Enums.SidePanelState.Opened;
+        }
+
+        activityChanged = (event: Offer.ActivityUpdatedOfferChainsEvent) =>{
+            var activity = new Business.Activity(event.updatedActivity);
+            this.offer.activity = activity;
+
+            var activityEditModel = new Business.ActivityEditModel(this.offer.activity);
+            this.activityEditCommand = new Commands.Activity.ActivityEditCommand(activityEditModel);
+        }
+
+        requirementChanged = (event: Offer.RequirementUpdatedOfferChainsEvent) =>{
+            throw new Error("Requirement changed not handled");
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
