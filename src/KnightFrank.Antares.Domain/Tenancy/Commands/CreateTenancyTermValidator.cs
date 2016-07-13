@@ -6,7 +6,7 @@
     {
         public CreateTenancyTermValidator()
         {
-            this.RuleFor(x => x.Price).NotEmpty();
+            this.RuleFor(x => x.AgreedRent).NotEmpty();
             this.RuleFor(x => x.StartDate).NotEmpty();
             this.RuleFor(x => x.EndDate).NotEmpty();
             this.RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate);

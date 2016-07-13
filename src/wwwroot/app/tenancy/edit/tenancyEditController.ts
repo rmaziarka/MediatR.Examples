@@ -4,18 +4,13 @@ module Antares.Tenancy {
     import Business = Antares.Common.Models.Business;
 
     export class TenancyEditController {
+        // bindings
         tenancy: Business.TenancyEditModel;
+        config: Antares.Tenancy.ITenancyEditConfig;
 
-        constructor(private $state: ng.ui.IStateService) {}
-
-        configMock: Antares.Tenancy.ITenancyEditConfig = {
-            term: {
-                term: {
-                    active: true,
-                    required: true
-                }
-            }
-        };
+        constructor(private $state: ng.ui.IStateService, private tenancyService: Antares.Services.TenancyService) {
+            this.setDefaultContacts();
+        }
 
         termDateSchema: Antares.Attributes.IDateRangeControlSchema = {
             dateFromControlId: 'termDateFrom',
@@ -43,14 +38,41 @@ module Antares.Tenancy {
         }
 
         cancel() {
-            this.$state.go('app.activity-view', {id: this.tenancy.activity.id});
+            this.$state.go('app.activity-view', { id: this.tenancy.activity.id });
         }
 
         save = () => {
+            if (this.isEditMode()) {
+                this.tenancyService.updateActivity(new Antares.Common.Models.Commands.Tenancy.TenancyEditCommand(this.tenancy)).then((dto: Antares.Common.Models.Dto.ITenancy) => {
+                    this.navigateToTenancyView(dto.id);
+                });
+            }
+            else {
+                this.tenancyService.addTenancy(new Antares.Common.Models.Commands.Tenancy.TenancyAddCommand(this.tenancy)).then((dto: Antares.Common.Models.Dto.ITenancy) => {
+                    this.navigateToTenancyView(dto.id);
+                });
+            }
         }
 
         isEditMode = (): boolean => {
             return !!this.tenancy.id;
+        }
+
+        isAddMode = (): boolean => {
+            return !this.isEditMode();
+        }
+
+        private navigateToTenancyView = (tenancyId: string) => {
+            this.$state.go('app.tenancy-view', { id: tenancyId });
+        }
+
+        private setDefaultContacts = () => {
+            if (this.isEditMode()) {
+                return;
+            }
+
+            this.tenancy.landlords = this.tenancy.activity.landlords;
+            this.tenancy.tenants = this.tenancy.requirement.contacts;
         }
     }
 

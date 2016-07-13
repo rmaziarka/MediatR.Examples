@@ -4,7 +4,7 @@
 
     public class UpdateTenancyTerm
     {
-        public decimal Price { get; set; }
+        public decimal AgreedRent { get; set; }
 
         public DateTime StartDate { get; set; }
 

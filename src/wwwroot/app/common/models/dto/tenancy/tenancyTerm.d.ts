@@ -3,7 +3,7 @@ declare module Antares.Common.Models.Dto {
         id: string;
         startDate: string;
         endDate: string;
-        price: number;
+        agreedRent: number;
         tenancyId: string;
     }
 }

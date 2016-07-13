@@ -13,34 +13,46 @@ module Antares.Tenancy {
         $stateProvider
             .state('app.tenancy-view', {
                 url: '/tenancy/view/:id',
-                template: "<tenancy-view></tenancy-view>"
-            })
-            .state('app.tenancy-edit', {
-                url: '/tenancy/edit/:id',
-                template: "<tenancy-edit tenancy='tenancy'></tenancy-edit>",
+                template: "<tenancy-view tenancy='tenancy'></tenancy-view>",
                 controller: ($scope: ng.IScope, tenancy: Dto.ITenancy) => {
-                    $scope['tenancy'] = new Business.TenancyEditModel(tenancy);;
+                    $scope['tenancy'] = new Business.TenancyViewModel(tenancy);
                 },
                 resolve: {
                     tenancy: ($stateParams: ng.ui.IStateParamsService, tenancyService: Antares.Services.TenancyService) => {
                         return tenancyService.getTenancy($stateParams['id']);
+                    },
+                }
+            })
+            .state('app.tenancy-edit', {
+                url: '/tenancy/edit/:id',
+                template: "<tenancy-edit tenancy='tenancy' config='config'></tenancy-edit>",
+                controller: ($scope: ng.IScope, tenancy: Dto.ITenancy, config: Antares.Tenancy.ITenancyEditConfig) => {
+                    $scope['tenancy'] = new Business.TenancyEditModel(tenancy);
+                    $scope['config'] = config;
+                },
+                resolve: {
+                    tenancy: ($stateParams: ng.ui.IStateParamsService, tenancyService: Antares.Services.TenancyService) => {
+                        return tenancyService.getTenancy($stateParams['id']);
+                    },
+                    config: (tenancy: Dto.ITenancy, configService: Services.ConfigService) => {
+                        var entity = new Business.TenancyEditModel(tenancy);
+
+                        return configService.getTenancy(PageTypeEnum.Update,
+                            tenancy.requirement.requirementTypeId,
+                            tenancy.tenancyTypeId,
+                            new Common.Models.Commands.Tenancy.TenancyEditCommand(entity));
                     }
                 }
             }).state('app.tenancy-add', {
                 url: '/activity/:activityId/requirement/:requirementId/tenancy/add',
                 template: "<tenancy-edit tenancy='tenancy' config='config'></tenancy-edit>",
-                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity, enumProvider: Providers.EnumProvider) => {
-                    var activityPreview = new Business.ActivityPreviewModel(activity);
-                    var requirementPreview = new Business.RequirementPreviewModel(requirement);
-
+                controller: ($scope: ng.IScope, requirement: Dto.IRequirement, activity: Dto.IActivity, config: Antares.Tenancy.ITenancyEditConfig) => {
                     var tenancy = new Business.TenancyEditModel();
-                    tenancy.activity = activityPreview;
-                    tenancy.landlords = activityPreview.landlords;
-
-                    tenancy.requirement = requirementPreview;
-                    tenancy.tenants = requirementPreview.contacts;
+                    tenancy.activity = new Business.ActivityPreviewModel(activity);
+                    tenancy.requirement = new Business.RequirementPreviewModel(requirement);
 
                     $scope['tenancy'] = tenancy;
+                    $scope['config'] = config;
                 },
                 resolve: {
                     tenancyTypes: (tenancyService: Antares.Services.TenancyService) => {

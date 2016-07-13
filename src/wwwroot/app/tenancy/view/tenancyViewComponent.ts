@@ -3,11 +3,10 @@
 module Antares.Tenancy {
     angular.module('app').component('tenancyView', {
         templateUrl: 'app/tenancy/view/tenancyView.html',
-        controllerAs: 'tvvm',
+        controllerAs: 'vm',
         controller: 'TenancyViewController',
         bindings: {
-            activity: '<',
-            requirement: '<'
+            tenancy: '<'
         }
     });
 }

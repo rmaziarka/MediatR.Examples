@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="page-header" translate="TENANCY.CREATE_TENANCY"></h2>
+        <h2 class="page-header" translate="TENANCY.CREATE_TENANCY" ng-if="vm.isAddMode()"></h2>
+        <h2 class="page-header" translate="TENANCY.EDIT_TENANCY" ng-if="vm.isEditMode()"></h2>
         <form ng-submit="tenancyEditForm.isFormValid() && vm.save()" name="tenancyEditForm" method="post" novalidate>
             <div class="row">
                 <div class="col-sm-6 col-md-4">
@@ -58,11 +59,11 @@
                     <!-- Terms -->
                     <fieldset>
                         <h3 class="page-header" translate="TENANCY.COMMON.TERMS"></h3>
-                        <date-range-edit-control date-from="vm.tenancy.startDate" date-to="vm.tenancy.endDate" config="vm.configMock.term" schema="vm.termDateSchema"></date-range-edit-control>
+                        <date-range-edit-control date-from="vm.tenancy.startDate" date-to="vm.tenancy.endDate" config="vm.config.tenancy_Term" schema="vm.termDateSchema"></date-range-edit-control>
                         
                         <div class="row">
                             <div class="col-sm-8 col-md-6">
-                                <price-edit-control config="vm.configMock.term" schema="vm.termAgreedRentSchema" ng-model="vm.tenancy.agreedRent"></price-edit-control>
+                                <price-edit-control ng-model="vm.tenancy.agreedRent" config="vm.config.tenancy_Term" schema="vm.termAgreedRentSchema" ></price-edit-control>
                             </div>
                         </div>
                     </fieldset>

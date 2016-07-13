@@ -4,6 +4,6 @@ declare module Antares.Tenancy {
     import Attributes = Antares.Attributes;
 
     interface ITenancyEditConfig {
-        term: ITenancyTermEditControlConfig;
+        tenancy_Term: ITenancyTermEditControlConfig;
     }
 }

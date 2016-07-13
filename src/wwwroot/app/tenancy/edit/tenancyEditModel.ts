@@ -1,6 +1,8 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
+    import Dto = Models.Dto;
+    import Enums = Antares.Common.Models.Enums;
 
     export class TenancyEditModel {
         id: string = null;
@@ -17,14 +19,21 @@ module Antares.Common.Models.Business {
                 this.id = dto.id;
                 this.activity = new Business.ActivityPreviewModel(dto.activity);
                 this.requirement = new Business.RequirementPreviewModel(dto.requirement);
+
+                this.landlords = this.getContacts(dto.contacts, Enums.TenancyContactType[Enums.TenancyContactType.Landlord]);
+                this.tenants = this.getContacts(dto.contacts, Enums.TenancyContactType[Enums.TenancyContactType.Tenant]);
+
                 this.startDate = Core.DateTimeUtils.convertDateToUtc(dto.terms[0].startDate);
                 this.endDate = Core.DateTimeUtils.convertDateToUtc(dto.terms[0].endDate);
-                this.agreedRent = dto.terms[0].price;
+                this.agreedRent = dto.terms[0].agreedRent;
+
             }
-            else {
-                this.startDate = moment().toDate();
-                this.endDate = moment().toDate();
-            }
+        }
+
+        getContacts = (contacts: Dto.ITenancyContact[], contactType: string): Business.Contact[] => {
+            return contacts
+                .filter((contact: Dto.ITenancyContact) => { return contact.contactType.code == contactType })
+                .map((tenancyContact: Dto.ITenancyContact) => { return new Business.Contact(tenancyContact.contact) });
         }
     }
 }

@@ -29,6 +29,7 @@
                        .Include(x => x.Terms)
                        .Include(x => x.Contacts)
                        .Include(x => x.Contacts.Select(c => c.Contact))
+                       .Include(x => x.Contacts.Select(c => c.ContactType))
                        .SingleOrDefault(x => x.Id == message.Id);
         }
     }
