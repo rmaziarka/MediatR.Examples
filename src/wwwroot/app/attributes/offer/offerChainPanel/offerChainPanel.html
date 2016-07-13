@@ -1,8 +1,20 @@
 ﻿﻿<kf-side-panel>
     <side-panel-cards>
-        <!--<offer-chain-preview-card chain="vm.chain" config="vm.config" on-edit="vm.edit">
-        </offer-chain-preview-card>-->
-        <offer-chain-add-edit-card chain="vm.chain" config="vm.config" on-edit="vm.edit">
+        <offer-chain-preview-card
+            chain="vm.chain"
+            config="vm.config" 
+            on-edit="vm.edit()"
+            ng-if="vm.panelMode == vm.offerChainPanelMode.Preview">
+        </offer-chain-preview-card>
+        <offer-chain-add-edit-card
+            chain="vm.chain"
+            config="vm.config"
+            on-save="vm.save(chain)"
+            on-cancel="vm.cancel()"
+            on-reload-config="vm.reloadConfig(chain)"
+            back-to-preview="vm.backToPreview"
+            pristine-flag="vm.cardPristine"
+            ng-if="vm.panelMode == vm.offerChainPanelMode.AddEdit">
         </offer-chain-add-edit-card>
     </side-panel-cards>
 </kf-side-panel>
