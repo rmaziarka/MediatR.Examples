@@ -112,7 +112,10 @@
                 ActivityUsers = activityNegotiatorList,
                 ActivityDepartments = this.activityDepartments,
                 SourceId = activitySourceId,
-                SellingReasonId = activitySellingReasonId
+                SellingReasonId = activitySellingReasonId,
+                AppraisalMeetingStart = this.date.AddHours(10),
+                AppraisalMeetingEnd = this.date.AddHours(12),
+                ChainTransactions = new List<ChainTransaction>()
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -169,8 +172,8 @@
                     {
                         new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId }
                     },
-                AppraisalMeetingStart = DateTime.Now.AddHours(24),
-                AppraisalMeetingEnd = DateTime.Now.AddHours(26)
+                AppraisalMeetingStart = this.date.AddHours(24),
+                AppraisalMeetingEnd = this.date.AddHours(26)
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -188,8 +191,8 @@
             updateActivityCommand.SourceId = activityFromDatabase.SourceId;
             updateActivityCommand.SellingReasonId = activityFromDatabase.SellingReasonId;
 
-            updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(24);
-            updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(26);
+            updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? this.date.AddHours(24);
+            updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? this.date.AddHours(26);
 
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
@@ -278,7 +281,8 @@
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
-                .Excluding(x => x.SellingReason));
+                .Excluding(x => x.SellingReason)
+                .Excluding(x => x.ChainTransactions));
         }
 
         [Then(@"Activity details should be the same as already added")]
