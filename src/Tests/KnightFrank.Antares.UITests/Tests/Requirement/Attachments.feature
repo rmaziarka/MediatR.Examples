@@ -3,7 +3,7 @@
 @Requirement
 Scenario: Upload attachment for residential sale requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
+		| Title | FirstName | LastName |
 		| Miss  | Alana     | Duran   |
 		And Requirement for GB is created in database
 			| Type             | Description |

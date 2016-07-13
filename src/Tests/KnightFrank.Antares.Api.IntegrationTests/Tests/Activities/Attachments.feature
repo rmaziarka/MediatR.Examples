@@ -55,3 +55,4 @@ Scenario: Get Activity with attachment
 	When User gets activity with latest id
 	Then User should get OK http status code
 		And Retrieved activity should have expected attachments 
+

@@ -7,12 +7,16 @@ module Antares.Common.Component
         controllerAs : 'vm',
         controller: 'SearchController',
         bindings: {
+            searchId: '@',
+            searchName: '@',
             options: '<',
             onSelectItem: '<',
+            onChangeValue: '<',
             onCancel: '<',
             loadItems: '<',
             itemTemplateUrl: '@',
-            searchPlaceholder: '@'
+            searchPlaceholder: '@',
+            initialValue: '<'
         }
     });
 }

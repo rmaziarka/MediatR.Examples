@@ -51,8 +51,8 @@
                 case "search property":
                     this.Driver.NavigateTo(GetUrl("SearchPropertyPage"));
                     break;
-                case "edit preferences":
-                    this.Driver.NavigateTo(GetUrl("EditPreferencesPage"));
+                case "preferences":
+                    this.Driver.NavigateTo(GetUrl("PreferencesPage"));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");
@@ -90,6 +90,9 @@
                     break;
                 case "edit company":
                     this.Driver.NavigateTo(GetUrl("EditCompanyPage", id));
+                    break;
+                case "view contacts":
+                    this.Driver.NavigateTo(GetUrl("ViewContactPage", id));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

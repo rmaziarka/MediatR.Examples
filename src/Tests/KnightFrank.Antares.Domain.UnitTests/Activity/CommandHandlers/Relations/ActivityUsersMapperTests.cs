@@ -218,14 +218,14 @@
         {
             return fixture.Build<EnumTypeItem>()
                           .With(i => i.Id, this.leadNegotiatorTypeId)
-                          .With(i => i.Code, ActivityUserType.LeadNegotiator.ToString()).Create();
+                          .With(i => i.Code, UserType.LeadNegotiator.ToString()).Create();
         }
 
         private EnumTypeItem GetSecondaryNegotiatorUserType(IFixture fixture)
         {
             return fixture.Build<EnumTypeItem>()
                           .With(i => i.Id, this.secondaryNegotiatorTypeId)
-                          .With(i => i.Code, ActivityUserType.SecondaryNegotiator.ToString()).Create();
+                          .With(i => i.Code, UserType.SecondaryNegotiator.ToString()).Create();
         }
     }
 }

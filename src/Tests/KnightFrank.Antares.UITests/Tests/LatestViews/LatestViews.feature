@@ -7,7 +7,7 @@ Scenario: Display latest viewed properties
 			| PropertyNumber | PropertyName | Line2       | Postcode | City          | County          |
 			| 70             | Condo        | Longford St | TS1 4RN  | Middlesbrough | North Yorkshire |
 		And Contacts are created in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Michael   | Johnson | Sir   |
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
@@ -74,7 +74,9 @@ Scenario: Display latest viewed activities
 			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-		And User selects Freehold Sale type on create activity page
+		And User selects activity status and type on create actvity page
+			| Type          | Status        |
+			| Freehold Sale | Pre-appraisal |
 		And User selects Direct phone call from source list on create activity page
 		And User selects Divorce from selling reason list on create activity page
 		And User selects John Smith from attendees on create activity page
@@ -90,8 +92,8 @@ Scenario: Display latest viewed activities
 			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
 			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
 		And Contacts are created in database
-			| FirstName | Surname | Title |
-			| Michael   | Johnson | Sir   |
+			| FirstName | LastName | Title |
+			| Michael   | Johnson  | Sir   |
 		And Property Long Leasehold Sale activity is defined
 	When User navigates to edit activity page with id
 	Then Latest 2 activities should contain following data
@@ -105,12 +107,12 @@ Scenario: Display latest viewed activities
 		| The Alternative Tuck Shop, 24 Holywell St |
 		| St John Flat, 2 Walton St                 |
 	When Contacts are created in database
-		| Title | FirstName | Surname   |
+		| Title | FirstName | LastName  |
 		| Lady  | Joanna    | Thornhill |
 		And Property with Residential division and House type is defined
 		And Contacts are created in database
-			| FirstName | Surname | Title |
-			| Tom       | Johnson | Dr    |
+			| FirstName | LastName | Title |
+			| Tom       | Johnson  | Dr    |
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2      | Postcode | City     | County |
 			| 237            | Duke Flat    | Margate Rd | CT12 6TA | Ramsgate | Kent   |
@@ -152,11 +154,11 @@ Scenario: Display latest viewed activities
 @LatestViews
 Scenario: Display latest viewed requirements
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
+		| Title | FirstName | LastName |
 		| Miss  | Triss     | Merigold |
 	When User navigates to create requirement page
 		And User selects contacts on create requirement page
-			| FirstName | Surname  |
+			| FirstName | LastName |
 			| Triss     | Merigold |
 		And User fills in sale requirement details on create requirement page
 			| Type             | Description |
@@ -170,9 +172,9 @@ Scenario: Display latest viewed requirements
 			| LatestData             |
 			| Triss Merigold         |
 	When Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Van       | Wilder  |
-		| Sir   | Van       | Wilder  |
+		| Title | FirstName | LastName |
+		| Dr    | Van       | Wilder   |
+		| Sir   | Van       | Wilder   |
 		And Requirement for GB is created in database
 			| Type                | Description |
 			| Residential Letting | Description |
@@ -187,7 +189,7 @@ Scenario: Display latest viewed requirements
 			| Line2    | Postcode | City   |
 			| Gower St | WC1E 6BT | London |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname  |
+			| FirstName | LastName |
 			| Triss     | Merigold |
 		And Latest 2 requirements should contain following data
 			| LatestData             |
@@ -197,23 +199,23 @@ Scenario: Display latest viewed requirements
 @LatestViews
 Scenario: Display latest viewed companies
 	Given Contacts are created in database
-		| FirstName | Surname | Title |
-		| Dustin    | Hoffman | Dr    |
+		| FirstName | LastName | Title |
+		| Dustin    | Hoffman  | Dr    |
 	When User navigates to create company page
 		And User fills in company details on create company page 
 			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
 			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
 		And User selects contacts on create company page
-			| FirstName | Surname |
-			| Dustin    | Hoffman |
+			| FirstName | LastName |
+			| Dustin    | Hoffman  |
 		And User clicks save company button on create company page
 	Then View company page should be displayed
 		And Latest 1 company should contain following data
 			| LatestData  |
 			| Hoffman Inc |
 	When Contacts are created in database
-		| FirstName | Surname | Title |
-		| Tom       | Hanks   | Dr    |
+		| FirstName | LastName | Title |
+		| Tom       | Hanks    | Dr    |
 		And Company is created in database
 			| Name      | WebsiteUrl               | ClientCarePageUrl         |
 			| Hanks Inc | https://www.tomhanks.com | https://www.tomhanks2.com |
@@ -231,3 +233,43 @@ Scenario: Display latest viewed companies
 			| LatestData  |
 			| Hoffman Inc |
 			| Hanks Inc   |
+
+@LatestViews
+Scenario: Display latest viewed contacts
+	Given Contacts are created in database
+		| FirstName | LastName   | Title |
+		| Mig       | Jagger     | Dr    |
+		| David     | Hasselhoff | Guard |
+	When User navigates to view contact page with id
+	Then Latest 2 contacts should contain following data
+	     | LatestData       |
+         | David Hasselhoff |
+         | Mig Jagger	    |
+	When User navigates to create contact page
+		And User fills in contact details on create contact page
+			| FirstName | LastName  | Title |
+			| Erick     | Ban		| Mr    |
+	And User clicks save contact button on create contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData       |
+			| Erick Ban        |
+			| David Hasselhoff |
+			| Mig Jagger       |
+	When User clicks latest contact on 2 position in drawer menu
+	Then Latest 3 contacts should contain following data
+		| LatestData       |
+		| David Hasselhoff |
+		| Erick Ban		   |
+		| Mig Jagger	   |
+	When User clicks edit button on view contact page
+		And User fills in contact details on edit contact page
+			| FirstName | LastName | Title |
+			| Mark      | Twain    | Sir   |
+		And User clicks save button on edit contact page
+	Then View contact page should be displayed
+		And Latest 3 contacts should contain following data
+			| LatestData |
+			| Mark Twain |
+			| Erick Ban  |
+			| Mig Jagger |

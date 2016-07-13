@@ -11,7 +11,7 @@ module Antares.Common.Models.Enums {
         RequirementDocumentType,
         PropertyDocumentType,
         OfferStatus,
-        ActivityUserType,
+        UserType,
         ActivityDepartmentType,
         MortgageStatus,
         ClientCareStatus,
@@ -24,6 +24,8 @@ module Antares.Common.Models.Enums {
         ActivitySellingReason,
         DisposalType,
         Decoration,
+        MailingSalutation,
+        EventSalutation,
         ActivityPriceType,
         ActivityMatchFlexPrice,
         ActivityMatchFlexRent,
@@ -84,7 +86,7 @@ module Antares.Common.Models.Enums {
         Accepted,
     }
 
-    export enum ActivityUserType {
+    export enum UserType {
         LeadNegotiator,
         SecondaryNegotiator,
     }
@@ -193,6 +195,20 @@ module Antares.Common.Models.Enums {
         Fair,
         Good,
         VeryGood,
+    }
+
+    export enum MailingSalutation {
+        MailingFormal,
+        MailingSemiformal,
+        MailingInformal,
+        MailingPersonal,
+    }
+
+    export enum EventSalutation {
+        EventInvite,
+        EventSemiformal,
+        EventInformal,
+        EventPersonal,
     }
 
     export enum ActivityPriceType {

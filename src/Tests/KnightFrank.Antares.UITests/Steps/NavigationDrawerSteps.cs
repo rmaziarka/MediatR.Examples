@@ -130,5 +130,17 @@
 
             expected.Should().Equal(current);
         }
+
+
+        [Then(@"Latest (.*) contact should contain following data")]
+        [Then(@"Latest (.*) contacts should contain following data")]
+        public void CheckLatestContactItems(int count, Table table)
+        {
+            this.page.OpenNavigationDrawer().ClickDrawerMenuItem("Contacts");
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("contact").Take(count).ToList();
+
+            expected.Should().Equal(current);
+        }
     }
 }

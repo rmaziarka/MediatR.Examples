@@ -10,7 +10,7 @@ module Antares.TestHelpers {
                 activityDepartmentType: EnumDictionaryGenerator.generateEnums(Enums.ActivityDepartmentType),
                 activityDocumentType: EnumDictionaryGenerator.generateEnums(Enums.ActivityDocumentType),
                 activityStatus: EnumDictionaryGenerator.generateEnums(Enums.ActivityStatus),
-                activityUserType: EnumDictionaryGenerator.generateEnums(Enums.ActivityUserType),
+                userType: EnumDictionaryGenerator.generateEnums(Enums.UserType),
                 division: EnumDictionaryGenerator.generateEnums(Enums.Division),
                 entityType: EnumDictionaryGenerator.generateEnums(Enums.EntityType),
                 offerStatus: EnumDictionaryGenerator.generateEnums(Enums.OfferStatus),

@@ -54,7 +54,7 @@
                     {
                         Id = requirement.Contacts[0].Id,
                         FirstName = requirement.Contacts[0].FirstName,
-                        Surname = requirement.Contacts[0].Surname,
+                        LastName = requirement.Contacts[0].LastName,
                         Title = requirement.Contacts[0].Title
                     }
                 },

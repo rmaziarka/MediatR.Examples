@@ -3,7 +3,7 @@
 @Company
 Scenario: Create new company with required fields
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
 	When User creates company with required fields using api
 	Then User should get OK http status code
@@ -12,7 +12,7 @@ Scenario: Create new company with required fields
 @Company
 Scenario: Create new company with all fields
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Michael   | Angel   | Mr    |
 	 When User creates company using api
 	 	| Name         | WebsiteUrl  | ClientCarePageUrl  |
@@ -23,7 +23,7 @@ Scenario: Create new company with all fields
 @Company
 Scenario Outline: Create company with invalid data
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Michael   | Angel   | ceo   |
 	When User creates company with invalid <data> using api
 	Then User should get BadRequest http status code
@@ -47,7 +47,7 @@ Scenario: Get company with invalid query
 @Company
 Scenario: Get company details
 	Given Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Michael   | Angel   | ceo | 
 		And Company exists in database
 	When User gets company details
@@ -57,7 +57,7 @@ Scenario: Get company details
 @Company
 Scenario: Update company
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
 		And Company exists in database
 	When User updates company using api
@@ -67,7 +67,7 @@ Scenario: Update company
 @Company
 Scenario Outline: Update company with invalid data
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
 		And Company exists in database
 	When User updates company with invalid <data> using api

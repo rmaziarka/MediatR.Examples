@@ -222,4 +222,7 @@
   <data name="Missing_Activity_Negotiators_Id" xml:space="preserve">
     <value>One or more negotiators do not exist.</value>
   </data>
+  <data name="Negotiators_Not_Unique" xml:space="preserve">
+    <value>One or more negotiators are duplicated.</value>
+  </data>
 </root>
