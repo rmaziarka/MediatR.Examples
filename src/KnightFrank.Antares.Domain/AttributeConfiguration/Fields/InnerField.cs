@@ -19,6 +19,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         protected Delegate IsHiddenExpression;
         protected Delegate IsReadonlyExpression;
 
+        public LambdaExpression TargetContainerExpression;
+        public Func<object, object> TargetContainerCompiled;
+
         public bool IsReadonly(object entity) => entity != null && ((bool?)this.IsReadonlyExpression?.DynamicInvoke(entity) ?? false);
         public bool IsHidden(object entity) => entity != null && ((bool?)this.IsHiddenExpression?.DynamicInvoke(entity) ?? false);
 
@@ -56,7 +59,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             {
                 IsHiddenExpression = this.IsHiddenExpression,
                 IsReadonlyExpression = this.IsReadonlyExpression,
-                Required = this.Required
+                Required = this.Required,
+                TargetContainerExpression = this.TargetContainerExpression,
+                TargetContainerCompiled = this.TargetContainerCompiled
             };
 
             foreach (IValidator validator in this.Validators)
