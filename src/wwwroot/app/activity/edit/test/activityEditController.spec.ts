@@ -270,6 +270,24 @@ module Antares {
                     expect(requestData.groundRentAmount).toEqual(activity.groundRentAmount);
                     expect(requestData.groundRentNote).toEqual(activity.groundRentNote);
                     expect(requestData.otherCondition).toEqual(activity.otherCondition);
+                    expect(requestData.priceTypeId).toEqual(activity.priceTypeId);
+                    expect(requestData.activityPrice).toEqual(activity.activityPrice);
+                    expect(requestData.matchFlexibilityId).toEqual(activity.matchFlexibilityId);
+                    expect(requestData.matchFlexValue).toEqual(activity.matchFlexValue);
+                    expect(requestData.matchFlexPercentage).toEqual(activity.matchFlexPercentage);
+                    expect(requestData.rentPaymentPeriodId).toEqual(activity.rentPaymentPeriodId);
+                    expect(requestData.shortAskingWeekRent).toEqual(activity.shortAskingWeekRent);
+                    expect(requestData.shortAskingMonthRent).toEqual(activity.shortAskingMonthRent);
+                    expect(requestData.longAskingWeekRent).toEqual(activity.longAskingWeekRent);
+                    expect(requestData.longAskingMonthRent).toEqual(activity.longAskingMonthRent);
+                    expect(requestData.shortMatchFlexibilityId).toEqual(activity.shortMatchFlexibilityId);
+                    expect(requestData.shortMatchFlexWeekValue).toEqual(activity.shortMatchFlexWeekValue);
+                    expect(requestData.shortMatchFlexMonthValue).toEqual(activity.shortMatchFlexMonthValue);
+                    expect(requestData.shortMatchFlexPercentage).toEqual(activity.shortMatchFlexPercentage);
+                    expect(requestData.longMatchFlexibilityId).toEqual(activity.longMatchFlexibilityId);
+                    expect(requestData.longMatchFlexWeekValue).toEqual(activity.longMatchFlexWeekValue);
+                    expect(requestData.longMatchFlexMonthValue).toEqual(activity.longMatchFlexMonthValue);
+                    expect(requestData.longMatchFlexPercentage).toEqual(activity.longMatchFlexPercentage);
                 }
             });
         });
@@ -657,6 +675,140 @@ module Antares {
 
                     // act & assert
                     expect(controller.isChargesSectionVisible()).toBe(data[3]);
+                });
+        });
+
+        describe('when change rent period is month', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Business.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    rentPaymentPeriod: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Monthly] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Weekly] }
+                    ]
+                };
+
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit({
+                    rentPaymentPeriodId: enumProvider.enums.rentPaymentPeriod[0].id, // Month
+                    shortAskingMonthRent: 13,
+                    longAskingMonthRent: 26,
+                    shortMatchFlexMonthValue: 39,
+                    longMatchFlexMonthValue: 52
+                });
+
+                controller.activity = activity;
+            });
+
+            it('and copyRentValues then week values must be equal to month' , () => {
+                // act
+                controller.copyRentValues();
+
+                // assert
+                expect(controller.activity.shortAskingWeekRent).toBe(controller.activity.shortAskingMonthRent);
+                expect(controller.activity.longAskingWeekRent).toBe(controller.activity.longAskingMonthRent);
+                expect(controller.activity.shortMatchFlexWeekValue).toBe(controller.activity.shortMatchFlexMonthValue);
+                expect(controller.activity.longMatchFlexWeekValue).toBe(controller.activity.longMatchFlexMonthValue);
+            });
+
+            it('and calculateRentPayments then week values must be calculated accoridng to formula', () => {
+                // act
+                controller.calculateRentPayments();
+
+                // assert
+                expect(controller.activity.shortAskingWeekRent).toBe(3);
+                expect(controller.activity.longAskingWeekRent).toBe(6);
+                expect(controller.activity.shortMatchFlexWeekValue).toBe(9);
+                expect(controller.activity.longMatchFlexWeekValue).toBe(12);
+            });
+        });
+
+        describe('when change rent period is week', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Business.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    rentPaymentPeriod: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Monthly] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Weekly] }
+                    ]
+                };
+
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit({
+                    rentPaymentPeriodId: enumProvider.enums.rentPaymentPeriod[1].id, // week
+                    shortAskingWeekRent: 3,
+                    longAskingWeekRent: 6,
+                    shortMatchFlexWeekValue: 9,
+                    longMatchFlexWeekValue: 12
+                });
+
+                controller.activity = activity;
+            });
+
+            it('and copyRentValues then month values must be equal to week', () => {
+                // act
+                controller.copyRentValues();
+
+                // assert
+                expect(controller.activity.shortAskingMonthRent).toBe(controller.activity.shortAskingWeekRent);
+                expect(controller.activity.longAskingMonthRent).toBe(controller.activity.longAskingWeekRent);
+                expect(controller.activity.shortMatchFlexMonthValue).toBe(controller.activity.shortMatchFlexWeekValue);
+                expect(controller.activity.longMatchFlexMonthValue).toBe(controller.activity.longMatchFlexWeekValue);
+            });
+
+            it('and calculateRentPayments then month values must be calculated accoridng to formula', () => {
+                // act
+                controller.calculateRentPayments();
+
+                // assert
+                expect(controller.activity.shortAskingMonthRent).toBe(13);
+                expect(controller.activity.longAskingMonthRent).toBe(26);
+                expect(controller.activity.shortMatchFlexMonthValue).toBe(39);
+                expect(controller.activity.longMatchFlexMonthValue).toBe(52);
+            });
+        });
+
+        describe('when convertPerWeekValueToPerMonthValue is called', () => {
+            type TestCase = [number, number];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [null, null],
+                    [1, 5],
+                    [2, 9],
+                    [3, 13],
+                    [4.5, 20]])
+                .dataIt((data: TestCase) =>
+                    `where weekValue is ${data[0]} then result must return ${data[1]}`)
+                .run((data: TestCase) => {
+                    // act & assert
+                    expect(controller.convertPerWeekValueToPerMonthValue(data[0])).toBe(data[1]);
+                });
+        });
+
+        describe('when convertPerMonthValueToPerWeekValue is called', () => {
+            type TestCase = [number, number];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [null, null],
+                    [1, 1],
+                    [2, 1],
+                    [3, 1],
+                    [4, 1],
+                    [6, 2],
+                    [13, 3]])
+                .dataIt((data: TestCase) =>
+                    `where monthValue is ${data[0]} then result must return ${data[1]}`)
+                .run((data: TestCase) => {
+                    // act & assert
+                    expect(controller.convertPerMonthValueToPerWeekValue(data[0])).toBe(data[1]);
                 });
         });
     });

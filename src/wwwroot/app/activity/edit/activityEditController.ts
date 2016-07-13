@@ -670,7 +670,7 @@ module Antares.Activity {
                 this.config.editConfig.appraisalMeetingAttendees != null || this.config.editConfig.appraisalMeetingInvitation != null);
         }
 
-        private copyRentValues = () => {
+        public copyRentValues = () => {
             if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
                 this.copyRentMonthValuesToWeekValues();
             }
@@ -695,7 +695,7 @@ module Antares.Activity {
         }
 
 
-        private calculateRentPayments = () => {
+        public calculateRentPayments = () => {
             if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
                 this.updateMonthValues();
             }
@@ -732,7 +732,7 @@ module Antares.Activity {
                 return null;
             }
             else {
-                return Math.round((weekValue * 52.0) / 12.0);
+                return Math.ceil((weekValue * 52.0) / 12.0);
             }
         }
 
@@ -741,7 +741,7 @@ module Antares.Activity {
                 return null;
             }
             else {
-                return Math.round((monthValue * 12.0) / 52.0);
+                return Math.ceil((monthValue * 12.0) / 52.0);
             }
         }
     }
