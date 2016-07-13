@@ -54,10 +54,11 @@
                 '**/app.module.js',
                 '**/*.module.js',
                 '**/common/core/**/*.js',
+                '**/common/models/enums/**/*.js',
                 '**/common/models/business/**/*.js',
                 '**/common/models/dto/**/*.js',
-                '**/common/models/enums/**/*.js',
                 '**/common/components/base/**/*.js',
+                '**/common/**/*Base*.js',
                 '**/common/**/*.js',
                 '**/**/*Base*.js',
                 '**/*.js'

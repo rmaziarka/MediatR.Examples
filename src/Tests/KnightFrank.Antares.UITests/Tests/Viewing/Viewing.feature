@@ -46,10 +46,11 @@ Scenario: Create viewing on residential sale requirement
 		| Knight Lancelot, 120 Baker Str | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
 	When User clicks view activity from viewing on view requirement page
 	Then View activity page should be displayed
-		And Viewing details on 1 position on view activity page are same as the following
-			| Date       | Time          | Name                                     |
-			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde |
-	When User clicks 1 viewings details link on view activity page
+		And Viewing should be displayed on overview tab on view activity page
+		And Viewing details on 1 position on overview tab on view activity page are same as the following
+			| Date       | Time          | Name                                     | Negotiator |
+			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde | -          |
+	When User clicks 1 viewings details link on overview tab on view activity page
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Amber Brooks, Sarah Knight, Kennedi Hyde | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
@@ -144,10 +145,11 @@ Scenario: Create viewing on residential letting requirement
 		| Judi Dench Property, 1 Stanway St | 12-06-2016 | 10:00     | 11:00   | John Smith | Maggie Smith;Cate Blanchett | Text           |                    |
 	When User clicks view activity from viewing on view requirement page
 	Then View activity page should be displayed
-		And Viewing details on 1 position on view activity page are same as the following
-			| Date       | Time          | Name                                   |
-			| 12-06-2016 | 10:00 - 11:00 | Maggie Smith, Judi Dench, Cate Blanchett |
-	When User clicks 1 viewings details link on view activity page
+		And Viewing should be displayed on overview tab on view activity page
+		And Viewing details on 1 position on overview tab on view activity page are same as the following
+			| Date       | Time          | Name                                     | Negotiator |
+			| 12-06-2016 | 10:00 - 11:00 | Maggie Smith, Judi Dench, Cate Blanchett | -          |
+	When User clicks 1 viewings details link on overview tab on view activity page
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                   | InvitationText | PostViewingComment |
 		| Maggie Smith, Judi Dench, Cate Blanchett | 12-06-2016 | 10:00     | 11:00   | John Smith | Maggie Smith;Cate Blanchett | Text           |                    |
