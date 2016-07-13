@@ -92,6 +92,11 @@ label,
   }
 }
 
+.radio-inline {
+  font-size: $font-size-base;
+  line-height: 21px;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -100,6 +105,15 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+// Textarea
+
+textarea {
+  &.form-control {
+    overflow-y: scroll;
+    resize: none;
+  }
 }
 
 // Textarea character limit

@@ -132,7 +132,7 @@
     },
     "EDIT": {
       "CONTACT_EDIT_SUCCESS": "Contact successfully saved"
-    } 
+    }
   },
     "FORM": {
       "FIELD_IS_REQUIRED": "Field is required",
@@ -342,6 +342,10 @@
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
       "VIEWINGS": "Viewings"
+      },
+      "MARKETING": {
+        "MARKETING": "Marketing",
+        "DETAILS": "Marketing details"
       }
     },
     "NEGOTIATORS": {
