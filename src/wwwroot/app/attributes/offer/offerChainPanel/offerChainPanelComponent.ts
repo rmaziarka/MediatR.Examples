@@ -9,7 +9,9 @@ module Antares.Attributes.Offer.OfferChain {
         bindings: {
             isVisible: '<',
             inPreviewMode: '<',
+            chainCommand: '<',
             chain: '<',
+            chainType: '<',
             isLastChain: '<'
         }
     });

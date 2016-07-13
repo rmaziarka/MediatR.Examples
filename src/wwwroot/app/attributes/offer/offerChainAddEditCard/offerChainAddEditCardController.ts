@@ -14,9 +14,13 @@ module Antares.Attributes.Offer.OfferChain {
         chain: Business.ChainTransaction;
         config: any;
         onEdit: () => void;
+        onSave: (obj: { chain: Business.ChainTransaction }) => void;
+        onCancel: () => void;
+        onReloadConfig: (chain: Business.ChainTransaction) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
 
         //properties
+        offerChainAddEditCardForm: ng.IFormController;
         configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
 
         public isThirdPartyAgentInEditMode: boolean = true;
@@ -123,6 +127,16 @@ module Antares.Attributes.Offer.OfferChain {
 
         public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {
             this.onEditCompanyContact({ companyContact: companyContact, type: type });
+        }
+
+        public save = () => {
+            this.onSave({
+                chain: this.chain
+            });
+        }
+
+        public cancel = () => {
+            this.onCancel();
         }
 
         public editThirdPartyAgent = () => {

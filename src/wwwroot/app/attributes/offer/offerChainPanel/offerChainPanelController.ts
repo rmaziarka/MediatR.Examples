@@ -9,7 +9,9 @@ module Antares.Attributes.Offer.OfferChain {
     export class OfferChainPanelController extends Common.Component.BaseSidePanelController {
         // bindings
         inPreviewMode: boolean;
+        chainCommand: Common.Models.Commands.IChainTransactionCommand;
         chain: Business.ChainTransaction;
+        chainType: Enums.OfferChainsType;
         isLastChain: boolean;
 
         // properties
@@ -24,7 +26,7 @@ module Antares.Attributes.Offer.OfferChain {
 
         constructor(
             private eventAggregator: Core.EventAggregator,
-            private activityService: Services.ActivityService,
+            private chainTransationsService: Services.ChainTransationsService,
             private dataAccessService: any) {
             super();
         }
@@ -59,7 +61,20 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         public save = (chain: Business.ChainTransaction) => {
-            //TODO service updateChain
+            this.isBusy = true;
+            if (chain.id == null) {
+                this.chainTransationsService.addChain(chain, this.chainCommand, this.chainType)
+                    .then((model: Dto.IActivity | Dto.IRequirement) => {
+                        this.onSuccessAddEditChain(chain, model);
+                    })
+                    .finally(() => { this.isBusy = false; });
+            } else {
+                this.chainTransationsService.editChain(chain, this.chainCommand, this.chainType)
+                    .then((model: Dto.IActivity | Dto.IRequirement) => {
+                        this.onSuccessAddEditChain(chain, model);
+                    })
+                    .finally(() => { this.isBusy = false; });
+            }
         }
 
         public edit = (chain: Business.ChainTransaction) => {
@@ -71,8 +86,12 @@ module Antares.Attributes.Offer.OfferChain {
             this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
         }
 
+        public reloadConfig(chain: Business.ChainTransaction) {
+            this.config = this.defineControlConfig(chain);
+        }
+
         protected onChanges = (changesObj: any) => {
-            this.loadConfig(changesObj.chain.currentValue);
+            this.reloadConfig(changesObj.chain.currentValue);
             this.resetState();
         }
 
@@ -97,10 +116,6 @@ module Antares.Attributes.Offer.OfferChain {
                 });
         }
 
-        private loadConfig(chain: Business.ChainTransaction) {
-            this.config = this.defineControlConfig(chain);
-        }
-
         private defineControlConfig = (chain: Business.ChainTransaction) => {
             return {
                 isEnd: { isEnd: { required: false, active: true } },
@@ -117,6 +132,28 @@ module Antares.Attributes.Offer.OfferChain {
                 surveyDate: { surveyDate: { required: false, active: true } }
             }
         }
+
+        private onSuccessAddEditChain = (chain: Business.ChainTransaction, model: Dto.IActivity | Dto.IRequirement) => {
+            if (this.chainType === Enums.OfferChainsType.Activity) {
+                var activity = <Dto.IActivity>model;
+                this.eventAggregator.publish(new ActivityUpdatedOfferChainsEvent(activity));
+            } else {
+                var requirement = <Dto.IRequirement>model;
+                this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
+            }
+            this.chain = chain;
+            this.closeAddEdit();
+        }
+
+        private closeAddEdit = () => {
+            if (this.inPreviewMode) {
+                this.panelMode = OfferChainPanelMode.Preview;
+            } else {
+                this.cancel();
+            }
+        }
+
+
     }
 
     angular.module('app').controller('offerChainPanelController', OfferChainPanelController);
