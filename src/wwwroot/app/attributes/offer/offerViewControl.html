@@ -1,14 +1,22 @@
 <div ng-if="vm.config">
-    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
-    <card-list-item class="activity-view-offers" ng-repeat="offer in vm.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' | limitTo: 5 track by offer.id + offer.statusId + offer.offerDate">
-        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="vm.showOfferPreview"
-            display-new-control="true" show-context-menu="true">
-            <card-context-menu>
-                <context-menu-item type="details" item="offer" action="vm.navigateToOfferView"></context-menu-item>
+    <h3 class="page-header"><span translate="ACTIVITY.VIEW.OFFERS.HEADER"></span> <span class="badge">{{vm.offers.length}}</span></h3>
+    <card-list>
+        <card-list-item class="activity-view-offers" ng-repeat="offer in vm.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+            <card-with-header card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="vm.showOfferPreview" show-context-menu="true">
+                <card-header-content>
+                    <span class="offer-status offer-status-{{offer.statusId | dynamicTranslate | lowercase}}">{{offer.statusId | dynamicTranslate}}</span>
+                    <span>{{offer.requirement.getContactNames()}}</span>
+                </card-header-content>
+                <card-context-menu>
+                    <context-menu-item type="details" item="offer" action="vm.navigateToOfferView"></context-menu-item>
                 <context-menu-item type="edit" item="offer" action="vm.navigateToEditTenancy"></context-menu-item>
-            </card-context-menu>
-        </card>
-    </card-list-item>
+                </card-context-menu>
+            </card-with-header>
+        </card-list-item>
+        <card-list-no-items ng-show="vm.offers.length === 0">
+            <p class="help-block" translate="ACTIVITY.VIEW.OFFERS.NO_OFFERS"></p>
+        </card-list-no-items>
+    </card-list>
     <offer-preview-panel offer="vm.selectedOffer" is-visible="vm.isPanelVisible">
     </offer-preview-panel>
 </div>
