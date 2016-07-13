@@ -1,0 +1,54 @@
+<div class="row">
+
+    <div class="col-md-12">
+        <h2 class="page-header" translate="CONTACT.VIEW_CONTACT"></h2>
+        <div class="well">
+            <button type="button" id="contact-edit-btn" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+            <div id="name">{{vm.contact.title}} {{vm.contact.getName()}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
+                <section id="section-salutations-mailings">
+                    <h4 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h4>
+                    <div class="section-details">
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.DEFAULT"></div>
+                            <div class="col-xs-8" id="defaultMailingSalutation">{{ (vm.contact.defaultMailingSalutationId | dynamicTranslate) }}</div>
+                        </div>
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.FORMAL"></div>
+                            <div class="col-xs-8" id="mailingFormalSalutation">{{vm.contact.mailingFormalSalutation }}</div>
+                        </div>
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.SEMIFORMAL"></div>
+                            <div class="col-xs-8" id="mailingSemiformalSalutation">{{vm.contact.mailingSemiformalSalutation }}</div>
+                        </div>
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.INFORMAL"></div>
+                            <div class="col-xs-8" id="mailingInformalSalutation">{{vm.contact.mailingInformalSalutation }}</div>
+                        </div>
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.PERSONAL"></div>
+                            <div class="col-xs-8" id="mailingPersonalSalutation">{{vm.contact.mailingPersonalSalutation }}</div>
+                        </div>
+                        <div class="section-row row">
+                            <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.ENVELOPE"></div>
+                            <div class="col-xs-8" id="mailingEnvelopeSalutation">{{vm.contact.mailingEnvelopeSalutation }}</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-md-6 col-lg-4"></div>
+
+            <div class="col-md-6 col-lg-4">
+                <section>
+                    <contact-negotiators-view-control lead-negotiator="vm.contact.leadNegotiator"
+                                                    secondary-negotiators="vm.contact.secondaryNegotiators">
+                    </contact-negotiators-view-control>
+
+                </section>
+            </div>
+        </div>

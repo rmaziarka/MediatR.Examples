@@ -6,10 +6,10 @@
 @Offer
 Scenario: Create residential letting offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Lori      | Petty   |
-		| Lady  | Emilia    | Clarke  |
-		| Lady  | Margot    | Robbie  |
+		| Title | FirstName | LastName |
+		| Lady  | Lori      | Petty    |
+		| Lady  | Emilia    | Clarke   |
+		| Lady  | Margot    | Robbie   |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -59,8 +59,8 @@ Scenario: Create residential letting offer on requirement
 @Offer
 Scenario: Update residential letting offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Vivien    | Leigh   |
+		| Title | FirstName | LastName |
+		| Lady  | Vivien    | Leigh    |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -97,9 +97,9 @@ Scenario: Update residential letting offer on requirement
 @Offer
 Scenario: View residential letting offer details page
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Gene      | Hackman |
-		| Chef  | Sidney    | Poitier |
+		| Title | FirstName | LastName |
+		| Sir   | Gene      | Hackman  |
+		| Chef  | Sidney    | Poitier  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -150,9 +150,9 @@ Scenario: View residential letting offer details page
 @Offer
 Scenario: Update new residential letting offer
 	Given Contacts are created in database	
-		| Title | FirstName | Surname  |
-		| Sir   | Peter     | O'Toole  |
-		| Sir   | Ben       | Kingsley |
+		| Title | FirstName | LastName  |
+		| Sir   | Peter     | O'Toole   |
+		| Sir   | Ben       | Kingsley  |
 		And Property with Residential division and House type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2     | Line3 | Postcode | City       | County             |
@@ -195,7 +195,7 @@ Scenario: Update new residential letting offer
 @Offer
 Scenario: Create residential sale offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
+		| Title | FirstName | LastName |
 		| Sir   | John      | Soane    |
 		| Sir   | Robert    | McAlpine |
 		| Sir   | Edward    | Graham   |
@@ -248,8 +248,8 @@ Scenario: Create residential sale offer on requirement
 @Offer
 Scenario: Update residential sale offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Indiana   | Jackson |
+		| Title | FirstName | LastName |
+		| Dr    | Indiana   | Jackson  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -286,9 +286,9 @@ Scenario: Update residential sale offer on requirement
 @Offer
 Scenario: View residential sale offer details page
 	Given Contacts are created in database
-		| Title  | FirstName | Surname |
-		| Madame | Judith    | Greciet |
-		| Chef   | Julius    | Chaloff |
+		| Title  | FirstName | LastName |
+		| Madame | Judith    | Greciet  |
+		| Chef   | Julius    | Chaloff  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -340,14 +340,14 @@ Scenario: View residential sale offer details page
 @Offer
 Scenario: Update new residential sale offer
 	Given Contacts are created in database	
-		| Title | FirstName | Surname |
-		| Sir   | John      | Adams   |
-		| Lady  | Sarah     | Adams   |
+		| Title | FirstName | LastName |
+		| Sir   | John      | Adams    |
+		| Lady  | Sarah     | Adams    |
 		And Company is created in database
 			| Name    |
 			| Testing |
 	Given Contacts are created in database
-		| Title | FirstName | Surname      |
+		| Title | FirstName | LastName     |
 		| Lady  | Sarah     | McCorquodale |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
@@ -400,7 +400,7 @@ Scenario: Update new residential sale offer
 @Offer
 Scenario: Create and update accepted residential sale offer
 	Given Contacts are created in database
-		| Title | FirstName | Surname   |
+		| Title | FirstName | LastName   |
 		| Sir   | Steve     | Harris    |
 		| Sir   | Dave      | Murray    |
 		| Sir   | Adrian    | Smith     |
@@ -409,7 +409,7 @@ Scenario: Create and update accepted residential sale offer
 			| Name        |
 			| Objectivity |
 		And Contacts are created in database
-			| Title | FirstName | Surname |
+			| Title | FirstName | LastName |
 			| Sir   | Mark      | Walport |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined

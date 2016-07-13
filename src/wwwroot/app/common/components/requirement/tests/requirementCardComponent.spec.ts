@@ -21,20 +21,22 @@ module Antares {
             controller.requirement = requirementMock;
 
             scope["requirement"] = requirementMock;
+            spyOn(controller, 'navigateToRequirement');
+
             scope.$apply();
         }));
 
-        it('then requirement link should be proper', () =>{
+        it('then requirement template should containt contact names', () =>{
             // assert
-            var requirementLink = element.find('#requirement-link').children('a').attr('ui-sref');
-            expect(requirementLink).toEqual('app.requirement-view({id: vm.requirement.id})');
-        });
-
-        it('then requirement details should display proper address text', () =>{
-            // assert
-            var requirementDetailsElement = element.find('#requirement-details');
+            var requirementDetailsElement = element.find('card-template');
             var properRequirementTextToDisplay = controller.requirement.getContactNames();
             expect(requirementDetailsElement.text()).toBe(properRequirementTextToDisplay);
+        });
+
+        it('when details link is clicked then navigateToRequirement() is called', () =>{
+            var menuItem = element.find('context-menu-item[type=details] a');
+            menuItem.triggerHandler('click');
+            expect(controller.navigateToRequirement).toHaveBeenCalledWith(requirementMock);
         });
     });
 }

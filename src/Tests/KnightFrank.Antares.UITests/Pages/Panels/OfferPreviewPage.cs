@@ -13,7 +13,7 @@
     {
         private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, ".slide-in side-panel-content > .section-details:first-of-type a");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in address-form-view .ng-binding");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#offer-status.ng-binding");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
@@ -23,7 +23,7 @@
         private readonly ElementLocator offerProposedCompletionDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-completion-date");
         private readonly ElementLocator activityActions = new ElementLocator(Locator.CssSelector, ".offer-preview-activity .card-action");
         private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, ".offer-preview-activity .card-action li");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-preview-panel .busy");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, ".side-panel-loading");
 
         private string currentWindowHandler;
 
@@ -67,7 +67,7 @@
 
         public OfferPreviewPage ClickDetailsLink()
         {
-            this.Driver.ClickWithJs(this.detailsLink);
+            this.Driver.Click(this.detailsLink);
             return this;
         }
 

@@ -33,7 +33,8 @@
       "RECENTPROPERTIES": "Recent",
       "RECENTACTIVITIES": "Recent",
       "RECENTCOMPANIES": "Recent",
-      "RECENTREQUIREMENTS": "Recent"
+      "RECENTREQUIREMENTS": "Recent",
+      "RECENTCONTACTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
@@ -100,9 +101,38 @@
     "VIEW_COMPANY": "View company"
   },
   "CONTACT": {
+    "CREATE_CONTACT": "Create contact",
+    "EDIT_CONTACT": "Edit contact",
+    "VIEW_CONTACT": "View contact",
     "TITLE": "Title",
     "FIRSTNAME": "First name",
-    "SURNAME": "Surname"
+    "LASTNAME": "Last name",
+    "BASIC_INFORMATION": "Basic information",
+    "SALUTATION": {
+      "TITLE": "Salutation",
+      "SALUTATIONS": "Salutations",
+      "MAILINGS": "Mailings",
+      "EVENTS": "Events",
+      "USE_SALUTATION": "Use salutation",
+      "DEFAULT": "Default salutation",
+      "FORMAL": "Formal",
+      "SEMIFORMAL": "Semiformal",
+      "INFORMAL": "Informal",
+      "PERSONAL": "Personal",
+      "ENVELOPE": "Envelope",
+      "INVITE": "Invite"
+  },
+    "NEGOTIATORS": {
+      "HEADER": "Negotiators",
+      "LEAD": "Lead negotiator",
+      "SECONDARY": "Secondary negotiators",
+      "EMPTY": "No negotiators added yet",
+      "ADD": "Add a negotiator",
+      "FIND": "Find a negotiator"
+    },
+    "EDIT": {
+      "CONTACT_EDIT_SUCCESS": "Contact successfully saved"
+    } 
   },
   "FORM": {
     "FIELD_IS_REQUIRED": "Field is required",

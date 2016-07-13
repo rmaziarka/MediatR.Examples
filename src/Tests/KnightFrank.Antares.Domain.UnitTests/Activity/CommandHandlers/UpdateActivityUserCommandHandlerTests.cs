@@ -169,7 +169,7 @@
 
         private ActivityUser CreateActivityUser(Guid activityUserId, Guid activityId, bool isLeadNegotiator, IFixture fixture)
         {
-            string userTypeCode = isLeadNegotiator ? ActivityUserType.LeadNegotiator.ToString() : ActivityUserType.SecondaryNegotiator.ToString();
+            string userTypeCode = isLeadNegotiator ? UserType.LeadNegotiator.ToString() : UserType.SecondaryNegotiator.ToString();
             EnumTypeItem userType = fixture.Build<EnumTypeItem>().With(i => i.Code, userTypeCode).Create();
 
             return

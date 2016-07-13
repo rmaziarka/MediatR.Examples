@@ -7,7 +7,7 @@ ActivityDocumentType
 PropertyDocumentType
 RequirementDocumentType
 OfferStatus
-ActivityUserType
+UserType
 ActivityDepartmentType
 MortgageStatus
 MortgageSurveyStatus
@@ -15,8 +15,10 @@ ClientCareStatus
 AdditionalSurveyStatus
 SearchStatus
 Enquiries
-ActivitySource
 SalutationFormat
+MailingSalutation
+EventSalutation
+ActivitySource
 ActivitySellingReason
 DisposalType
 Decoration
