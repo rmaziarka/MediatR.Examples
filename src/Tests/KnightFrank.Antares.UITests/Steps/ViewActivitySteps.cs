@@ -96,10 +96,10 @@
             this.page.OpenViewingDetails(position).WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks view requirement from viewing on view activity page")]
+        [When(@"User clicks requirement details from viewing on view activity page")]
         public void ClickViewActivity()
         {
-            this.page.ViewingDetails.ClickViewLink();
+            this.page.ViewingDetails.OpenActions().ClickDetailsLink();
         }
 
         [When(@"User clicks (.*) offer details on view activity page")]
@@ -223,7 +223,6 @@
         public void CheckViewingInDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<ViewingDetails>();
-
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
             Verify.That(this.driverContext, 

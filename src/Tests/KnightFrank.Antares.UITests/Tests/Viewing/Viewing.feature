@@ -53,7 +53,7 @@ Scenario: Create viewing on residential sale requirement
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Amber Brooks, Sarah Knight, Kennedi Hyde | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
-	When User clicks view requirement from viewing on view activity page
+	When User clicks requirement details from viewing on view activity page
 	Then View requirement page should be displayed
 
 @Requirement
@@ -151,7 +151,7 @@ Scenario: Create viewing on residential letting requirement
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                   | InvitationText | PostViewingComment |
 		| Maggie Smith, Judi Dench, Cate Blanchett | 12-06-2016 | 10:00     | 11:00   | John Smith | Maggie Smith;Cate Blanchett | Text           |                    |
-	When User clicks view requirement from viewing on view activity page
+	When User clicks requirement details from viewing on view activity page
 	Then View requirement page should be displayed
 
 @Requirement
