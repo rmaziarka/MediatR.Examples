@@ -32,7 +32,7 @@
                     <button class="btn btn-default" id="agent-user-btn" type="button" ng-click="vm.editThirdPartyAgent()"><i class="fa fa-pencil"></i></button>
                 </div>
 
-                <div class="section-row row" ng-if="vm.config.agentUser">
+                <div class="section-row row" ng-if="vm.isKnightFrankAgent">
                     <div class="col-xs-12">
                         <div class="panel panel-default applicant">
                             <div class="panel-body">
@@ -43,11 +43,12 @@
                 </div>
 
                 <!--TODO: create card instead of panel-->
-                <company-contact-edit-control schema="vm.controlSchemas.thirdPartyAgent"
-                                              config="vm.config.agentCompanyContact"
+                <company-contact-edit-control schema="vm.controlSchemas.thirdPartyAgent" ng-if="!vm.isKnightFrankAgent"
+                                              config="{}"
                                               type="vm.companyContactType.ThirdPartyAgent"
                                               company-contact="vm.chain.agentCompanyContact"
-                                              is-panel-visible="vm.isThirdPartyAgentEditPanelVisible">
+                                              is-panel-visible="vm.isThirdPartyAgentEditPanelVisible"
+                                              on-edit="vm.editCompanyContact(companyContact, type)">
                 </company-contact-edit-control>
             </div>
 

@@ -4,6 +4,7 @@ module Antares.Attributes.Offer.OfferChain {
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
     import Business = Common.Models.Business;
+    import CompanyContactType = Common.Models.Enums.CompanyContactType;
 
     export class OfferChainPanelController extends Common.Component.BaseSidePanelController {
         // bindings
@@ -17,10 +18,14 @@ module Antares.Attributes.Offer.OfferChain {
         isBusy: boolean = false;
         panelMode: OfferChainPanelMode;
         offerChainPanelMode: any = OfferChainPanelMode;
+        companyContactType: CompanyContactType;
+        companyContacts: Business.CompanyContact[] = [];
+        initialySelectedCompanyContact: Business.CompanyContactRelation;
 
         constructor(
             private eventAggregator: Core.EventAggregator,
-            private activityService: Services.ActivityService) {
+            private activityService: Services.ActivityService,
+            private dataAccessService: any) {
             super();
         }
 
@@ -32,11 +37,33 @@ module Antares.Attributes.Offer.OfferChain {
             }
         }
 
+        onCompanyContactSelected = (contacts: Business.CompanyContact[]) => {
+            if (this.companyContactType === CompanyContactType.ThirdPartyAgent) {
+                this.chain.agentCompanyContact = contacts[0];
+            }
+            else if (this.companyContactType === CompanyContactType.ThirdPartyAgent) {
+                this.chain.solicitorCompanyContact = contacts[0];
+            }
+            this.panelMode = OfferChainPanelMode.AddEdit;
+        }
+
+        onCompanyContactListCancel = () => {
+            this.panelMode = OfferChainPanelMode.AddEdit;
+        }
+
+        openCompanyContactEditCard = (companyContact: Business.CompanyContactRelation, type: CompanyContactType) => {
+            this.initialySelectedCompanyContact = companyContact;
+            this.loadCompanyContacts();
+            this.panelMode = OfferChainPanelMode.CompanyContactList;
+            this.companyContactType = type;
+        }
+
         public save = (chain: Business.ChainTransaction) => {
             //TODO service updateChain
         }
 
         public edit = (chain: Business.ChainTransaction) => {
+            this.panelMode = OfferChainPanelMode.AddEdit;
         }
 
         public cancel = () => {
@@ -51,6 +78,23 @@ module Antares.Attributes.Offer.OfferChain {
 
         private resetState = () => {
             this.cardPristine = new Object();
+        }
+
+        loadCompanyContacts = () => {
+            this.isBusy = true;
+            this.dataAccessService
+                .getCompanyContactResource()
+                .query()
+                .$promise.then((data: any) => {
+                    this.companyContacts = data.map((dataItem: Dto.ICompanyContact) => new Business.CompanyContact(dataItem));
+
+                    this.companyContacts.forEach((current: any) => {
+                        var shouldContactBeInitialySelected = current.companyId === this.initialySelectedCompanyContact.company.id && current.contactId === this.initialySelectedCompanyContact.contact.id;
+                        current.selected = shouldContactBeInitialySelected;
+                    });
+                }).finally(() => {
+                    this.isBusy = false;
+                });
         }
 
         private loadConfig(chain: Business.ChainTransaction) {

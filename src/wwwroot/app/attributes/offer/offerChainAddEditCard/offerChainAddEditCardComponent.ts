@@ -8,7 +8,8 @@ module Antares.Attributes.Offer.OfferChain {
         bindings: {
             chain: '<',
             config:'<',
-            onEdit: '&'
+            onEdit: '&',
+            onEditCompanyContact: '&'
         }
     });
 }

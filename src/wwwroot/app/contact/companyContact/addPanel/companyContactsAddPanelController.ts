@@ -11,11 +11,15 @@ module Antares.Ownership {
 
         companyContacts: Business.CompanyContact[] = [];
         initialySelectedCompanyContacts: Business.CompanyContactWithSelection[] = [];
-        onSave: (contactCompanies: Business.CompanyContact[]) => void;
+        onSave: (obj: { contacts: Business.CompanyContact[] }) => void;
         allowMultipleSelect: boolean;
 
         panelShown = () => {
             this.loadCompanyContacts();
+        }
+
+        save = (contacts: Business.CompanyContact[]) =>{
+            this.onSave({ contacts: contacts});
         }
 
         loadCompanyContacts = () => {
