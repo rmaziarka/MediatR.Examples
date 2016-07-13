@@ -39,8 +39,10 @@
         }
 
         [Given(@"Upward chain exists in database")]
-        public void CreateUpwardChainInDatabase()
+        public void CreateUpwardChainInDatabase(Table table)
         {
+            bool isEnd = bool.Parse(table.Rows[0]["IsEnd"]);
+
             var activity = this.scenarioContext.Get<Activity>("Activity");
             var property = this.scenarioContext.Get<Property>("Property");
             var requirement = this.scenarioContext.Get<Requirement>("Requirement");
@@ -51,7 +53,7 @@
                 ActivityId = activity.Id,
                 RequirementId = requirement.Id,
                 PropertyId = property.Id,
-                IsEnd = true,
+                IsEnd = isEnd,
                 Vendor = StringExtension.GenerateMaxAlphanumericString(128),
                 AgentCompanyId = company.CompaniesContacts.First().CompanyId,
                 AgentContactId = company.CompaniesContacts.First().ContactId,
@@ -97,93 +99,6 @@
 
         [When(@"User updates activity with upward chain")]
         public void UpdateActivityWithChainTransaction()
-        {
-            var activity = this.scenarioContext.Get<Activity>("Activity");
-            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
-            var property = this.scenarioContext.Get<Property>("Property");
-            var company = this.scenarioContext.Get<Company>("Company");
-
-            var chainTransaction = new ChainTransaction
-            {
-                ActivityId = activity.Id,
-                RequirementId = requirement.Id,
-                PropertyId = property.Id,
-                IsEnd = true,
-                Vendor = StringExtension.GenerateMaxAlphanumericString(128),
-                AgentCompanyId = company.CompaniesContacts.First().CompanyId,
-                AgentContactId = company.CompaniesContacts.First().ContactId,
-                AgentUserId = null,
-                SolicitorCompanyId = company.CompaniesContacts.First().CompanyId,
-                SolicitorContactId = company.CompaniesContacts.First().ContactId,
-                CreatedDate = this.date,
-                LastModifiedDate = this.date,
-                SurveyDate = this.date,
-                MortgageId =
-                    this.fixture.DataContext.EnumTypeItems.Single(
-                        e =>
-                            e.EnumType.Code.Equals(nameof(ChainMortgageStatus)) &&
-                            e.Code.Equals(nameof(ChainMortgageStatus.Unknown))).Id,
-                SurveyId =
-                    this.fixture.DataContext.EnumTypeItems.Single(
-                        e =>
-                            e.EnumType.Code.Equals(nameof(ChainMortgageSurveyStatus)) &&
-                            e.Code.Equals(nameof(ChainMortgageSurveyStatus.Unknown))).Id,
-                SearchesId =
-                    this.fixture.DataContext.EnumTypeItems.Single(
-                        e =>
-                            e.EnumType.Code.Equals(nameof(ChainSearchStatus)) &&
-                            e.Code.Equals(nameof(ChainSearchStatus.Outstanding))).Id,
-                EnquiriesId =
-                    this.fixture.DataContext.EnumTypeItems.Single(
-                        e => e.EnumType.Code.Equals(nameof(ChainEnquiries)) && e.Code.Equals(nameof(ChainEnquiries.Outstanding)))
-                        .Id,
-                ContractAgreedId =
-                    this.fixture.DataContext.EnumTypeItems.Single(
-                        e =>
-                            e.EnumType.Code.Equals(nameof(ChainContractAgreedStatus)) &&
-                            e.Code.Equals(nameof(ChainContractAgreedStatus.Outstanding))).Id,
-                ParentId = null
-            };
-
-            var updateActivityCommand = new UpdateActivityCommand
-            {
-                Id = activity.Id,
-                ActivityStatusId = activity.ActivityStatusId,
-                ActivityTypeId = activity.ActivityTypeId,
-                SourceId = activity.SourceId,
-                SellingReasonId = activity.SellingReasonId,
-                AppraisalMeetingStart = this.date.AddHours(24),
-                AppraisalMeetingEnd = this.date.AddHours(26),
-                Departments =
-                    new List<UpdateActivityDepartment>
-                    {
-                        new UpdateActivityDepartment
-                        {
-                            DepartmentId = activity.ActivityDepartments.First().DepartmentId,
-                            DepartmentTypeId =
-                                this.fixture.DataContext.EnumTypeItems.Single(
-                                    i =>
-                                        i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
-                                        i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
-                        }
-                    },
-                LeadNegotiator =
-                    new UpdateActivityUser
-                    {
-                        UserId = activity.ActivityUsers.First().UserId,
-                        CallDate = this.date.AddDays(1)
-                    },
-                ChainTransactions = new List<ChainTransaction>
-                {
-                    chainTransaction
-                }
-            };
-
-            this.UpdateActivity(updateActivityCommand);
-        }
-
-        [When(@"User updates activity with upward chain with mandatory fields")]
-        public void UpdateActivityWithChainTransactionMandatoryFields()
         {
             var activity = this.scenarioContext.Get<Activity>("Activity");
             var requirement = this.scenarioContext.Get<Requirement>("Requirement");
@@ -246,11 +161,7 @@
                         new UpdateActivityDepartment
                         {
                             DepartmentId = activity.ActivityDepartments.First().DepartmentId,
-                            DepartmentTypeId =
-                                this.fixture.DataContext.EnumTypeItems.Single(
-                                    i =>
-                                        i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
-                                        i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
+                            DepartmentTypeId = activity.ActivityDepartments.First().DepartmentTypeId
                         }
                     },
                 LeadNegotiator =
@@ -351,19 +262,15 @@
                 ActivityTypeId = activity.ActivityTypeId,
                 SourceId = activity.SourceId,
                 SellingReasonId = activity.SellingReasonId,
-                AppraisalMeetingStart = this.date.AddHours(24),
-                AppraisalMeetingEnd = this.date.AddHours(26),
+                AppraisalMeetingStart = activity.AppraisalMeetingStart,
+                AppraisalMeetingEnd = activity.AppraisalMeetingEnd,
                 Departments =
                     new List<UpdateActivityDepartment>
                     {
                         new UpdateActivityDepartment
                         {
                             DepartmentId = activity.ActivityDepartments.First().DepartmentId,
-                            DepartmentTypeId =
-                                this.fixture.DataContext.EnumTypeItems.Single(
-                                    i =>
-                                        i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
-                                        i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
+                            DepartmentTypeId = activity.ActivityDepartments.First().DepartmentTypeId
                         }
                     },
                 LeadNegotiator =
@@ -376,6 +283,71 @@
                 {
                     chainTransaction
                 }
+            };
+
+            this.UpdateActivity(updateActivityCommand);
+        }
+
+        [When(@"User removes upward chain from activity")]
+        public void RemoveUpwardChain(Table table)
+        {
+            bool isEnd = bool.Parse(table.Rows[0]["IsEnd"]);
+            var activity = this.scenarioContext.Get<Activity>("Activity");
+
+            List<ChainTransaction> chains = activity.ChainTransactions.Where(ct => ct.IsEnd == isEnd).ToList();
+            var chainTransactions = new List<ChainTransaction>();
+
+            foreach (ChainTransaction ct in chains)
+            {
+                chainTransactions.Add(new ChainTransaction
+                {
+                    Id = ct.Id,
+                    ActivityId = ct.ActivityId,
+                    RequirementId = ct.RequirementId,
+                    PropertyId = ct.PropertyId,
+                    IsEnd = ct.IsEnd,
+                    Vendor = ct.Vendor,
+                    AgentCompanyId = ct.AgentCompanyId,
+                    AgentContactId = ct.AgentContactId,
+                    AgentUserId = ct.AgentUserId,
+                    SolicitorCompanyId = ct.SolicitorCompanyId,
+                    SolicitorContactId = ct.SolicitorContactId,
+                    CreatedDate = this.date,
+                    LastModifiedDate = this.date,
+                    MortgageId = ct.MortgageId,
+                    SurveyId = ct.SurveyId,
+                    SearchesId = ct.SearchesId,
+                    EnquiriesId = ct.EnquiriesId,
+                    ContractAgreedId = ct.ContractAgreedId,
+                    ParentId = ct.ParentId
+                });
+            }
+
+            var updateActivityCommand = new UpdateActivityCommand
+            {
+                Id = activity.Id,
+                ActivityStatusId = activity.ActivityStatusId,
+                ActivityTypeId = activity.ActivityTypeId,
+                SourceId = activity.SourceId,
+                SellingReasonId = activity.SellingReasonId,
+                AppraisalMeetingStart = activity.AppraisalMeetingStart,
+                AppraisalMeetingEnd = activity.AppraisalMeetingEnd,
+                Departments =
+                    new List<UpdateActivityDepartment>
+                    {
+                        new UpdateActivityDepartment
+                        {
+                            DepartmentId = activity.ActivityDepartments.First().DepartmentId,
+                            DepartmentTypeId = activity.ActivityDepartments.First().DepartmentTypeId
+                        }
+                    },
+                LeadNegotiator =
+                    new UpdateActivityUser
+                    {
+                        UserId = activity.ActivityUsers.First().UserId,
+                        CallDate = this.date.AddDays(1)
+                    },
+                ChainTransactions = chainTransactions
             };
 
             this.UpdateActivity(updateActivityCommand);
