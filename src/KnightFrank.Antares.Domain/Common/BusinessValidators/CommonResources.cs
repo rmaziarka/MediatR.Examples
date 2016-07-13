@@ -211,7 +211,27 @@
         /// Key value : Knight Frank Agent has been selected, cannot use 3rd party Agent.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        ActivityChainTransactionAgentUser_InvalidValue
+        ActivityChainTransactionAgentUser_InvalidValue,
+        /// <summary>
+        /// Key value : You cannot add more than one transaction chain.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionAdd_MoreThanOne,
+        /// <summary>
+        /// Key value : Parent of added transaction chain must be last transaction chain.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionAdd_InvalidParentId,
+        /// <summary>
+        /// Key value : You cannot remove more than one transaction chain.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionRemove_MoreThanOne,
+        /// <summary>
+        /// Key value : Removed transaction chain must be last transaction chain.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityChainTransactionRemove_InvalidId
     }
 }
 

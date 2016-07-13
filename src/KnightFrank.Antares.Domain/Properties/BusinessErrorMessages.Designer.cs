@@ -133,6 +133,24 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent of added transaction chain must be last transaction chain..
+        /// </summary>
+        internal static string ActivityChainTransactionAdd_InvalidParentId {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionAdd_InvalidParentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot add more than one transaction chain..
+        /// </summary>
+        internal static string ActivityChainTransactionAdd_MoreThanOne {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionAdd_MoreThanOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 3rd party Agent has been selected, cannot use Knight Frank Agent..
         /// </summary>
         internal static string ActivityChainTransactionAgentContact_InvalidValue {
@@ -156,6 +174,24 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string ActivityChainTransactionEnd_InvalidValue {
             get {
                 return ResourceManager.GetString("ActivityChainTransactionEnd_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed transaction chain must be last transaction chain..
+        /// </summary>
+        internal static string ActivityChainTransactionRemove_InvalidId {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionRemove_InvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot remove more than one transaction chain..
+        /// </summary>
+        internal static string ActivityChainTransactionRemove_MoreThanOne {
+            get {
+                return ResourceManager.GetString("ActivityChainTransactionRemove_MoreThanOne", resourceCulture);
             }
         }
         

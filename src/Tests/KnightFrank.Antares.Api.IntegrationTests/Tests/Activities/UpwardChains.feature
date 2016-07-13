@@ -116,7 +116,6 @@ Scenario: Remove end of chain transaction from residential sale activity
 	Then User should get OK http status code
 		And Upward chain transaction from offer activity should match transaction already added
 
-@ignore
 Scenario: Remove middle chain transaction from residential sale activity 
 	Given Property exists in database
 		| PropertyType | Division    |

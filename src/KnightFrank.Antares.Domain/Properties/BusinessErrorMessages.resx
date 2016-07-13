@@ -243,4 +243,16 @@
   <data name="ActivityChainTransactionAgentUser_InvalidValue" xml:space="preserve">
     <value>Knight Frank Agent has been selected, cannot use 3rd party Agent.</value>
   </data>
+  <data name="ActivityChainTransactionAdd_MoreThanOne" xml:space="preserve">
+    <value>You cannot add more than one transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionAdd_InvalidParentId" xml:space="preserve">
+    <value>Parent of added transaction chain must be last transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionRemove_MoreThanOne" xml:space="preserve">
+    <value>You cannot remove more than one transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionRemove_InvalidId" xml:space="preserve">
+    <value>Removed transaction chain must be last transaction chain.</value>
+  </data>
 </root>

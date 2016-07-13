@@ -34,7 +34,7 @@
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
         {
-            this.Validate(message);
+            this.Validate(message, activity);
 
             activity.ChainTransactions
                     .Where(x => message.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
@@ -56,7 +56,7 @@
             }
         }
 
-        private void Validate(ActivityCommandBase message)
+        private void Validate(ActivityCommandBase message, Activity activity)
         {
             if (message.ChainTransactions.Count(x => x.IsEnd) > 1)
             {
@@ -106,6 +106,68 @@
                     throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionEnd_InvalidValue);
                 }
             }
+
+            this.ValidateAddedChains(message, activity);
+            this.ValidateRemovedChains(message, activity);
+        }
+
+        private void ValidateAddedChains(ActivityCommandBase message, Activity activity)
+        {
+            var chainsToAdd = message.ChainTransactions
+                                .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
+                                .ToList();
+
+            if (chainsToAdd.Count == 0)
+                return;
+
+            if(chainsToAdd.Count > 1)
+                throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAdd_MoreThanOne);
+
+            var chainToAdd = chainsToAdd.Single();
+            var lastChain = this.FindLastChain(activity.ChainTransactions);
+
+            if (chainToAdd.ParentId != lastChain.Id)
+            {
+                throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionAdd_InvalidParentId);
+            }
+        }
+
+        private void ValidateRemovedChains(ActivityCommandBase message, Activity activity)
+        {
+            var chainsToRemove = activity.ChainTransactions
+                                      .Where(x => message.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
+                                      .ToList();
+
+            if (chainsToRemove.Count == 0)
+                return;
+
+            if(chainsToRemove.Count > 1)
+                throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionRemove_MoreThanOne);
+
+            var chainToAdd = chainsToRemove.Single();
+            var lastChain = this.FindLastChain(activity.ChainTransactions);
+
+            if (chainToAdd.Id != lastChain.Id)
+            {
+                throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionRemove_InvalidId);
+            }
+        }
+
+        private ChainTransaction FindLastChain(IEnumerable<ChainTransaction> chains)
+        {
+            ChainTransaction firstChain = chains.First(c => c.ParentId == null);
+
+            ChainTransaction lastChain = firstChain;
+            ChainTransaction nextChain = null;
+            do
+            {
+                nextChain = chains.SingleOrDefault(c => c.Id == lastChain.ParentId);
+                if (nextChain != null)
+                    lastChain = nextChain;
+            }
+            while (nextChain != null);
+
+            return lastChain;
         }
     }
 }
