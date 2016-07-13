@@ -20,7 +20,7 @@ module Antares.Attributes {
         $onInit = () => {
             this.allEnumItems = this.enumProvider.enums[this.schema.enumTypeCode];
         }
-
+        
         public getEnumItems = () => {
             if (!(this.config && this.config[this.schema.fieldName])) {
                 return [];
@@ -30,7 +30,15 @@ module Antares.Attributes {
                 return this.allEnumItems;
             }
 
-            return <Dto.IEnumItem[]>_(this.allEnumItems).indexBy('code').at(this.config[this.schema.fieldName].allowedCodes).value();
+            var enumItems = <Dto.IEnumItem[]>_(this.allEnumItems).indexBy('code').at(this.config[this.schema.fieldName].allowedCodes).value();
+
+            var newlySelectedValue = _.find(enumItems, (e: Dto.IEnumItem) => e.id === this.ngModel);
+
+            if (!newlySelectedValue) {
+                this.ngModel = '';
+            }
+
+            return enumItems;
         }
 
         public changeSelectedItem = () => {
