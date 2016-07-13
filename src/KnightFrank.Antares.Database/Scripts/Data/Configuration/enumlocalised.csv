@@ -135,5 +135,5 @@ ActivityMatchFlexPrice;MinimumPrice;en;Minimum price
 ActivityMatchFlexPrice;Percentage;en;Percentage
 ActivityMatchFlexRent;MinimumRent;en;Minimum rent
 ActivityMatchFlexRent;Percentage;en;Percentage
-RentPaymentPeriod;Weekly;en;Weekly
-RentPaymentPeriod;Monthly;en;Monthly
+RentPaymentPeriod;Weekly;en;per week
+RentPaymentPeriod;Monthly;en;per month
