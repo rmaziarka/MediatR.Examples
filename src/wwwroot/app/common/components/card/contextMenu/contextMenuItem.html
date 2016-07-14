@@ -4,5 +4,8 @@
            ng-class="{'fa-pencil': vm.type == 'edit', 'fa-trash-o': vm.type == 'delete' || vm.type == 'remove', 'fa-eye': vm.type == 'details'}">
         </i>
         <span translate="{{ 'COMMON.' + vm.type | uppercase}}"></span>
+        <i class="fa fa-external-link external-link-icon" aria-hidden="true" ng-show="vm.external"> 
+            
+        </i>
     </a>
 </li>

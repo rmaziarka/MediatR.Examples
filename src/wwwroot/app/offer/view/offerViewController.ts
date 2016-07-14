@@ -71,6 +71,7 @@ module Antares.Component {
         }
 
         showActivityPreview = (offer: Common.Models.Business.Offer) =>{
+            this.hidePanels();
             this.isActivityPreviewPanelVisible = Enums.SidePanelState.Opened;
 
             this.latestViewsProvider.addView({

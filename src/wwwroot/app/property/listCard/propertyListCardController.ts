@@ -14,7 +14,7 @@ module Antares.Property.ListCard {
             onSave: (obj: { properties: Dto.IPreviewProperty[]}) => void;
             onCancel: () => void;
 
-            constructor(private $state: ng.ui.IStateService) { }
+            constructor(private $state: ng.ui.IStateService, private $window: ng.IWindowService) { }
 
             close = () => {
                 this.onCancel();
@@ -35,7 +35,8 @@ module Antares.Property.ListCard {
             }
 
             navigateToProperty = (property: Dto.IProperty) => {
-                this.$state.go('app.property-view', { id: property.id });
+                var url = this.$state.href('app.property-view', { id: property.id }, { absolute: true });
+                this.$window.open(url, '_blank')
             }
 
             save = () => {

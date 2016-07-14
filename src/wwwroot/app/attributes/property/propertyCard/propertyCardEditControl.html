@@ -17,16 +17,14 @@
     </div>
     <div id="property-card-edit" class="row" ng-if="vm.property">
         <div class="col-md-12">
-            <card-list-item>
-                <card 
-                    show-context-menu="true"
-                    card-template-url="'app/attributes/property/propertyCard/propertyCard.html'" 
-                    item="vm.property">
-                    <card-context-menu>
-                        <context-menu-item type="details" item="vm.property" action="vm.navigateToProperty"></context-menu-item>
-                    </card-context-menu>
-                </card>
-            </card-list-item>
+            <card 
+                show-context-menu="true"
+                card-template-url="'app/attributes/property/propertyCard/propertyCard.html'" 
+                item="vm.property">
+                <card-context-menu>
+                    <context-menu-item type="details" item="vm.property" action="vm.navigateToProperty"></context-menu-item>
+                </card-context-menu>
+            </card>
         </div>
     </div>
 </ng-form>
