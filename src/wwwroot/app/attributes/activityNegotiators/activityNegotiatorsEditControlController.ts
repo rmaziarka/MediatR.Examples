@@ -126,7 +126,7 @@ module Antares.Attributes {
         }
         
         public getNextCallDateValidDate = (form: IActivityNegotiatorsEditControlForm): Date => {
-            if (form.callDate.$dirty) {
+            if (form.callDate && form.callDate.$dirty) {
                 return this.today;
             }
 
