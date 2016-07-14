@@ -187,10 +187,10 @@
             if(chainsToRemove.Count > 1)
                 throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionRemove_MoreThanOne);
 
-            ChainTransaction chainToAdd = chainsToRemove.Single();
+            ChainTransaction chainToRemove = chainsToRemove.Single();
             ChainTransaction lastChain = this.FindLastChain(activity.ChainTransactions);
 
-            if (chainToAdd.Id != lastChain.Id)
+            if (chainToRemove.Id != lastChain.Id)
             {
                 throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionRemove_InvalidId);
             }
