@@ -3,8 +3,8 @@
 @Activity
 Scenario: Upload attachment for activity
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Felix     | Jordan  |
+		| Title | FirstName | LastName |
+		| Sir   | Felix     | Jordan   |
 		And Property with Residential division and Development Plot type is defined
 		And Property attributes details are defined
 			| MinLandArea | MaxLandArea |

@@ -1,4 +1,5 @@
 ﻿:r .\SQL\Locale.sql
+:r .\SQL\ContactTitle.sql
 :r .\SQL\Country.sql
 :r .\SQL\CountryLocalised.sql
 :r .\SQL\Department.sql

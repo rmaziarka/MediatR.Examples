@@ -2,7 +2,7 @@
     interface IPropertySearchResultContact {
         id: string;
         firstName: string;
-        surname: string;
+        lastName: string;
         title: string;
     }
 }

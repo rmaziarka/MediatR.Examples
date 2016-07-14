@@ -3,6 +3,7 @@
 module Antares {
     import ContactListController = Component.ContactListController;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 
     describe('Given contacts are displayed', () =>{
 
@@ -11,8 +12,44 @@ module Antares {
             $http:ng.IHttpBackendService;
 
         var contacts: Dto.IContact[] = [
-            { id : '1', firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
-            { id : '2', firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
+            {
+                id: '1',
+                firstName: 'Test1',
+                lastName: 'Test1_S',
+                title: 'Mr',
+                mailingFormalSalutation: '',
+                mailingSemiformalSalutation: '',
+                mailingInformalSalutation: '',
+                mailingPersonalSalutation: '',
+                mailingEnvelopeSalutation: '',
+                defaultMailingSalutationId: '',
+                eventInviteSalutation: '',
+                eventSemiformalSalutation: '',
+                eventInformalSalutation: '',
+                eventPersonalSalutation: '',
+                eventEnvelopeSalutation: '',
+                defaultEventSalutationId: '',
+                contactUsers:[]
+            },
+            {
+                id: '2',
+                firstName: 'Test2',
+                lastName: 'Test2_S',
+                title: 'Mr',
+                mailingFormalSalutation: '',
+                mailingSemiformalSalutation: '',
+                mailingInformalSalutation: '',
+                mailingPersonalSalutation: '',
+                mailingEnvelopeSalutation: '',
+                defaultMailingSalutationId: '',
+                eventInviteSalutation: '',
+                eventSemiformalSalutation: '',
+                eventInformalSalutation: '',
+                eventPersonalSalutation: '',
+                eventEnvelopeSalutation: '',
+                defaultEventSalutationId: '',
+				contactUsers: []
+            }
         ];
 
         var controller: ContactListController;

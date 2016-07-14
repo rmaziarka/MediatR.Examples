@@ -24,7 +24,7 @@ Scenario: Create latest viewed activity
 @LatestViews
 Scenario: Create latest viewed requirement
 	Given Contacts exists in database
-		| FirstName | Surname | Title  |
+		| FirstName | LastName | Title  |
 		| Tomasz    | Bien    | Mister |
 		| Adam      | Malysz  | Mister |
 		And Requirement of type ResidentialSale exists in database
@@ -35,17 +35,36 @@ Scenario: Create latest viewed requirement
 @LatestViews
 Scenario: Create latest viewed company
 	Given Contacts exists in database
-		| FirstName | Surname | Title  |
-		| Tomasz    | Bien    | Mister |
+		| FirstName | LastName | Title  |
+		| Tomasz    | Bien     | Mister |
 		And Company exists in database
 	When User adds Company to latest viewed entities using api
 	Then User should get OK http status code
 		And Retrieved latest view should contain Company entity
 
+
+@LatestViews
+Scenario: Create latest viewed contacts
+	Given Contacts exists in database
+			| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingEnvelopeSalutation |
+			| Tomasz    | Bien     | Mister | Sir                     | Mr Bien                     | Mr Bien                   |
+	When User adds Contact to latest viewed entities using api
+	Then User should get OK http status code
+		And Retrieved latest view should contain Contact entity
+
 @LatestViews
 Scenario: Create latest view using invalid entity type
 	When User creates latest view using invalid entity type
 	Then User should get BadRequest http status code
+
+@LatestViews
+Scenario: Get latest viewed contacts
+	Given Contacts exists in database
+		| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingEnvelopeSalutation |
+		| Tomasz    | Bien     | Mister | Sir                     | Mr Bien                     | Mr Bien                   |
+		And Contact is added to latest views
+	When User gets latest viewed entities
+	Then User should get OK http status code
 
 @LatestViews
 Scenario: Get latest viewed properties
@@ -97,18 +116,18 @@ Scenario: Get latest viewed activities
 @LatestViews
 Scenario: Get latest viewed requirements
 	Given Contacts exists in database 
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Tomasz    | Bien    | Sir   |
 		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
 		And Requirement is added to latest views
 		And Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Tomasz    | Bien    | Dude  |
 		And Requirement of type ResidentialSale exists in database
 		And Requirement is added to latest views
@@ -119,18 +138,18 @@ Scenario: Get latest viewed requirements
 @LatestViews
 Scenario: Get latest viewed companies
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
-		| Anthony   | Hopkins | Sir   |
+		| FirstName | LastName | Title |
+		| Anthony   | Hopkins  | Sir   |
 		And Company exists in database
 		And Company is added to latest views
 		And Contacts exists in database
-			| FirstName | Surname | Title |
-			| Paul      | Newman  | Sir   |
+			| FirstName | LastName | Title |
+			| Paul      | Newman   | Sir   |
 		And Company exists in database
 		And Company is added to latest views
 		And Company is added to latest views
 		And Contacts exists in database
-			| FirstName | Surname    | Title |
+			| FirstName | LastName   | Title |
 			| Denzel    | Washington | Sir   |
 		And Company exists in database
 		And Company is added to latest views

@@ -27,9 +27,10 @@
             config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter { AllowIntegerValues = false });
 
             config.Filters.Add(new ValidationExceptionFilterAttribute());
+			config.Filters.Add(new CachingFilterAttribute());
 
-            // Web API configuration and services
-            var cors = new EnableCorsAttribute("*", "*", "*");
+			// Web API configuration and services
+			var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
             // Web API routes

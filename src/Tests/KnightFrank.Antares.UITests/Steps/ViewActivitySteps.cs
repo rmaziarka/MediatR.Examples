@@ -68,16 +68,16 @@
             this.page.EditActivity();
         }
 
-        [When(@"User clicks (.*) viewings details link on view activity page")]
+        [When(@"User clicks (.*) viewings details link on overview tab on view activity page")]
         public void OpenViewingsDetails(int position)
         {
             this.page.OpenViewingDetails(position).WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks view requirement from viewing on view activity page")]
+        [When(@"User clicks requirement details from viewing on view activity page")]
         public void ClickViewActivity()
         {
-            this.page.ViewingDetails.ClickViewLink();
+            this.page.ViewingDetails.OpenActions().ClickDetailsLink();
         }
 
         [When(@"User clicks (.*) offer details on view activity page")]
@@ -160,23 +160,23 @@
             Assert.True(this.page.IsViewActivityFormPresent());
         }
 
-        [Then(@"Viewing details on (.*) position on view activity page are same as the following")]
+        [Then(@"Viewing details on (.*) position on overview tab on view activity page are same as the following")]
         public void CheckViewing(int position, Table table)
         {
             var expectedDetails = table.CreateInstance<ViewingData>();
             List<string> actualDetails = this.page.GetViewingDetails(position);
 
             Verify.That(this.driverContext, () => Assert.Equal(this.page.ViewingsNumber, 1),
-                () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
+                () => Assert.Equal(expectedDetails.Name, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Date + ",", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Time, actualDetails[2]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[3]));
         }
 
         [Then(@"Viewing details on view activity page are same as the following")]
         public void CheckViewingInDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<ViewingDetails>();
-
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
             Verify.That(this.driverContext, 
@@ -210,22 +210,46 @@
             expectedSecondary.Should().Equal(actual, (n1, n2) => n1.Name.Equals(n2.Name) && n1.NextCall.Equals(n2.NextCall));
         }
 
-        [Then(@"Offer should be displayed on view activity page")]
+        [Then(@"Offer should be displayed on overview tab on view activity page")]
         public void CheckIfOfferDisplayed()
         {
             Assert.Equal(1, this.page.OffersNumber);
+            Assert.Equal(1, int.Parse(this.page.OffersCounter));
         }
 
-        [Then(@"Offer details on (.*) position on view activity page are same as the following")]
-        public void CheckOffer(int position, Table table)
+        [Then(@"Viewing should be displayed on overview tab on view activity page")]
+        public void CheckIViewingDisplayed()
+        {
+            Assert.Equal(1, this.page.ViewingsNumber);
+            Assert.Equal(1, int.Parse(this.page.ViewingsCounter));
+        }
+
+        [Then(@"Letting offer details on (.*) position on overview tab on view activity page are same as the following")]
+        public void CheckLettingOffer(int position, Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             List<string> actualDetails = this.page.GetOfferDetails(position);
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer + " GBP", actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[2]),
+                () => Assert.Equal(this.scenarioContext.Get<OfferData>("Offer").ExchangeDate, actualDetails[3]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[4]));
+        }
+
+        [Then(@"Sale offer details on (.*) position on overview tab on view activity page are same as the following")]
+        public void CheckSalesOffer(int position, Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[2]),
+                () => Assert.Equal(this.scenarioContext.Get<OfferData>("Offer").ExchangeDate, actualDetails[3]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[4]));
         }
 
         [Then(@"Offer details on view activity page are same as the following")]

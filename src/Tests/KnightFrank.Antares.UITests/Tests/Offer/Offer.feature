@@ -6,10 +6,10 @@
 @Offer
 Scenario: Create residential letting offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Lori      | Petty   |
-		| Lady  | Emilia    | Clarke  |
-		| Lady  | Margot    | Robbie  |
+		| Title | FirstName | LastName |
+		| Lady  | Lori      | Petty    |
+		| Lady  | Emilia    | Clarke   |
+		| Lady  | Margot    | Robbie   |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -43,13 +43,13 @@ Scenario: Create residential letting offer on requirement
 	Then Letting offer details on view requirement page are same as the following
 		| Details                                                            | Status | OfferPerWeek | SpecialConditions | Negotiator |
 		| 8 Lori Petty’s house George St NN16 0AW Kettering Northamptonshire | New    | 1000         | Text              | John Smith |
-	#   -------TODO when view on activity is done-------
-	#When User clicks view activity from offer on view requirement page
-	#Then View activity page should be displayed
-	#	And Offer should be displayed on view activity page
-	#	And Offer details on 1 position on view activity page are same as the following
-	#		| Details                                  | OfferPerWeek | Status |
-	#		| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    |
+	When User clicks view activity from offer on view requirement page
+	Then View activity page should be displayed
+		And Offer should be displayed on overview tab on view activity page
+		And Letting offer details on 1 position on overview tab on view activity page are same as the following
+			| Details                                  | OfferPerWeek | Status | Negotiator |
+			| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    | -          |
+	#   -------TODO when offer preview is done-------
 	#When User clicks 1 offer details on view activity page
 	#Then Offer details on view activity page are same as the following
 	#	| Details                                  | Status | OfferPerWeek | SpecialConditions | Negotiator |
@@ -59,8 +59,8 @@ Scenario: Create residential letting offer on requirement
 @Offer
 Scenario: Update residential letting offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Lady  | Vivien    | Leigh   |
+		| Title | FirstName | LastName |
+		| Lady  | Vivien    | Leigh    |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -97,9 +97,9 @@ Scenario: Update residential letting offer on requirement
 @Offer
 Scenario: View residential letting offer details page
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Gene      | Hackman |
-		| Chef  | Sidney    | Poitier |
+		| Title | FirstName | LastName |
+		| Sir   | Gene      | Hackman  |
+		| Chef  | Sidney    | Poitier  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -150,9 +150,9 @@ Scenario: View residential letting offer details page
 @Offer
 Scenario: Update new residential letting offer
 	Given Contacts are created in database	
-		| Title | FirstName | Surname  |
-		| Sir   | Peter     | O'Toole  |
-		| Sir   | Ben       | Kingsley |
+		| Title | FirstName | LastName  |
+		| Sir   | Peter     | O'Toole   |
+		| Sir   | Ben       | Kingsley  |
 		And Property with Residential division and House type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2     | Line3 | Postcode | City       | County             |
@@ -195,7 +195,7 @@ Scenario: Update new residential letting offer
 @Offer
 Scenario: Create residential sale offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
+		| Title | FirstName | LastName |
 		| Sir   | John      | Soane    |
 		| Sir   | Robert    | McAlpine |
 		| Sir   | Edward    | Graham   |
@@ -232,13 +232,13 @@ Scenario: Create residential sale offer on requirement
 	Then Sale offer details on view requirement page are same as the following
 		| Details                                                                  | Status | Offer  | SpecialConditions | Negotiator |
 		| 13 John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county | New    | 100000 | Text              | John Smith |
-	#   -------TODO when view on activity is done-------
-	#When User clicks view activity from offer on view requirement page
-	#Then View activity page should be displayed
-	#	And Offer should be displayed on view activity page
-	#	And Offer details on 1 position on view activity page are same as the following
-	#		| Details                                    | Offer  | Status |
-	#		| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    |
+	When User clicks view activity from offer on view requirement page
+	Then View activity page should be displayed
+		And Offer should be displayed on overview tab on view activity page
+		And Sale offer details on 1 position on overview tab on view activity page are same as the following
+			| Details                                    | Offer  | Status | Negotiator |
+			| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    | -          |
+	#   -------TODO when offer preview is done-------
 	#When User clicks 1 offer details on view activity page
 	#Then Offer details on view activity page are same as the following
 	#	| Details                                    | Status | Offer  | SpecialConditions | Negotiator |
@@ -248,8 +248,8 @@ Scenario: Create residential sale offer on requirement
 @Offer
 Scenario: Update residential sale offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Indiana   | Jackson |
+		| Title | FirstName | LastName |
+		| Dr    | Indiana   | Jackson  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -286,9 +286,9 @@ Scenario: Update residential sale offer on requirement
 @Offer
 Scenario: View residential sale offer details page
 	Given Contacts are created in database
-		| Title  | FirstName | Surname |
-		| Madame | Judith    | Greciet |
-		| Chef   | Julius    | Chaloff |
+		| Title  | FirstName | LastName |
+		| Madame | Judith    | Greciet  |
+		| Chef   | Julius    | Chaloff  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -340,14 +340,14 @@ Scenario: View residential sale offer details page
 @Offer
 Scenario: Update new residential sale offer
 	Given Contacts are created in database	
-		| Title | FirstName | Surname |
-		| Sir   | John      | Adams   |
-		| Lady  | Sarah     | Adams   |
+		| Title | FirstName | LastName |
+		| Sir   | John      | Adams    |
+		| Lady  | Sarah     | Adams    |
 		And Company is created in database
 			| Name    |
 			| Testing |
 	Given Contacts are created in database
-		| Title | FirstName | Surname      |
+		| Title | FirstName | LastName     |
 		| Lady  | Sarah     | McCorquodale |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
@@ -400,7 +400,7 @@ Scenario: Update new residential sale offer
 @Offer
 Scenario: Create and update accepted residential sale offer
 	Given Contacts are created in database
-		| Title | FirstName | Surname   |
+		| Title | FirstName | LastName   |
 		| Sir   | Steve     | Harris    |
 		| Sir   | Dave      | Murray    |
 		| Sir   | Adrian    | Smith     |
@@ -409,7 +409,7 @@ Scenario: Create and update accepted residential sale offer
 			| Name        |
 			| Objectivity |
 		And Contacts are created in database
-			| Title | FirstName | Surname |
+			| Title | FirstName | LastName |
 			| Sir   | Mark      | Walport |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined

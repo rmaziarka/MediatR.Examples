@@ -44,6 +44,7 @@
         }
 
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactTitle> ContactTitles { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementType> RequirementTypes { get; set; }
         public DbSet<RequirementTypeLocalised> RequirementTypeLocaliseds{ get; set; }

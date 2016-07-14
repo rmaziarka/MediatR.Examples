@@ -29,6 +29,7 @@ module Antares.Common.Models.Business {
                 if (viewing.activity) {
                     this.activity = new Business.Activity(viewing.activity);
                 }
+                this.negotiator = new User(viewing.negotiator);
                 this.startDate = moment(viewing.startDate).toDate();
                 this.endDate = moment(viewing.endDate).toDate();
             }

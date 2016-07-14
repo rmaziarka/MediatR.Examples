@@ -139,7 +139,7 @@
         [When(@"User clicks view activity from offer on view requirement page")]
         public void ClickViewActivityOffer()
         {
-            this.page.OfferPreview.WaitForDetailsToLoad().ClickViewLink();
+            this.page.OfferPreview.WaitForDetailsToLoad().ClickActivityDetailsLink();
         }
 
         [When(@"User clicks make an offer button for (.*) viewing on view requirement page")]
@@ -286,7 +286,7 @@
         {
             List<string> applicants = this.page.Applicants;
             List<string> expectedApplicants =
-                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
+                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.LastName).ToList();
 
             Assert.Equal(expectedApplicants, applicants);
         }
