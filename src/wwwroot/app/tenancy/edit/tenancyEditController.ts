@@ -32,16 +32,21 @@ module Antares.Tenancy {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        navigateToActivity = (ativity: Business.ActivityPreviewModel) => {
-            this.$state.go('app.activity-view', { id: ativity.id });
+        navigateToActivity = () => {
+            this.$state.go('app.activity-view', { id: this.tenancy.activity.id });
         }
 
-        navigateToRequirement = (requirement: Business.RequirementPreviewModel) => {
-            this.$state.go('app.requirement-view', { id: requirement.id });
+        navigateToRequirement = () => {
+            this.$state.go('app.requirement-view', { id: this.tenancy.requirement.id });
         }
 
         cancel() {
-            this.$state.go('app.activity-view', { id: this.tenancy.activity.id });
+            if (this.isEditMode()) {
+                this.navigateToTenancyView(this.tenancy.id);
+            }
+            else {
+                this.navigateToRequirement();
+            }
         }
 
         save = () => {

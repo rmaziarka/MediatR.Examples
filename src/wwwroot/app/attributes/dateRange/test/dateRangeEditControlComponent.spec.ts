@@ -34,8 +34,6 @@ module Antares {
             scope['vm'] = { dateFrom: dateFrom, dateTo: dateTo, config: configMock, schema: termDateSchema };
             element = $compile('<date-range-edit-control date-from="vm.dateFrom" date-to="vm.dateTo" config="vm.config" schema="vm.schema"></date-range-edit-control>')(scope);
             scope.$apply();
-
-            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
         describe('when config is provided', () => {
