@@ -92,6 +92,7 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendee.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityChainTransaction.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAppraisalMeeting.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendeeValidator.cs" />

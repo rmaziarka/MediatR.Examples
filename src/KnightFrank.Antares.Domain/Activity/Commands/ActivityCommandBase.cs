@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Offer;
-
     using MediatR;
 
     public abstract class ActivityCommandBase : IRequest<Guid>
@@ -45,7 +43,7 @@
 
         public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
 
-        public IList<ChainTransaction> ChainTransactions { get; set; } = new List<ChainTransaction>();
+        public IList<UpdateActivityChainTransaction> ChainTransactions { get; set; } = new List<UpdateActivityChainTransaction>();
 
         public decimal? ServiceChargeAmount { get; set; }
         public string ServiceChargeNote { get; set; }

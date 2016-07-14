@@ -109,7 +109,7 @@
             var property = this.scenarioContext.Get<Property>("Property");
             var company = this.scenarioContext.Get<Company>("Company");
 
-            var chainTransaction = new ChainTransaction
+            var chainTransaction = new UpdateActivityChainTransaction
             {
                 ActivityId = activity.Id,
                 RequirementId = requirement.Id,
@@ -121,8 +121,6 @@
                 AgentUserId = this.fixture.DataContext.Users.First().Id,
                 SolicitorCompanyId = company.CompaniesContacts.First().CompanyId,
                 SolicitorContactId = company.CompaniesContacts.First().ContactId,
-                CreatedDate = this.date,
-                LastModifiedDate = this.date,
                 MortgageId =
                     this.fixture.DataContext.EnumTypeItems.Single(
                         e =>
@@ -174,7 +172,7 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = new List<ChainTransaction>
+                ChainTransactions = new List<UpdateActivityChainTransaction>
                 {
                     chainTransaction
                 }
@@ -191,7 +189,7 @@
             var property = this.scenarioContext.Get<Property>("Property");
             var company = this.scenarioContext.Get<Company>("Company");
 
-            var chainTransaction = new ChainTransaction
+            var chainTransaction = new UpdateActivityChainTransaction
             {
                 ActivityId = data.Equals("ActivityId") ? Guid.NewGuid() : activity.Id,
                 RequirementId = data.Equals("RequirementId") ? Guid.NewGuid() : requirement.Id,
@@ -202,8 +200,6 @@
                     data.Equals("SolicitorCompanyId") ? Guid.NewGuid() : company.CompaniesContacts.First().CompanyId,
                 SolicitorContactId =
                     data.Equals("SolicitorContactId") ? Guid.NewGuid() : company.CompaniesContacts.First().ContactId,
-                CreatedDate = this.date,
-                LastModifiedDate = this.date,
                 MortgageId =
                     data.Equals("MortgageId")
                         ? Guid.NewGuid()
@@ -283,7 +279,7 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = new List<ChainTransaction>
+                ChainTransactions = new List<UpdateActivityChainTransaction>
                 {
                     chainTransaction
                 }
@@ -299,11 +295,11 @@
             var activity = this.scenarioContext.Get<Activity>("Activity");
 
             List<ChainTransaction> chains = activity.ChainTransactions.Where(ct => ct.IsEnd != isEnd).ToList();
-            var chainTransactions = new List<ChainTransaction>();
+            var chainTransactions = new List<UpdateActivityChainTransaction>();
 
             foreach (ChainTransaction ct in chains)
             {
-                chainTransactions.Add(new ChainTransaction
+                chainTransactions.Add(new UpdateActivityChainTransaction
                 {
                     Id = ct.Id,
                     ActivityId = ct.ActivityId,
@@ -316,8 +312,6 @@
                     AgentUserId = ct.AgentUserId,
                     SolicitorCompanyId = ct.SolicitorCompanyId,
                     SolicitorContactId = ct.SolicitorContactId,
-                    CreatedDate = this.date,
-                    LastModifiedDate = this.date,
                     MortgageId = ct.MortgageId,
                     SurveyId = ct.SurveyId,
                     SearchesId = ct.SearchesId,
@@ -402,6 +396,40 @@
             activity.ChainTransactions.Clear();
             activity.ChainTransactions.Add(chain);
 
+            var chainCommand = new UpdateActivityChainTransaction
+            {
+                Id = activity.ChainTransactions.First().Id,
+                ActivityId = activity.ChainTransactions.First().ActivityId,
+                RequirementId = activity.ChainTransactions.First().RequirementId,
+                PropertyId = activity.ChainTransactions.First().PropertyId,
+                IsEnd = true,
+                Vendor = StringExtension.GenerateMaxAlphanumericString(128),
+                AgentCompanyId = null,
+                AgentContactId = null,
+                AgentUserId = this.fixture.DataContext.Users.First().Id,
+                SolicitorCompanyId = company.CompaniesContacts.First().CompanyId,
+                SolicitorContactId = company.CompaniesContacts.First().ContactId,
+                MortgageId = this.fixture.DataContext.EnumTypeItems.Single(
+                    e =>
+                        e.EnumType.Code.Equals(nameof(ChainMortgageStatus)) &&
+                        e.Code.Equals(nameof(ChainMortgageStatus.Complete))).Id,
+                SurveyId = this.fixture.DataContext.EnumTypeItems.Single(
+                    e =>
+                        e.EnumType.Code.Equals(nameof(ChainMortgageSurveyStatus)) &&
+                        e.Code.Equals(nameof(ChainMortgageSurveyStatus.Complete))).Id,
+                SearchesId = this.fixture.DataContext.EnumTypeItems.Single(
+                    e =>
+                        e.EnumType.Code.Equals(nameof(ChainSearchStatus)) &&
+                        e.Code.Equals(nameof(ChainSearchStatus.Complete))).Id,
+                EnquiriesId = this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(ChainEnquiries)) && e.Code.Equals(nameof(ChainEnquiries.Complete)))
+                                  .Id,
+                ContractAgreedId = this.fixture.DataContext.EnumTypeItems.Single(
+                    e =>
+                        e.EnumType.Code.Equals(nameof(ChainContractAgreedStatus)) &&
+                        e.Code.Equals(nameof(ChainContractAgreedStatus.Outstanding))).Id
+            };
+
             var updateActivityCommand = new UpdateActivityCommand
             {
                 Id = activity.Id,
@@ -426,9 +454,9 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = activity.ChainTransactions.ToList()
+                ChainTransactions = new List<UpdateActivityChainTransaction> { chainCommand }
             };
-
+            
             this.UpdateActivity(updateActivityCommand);
         }
 

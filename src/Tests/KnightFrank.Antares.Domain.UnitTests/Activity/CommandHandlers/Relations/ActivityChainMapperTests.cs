@@ -42,9 +42,9 @@
             Guid guid = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749");
             var command = new UpdateActivityCommand
             {
-                ChainTransactions = new List<ChainTransaction>
+                ChainTransactions = new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction { Id = guid }
+                    new UpdateActivityChainTransaction { Id = guid }
                 }
             };
             var activity = new Activity
@@ -84,7 +84,7 @@
             // Assert
             chainTransactionRepository.Verify(r => r.Delete(It.IsAny<ChainTransaction>()), Times.Exactly(1));
 
-            activity.ChainTransactions.ShouldBeEquivalentTo(command.ChainTransactions);
+            activity.ChainTransactions.ShouldBeEquivalentTo(command.ChainTransactions, options => options.ExcludingMissingMembers());
         }
 
         [Theory]
@@ -99,9 +99,9 @@
             // Arrange
             var command = new UpdateActivityCommand
             {
-                ChainTransactions = new List<ChainTransaction>
+                ChainTransactions = new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction()
+                    new UpdateActivityChainTransaction()
                 }
             };
             var activity = new Activity
@@ -138,7 +138,7 @@
         [Theory]
         [MemberData("InvalidChainTransactions")]
         public void Given_InvalidCommand_When_Handling_Then_ShouldThrowException(
-            List<ChainTransaction> chainTransactions)
+            List<UpdateActivityChainTransaction> chainTransactions)
         {
             // Arrange
             var activity = new Activity
@@ -174,13 +174,13 @@
         {
             new object[]
             {
-                new List<ChainTransaction>
+                new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         IsEnd = true,
                     },
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         IsEnd = true,
                     }
@@ -188,9 +188,9 @@
             },
             new object[]
             {
-                new List<ChainTransaction>
+                new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         AgentContactId = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749"),
                         AgentUserId = Guid.Parse("50FAB333-2584-41ED-ADA5-051110091749")
@@ -199,9 +199,9 @@
             },
             new object[]
             {
-                new List<ChainTransaction>
+                new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         Vendor =
                             "50FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-0511100917491"
@@ -210,14 +210,14 @@
             },
             new object[]
             {
-                new List<ChainTransaction>
+                new List<UpdateActivityChainTransaction>
                 {
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         Id = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749"),
                         IsEnd = true
                     },
-                    new ChainTransaction
+                    new UpdateActivityChainTransaction
                     {
                         ParentId = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749")
                     }
