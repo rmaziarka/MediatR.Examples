@@ -126,9 +126,9 @@ module Antares {
 
                 it('and there is accepted offer and tenancy exists then cannot negotiate another tenancy', () => {
                     // arrange
-                    var offerStatus: any = TestHelpers.EnumTypeItemGenerator.generateDto("Accepted");
+                    var offerStatus: any = TestHelpers.EnumTypeItemGenerator.generateDto(Enums.OfferStatus[Enums.OfferStatus.Accepted]);
                     controller.requirement.offers[0].status = offerStatus;
-                    controller.requirement.tenancy = TestHelpers.TenancyGenerator.generateDto();
+                    controller.requirement.tenancy = new Business.TenancyPreviewModel(TestHelpers.TenancyGenerator.generateDto());
 
                     // act
                     var result = controller.canTenancyBeNegotiated(requirementViewModel.offers[0]);
