@@ -9,5 +9,7 @@
         bool IsCompanyCategoryEnumValid(Guid? enumItemId);
 
         bool IsCompanyTypeEnumValid(Guid? enumItemId);
+
+        bool IsRelationshipManagerValid(Guid? entityItemId);
     }
 }

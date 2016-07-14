@@ -16,6 +16,7 @@
             this.RuleFor(p => p.ClientCareStatusId).Must(companyCommandCustomValidator.IsClientCareEnumValid);
             this.RuleFor(p => p.CompanyTypeId).Must(companyCommandCustomValidator.IsCompanyTypeEnumValid);
             this.RuleFor(p => p.CompanyCategoryId).Must(companyCommandCustomValidator.IsCompanyCategoryEnumValid);
+            this.RuleFor(p => p.RelationshipManagerId).Must(companyCommandCustomValidator.IsRelationshipManagerValid);
         }
     }
 }

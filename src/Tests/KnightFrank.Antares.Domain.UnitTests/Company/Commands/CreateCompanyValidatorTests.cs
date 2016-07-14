@@ -189,6 +189,7 @@
             customCompanyCommandValidatorMock.Setup(x => x.IsClientCareEnumValid(It.IsAny<Guid?>())).Returns(true);
             customCompanyCommandValidatorMock.Setup(x => x.IsCompanyCategoryEnumValid(It.IsAny<Guid?>())).Returns(true);
             customCompanyCommandValidatorMock.Setup(x => x.IsCompanyTypeEnumValid(It.IsAny<Guid?>())).Returns(true);
+            customCompanyCommandValidatorMock.Setup(x => x.IsRelationshipManagerValid(It.IsAny<Guid?>())).Returns(true);
         }
     }
 }

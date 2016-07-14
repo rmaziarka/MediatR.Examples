@@ -95,7 +95,7 @@
                 ClientCareStatusId = Guid.NewGuid(),
                 CompanyTypeId = Guid.NewGuid(),
                 CompanyCategoryId = Guid.NewGuid(),
-                RelationshipMangerId = Guid.NewGuid()
+                RelationshipManagerId = Guid.NewGuid()
             };
         }
     }
