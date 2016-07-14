@@ -3,9 +3,8 @@
 module Antares.Attributes.Offer {
     import Enums = Common.Models.Enums;
     import Dto = Common.Models.Dto;
-    import RequirementService = Antares.Requirement.RequirementService;
-    import KfModalService = Antares.Services.KfModalService;
-    import ActivityService = Services.ActivityService;
+    import Business = Common.Models.Business;
+    import KfModalService = Services.KfModalService;
     import ChainTransaction = Common.Models.Business.ChainTransaction;
 
     export class OfferChainsControlController {
@@ -31,53 +30,54 @@ module Antares.Attributes.Offer {
         private $onChanges = () => {
             var tempCommand = angular.copy(this.chainCommand);
             this.chains = tempCommand.chainTransactions;
-        }
-
+        };
         public addChain = () => {
             this.currentChain = new ChainTransaction();
             this.panelInPreviewMode = false;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
-        }
-
+        };
         public editChain = (chain: ChainTransaction) => {
             this.currentChain = chain;
             this.panelInPreviewMode = false;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
-        }
-
+        };
         public previewChain = (chain: ChainTransaction) => {
-            this.currentChain = chain
+
+            if (chain.parentId) {
+                var parentChain = this.chains.filter((parentChain: ChainTransaction) =>{ return parentChain.id === chain.parentId; })[0];
+                chain.parent = new Business.ChainTransaction(parentChain);
+            }
+
+            this.currentChain = chain;
             this.panelInPreviewMode = true;
 
             this.eventAggregator.publish(new OpenChainPanelEvent());
-        }
-
+        };
         public removeChain = (chain: ChainTransaction) => {
-            this.currentChain = chain
+            this.currentChain = chain;
             var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             promise.then(this.onRemoveConfirm);
-        }
-        
-        private onRemoveConfirm = () => {
+        };
+        private onRemoveConfirm = () =>{
             this.chainTransationsService
                 .removeChain(this.currentChain, this.chainCommand, this.chainType)
                 .then((model: Dto.IActivity | Dto.IRequirement) =>{
-                    if(this.chainType === Enums.OfferChainsType.Activity){
+                    if (this.chainType === Enums.OfferChainsType.Activity) {
                         var activity = <Dto.IActivity> model;
                         this.eventAggregator.publish(new ActivityUpdatedOfferChainsEvent(activity));
-                    } else {
+                    }
+                    else {
                         var requirement = <Dto.IRequirement> model;
                         this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
                     }
-                })
-        }
-
+                });
+        };
         isEndOfChainVisibleInPanel = () =>{
             return false;
+        };
         }
-    }
 
     angular.module('app').controller('OfferChainsControlController', OfferChainsControlController);
 }

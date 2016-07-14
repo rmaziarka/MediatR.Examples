@@ -30,6 +30,7 @@ module Antares.Common.Models.Business {
         enquiries: Business.EnumTypeItem = null;
         contractAgreed: Business.EnumTypeItem = null;
         surveyDate: Date | string = null;
+        lastElementInChainLink: boolean = null;
 
         constructor(chainTransaction?: Dto.IChainTransaction) {
             angular.extend(this, chainTransaction);

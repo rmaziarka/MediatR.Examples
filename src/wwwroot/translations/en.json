@@ -609,6 +609,7 @@
         "IS_END": "End of chain",
         "PROPERTY": "Property",
         "VENDOR": "Vendor",
+        "BUYER": "Buyer",
         "AGENT": "Agent",
         "NO_AGENT": "Agent contact not specified",
         "SOLICITOR": "Solicitor",
