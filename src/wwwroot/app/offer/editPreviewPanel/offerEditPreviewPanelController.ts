@@ -11,7 +11,7 @@ module Antares.Offer {
             // bindings
             config: IOfferConfig;
             offer: Business.Offer;
-            mode: OfferPanelMode;
+            mode: Enums.PanelMode;
             requirement: Business.Requirement;
 
             // properties
@@ -34,11 +34,11 @@ module Antares.Offer {
                 this.config = null;
                 this.busyLabelKey = null;
 
-                if (this.mode === OfferPanelMode.Preview) {
+                if (this.mode === Enums.PanelMode.Preview) {
                     this.isPreviewCardVisible = true;
                     this.isEditCardVisible = false;
                     this.loadConfig(Enums.PageTypeEnum.Preview, this.offer);
-                } else if (this.mode === OfferPanelMode.Edit) {
+                } else if (this.mode === Enums.PanelMode.Edit) {
                     this.isPreviewCardVisible = false;
                     this.isEditCardVisible = true;
                     this.loadConfig(Enums.PageTypeEnum.Update, this.offer);
@@ -97,12 +97,12 @@ module Antares.Offer {
             }
 
             preview = () => {
-                this.mode = OfferPanelMode.Preview;
+                this.mode = Enums.PanelMode.Preview;
                 this.resetState();
             }
 
             edit = () => {
-                this.mode = OfferPanelMode.Edit;
+                this.mode = Enums.PanelMode.Edit;
                 this.backToPreview = true;
                 this.resetState();
             }
