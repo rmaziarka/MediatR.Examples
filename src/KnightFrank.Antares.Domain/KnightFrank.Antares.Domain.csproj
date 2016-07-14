@@ -332,6 +332,7 @@
     <Compile Include="Tenancy\Commands\UpdateTenancyCommand.cs" />
     <Compile Include="Tenancy\Commands\CreateTenancyCommand.cs" />
     <Compile Include="Tenancy\Commands\UpdateTenancyTerm.cs" />
+    <Compile Include="Tenancy\Queries\TenancyQueryValidator.cs" />
     <Compile Include="Tenancy\Queries\TenancyTypeQuery.cs" />
     <Compile Include="Tenancy\Queries\TenancyQuery.cs" />
     <Compile Include="Tenancy\QueryHandlers\TenancyQueryHandler.cs" />
