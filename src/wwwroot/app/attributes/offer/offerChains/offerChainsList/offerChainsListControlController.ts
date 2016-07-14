@@ -33,6 +33,26 @@ module Antares.Attributes.Offer {
         previewChain = (chain: ChainTransaction) => {
             this.onChainPreview({ chain: angular.copy(chain) });
         }
+
+        $onChanges = (obj: any) => {
+            if (obj.chains && obj.chains.currentValue !== obj.chains.previousValue) {
+                this.markLastChainElement();
+            }
+        }
+
+        markLastChainElement = () => {
+            this.chains.forEach((chain: ChainTransaction) => {
+                var isParentToOther = this.chains.filter((innerChain: ChainTransaction) => {
+                    return innerChain.parentId === chain.id;
+                });
+                if (isParentToOther.length > 0) {
+                    chain.lastElementInChainLink = false;
+                }
+                else {
+                    chain.lastElementInChainLink = true;
+                }
+            });
+        }
     }
 
     angular.module('app').controller('OfferChainsListControlController', OfferChainsListControlController);
