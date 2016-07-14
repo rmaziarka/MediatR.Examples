@@ -248,6 +248,14 @@ module Antares.Requirement.View {
             this.$state.go('app.offer-view', { id: offer.id });
         }
 
+        showTenancyDetailsPage = () => {
+            this.$state.go('app.tenancy-view', { id: this.requirement.tenancy.id });
+        }
+
+        showTenancyEditPage = () => {
+            this.$state.go('app.tenancy-edit', { id: this.requirement.tenancy.id });
+        }
+
         showAddOfferPanel = (viewing: Dto.IViewing) => {
             this.hidePanels();
             this.selectedViewing = viewing;

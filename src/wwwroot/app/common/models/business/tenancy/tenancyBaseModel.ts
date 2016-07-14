@@ -1,10 +1,10 @@
-/// <reference path="../../typings/_all.d.ts" />
+/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
     import Dto = Models.Dto;
     import Enums = Antares.Common.Models.Enums;
 
-    export class TenancyEditModel {
+    export class TenancyBaseModel {
         id: string = null;
         activity: Business.ActivityPreviewModel;
         requirement: Business.RequirementPreviewModel;
@@ -26,7 +26,6 @@ module Antares.Common.Models.Business {
                 this.startDate = Core.DateTimeUtils.convertDateToUtc(dto.terms[0].startDate);
                 this.endDate = Core.DateTimeUtils.convertDateToUtc(dto.terms[0].endDate);
                 this.agreedRent = dto.terms[0].agreedRent;
-
             }
         }
 

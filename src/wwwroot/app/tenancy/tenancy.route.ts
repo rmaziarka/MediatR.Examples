@@ -13,14 +13,23 @@ module Antares.Tenancy {
         $stateProvider
             .state('app.tenancy-view', {
                 url: '/tenancy/view/:id',
-                template: "<tenancy-view tenancy='tenancy'></tenancy-view>",
-                controller: ($scope: ng.IScope, tenancy: Dto.ITenancy) => {
+                template: "<tenancy-view tenancy='tenancy' config='config'></tenancy-view>",
+                controller: ($scope: ng.IScope, tenancy: Dto.ITenancy, config: Antares.Tenancy.ITenancyEditConfig) => {
                     $scope['tenancy'] = new Business.TenancyViewModel(tenancy);
+                    $scope['config'] = config;
                 },
                 resolve: {
                     tenancy: ($stateParams: ng.ui.IStateParamsService, tenancyService: Antares.Services.TenancyService) => {
                         return tenancyService.getTenancy($stateParams['id']);
                     },
+                    config: (tenancy: Dto.ITenancy, configService: Services.ConfigService) => {
+                        var entity = new Business.TenancyViewModel(tenancy);
+
+                        return configService.getTenancy(PageTypeEnum.Details,
+                            tenancy.requirement.requirementTypeId,
+                            tenancy.tenancyTypeId,
+                            entity);
+                    }
                 }
             })
             .state('app.tenancy-edit', {
