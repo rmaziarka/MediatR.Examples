@@ -60,7 +60,7 @@ module Antares.Attributes.Offer.OfferChain {
             agentCompanyContact: <any>{
                 formName: "agentCompanyContactForm",
                 controlId: "offer-chain-edit-agent-company-contact",
-                translationKey: "OFFER.CHAIN.EDIT.AGENT",
+                translationKey: "",
                 emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
                 fieldName: "agentCompanyContact"
             },
