@@ -352,7 +352,24 @@
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
-      "VIEWINGS": "Viewings"
+      "OFFERS": {
+        "HEADER": "Offers",
+        "NO_OFFERS": "No offers",
+        "DETAILS": {
+          "OFFER": "Offer",
+          "LEAD_NEGOTIATOR": "Lead negotiator",
+          "PROPOSED_EXCHANGE": "Proposed exchange",
+          "LATEST_NOTE": "Latest note"
+        }
+      },
+      "VIEWINGS": {
+        "HEADER": "Viewings",
+        "NO_VIEWINGS": "No viewings",
+        "DETAILS": {
+          "VIEWING": "VIEWING",
+          "LEAD_NEGOTIATOR": "Lead negotiator"
+        }
+      }
     }
   },
   "NEGOTIATORS": {

@@ -38,14 +38,16 @@
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
         private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
         // Viewing locators
-        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item card[item='viewing']");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list .card");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator viewingCounter = new ElementLocator(Locator.CssSelector, "viewing-view-control .page-header .ng-binding");
         // Offer locators
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator offerCounter = new ElementLocator(Locator.CssSelector, "offer-view-control .page-header .ng-binding");
         // Negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, ".active #card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
@@ -98,6 +100,10 @@
 
         public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
 
+        public string OffersCounter => this.Driver.GetElement(this.offerCounter).Text;
+
+        public string ViewingsCounter => this.Driver.GetElement(this.viewingCounter).Text;
+        
         //TODO check if still valid data
         public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
 

@@ -1,7 +1,7 @@
 <div class="panel panel-default" ng-if="!cvm.displayNewControl">
     <div class="panel-body">
-        <div ng-include src="cvm.cardTemplateUrl"></div>
-
+        <div ng-include src="cvm.cardTemplateUrl" ng-if="cvm.cardTemplateUrl"></div>
+        <div ng-transclude="template" ng-if="!cvm.cardTemplateUrl"></div>
         <div class="row">
             <div class="col-md-12 text-right" ng-if="!!cvm.showItemDetails">
                 <a class="detailsLink" href="" ng-click="cvm.showItemDetails(cvm.item)" translate="COMMON.DETAILS"></a>
@@ -12,7 +12,8 @@
 
 <div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selectable': cvm.allowSelection, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl" ng-click="cvm.clicked()">
     <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
-        <div ng-include src="cvm.cardTemplateUrl"></div>
+        <div ng-include src="cvm.cardTemplateUrl" ng-if="cvm.cardTemplateUrl"></div>
+        <div ng-transclude="template" ng-if="!cvm.cardTemplateUrl"></div>
     </div>
     <div class="card-action" tabindex="-1" ng-if="cvm.showContextMenu" uib-dropdown uib-dropdown-toggle>
         <a href="" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>

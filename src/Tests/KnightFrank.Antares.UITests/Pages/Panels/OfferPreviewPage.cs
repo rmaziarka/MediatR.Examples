@@ -13,7 +13,7 @@
     {
         private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, ".slide-in side-panel-content > .section-details:first-of-type a");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in address-form-view .ng-binding");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#offer-status.ng-binding");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
@@ -21,8 +21,11 @@
         private readonly ElementLocator offerNegotiator = new ElementLocator(Locator.Id, "offer-preview-negotiator");
         private readonly ElementLocator offerProposedexchangeDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-exchange-date");
         private readonly ElementLocator offerProposedCompletionDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-completion-date");
-        private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in #activity-link > a");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-preview-panel .busy");
+        private readonly ElementLocator activityActions = new ElementLocator(Locator.CssSelector, ".offer-preview-activity .card-action");
+        private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, ".offer-preview-activity .card-action li");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, ".side-panel-loading");
+
+        private string currentWindowHandler;
 
         public OfferPreviewPage(DriverContext driverContext) : base(driverContext)
         {
@@ -44,15 +47,27 @@
 
         public string ProposedCompletionDate => this.Driver.GetElement(this.offerProposedCompletionDate).Text;
 
-        public OfferPreviewPage ClickViewLink()
+        public OfferPreviewPage ClickActivityDetailsLink()
         {
-            this.Driver.Click(this.viewLink);
+            this.currentWindowHandler = this.Driver.CurrentWindowHandle;
+            this.Driver.Click(this.activityActions);
+            this.Driver.Click(this.activityDetailsLink);
+
+            List<string> windowHandlers = this.Driver.WindowHandles.ToList();
+            foreach (string handler in windowHandlers)
+            {
+                if (handler != this.currentWindowHandler)
+                {
+                    this.Driver.SwitchTo().Window(handler);
+                    break;
+                }
+            }
             return this;
         }
 
         public OfferPreviewPage ClickDetailsLink()
         {
-            this.Driver.ClickWithJs(this.detailsLink);
+            this.Driver.Click(this.detailsLink);
             return this;
         }
 
