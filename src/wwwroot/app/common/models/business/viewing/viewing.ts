@@ -22,6 +22,10 @@ module Antares.Common.Models.Business {
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
+
+                this.attendees = viewing.attendees.map((contact: Dto.IContact) => { return new Contact(contact) });
+                this.negotiator = new User(viewing.negotiator);
+
                 this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
                 if (viewing.requirement) {
                     this.requirement = new Requirement(viewing.requirement);
