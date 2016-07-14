@@ -37,11 +37,7 @@ module Antares.Attributes.Offer.OfferChain {
 
         public panelShown = () => {
             this.cardPristine = new Object();
-            if (this.inPreviewMode) {
-                this.panelMode = OfferChainPanelMode.Preview;
-            } else {
-                this.panelMode = OfferChainPanelMode.AddEdit;
-            }
+            this.resetState();
         }
 
         onCompanyContactSelected = (contacts: Business.CompanyContact[]) => {
@@ -101,7 +97,11 @@ module Antares.Attributes.Offer.OfferChain {
 
         public cancel = () => {
             this.isBusy = false;
-            this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+            if (this.inPreviewMode) {
+                this.panelMode = OfferChainPanelMode.Preview;
+            } else {
+                this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+            }
         }
 
         public reloadConfig(chain: Business.ChainTransaction) {
@@ -116,6 +116,11 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         private resetState = () => {
+            if (this.inPreviewMode) {
+                this.panelMode = OfferChainPanelMode.Preview;
+            } else {
+                this.panelMode = OfferChainPanelMode.AddEdit;
+            }
         }
 
         loadCompanyContacts = () => {
