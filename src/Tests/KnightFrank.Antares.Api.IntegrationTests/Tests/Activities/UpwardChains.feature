@@ -52,23 +52,6 @@ Scenario Outline: Create upward chain with invalid data
 	| ContractAgreedId   |
 	| ParentId           |
 
-@ignore
-Scenario: Create upward chain for residential letting activity
-	Given Property exists in database
-		| PropertyType | Division    |
-		| House        | Residential |
-		And Activity exists in database
-			| ActivityStatus | ActivityType        |
-			| PreAppraisal   | Open Market Letting |
-		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
-		And Company exists in database
-		And Requirement of type ResidentialLetting exists in database
-		And Offer with New status exists in database
-	When User creates upward chain for activity using api
-	Then User should get BadRequest http status code
-
 Scenario: Get upward chain from residential sale activity 
 	Given Property exists in database
 		| PropertyType | Division    |
