@@ -9,9 +9,9 @@ module Antares.Common.Models.Business  {
         property: PreviewProperty;
 
         constructor(activity: Dto.IActivity ) {
-            this.landlords =  activity.contacts.map((user: Dto.IContact)=> {
+            this.landlords = activity.contacts ? activity.contacts.map((user: Dto.IContact)=> {
                 return new Contact(user);
-            });
+            }) : [];
             this.property = new PreviewProperty(activity.property);
             this.id = activity.id;
         }         

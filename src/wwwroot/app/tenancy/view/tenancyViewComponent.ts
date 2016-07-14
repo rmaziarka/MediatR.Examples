@@ -6,7 +6,8 @@ module Antares.Tenancy {
         controllerAs: 'vm',
         controller: 'TenancyViewController',
         bindings: {
-            tenancy: '<'
+            tenancy: '<', 
+            config: '<'
         }
     });
 }
