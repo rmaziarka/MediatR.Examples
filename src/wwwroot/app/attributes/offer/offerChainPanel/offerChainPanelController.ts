@@ -15,8 +15,8 @@ module Antares.Attributes.Offer.OfferChain {
         isLastChain: boolean;
 
         // properties
-        config: any;
         cardPristine: any;
+        config: any;
         isBusy: boolean = false;
         panelMode: OfferChainPanelMode;
         offerChainPanelMode: any = OfferChainPanelMode;
@@ -36,6 +36,7 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         public panelShown = () => {
+            this.cardPristine = new Object();
             if (this.inPreviewMode) {
                 this.panelMode = OfferChainPanelMode.Preview;
             } else {
@@ -115,7 +116,6 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         private resetState = () => {
-            this.cardPristine = new Object();
         }
 
         loadCompanyContacts = () => {

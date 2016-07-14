@@ -7,11 +7,10 @@
         </offer-chain-preview-card>
         <offer-chain-add-edit-card chain="vm.chain"
                                    config="vm.config"
-                                   on-save="vm.save(chain)"
                                    on-cancel="vm.cancel()"
+                                   on-save="vm.save(chain)"
                                    on-reload-config="vm.reloadConfig(chain)"
                                    on-edit-company-contact="vm.openCompanyContactEditCard(companyContact, type)"
-                                   back-to-preview="vm.backToPreview"
                                    pristine-flag="vm.cardPristine"
                                    ng-show="vm.panelMode == vm.offerChainPanelMode.AddEdit">
         </offer-chain-add-edit-card>

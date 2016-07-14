@@ -9,9 +9,10 @@ module Antares.Attributes.Offer.OfferChain {
             chain: '<',
             config:'<',
             onCancel: '&',
-            onReloadConfig: '&',
             onSave: '&',
-            onEditCompanyContact: '&'
+            onReloadConfig: '&',
+            onEditCompanyContact: '&',
+            pristineFlag: '<'
         }
     });
 }

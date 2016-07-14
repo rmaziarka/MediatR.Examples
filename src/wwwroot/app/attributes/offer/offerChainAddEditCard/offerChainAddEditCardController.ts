@@ -13,11 +13,11 @@ module Antares.Attributes.Offer.OfferChain {
         // bindings
         chain: Business.ChainTransaction;
         config: any;
-        onEdit: () => void;
         onCancel: () => void;
+        onSave: (obj: { chain: Business.ChainTransaction }) => void;
         onReloadConfig: (chain: Business.ChainTransaction) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
-        onSave: (obj: { chain: Business.ChainTransaction }) => void;
+        pristineFlag: any;
 
         //properties
         offerChainAddEditCardForm: ng.IFormController;
@@ -123,6 +123,14 @@ module Antares.Attributes.Offer.OfferChain {
         constructor(
             private dataAccessService: Services.DataAccessService,
             private eventAggregator: Core.EventAggregator) {
+        }
+
+        $onChanges = (obj: any) => {
+            if (obj.pristineFlag && obj.pristineFlag.currentValue !== obj.pristineFlag.previousValue) {
+                if (this.offerChainAddEditCardForm) {
+                    this.offerChainAddEditCardForm.$setPristine();
+                }
+            }
         }
 
         public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {
