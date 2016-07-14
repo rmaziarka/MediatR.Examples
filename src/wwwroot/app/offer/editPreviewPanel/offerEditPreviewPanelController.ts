@@ -32,7 +32,6 @@ module Antares.Offer {
             private resetState = () => {
                 this.cardPristine = new Object();
                 this.config = null;
-                this.offer.requirement = null;
                 this.busyLabelKey = null;
 
                 if (this.mode === OfferPanelMode.Preview) {
