@@ -205,6 +205,7 @@
     <Compile Include="Steps\Requierement\RequirementNotesSteps.cs" />
     <Compile Include="Steps\Requierement\RequirementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
+    <Compile Include="Steps\Tenancies\TenancySteps.cs" />
     <Compile Include="Steps\Translations\TranslationsSteps.cs" />
     <Compile Include="Steps\Users\UsersSteps.cs" />
     <Compile Include="Tests\Activities\Negotiators.feature.cs">
@@ -328,6 +329,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Tenancies\Tenancy.feature.cs">
+      <DependentUpon>Tenancy.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tests\Translations\Translations.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -394,6 +400,10 @@
     <None Include="Tests\Requirement\Attachments.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Tenancies\Tenancy.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Tenancy.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Users\Users.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
