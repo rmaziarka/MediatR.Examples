@@ -17,6 +17,7 @@ module Antares.Attributes.Offer.OfferChain {
         onSave: (obj: { chain: Business.ChainTransaction }) => void;
         onReloadConfig: (chain: Business.ChainTransaction) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
+        onAddEditProperty: (obj: { property: Business.PreviewProperty }) => void;
         pristineFlag: any;
 
         //properties
@@ -38,10 +39,6 @@ module Antares.Attributes.Offer.OfferChain {
                 controlId: "offer-chain-edit-is-end",
                 translationKey: "OFFER.CHAIN.EDIT.IS_END",
                 fieldName: "isEnd"
-            },
-            property: <any>{
-                controlId: "offer-chain-edit-property",
-                translationKey: "OFFER.CHAIN.EDIT.PROPERTY"
             },
             vendor: <any>{
                 formName: "vendorControlForm",
@@ -135,6 +132,10 @@ module Antares.Attributes.Offer.OfferChain {
 
         public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {
             this.onEditCompanyContact({ companyContact: companyContact, type: type });
+        }
+
+        public addEditProperty = (property: Business.PreviewProperty) => {
+            this.onAddEditProperty({ property: property });
         }
 
         public cancel = () => {

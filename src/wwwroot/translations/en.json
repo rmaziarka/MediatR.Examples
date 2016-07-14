@@ -186,6 +186,10 @@
       "EDIT_PROPERTY": "Edit property",
       "ADDRESS": "Address"
     },
+    "CARDEDIT": {
+      "PROPERTY": "Property",
+      "PROPERTYEMPTY": "Property not specified"
+    },
     "VIEW": {
       "CHARACTERISTICS": "Characteristics",
       "VIEW_PROPERTY": "View property",
@@ -195,6 +199,9 @@
     "LIST": {
       "OWNERSHIPS": "Ownerships",
       "NO_ITEMS": "Ownership information not configured yet"
+    },
+    "LISTCARD": {
+      "SELECTPROPERTY": "Select property"
     },
     "PREVIEW": {
       "PROPERTY_PREVIEW": "Property preview",

@@ -12,6 +12,7 @@ module Antares.Attributes.Offer.OfferChain {
             onSave: '&',
             onReloadConfig: '&',
             onEditCompanyContact: '&',
+            onAddEditProperty: '&',
             pristineFlag: '<'
         }
     });

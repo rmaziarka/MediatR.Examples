@@ -35,15 +35,6 @@ module Antares.Attributes.Offer.OfferChain {
             super();
         }
 
-        public panelShown = () => {
-            this.cardPristine = new Object();
-            if (this.inPreviewMode) {
-                this.panelMode = OfferChainPanelMode.Preview;
-            } else {
-                this.panelMode = OfferChainPanelMode.AddEdit;
-            }
-        }
-
         onCompanyContactSelected = (contacts: Business.CompanyContact[]) => {
             switch (this.companyContactType) {
                 case CompanyContactType.ChainAgent:
@@ -56,7 +47,13 @@ module Antares.Attributes.Offer.OfferChain {
             this.panelMode = OfferChainPanelMode.AddEdit;
         }
 
-        onCompanyContactListCancel = () => {
+        onPropertySelected = (properties: Business.PreviewProperty[]) => {
+            this.chain.property = properties[0];
+            this.chain.propertyId = properties[0] && properties[0].id;
+            this.panelMode = OfferChainPanelMode.AddEdit;
+        }
+
+        onListCancel = () => {
             this.panelMode = OfferChainPanelMode.AddEdit;
         }
 
@@ -67,8 +64,8 @@ module Antares.Attributes.Offer.OfferChain {
             this.companyContactType = type;
         }
 
-        openPropertyEditCard = (propertyId: string) => {
-            this.initiallySelectedPropertyId = propertyId;
+        openPropertyAddEditCard = (property: Business.PreviewProperty) => {
+            this.initiallySelectedPropertyId = property && property.id;
             this.loadProperties();
             this.panelMode = OfferChainPanelMode.Property;
         }
@@ -76,18 +73,17 @@ module Antares.Attributes.Offer.OfferChain {
         public save = (chain: Business.ChainTransaction) => {
             this.isBusy = true;
 
-            chain.propertyId = '0D58971F-0049-E611-8115-00155D038C01';
+            var serverChain = this.createChainForServer(chain, this.chainCommand.chainTransactions);
+            var chainCommand = angular.copy(this.chainCommand);
 
-            var chainCommand = this.createChainCommand(chain, this.chainCommand.chainTransactions);
-
-            if (chainCommand.id == null) {
-                this.chainTransationsService.addChain(chainCommand, this.chainCommand, this.chainType)
+            if (serverChain.id == null) {
+                this.chainTransationsService.addChain(serverChain, chainCommand, this.chainType)
                     .then((model: Dto.IActivity | Dto.IRequirement) => {
                         this.onSuccessAddEditChain(chain, model);
                     })
                     .finally(() => { this.isBusy = false; });
             } else {
-                this.chainTransationsService.editChain(chainCommand, this.chainCommand, this.chainType)
+                this.chainTransationsService.editChain(serverChain, chainCommand, this.chainType)
                     .then((model: Dto.IActivity | Dto.IRequirement) => {
                         this.onSuccessAddEditChain(chain, model);
                     })
@@ -99,19 +95,21 @@ module Antares.Attributes.Offer.OfferChain {
             this.panelMode = OfferChainPanelMode.AddEdit;
         }
 
-        public cancel = () => {
-            this.isBusy = false;
-            this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
-        }
-
         public reloadConfig(chain: Business.ChainTransaction) {
             this.config = this.defineControlConfig(chain);
         }
 
-        protected onChanges = (changesObj: any) => {
+        protected onChanges = (changesObj: IOfferChainPanelChange) => {
             if (changesObj.chain && changesObj.chain.currentValue) {
                 this.reloadConfig(changesObj.chain.currentValue);
+                this.cardPristine = new Object();
             }
+            if (changesObj.inPreviewMode) {
+                this.panelMode = this.inPreviewMode 
+                    ? OfferChainPanelMode.Preview 
+                    : OfferChainPanelMode.AddEdit;
+            }
+
             this.resetState();
         }
 
@@ -170,7 +168,7 @@ module Antares.Attributes.Offer.OfferChain {
             }
         }
 
-        private createChainCommand = (chain: Business.ChainTransaction, chainTransactions: Dto.IChainTransaction[]): Business.ChainTransaction => {
+        private createChainForServer = (chain: Business.ChainTransaction, chainTransactions: Dto.IChainTransaction[]): Business.ChainTransaction => {
 
             // TODO: chang to use dedicated ChainTransactionCommand in IChainTransactionCommand
             var command = angular.copy(chain);
@@ -214,11 +212,17 @@ module Antares.Attributes.Offer.OfferChain {
             if (this.inPreviewMode) {
                 this.panelMode = OfferChainPanelMode.Preview;
             } else {
-                this.cancel();
+                this.isBusy = false;
+                this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
             }
         }
 
 
+    }
+
+    interface IOfferChainPanelChange {
+        chain: { currentValue: Business.ChainTransaction, previousValue: Business.ChainTransaction }
+        inPreviewMode: { currentValue: boolean, previousValue: boolean }
     }
 
     angular.module('app').controller('offerChainPanelController', OfferChainPanelController);

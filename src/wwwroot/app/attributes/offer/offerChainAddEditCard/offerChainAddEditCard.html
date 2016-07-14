@@ -9,8 +9,10 @@
             </div>
 
             <div class="section-details">
-                <!-- TODO: Implement property edit component -->
-                <property-edit-control> </property-edit-control>
+                <property-card-edit-control property="vm.chain.property" 
+                                            config="vm.config.property" 
+                                            on-add-edit="vm.addEditProperty(property)"> 
+                </property-card-edit-control>
             </div>
 
             <div class="section-details">

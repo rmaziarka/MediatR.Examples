@@ -7,10 +7,11 @@
         </offer-chain-preview-card>
         <offer-chain-add-edit-card chain="vm.chain"
                                    config="vm.config"
-                                   on-cancel="vm.cancel()"
+                                   on-cancel="vm.closeAddEdit()"
                                    on-save="vm.save(chain)"
                                    on-reload-config="vm.reloadConfig(chain)"
                                    on-edit-company-contact="vm.openCompanyContactEditCard(companyContact, type)"
+                                   on-add-edit-property="vm.openPropertyAddEditCard(property)"
                                    pristine-flag="vm.cardPristine"
                                    ng-show="vm.panelMode == vm.offerChainPanelMode.AddEdit">
         </offer-chain-add-edit-card>
@@ -19,7 +20,14 @@
                                    ng-show="vm.panelMode == vm.offerChainPanelMode.CompanyContactList"
                                    allow-multiple-select="false"
                                    on-save="vm.onCompanyContactSelected(contacts)"
-                                   on-cancel="vm.onCompanyContactListCancel()">
+                                   on-cancel="vm.onListCancel()">
         </company-contact-list-card>
+        <property-list-card properties="vm.properties"
+                            is-loading="vm.isLoading"
+                            ng-show="vm.panelMode == vm.offerChainPanelMode.Property"
+                            allow-multiple-select="false"
+                            on-save="vm.onPropertySelected(properties)"
+                            on-cancel="vm.onListCancel()">
+        </property-list-card>
     </side-panel-cards>
 </kf-side-panel>
