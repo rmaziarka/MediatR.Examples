@@ -135,7 +135,7 @@ module Antares.Attributes {
 
         private fixLeadNegotiatorCallDate = () => {
             if (!this.leadNegotiator.callDate || moment(this.leadNegotiator.callDate).isBefore(this.today, 'day')) {
-                this.leadNegotiator.callDate = this.today;
+                this.leadNegotiator.callDate = moment(this.today).startOf('day').toDate();
             }
         }
 

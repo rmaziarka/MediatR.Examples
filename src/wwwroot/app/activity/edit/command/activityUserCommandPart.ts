@@ -10,8 +10,7 @@ module Antares.Activity.Commands {
         constructor(activityUser?: Business.ActivityUser) {
             if (activityUser) {
                 this.userId = activityUser.userId;
-                // Core.DateTimeUtils.convertDateToUtc
-                this.callDate = Core.DateTimeUtils.convertDateToUtc(activityUser.callDate);
+                this.callDate = Core.DateTimeUtils.createDateAsUtc(activityUser.callDate);
             }
         }
     }

@@ -456,7 +456,7 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
             this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
 
-            this.activity.leadNegotiator.callDate = moment().add(2, 'week').toDate();
+            this.activity.leadNegotiator.callDate = moment().add(2, 'week').startOf('day').toDate();
         }
 
         private setDefaultDepartment = () => {

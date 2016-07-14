@@ -15,7 +15,7 @@ module Antares.Common.Models.Business {
                 this.user = new User(activityUser.user);
 
                 if (activityUser.callDate) {
-                    this.callDate = Core.DateTimeUtils.createDateAsUtc(activityUser.callDate);
+                    this.callDate = Core.DateTimeUtils.convertDateToUtc(activityUser.callDate);
                 }
             }
 
