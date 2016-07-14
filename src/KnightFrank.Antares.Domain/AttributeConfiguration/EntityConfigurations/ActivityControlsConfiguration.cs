@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
+    using System.Linq;    
 
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -65,6 +64,7 @@
             this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
             this.AddControl(PageType.Details, ControlCode.KeyNumber, Field<Activity>.Create(x => x.KeyNumber));
             this.AddControl(PageType.Details, ControlCode.AccessArrangements, Field<Activity>.Create(x => x.AccessArrangements));
+            this.AddControl(PageType.Details, ControlCode.Offer_UpwardChain, Field<Activity>.Create(x => x.ChainTransactions));
             this.AddControl(PageType.Details, ControlCode.AppraisalMeeting,
                 new List<IField>
                 {
@@ -139,6 +139,7 @@
                 this.AddControl(pageType, ControlCode.LongKfValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongKfValuationPrice).Required());
                 this.AddControl(pageType, ControlCode.LongVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.LongAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.LongAgreedInitialMarketingPrice));
+                this.AddControl(pageType, ControlCode.Offer_UpwardChain, Field<ActivityCommandBase>.Create(x => x.ChainTransactions));
             }
         }
 
@@ -310,6 +311,13 @@
                 },
                 this.When(openMarketLetting, PageType.Details))
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.Offer_UpwardChain
+                },
+                this.When(residentialSale, PageType.Details, PageType.Update));
         }
     }
 }

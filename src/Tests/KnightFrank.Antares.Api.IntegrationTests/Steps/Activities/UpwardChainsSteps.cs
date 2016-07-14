@@ -298,7 +298,7 @@
             bool isEnd = bool.Parse(table.Rows[0]["IsEnd"]);
             var activity = this.scenarioContext.Get<Activity>("Activity");
 
-            List<ChainTransaction> chains = activity.ChainTransactions.Where(ct => ct.IsEnd == isEnd).ToList();
+            List<ChainTransaction> chains = activity.ChainTransactions.Where(ct => ct.IsEnd != isEnd).ToList();
             var chainTransactions = new List<ChainTransaction>();
 
             foreach (ChainTransaction ct in chains)

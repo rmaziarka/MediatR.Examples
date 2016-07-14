@@ -6,16 +6,17 @@ module Antares.Attributes.Offer.OfferChain {
     import SearchOptions = Common.Component.SearchOptions;
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
     import CompanyContactType = Common.Models.Enums.CompanyContactType;
-    import OpenCompanyContactEditPanelEvent = Attributes.OpenCompanyContactEditPanelEvent;
     import Enums = Common.Models.Enums;
+    import ISearchUserControlSchema = Attributes.ISearchUserControlSchema;
 
     export class OfferChainAddEditCardController {
         // bindings
         chain: Business.ChainTransaction;
+        isAgentUserType: boolean;
         config: any;
         onCancel: () => void;
         onSave: (obj: { chain: Business.ChainTransaction }) => void;
-        onReloadConfig: (chain: Business.ChainTransaction) => void;
+        onReloadConfig: (obj: { isAgentUserType: boolean }) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
         onAddEditProperty: (obj: { property: Business.PreviewProperty }) => void;
         pristineFlag: any;
@@ -24,16 +25,20 @@ module Antares.Attributes.Offer.OfferChain {
         offerChainAddEditCardForm: ng.IFormController;
         configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
 
-        public isThirdPartyAgentInEditMode: boolean = true;
-        public thirdPartyAgentSearchOptions: SearchOptions = new SearchOptions();
-        public usersSearchMaxCount: number = 100;
-        public isKnightFrankAgent: boolean = true;
 
         isThirdPartyAgentEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         public companyContactType = Common.Models.Enums.CompanyContactType;
 
         // controls
         controlSchemas: any = {
+            searchUser: <ISearchUserControlSchema>{
+                formName: "searchUserControlForm",
+                controlId: "offer-chain-search-user",
+                searchPlaceholderTranslationKey: "OFFER.CHAIN.EDIT.FIND_AGENT",
+                fieldName: "searchUser",
+                itemTemplateUrl: "app/attributes/activityNegotiators/userSearchTemplate.html",
+                usersSearchMaxCount: 100
+            },
             isEnd: <any>{
                 formName: "isEndControlForm",
                 controlId: "offer-chain-edit-is-end",
@@ -112,8 +117,9 @@ module Antares.Attributes.Offer.OfferChain {
                 fieldName: "chainEditAgentType",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT",
                 radioButtons: [
-                    { value: true, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
-                    { value: false, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }]
+                    { value: false, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
+                    { value: true, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }],
+                onChangeValue: () => { this.onReloadConfig({ isAgentUserType: this.isAgentUserType }); }
             }
         }
 
@@ -142,39 +148,8 @@ module Antares.Attributes.Offer.OfferChain {
             this.onCancel();
         }
 
-        public editThirdPartyAgent = () => {
-            this.isThirdPartyAgentInEditMode = true;
-        }
-
-        public changeAgentUser = (user: Business.User) => {
-            this.chain.agentUser = user;
-            this.chain.agentUserId = user.id;
-            this.isThirdPartyAgentInEditMode = false;
-        }
-
-        public cancelChangeAgentUser = () => {
-            this.isThirdPartyAgentInEditMode = false;
-        }
-
         public save = () => {
             this.onSave({ chain: angular.copy(this.chain) });
-        }
-
-        public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
-            return { partialName: searchValue, take: this.usersSearchMaxCount, 'excludedIds[]': [] };
-        }
-
-        public getUsers = (searchValue: string) => {
-            var query = this.getUsersQuery(searchValue);
-
-            //TODO: create and use service
-            return this.dataAccessService
-                .getDepartmentUserResource()
-                .query(query)
-                .$promise
-                .then((users: any) => {
-                    return users.map((user: Common.Models.Dto.IUser) => { return new Common.Models.Business.User(<Common.Models.Dto.IUser>user); });
-                });
         }
     }
 

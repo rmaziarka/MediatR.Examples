@@ -5,11 +5,12 @@
                                   on-edit="vm.edit()"
                                   ng-show="vm.panelMode == vm.offerChainPanelMode.Preview">
         </offer-chain-preview-card>
-        <offer-chain-add-edit-card chain="vm.chain"
+        <offer-chain-add-edit-card is-agent-user-type = "vm.isAgentUserType"
+                                   chain="vm.chain"
                                    config="vm.config"
                                    on-cancel="vm.closeAddEdit()"
                                    on-save="vm.save(chain)"
-                                   on-reload-config="vm.reloadConfig(chain)"
+                                   on-reload-config="vm.reloadConfig(isAgentUserType)"
                                    on-edit-company-contact="vm.openCompanyContactEditCard(companyContact, type)"
                                    on-add-edit-property="vm.openPropertyAddEditCard(property)"
                                    pristine-flag="vm.cardPristine"

@@ -5,7 +5,8 @@ declare module Antares.Attributes {
         fieldName: string;
         translationKey: string,
         formName: string,
-        radioButtons: IRadioButtonSchema[]
+        radioButtons: IRadioButtonSchema[],
+        onChangeValue: () => void
     }
 
     interface IRadioButtonSchema {

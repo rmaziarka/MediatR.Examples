@@ -54,7 +54,7 @@ module Antares.Attributes.Offer {
             this.eventAggregator.publish(new OpenChainPanelEvent());
         }
 
-        public removeChain = (chain: ChainTransaction) =>{
+        public removeChain = (chain: ChainTransaction) => {
             this.currentChain = chain
             var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             promise.then(this.onRemoveConfirm);

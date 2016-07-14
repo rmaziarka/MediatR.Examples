@@ -15,6 +15,7 @@ module Antares.Attributes.Offer.OfferChain {
         isLastChain: boolean;
 
         // properties
+        isAgentUserType: boolean;
         cardPristine: any;
         config: any;
         isBusy: boolean = false;
@@ -95,13 +96,14 @@ module Antares.Attributes.Offer.OfferChain {
             this.panelMode = OfferChainPanelMode.AddEdit;
         }
 
-        public reloadConfig(chain: Business.ChainTransaction) {
-            this.config = this.defineControlConfig(chain);
+        public reloadConfig(isAgentUserType: boolean) {
+            this.config = this.defineControlConfig(isAgentUserType);
         }
 
         protected onChanges = (changesObj: IOfferChainPanelChange) => {
             if (changesObj.chain && changesObj.chain.currentValue) {
-                this.reloadConfig(changesObj.chain.currentValue);
+                this.isAgentUserType = !!changesObj.chain.currentValue.agentUser;                
+                this.reloadConfig(this.isAgentUserType);
                 this.cardPristine = new Object();
             }
             if (changesObj.inPreviewMode) {
@@ -114,6 +116,11 @@ module Antares.Attributes.Offer.OfferChain {
         }
 
         private resetState = () => {
+            if (this.inPreviewMode) {
+                this.panelMode = OfferChainPanelMode.Preview;
+            } else {
+                this.panelMode = OfferChainPanelMode.AddEdit;
+            }
         }
 
         loadCompanyContacts = () => {
@@ -151,13 +158,13 @@ module Antares.Attributes.Offer.OfferChain {
             });
         }
 
-        private defineControlConfig = (chain: Business.ChainTransaction) => {
+        private defineControlConfig = (isAgentUserType: boolean) => {
             return {
                 isEnd: { isEnd: { required: false, active: true } },
                 property: { propertyId: { required: true, active: true } },
                 vendor: { vendor: { required: true, active: true } },
-                agentUser: chain != null && chain.agentUser != null ? { agentUserId: { required: true, active: true } } : null,
-                agentCompanyContact: chain == null || chain.agentUser != null ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
+                agentUser: isAgentUserType ? { agentUserId: { required: true, active: true } } : null,
+                agentCompanyContact: isAgentUserType ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
                 solicitorCompanyContact: { solicitorContactId: { required: false, active: true }, solicitorCompanyId: { required: false, active: true } },
                 mortgage: { mortgageId: { required: true, active: true } },
                 survey: { surveyId: { required: true, active: true } },
