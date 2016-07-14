@@ -11,7 +11,9 @@ module Antares.Component {
             offer: '<',
             requirement: '<',
             mode: '=',
-            canEdit: '<'
+            canEdit: '<',
+            showActivity: '<',
+            showRequirement: '<'
         }
     });
 }

@@ -9,7 +9,9 @@ module Antares.Offer {
             config: '<',
             offer: '<',
             canEdit: '<',
-            onEdit: '&'
+            onEdit: '&',
+            showActivity: '<',
+            showRequirement: '<'
         }
     });
 }
