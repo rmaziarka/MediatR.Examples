@@ -12,6 +12,8 @@ module Antares.Company {
         private config = CompanyControls.config;
         private controlSchemas = CompanyControls.controlSchemas;
 
+        private editCompanyForm: ng.IFormController | any;
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
@@ -25,6 +27,10 @@ module Antares.Company {
             this.companyResource = dataAccessService.getCompanyResource();
         }
         
+        $postLink(){
+            this.editCompanyForm = this.$scope["editCompanyForm"];
+        }
+
         hasCompanyContacts = (): boolean => {
             return this.company.contacts != null && this.company.contacts.length > 0;
         }
@@ -48,6 +54,9 @@ module Antares.Company {
             var selectedContacts = this.components.contactList().getSelected();            
             this.company.contacts = selectedContacts.map((contact: Dto.IContact) => { return new Business.Contact(contact) });
             this.components.sidePanels.contact().hide();
+
+            let areContactsValid = this.hasCompanyContacts();
+            this.editCompanyForm.$setValidity("company.contacts.custom", areContactsValid);
         }
 
         cancelEditCompany= () =>{
@@ -64,9 +73,8 @@ module Antares.Company {
                 .update(updatedCompany)
                 .$promise
                 .then((company: Dto.ICompany) => {                
-                   this.company = new Business.Company();
-                    var form = this.$scope["editCompanyForm"];
-                    form.$setPristine();
+                    this.company = new Business.Company();
+                    this.editCompanyForm.$setPristine();
                     this.$state.go('app.company-view', company);
                 });
         }

@@ -3,7 +3,7 @@
         <h2 class="page-header" translate="COMPANY.CREATE_COMPANY"></h2>
     </div>
 
-    <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
+    <form ng-submit="addCompanyForm.isFormValid() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>

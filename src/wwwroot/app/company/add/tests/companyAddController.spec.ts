@@ -88,8 +88,8 @@ module Antares {
         });
 
         it('when contacts are not selected then only information message should be displayed', () =>{
-            assertValidator.assertShowElement(false, pageObjectSelectors.noContactsHelpBlockSelector);
-            assertValidator.assertShowElement(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(false, pageObjectSelectors.noContactsHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
         });
 
         it('when contacts are not selected and save button is clicked then only error message should be displayed', () =>{
@@ -100,8 +100,8 @@ module Antares {
             button.click();
 
             // asserts
-            assertValidator.assertShowElement(true, pageObjectSelectors.noContactsHelpBlockSelector);
-            assertValidator.assertShowElement(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(true, pageObjectSelectors.noContactsHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
         });
 
         it('when contacts exists then should be displayed', () =>{

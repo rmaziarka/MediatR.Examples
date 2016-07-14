@@ -1,15 +1,16 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
+    import CompanyViewController = Antares.Company.CompanyViewController;
+    import Business = Antares.Common.Models.Business;
+
     describe('Given company view', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService,
             controller: Company.CompanyViewController;
 
-        var pageObjectSelectors = {
-           
-        };
+        var companyMock: Business.Company = TestHelpers.CompanyGenerator.generate();
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -19,7 +20,8 @@ module Antares {
             compile = $compile;
 
             scope = $rootScope.$new();
-            element = compile('<company-view></company-view>')(scope);
+            element = compile('<company-view company="company"></company-view>')(scope);
+            scope["company"] = companyMock;
             scope.$apply();
 
             controller = element.controller('companyView');

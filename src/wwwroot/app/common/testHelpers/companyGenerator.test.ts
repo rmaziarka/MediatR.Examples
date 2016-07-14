@@ -5,7 +5,7 @@ module Antares.TestHelpers {
     import Dto = Common.Models.Dto;
 
     export class CompanyGenerator {
-        public static generateDto(): Dto.ICompany {
+        public static generateDto(withContacts: boolean = true): Dto.ICompany {
 
             var company: Dto.ICompany = {
                 id: CompanyGenerator.makeRandom('id'),
@@ -13,7 +13,7 @@ module Antares.TestHelpers {
                 websiteUrl: CompanyGenerator.makeRandom('website'),
                 clientCarePageUrl: CompanyGenerator.makeRandom('clientCarePageUrl'),
                 clientCareStatusId: CompanyGenerator.makeRandom('careStatus'),
-                contacts: ContactGenerator.generateMany(3),
+                contacts: [],
                 companiesContacts: [],
                 description: CompanyGenerator.makeRandom('desc'),
                 companyCategoryId: CompanyGenerator.makeRandom('categoryid'),
@@ -22,11 +22,15 @@ module Antares.TestHelpers {
                 relationshipManager: UserGenerator.generateDto()
             }
 
+            if (withContacts) {
+                company.contacts = ContactGenerator.generateMany(3);
+            }
+
             return company;
         }
 
         public static generateManyDtos(n: number): Dto.ICompany[] {
-            return _.times(n, CompanyGenerator.generateDto);
+            return _.times(n, () => CompanyGenerator.generateDto());
         }
 
         public static generateMany(n: number): Business.Company[] {
@@ -35,6 +39,10 @@ module Antares.TestHelpers {
 
         public static generate(): Business.Company {
             return new Business.Company(CompanyGenerator.generateDto());
+        }
+
+        public static generateWithoutContacts(): Business.Company {
+            return new Business.Company(CompanyGenerator.generateDto(false));
         }
 
         private static makeRandom(text: string): string {
