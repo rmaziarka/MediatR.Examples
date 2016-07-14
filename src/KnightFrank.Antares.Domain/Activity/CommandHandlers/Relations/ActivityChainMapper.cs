@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -13,27 +14,49 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
+
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
+    using PropertyType = KnightFrank.Antares.Domain.Common.Enums.PropertyType;
 
     public class ActivityChainMapper : IActivityReferenceMapper<ChainTransaction>
     {
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<ChainTransaction> chainTransactionRepository;
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityControlsConfiguration;
+        private readonly IEnumParser enumParser;
 
         public ActivityChainMapper(
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
-            IGenericRepository<ChainTransaction> chainTransactionRepository)
+            IGenericRepository<ChainTransaction> chainTransactionRepository,
+            IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityControlsConfiguration,
+            IEnumParser enumParser)
         {
             this.entityValidator = entityValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.chainTransactionRepository = chainTransactionRepository;
+            this.activityControlsConfiguration = activityControlsConfiguration;
+            this.enumParser = enumParser;
         }
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
         {
+            ActivityType activityType = this.enumParser.Parse<Dal.Model.Property.Activities.ActivityType, ActivityType>(activity.ActivityTypeId);
+            PropertyType propertyType = this.enumParser.Parse<Dal.Model.Property.PropertyType, PropertyType>(activity.Property.PropertyTypeId);
+            IList<InnerFieldState> configuration = this.activityControlsConfiguration.GetInnerFieldsState(PageType.Update,
+                new Tuple<PropertyType, ActivityType>(propertyType, activityType), message);
+
+            if (configuration.Any(x => x.ControlCode == ControlCode.Offer_UpwardChain && x.Readonly))
+            {
+                return;
+            }
+
             this.Validate(message, activity);
 
             activity.ChainTransactions
@@ -113,11 +136,11 @@
 
         private void ValidateAddRemove(ActivityCommandBase message, Activity activity)
         {
-            var chainsToAdd = message.ChainTransactions
+            List<ChainTransaction> chainsToAdd = message.ChainTransactions
                                 .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                 .ToList();
 
-            var chainsToRemove = activity.ChainTransactions
+            List<ChainTransaction> chainsToRemove = activity.ChainTransactions
                                       .Where(x => message.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                       .ToList();
 
@@ -130,7 +153,7 @@
 
         private void ValidateAddedChains(ActivityCommandBase message, Activity activity)
         {
-            var chainsToAdd = message.ChainTransactions
+            List<ChainTransaction> chainsToAdd = message.ChainTransactions
                                 .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                 .ToList();
 
@@ -143,8 +166,8 @@
             if (activity.ChainTransactions.Count == 0)
                 return;
 
-            var chainToAdd = chainsToAdd.Single();
-            var lastChain = this.FindLastChain(activity.ChainTransactions);
+            ChainTransaction chainToAdd = chainsToAdd.Single();
+            ChainTransaction lastChain = this.FindLastChain(activity.ChainTransactions);
 
             if (chainToAdd.ParentId != lastChain.Id)
             {
@@ -154,7 +177,7 @@
 
         private void ValidateRemovedChains(ActivityCommandBase message, Activity activity)
         {
-            var chainsToRemove = activity.ChainTransactions
+            List<ChainTransaction> chainsToRemove = activity.ChainTransactions
                                       .Where(x => message.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                       .ToList();
 
@@ -164,8 +187,8 @@
             if(chainsToRemove.Count > 1)
                 throw new BusinessValidationException(ErrorMessage.ActivityChainTransactionRemove_MoreThanOne);
 
-            var chainToAdd = chainsToRemove.Single();
-            var lastChain = this.FindLastChain(activity.ChainTransactions);
+            ChainTransaction chainToAdd = chainsToRemove.Single();
+            ChainTransaction lastChain = this.FindLastChain(activity.ChainTransactions);
 
             if (chainToAdd.Id != lastChain.Id)
             {
@@ -175,13 +198,14 @@
 
         private ChainTransaction FindLastChain(IEnumerable<ChainTransaction> chains)
         {
-            ChainTransaction firstChain = chains.First(c => c.ParentId == null);
+            IEnumerable<ChainTransaction> chainTransactions = chains as IList<ChainTransaction> ?? chains.ToList();
+            ChainTransaction firstChain = chainTransactions.First(c => c.ParentId == null);
 
             ChainTransaction lastChain = firstChain;
-            ChainTransaction nextChain = null;
+            ChainTransaction nextChain;
             do
             {
-                nextChain = chains.SingleOrDefault(c => c.ParentId == lastChain.Id);
+                nextChain = chainTransactions.SingleOrDefault(c => c.ParentId == lastChain.Id);
                 if (nextChain != null)
                     lastChain = nextChain;
             }
