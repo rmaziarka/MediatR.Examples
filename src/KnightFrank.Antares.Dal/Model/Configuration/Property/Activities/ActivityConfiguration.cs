@@ -32,12 +32,6 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.Property(o => o.VendorValuationPrice)
                 .IsMoney();
 
-            this.Property(o => o.ShortLetPricePerWeek)
-                .IsMoney();
-
-            this.Property(o => o.AskingPrice)
-                .IsMoney();
-
             this.HasMany(p => p.Attachments)
                 .WithMany()
                 .Map(cs =>
@@ -79,24 +73,40 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.Property(a => a.AppraisalMeetingInvitationText)
                 .HasMaxLength(4000);
 
-            this.Property(x => x.ServiceChargeAmount).IsMoney();
-            this.Property(x => x.ServiceChargeNote).HasMaxLength(4000);
-            this.Property(x => x.GroundRentAmount).IsMoney();
-            this.Property(x => x.GroundRentNote).HasMaxLength(4000);
+            this.Property(a => a.ServiceChargeAmount).IsMoney();
+            this.Property(a => a.ServiceChargeNote).HasMaxLength(4000);
+            this.Property(a => a.GroundRentAmount).IsMoney();
+            this.Property(a => a.GroundRentNote).HasMaxLength(4000);
 
             this.HasOptional(a => a.DisposalType).WithMany().HasForeignKey(s => s.DisposalTypeId).WillCascadeOnDelete(false);
 
-            this.Property(x => x.OtherCondition).HasMaxLength(4000);
+            this.Property(a => a.OtherCondition).HasMaxLength(4000);
 
             this.HasOptional(a => a.Decoration).WithMany().HasForeignKey(s => s.DecorationId).WillCascadeOnDelete(false);
 
-            this.Property(x => x.ShortKfValuationPrice).IsMoney();
-            this.Property(x => x.ShortVendorValuationPrice).IsMoney();
-            this.Property(x => x.ShortAgreedInitialMarketingPrice).IsMoney();
+            this.Property(a => a.ShortKfValuationPrice).IsMoney();
+            this.Property(a => a.ShortVendorValuationPrice).IsMoney();
+            this.Property(a => a.ShortAgreedInitialMarketingPrice).IsMoney();
 
-            this.Property(x => x.LongKfValuationPrice).IsMoney();
-            this.Property(x => x.LongVendorValuationPrice).IsMoney();
-            this.Property(x => x.LongAgreedInitialMarketingPrice).IsMoney();
+            this.Property(a => a.LongKfValuationPrice).IsMoney();
+            this.Property(a => a.LongVendorValuationPrice).IsMoney();
+            this.Property(a => a.LongAgreedInitialMarketingPrice).IsMoney();
+            
+            this.HasOptional(a => a.PriceType).WithMany().HasForeignKey(s => s.PriceTypeId).WillCascadeOnDelete(false);
+            this.HasOptional(a => a.MatchFlexibility).WithMany().HasForeignKey(s => s.MatchFlexibilityId).WillCascadeOnDelete(false);
+            this.HasOptional(a => a.ShortMatchFlexibility).WithMany().HasForeignKey(s => s.ShortMatchFlexibilityId).WillCascadeOnDelete(false);
+            this.HasOptional(a => a.LongMatchFlexibility).WithMany().HasForeignKey(s => s.LongMatchFlexibilityId).WillCascadeOnDelete(false);
+
+            this.Property(a => a.ActivityPrice).IsMoney();
+            this.Property(a => a.MatchFlexValue).IsMoney();
+            this.Property(a => a.ShortAskingWeekRent).IsMoney();
+            this.Property(a => a.ShortAskingMonthRent).IsMoney();
+            this.Property(a => a.LongAskingWeekRent).IsMoney();
+            this.Property(a => a.LongAskingMonthRent).IsMoney();
+            this.Property(a => a.ShortMatchFlexWeekValue).IsMoney();
+            this.Property(a => a.ShortMatchFlexMonthValue).IsMoney();
+            this.Property(a => a.LongMatchFlexWeekValue).IsMoney();
+            this.Property(a => a.LongMatchFlexMonthValue).IsMoney();
         }
     }
 }

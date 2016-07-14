@@ -32,10 +32,6 @@
 
         public decimal? VendorValuationPrice { get; set; }
 
-        public decimal? ShortLetPricePerWeek { get; set; }
-
-        public decimal? AskingPrice { get; set; }
-
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
@@ -104,5 +100,51 @@
         public decimal? LongVendorValuationPrice { get; set; }
 
         public decimal? LongAgreedInitialMarketingPrice { get; set; }
+
+        public Guid? PriceTypeId { get; set; }
+
+        public virtual EnumTypeItem PriceType { get; set; }
+
+        public decimal? ActivityPrice { get; set; }
+
+        public Guid? MatchFlexibilityId { get; set; }
+
+        public virtual EnumTypeItem MatchFlexibility { get; set; }
+
+        public decimal? MatchFlexValue { get; set; }
+
+        public decimal? MatchFlexPercentage { get; set; }
+
+        public Guid? RentPaymentPeriodId { get; set; }
+
+        public virtual EnumTypeItem RentPaymentPeriod { get; set; }
+
+        public decimal? ShortAskingWeekRent { get; set; }
+
+        public decimal? ShortAskingMonthRent { get; set; }
+
+        public decimal? LongAskingWeekRent { get; set; }
+
+        public decimal? LongAskingMonthRent { get; set; }
+
+        public Guid? ShortMatchFlexibilityId { get; set; }
+
+        public virtual EnumTypeItem ShortMatchFlexibility { get; set; }
+
+        public decimal? ShortMatchFlexWeekValue { get; set; }
+
+        public decimal? ShortMatchFlexMonthValue { get; set; }
+
+        public decimal? ShortMatchFlexPercentage { get; set; }
+
+        public Guid? LongMatchFlexibilityId { get; set; }
+
+        public virtual EnumTypeItem LongMatchFlexibility { get; set; }
+
+        public decimal? LongMatchFlexWeekValue { get; set; }
+
+        public decimal? LongMatchFlexMonthValue { get; set; }
+
+        public decimal? LongMatchFlexPercentage { get; set; }
     }
 }

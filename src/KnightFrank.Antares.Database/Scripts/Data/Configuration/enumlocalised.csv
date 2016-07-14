@@ -6,6 +6,8 @@ OwnershipType;Leaseholder;en;Leasehold
 ActivityStatus;PreAppraisal;en;Pre-appraisal
 ActivityStatus;MarketAppraisal;en;Market appraisal
 ActivityStatus;NotSelling;en;Not selling
+ActivityStatus;ForSaleUnavailable;en;For Sale Unavailable
+ActivityStatus;ToLetUnavailable;en;To Let Unavailable
 Division;Residential;en;Residential property
 Division;Commercial;en;Commercial property
 ActivityDocumentType;TermsOfBusiness;en;Terms of Business
@@ -122,3 +124,16 @@ EventSalutation;EventInformal;en;Informal
 EventSalutation;EventPersonal;en;Personal
 UserType;LeadNegotiator;en;Lead Negotiator
 UserType;SecondaryNegotiator;en;Secondary Negotiator
+ActivityPriceType;AskingPrice;en;Asking price
+ActivityPriceType;PriceOnApplication;en;Price on application
+ActivityPriceType;GuidePrice;en;Guide price
+ActivityPriceType;OffersInRegionOf;en;Offers in the region of
+ActivityPriceType;OffersInExcessOf;en;Offers in excess of
+ActivityPriceType;FixedPrice;en;Fixed price
+ActivityPriceType;PriceReducedTo;en;Price reduced to
+ActivityMatchFlexPrice;MinimumPrice;en;Minimum price
+ActivityMatchFlexPrice;Percentage;en;Percentage
+ActivityMatchFlexRent;MinimumRent;en;Minimum rent
+ActivityMatchFlexRent;Percentage;en;Percentage
+RentPaymentPeriod;Weekly;en;per week
+RentPaymentPeriod;Monthly;en;per month

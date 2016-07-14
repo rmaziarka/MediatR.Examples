@@ -50,7 +50,7 @@ module Antares {
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
             scope.$apply();
-            controller = element.controller('activityStatusControl');
+            controller = element.controller('enumItemEditControl');
 
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
@@ -58,13 +58,16 @@ module Antares {
         describe('when is rendered', () => {
             it('with config it should display status', () => {
                 var activityStatus = element.find(pageObjectSelector.status);
+
                 expect(activityStatus.length).toEqual(1);
             });
 
             it('without config it should not display status', () => {
                 scope['vm']['config'] = undefined;
                 scope.$apply();
+
                 var activityStatus = element.find(pageObjectSelector.status);
+
                 expect(activityStatus.length).toEqual(0);
             });
 
@@ -72,7 +75,9 @@ module Antares {
                 scope['vm']['config'] = TestHelpers.ConfigGenerator.generateActivityStatusEditConfig();
                 scope['vm']['config'].activityStatusId = { required: true, active: true };
                 scope.$apply();
+
                 var activityStatus = element.find(pageObjectSelector.status);
+
                 expect((<HTMLSelectElement>activityStatus[0]).disabled).toEqual(false);
                 expect((<HTMLSelectElement>activityStatus[0]).required).toEqual(true);
             });

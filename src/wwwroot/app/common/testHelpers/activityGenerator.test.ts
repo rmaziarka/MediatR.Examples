@@ -29,22 +29,40 @@ module Antares.TestHelpers {
                 appraisalMeetingStart: moment().toDate().toDateString(),
                 appraisalMeetingInvitationText: StringGenerator.generate(),
                 appraisalMeetingAttendees: [],
-                kfValuationPrice: 21,
-                agreedInitialMarketingPrice: 21,
-                vendorValuationPrice: 21,
-                shortKfValuationPrice: 23,
-                shortAgreedInitialMarketingPrice: 24,
-                shortVendorValuationPrice: 25,
-                longKfValuationPrice: 26,
-                longAgreedInitialMarketingPrice: 27,
-                longVendorValuationPrice: 28,
+                kfValuationPrice: NumberGenerator.generate(),
+                agreedInitialMarketingPrice: NumberGenerator.generate(),
+                vendorValuationPrice: NumberGenerator.generate(),
+                shortKfValuationPrice: NumberGenerator.generate(),
+                shortAgreedInitialMarketingPrice: NumberGenerator.generate(),
+                shortVendorValuationPrice: NumberGenerator.generate(),
+                longKfValuationPrice: NumberGenerator.generate(),
+                longAgreedInitialMarketingPrice: NumberGenerator.generate(),
+                longVendorValuationPrice: NumberGenerator.generate(),
                 disposalTypeId: StringGenerator.generate(),
                 decorationId: StringGenerator.generate(),
-                serviceChargeAmount: 29,
+                serviceChargeAmount: NumberGenerator.generate(),
                 serviceChargeNote: StringGenerator.generate(),
-                groundRentAmount: 30,
+                groundRentAmount: NumberGenerator.generate(),
                 groundRentNote: StringGenerator.generate(),
-                otherCondition: StringGenerator.generate()
+                otherCondition: StringGenerator.generate(),
+                priceTypeId: StringGenerator.generate(),
+                activityPrice: NumberGenerator.generate(),
+                matchFlexibilityId: StringGenerator.generate(),
+                matchFlexValue: NumberGenerator.generate(),
+                matchFlexPercentage: NumberGenerator.generate(),
+                rentPaymentPeriodId: StringGenerator.generate(),
+                shortAskingWeekRent: NumberGenerator.generate(),
+                shortAskingMonthRent: NumberGenerator.generate(),
+                longAskingWeekRent: NumberGenerator.generate(),
+                longAskingMonthRent: NumberGenerator.generate(),
+                shortMatchFlexibilityId: StringGenerator.generate(),
+                shortMatchFlexWeekValue: NumberGenerator.generate(),
+                shortMatchFlexMonthValue: NumberGenerator.generate(),
+                shortMatchFlexPercentage: NumberGenerator.generate(),
+                longMatchFlexibilityId: StringGenerator.generate(),
+                longMatchFlexWeekValue: NumberGenerator.generate(),
+                longMatchFlexMonthValue: NumberGenerator.generate(),
+                longMatchFlexPercentage: NumberGenerator.generate()
             }
 
             return angular.extend(activity, specificData || {});
@@ -62,8 +80,8 @@ module Antares.TestHelpers {
             return new Business.Activity(ActivityGenerator.generateDto(specificData));
         }
 
-        public static generateActivityEdit(specificData?: any): Activity.ActivityEditModel {
-            return new Activity.ActivityEditModel(ActivityGenerator.generateDto(specificData));
+        public static generateActivityEdit(specificData?: any): Business.ActivityEditModel {
+            return new Business.ActivityEditModel(ActivityGenerator.generateDto(specificData));
     }
     }
 }

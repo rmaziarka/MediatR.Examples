@@ -10,5 +10,6 @@
         offerStatus: IEnumItem[];
         ownershipType: IEnumItem[];
         salutationFormat: IEnumItem[];
+        rentPaymentPeriod: IEnumItem[];
     }
 }

@@ -4,6 +4,7 @@ module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import Commands = Common.Models.Commands;
 
     enum PageMode {
         Add,
@@ -11,8 +12,8 @@ module Antares.Activity {
     }
 
     export class ActivityEditController {
-        public config: IActivityEditConfig;
-        public activity: ActivityEditModel;
+        public config: IActivityEditViewConfig;
+        public activity: Business.ActivityEditModel;
         public userData: Dto.ICurrentUser;
 
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
@@ -27,22 +28,8 @@ module Antares.Activity {
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
         private defaultActivityStatusCode: string = 'PreAppraisal';
-
-        //controls
-        controlSchemas: any = {           
-            askingPrice: {
-                formName: "askingPriceControlForm",
-                controlId: "asking-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.ASKING_PRICE",
-                fieldName: "askingPrice"
-            },
-            shortLetPricePerWeek: {
-                formName: "shortLetPricePerWeekControlForm",
-                controlId: "short-let-price-per-week",
-                translationKey: "ACTIVITY.EDIT.PRICES.SHORT_LET_PRICE_PER_WEEK",
-                fieldName: "shortLetPricePerWeek"
-            }
-        };
+        private weeklyCode: string = 'Weekly';
+        private monthlyhCode: string = 'Monthly';
 
         activitySourceSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'sourceId',
@@ -142,7 +129,7 @@ module Antares.Activity {
         }
 
 
-        shortKfValuationPriceSchema = {
+        shortKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortKfValuationPriceForm',
@@ -150,7 +137,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        shortVendorValuationPriceSchema = {
+        shortVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortVendorValuationPriceForm',
@@ -158,7 +145,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        shortAgreedInitialMarketingPriceSchema = {
+        shortAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'shortAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortAgreedInitialMarketingPriceForm',
@@ -166,7 +153,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longKfValuationPriceSchema = {
+        longKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longKfValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longKfValuationPriceForm',
@@ -174,7 +161,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longVendorValuationPriceSchema = {
+        longVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longVendorValuationPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longVendorValuationPriceForm',
@@ -182,7 +169,7 @@ module Antares.Activity {
             suffix: 'ACTIVITY.COMMON.GBP_PER_WEEK'
         }
 
-        longAgreedInitialMarketingPriceSchema = {
+        longAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'longAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longAgreedInitialMarketingPriceForm',
@@ -223,28 +210,150 @@ module Antares.Activity {
             translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
             fieldName: 'otherCondition',
             formName: 'otherConditionForm'
+
         }
 
-        configMocked: any = {
-            attendees: {
-                attendees: {
-                    active: true
-                }
-            }
+        priceTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'priceTypeId',
+            translationKey: 'ACTIVITY.COMMON.PRICE_TYPE',
+            fieldName: 'priceTypeId',
+            formName: 'priceTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityPriceType
         }
 
-        configAppraisalMeetingDateMocked :any = {
-            appraisalMeetingDate:  {start:  { active:  true, required:  true  }, end:  { active:  true, required:  true  }  } 
+        activityPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'activityPrice',
+            translationKey: 'ACTIVITY.COMMON.PRICE',
+            formName: 'activityPricetForm',
+            fieldName: 'activityPrice'
         }
 
+        matchFlexibilitySchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'matchFlexibilityId',
+            translationKey: '',
+            fieldName: 'matchFlexibilityId',
+            formName: 'matchFlexibilityForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityMatchFlexPrice
+        }
+
+        matchFlexValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'matchFlexValue',
+            translationKey: '',
+            formName: 'matchFlexValueForm',
+            fieldName: 'matchFlexValue'
+        }
+
+        matchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'matchFlexPercentage',
+            translationKey: '',
+            formName: 'matchFlexPercentageForm',
+            fieldName: 'matchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+
+        rentPaymentPeriodSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'rentPaymentPeriodId',
+            translationKey: 'ACTIVITY.COMMON.RENT',
+            fieldName: 'rentPaymentPeriodId',
+            formName: 'rentPaymentPeriodForm',
+            enumTypeCode: Dto.EnumTypeCode.RentPaymentPeriod
+        }
+
+        shortAskingWeekRentSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortAskingWeekRent',
+            translationKey: '',
+            formName: 'shortAskingWeekRentForm',
+            fieldName: 'shortAskingWeekRent'
+        }
+
+        shortAskingMonthRentSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortAskingMonthRent',
+            translationKey: '',
+            formName: 'shortAskingMonthRentForm',
+            fieldName: 'shortAskingMonthRent'
+        }
+
+        shortMatchFlexibilitySchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'shortMatchFlexibilityId',
+            translationKey: '',
+            fieldName: 'shortMatchFlexibilityId',
+            formName: 'shortMatchFlexibilityForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityMatchFlexRent
+        }
+
+        shortMatchFlexWeekValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortMatchFlexWeekValue',
+            translationKey: '',
+            formName: 'shortMatchFlexWeekValueForm',
+            fieldName: 'shortMatchFlexWeekValue'
+        }
+
+        shortMatchFlexMonthValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortMatchFlexMonthValue',
+            translationKey: '',
+            formName: 'shortMatchFlexMonthValueForm',
+            fieldName: 'shortMatchFlexMonthValue',
+        }
+
+        shortMatchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortMatchFlexPercentage',
+            translationKey: '',
+            formName: 'shortMatchFlexPercentageForm',
+            fieldName: 'shortMatchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+
+        longAskingWeekRentSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longAskingWeekRent',
+            translationKey: '',
+            formName: 'longAskingWeekRentForm',
+            fieldName: 'longAskingWeekRent'
+        }
+
+        longAskingMonthRentSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longAskingMonthRent',
+            translationKey: '',
+            formName: 'longAskingMonthRentForm',
+            fieldName: 'longAskingMonthRent'
+        }
+
+        longMatchFlexibilitySchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'longMatchFlexibilityId',
+            translationKey: '',
+            fieldName: 'longMatchFlexibilityId',
+            formName: 'longMatchFlexibilityForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityMatchFlexRent
+        }
+
+        longMatchFlexWeekValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longMatchFlexWeekValue',
+            translationKey: '',
+            formName: 'longMatchFlexWeekValueForm',
+            fieldName: 'longMatchFlexWeekValue'
+        }
+
+        longMatchFlexMonthValueSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longMatchFlexMonthValue',
+            translationKey: '',
+            formName: 'longMatchFlexMonthValueForm',
+            fieldName: 'longMatchFlexMonthValue'
+        }
+
+        longMatchFlexPercentageSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longMatchFlexPercentage',
+            translationKey: '',
+            formName: 'longMatchFlexPercentageForm',
+            fieldName: 'longMatchFlexPercentage',
+            suffix: 'ACTIVITY.COMMON.PERCENT'
+        }
+        
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
             private $q: ng.IQService,
             public kfMessageService: Services.KfMessageService,
-            private activityConfigUtils: ActivityConfigUtils,
             private configService: Services.ConfigService,
-            private activityService: Activity.ActivityService,
+            private activityService: Services.ActivityService,
             private latestViewsProvider: Providers.LatestViewsProvider,
             private eventAggregator: Core.EventAggregator,
             private enumProvider: Providers.EnumProvider) {
@@ -271,25 +380,45 @@ module Antares.Activity {
 
         public activityTypeChanged = (activityTypeId: string) => {
             this.activity.activityTypeId = activityTypeId;
-
             this.reloadConfig(this.activity);
         }
 
-        public activityStatusChanged = (id: string) =>{
+        public activityStatusChanged = (id: string) => {
             this.activity.activityStatusId = id;
             this.reloadConfig(this.activity);
         }
 
-        public reloadConfig = (activity: Activity.ActivityEditModel) => {
-            var entity: Commands.ActivityBaseCommand;
+        public matchFlexibilityChanged = (id: string) => {
+            this.activity.matchFlexibilityId = id;
+            this.reloadConfig(this.activity);
+        }
+
+        public rentPaymentPeriodChanged = (id: string) => {
+            this.activity.rentPaymentPeriodId = id;
+            this.copyRentValues();
+            this.reloadConfig(this.activity);
+        }
+
+        public shortMatchFlexibilityChanged = (id: string) => {
+            this.activity.shortMatchFlexibilityId = id;
+            this.reloadConfig(this.activity);
+        }
+
+        public longMatchFlexibilityChanged = (id: string) => {
+            this.activity.longMatchFlexibilityId = id;
+            this.reloadConfig(this.activity);
+        }
+
+        public reloadConfig = (activity: Business.ActivityEditModel) => {
+            var entity: Commands.Activity.ActivityBaseCommand;
             var pageTypeEnum: Enums.PageTypeEnum;
 
             if (this.isAddMode()) {
-                entity = new Commands.ActivityAddCommand(this.activity);
+                entity = new Commands.Activity.ActivityAddCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Create;
             }
             else {
-                entity = new Commands.ActivityEditCommand(this.activity);
+                entity = new Commands.Activity.ActivityEditCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Update;
             }
 
@@ -301,7 +430,10 @@ module Antares.Activity {
 
             this.$q.all([addEditConfig, detailsConfig])
                 .then((configs: IActivityConfig[]) => {
-                    this.config = <IActivityEditConfig>this.activityConfigUtils.merge(configs[0], configs[1]);
+                    this.config = <IActivityEditViewConfig>{
+                        editConfig: configs[0],
+                        viewConfig: configs[1]
+                    };
                 });
         }
 
@@ -312,8 +444,13 @@ module Antares.Activity {
                 return;
             }
 
+            if (this.activity.rentPaymentPeriodId != null) {
+
+                this.calculateRentPayments();
+            }
+
             if (this.isAddMode()) {
-                var addCommand = new Commands.ActivityAddCommand(this.activity);
+                var addCommand = new Commands.Activity.ActivityAddCommand(this.activity);
 
                 this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
                     this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
@@ -325,7 +462,7 @@ module Antares.Activity {
                 });
             }
             else {
-                var editCommand = new Commands.ActivityEditCommand(this.activity);
+                var editCommand = new Commands.Activity.ActivityEditCommand(this.activity);
 
                 this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) => {
                     this.$state.go('app.activity-view', { id: activityDto.id });
@@ -387,22 +524,22 @@ module Antares.Activity {
         }
 
         public isOtherSectionVisible = (): Boolean => {
-            return this.config && this.config.decoration != null && this.config.otherCondition != null;
+            return this.config && this.config.editConfig && this.config.editConfig.decoration != null && this.config.editConfig.otherCondition != null;
         }
 
         public isValuationInfoSectionVisible = (): Boolean => {
-            return this.config && this.config.kfValuationPrice != null && this.config.vendorValuationPrice != null &&
-                this.config.agreedInitialMarketingPrice != null;
+            return this.config && this.config.editConfig && this.config.editConfig.kfValuationPrice != null && this.config.editConfig.vendorValuationPrice != null &&
+                this.config.editConfig.agreedInitialMarketingPrice != null;
         }
 
         public isValuationInfoShortLongSectionVisible = (): Boolean => {
-            return this.config && this.config.shortKfValuationPrice != null && this.config.longKfValuationPrice != null &&
-                this.config.shortVendorValuationPrice != null && this.config.longVendorValuationPrice != null &&
-                this.config.shortAgreedInitialMarketingPrice != null && this.config.longAgreedInitialMarketingPrice != null;
+            return this.config && this.config.editConfig && this.config.editConfig.shortKfValuationPrice != null && this.config.editConfig.longKfValuationPrice != null &&
+                this.config.editConfig.shortVendorValuationPrice != null && this.config.editConfig.longVendorValuationPrice != null &&
+                this.config.editConfig.shortAgreedInitialMarketingPrice != null && this.config.editConfig.longAgreedInitialMarketingPrice != null;
         }
 
         public isChargesSectionVisible = (): Boolean => {
-            return this.config && this.config.serviceChargeAmount != null && this.config.groundRentAmount != null && this.config.groundRentNote != null;
+            return this.config && this.config.editConfig && this.config.editConfig.serviceChargeAmount != null && this.config.editConfig.groundRentAmount != null && this.config.editConfig.groundRentNote != null;
         }
 
         private get pageMode(): PageMode {
@@ -499,22 +636,93 @@ module Antares.Activity {
             return activityDepartment;
         }
 
-        public isValuationPricesSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.askingPrice != null || this.config.shortLetPricePerWeek != null);
-        }
-
         public isBasicInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.property != null || this.config.disposalType != null || this.config.source != null ||
-                this.config.sourceDescription != null || this.config.sellingReason != null || this.config.pitchingThreats != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.property != null || this.config.editConfig.disposalType != null || this.config.editConfig.source != null ||
+                this.config.editConfig.sourceDescription != null || this.config.editConfig.sellingReason != null || this.config.editConfig.pitchingThreats != null);
         }
 
         public isAdditionalInformationSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.keyNumber != null || this.config.accessArrangements != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.keyNumber != null || this.config.editConfig.accessArrangements != null);
         }
 
         public isAppraisalMeetingSectionVisible = (): Boolean => {
-            return this.config != null && (this.config.appraisalMeetingDate != null ||
-                this.config.appraisalMeetingAttendees != null || this.config.appraisalMeetingInvitation != null);
+            return this.config && this.config.editConfig && (this.config.editConfig.appraisalMeetingDate != null ||
+                this.config.editConfig.appraisalMeetingAttendees != null || this.config.editConfig.appraisalMeetingInvitation != null);
+        }
+
+        public copyRentValues = () => {
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
+                this.copyRentMonthValuesToWeekValues();
+            }
+
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.monthlyhCode)) {
+                this.copyRentWeekValuesToMonthValues();
+            }
+        }
+
+        private copyRentMonthValuesToWeekValues = () => {
+            this.activity.shortAskingWeekRent = this.activity.shortAskingMonthRent;
+            this.activity.shortMatchFlexWeekValue = this.activity.shortMatchFlexMonthValue;
+            this.activity.longAskingWeekRent = this.activity.longAskingMonthRent;
+            this.activity.longMatchFlexWeekValue = this.activity.longMatchFlexMonthValue;
+        }
+
+        private copyRentWeekValuesToMonthValues = () => {
+            this.activity.shortAskingMonthRent = this.activity.shortAskingWeekRent;
+            this.activity.shortMatchFlexMonthValue = this.activity.shortMatchFlexWeekValue;
+            this.activity.longAskingMonthRent = this.activity.longAskingWeekRent;
+            this.activity.longMatchFlexMonthValue = this.activity.longMatchFlexWeekValue;
+        }
+
+
+        public calculateRentPayments = () => {
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.weeklyCode)) {
+                this.updateMonthValues();
+            }
+
+            if (this.activity.rentPaymentPeriodId === this.getRentPaymentPeriodId(this.monthlyhCode)) {
+                this.updateWeekValues();
+            }
+        }
+
+        private updateWeekValues = () => {
+            this.activity.shortAskingWeekRent = this.convertPerMonthValueToPerWeekValue(this.activity.shortAskingMonthRent);
+            this.activity.shortMatchFlexWeekValue = this.convertPerMonthValueToPerWeekValue(this.activity.shortMatchFlexMonthValue);
+            this.activity.longAskingWeekRent = this.convertPerMonthValueToPerWeekValue(this.activity.longAskingMonthRent);
+            this.activity.longMatchFlexWeekValue = this.convertPerMonthValueToPerWeekValue(this.activity.longMatchFlexMonthValue);
+        }
+
+        private updateMonthValues = () => {
+            this.activity.shortAskingMonthRent = this.convertPerWeekValueToPerMonthValue(this.activity.shortAskingWeekRent);
+            this.activity.shortMatchFlexMonthValue = this.convertPerWeekValueToPerMonthValue(this.activity.shortMatchFlexWeekValue);
+            this.activity.longAskingMonthRent = this.convertPerWeekValueToPerMonthValue(this.activity.longAskingWeekRent);
+            this.activity.longMatchFlexMonthValue = this.convertPerWeekValueToPerMonthValue(this.activity.longMatchFlexWeekValue);
+        }
+
+        private getRentPaymentPeriodId = (rentPaymentPeriodCode: string): string => {
+            var selectedRentPaymentPeriod: any = <Dto.IEnumTypeItem>_.find(this.enumProvider.enums[Dto.EnumTypeCode.RentPaymentPeriod], (item: Dto.IEnumTypeItem) => {
+                return item.code === rentPaymentPeriodCode;
+            });
+
+            return selectedRentPaymentPeriod.id;
+        }
+
+        public convertPerWeekValueToPerMonthValue(weekValue: number): number {
+            if (weekValue == null) {
+                return null;
+            }
+            else {
+                return Math.ceil((weekValue * 52.0) / 12.0);
+            }
+        }
+
+        public convertPerMonthValueToPerWeekValue(monthValue: number): number {
+            if (monthValue == null) {
+                return null;
+            }
+            else {
+                return Math.ceil((monthValue * 12.0) / 52.0);
+            }
         }
     }
 

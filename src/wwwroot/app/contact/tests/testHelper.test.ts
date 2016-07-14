@@ -13,6 +13,7 @@ module Antares.TestHelpers.Contacts {
         salutationFormat: [
             { id: '1', code: 'MrJohnSmith' },
             { id: '2', code: 'JohnSmithEsq' }
-        ]
+        ],
+        rentPaymentPeriod: []
     };
 }

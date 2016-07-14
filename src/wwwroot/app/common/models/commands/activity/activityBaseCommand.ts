@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Activity.Commands {
+module Antares.Common.Models.Commands.Activity {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     
@@ -42,8 +42,26 @@ module Antares.Activity.Commands {
         groundRentAmount: number = null;
         groundRentNote: string = '';
         otherCondition: string = '';
+        priceTypeId: string = '';
+        activityPrice: number = null;
+        matchFlexibilityId: string = '';
+        matchFlexValue: number = null;
+        matchFlexPercentage: number = null;
+        rentPaymentPeriodId: string = '';
+        shortAskingWeekRent: number = null;
+        shortAskingMonthRent: number = null;
+        longAskingWeekRent: number = null;
+        longAskingMonthRent: number = null;
+        shortMatchFlexibilityId: string = '';
+        shortMatchFlexWeekValue: number = null;
+        shortMatchFlexMonthValue: number = null;
+        shortMatchFlexPercentage: number = null;
+        longMatchFlexibilityId: string = '';
+        longMatchFlexWeekValue: number = null;
+        longMatchFlexMonthValue: number = null;
+        longMatchFlexPercentage: number = null; 
 
-        constructor(activity: Activity.ActivityEditModel) {
+        constructor(activity: Business.ActivityEditModel) {
             this.activityStatusId = activity.activityStatusId;
             this.shortLetPricePerWeek = activity.shortLetPricePerWeek;
             this.askingPrice = activity.askingPrice;
@@ -80,6 +98,24 @@ module Antares.Activity.Commands {
             this.groundRentNote = activity.groundRentNote;
             this.otherCondition = activity.otherCondition;
 
+            this.priceTypeId = activity.priceTypeId;
+            this.activityPrice = activity.activityPrice;
+            this.matchFlexibilityId = activity.matchFlexibilityId;
+            this.matchFlexValue = activity.matchFlexValue;
+            this.matchFlexPercentage = activity.matchFlexPercentage;
+            this.rentPaymentPeriodId = activity.rentPaymentPeriodId;
+            this.shortAskingWeekRent = activity.shortAskingWeekRent;
+            this.shortAskingMonthRent = activity.shortAskingMonthRent;
+            this.longAskingWeekRent = activity.longAskingWeekRent;
+            this.longAskingMonthRent = activity.longAskingMonthRent;
+            this.shortMatchFlexibilityId = activity.shortMatchFlexibilityId;
+            this.shortMatchFlexWeekValue = activity.shortMatchFlexWeekValue;
+            this.shortMatchFlexMonthValue = activity.shortMatchFlexMonthValue;
+            this.shortMatchFlexPercentage = activity.shortMatchFlexPercentage;
+            this.longMatchFlexibilityId = activity.longMatchFlexibilityId;
+            this.longMatchFlexWeekValue = activity.longMatchFlexWeekValue;
+            this.longMatchFlexMonthValue = activity.longMatchFlexMonthValue;
+            this.longMatchFlexPercentage = activity.longMatchFlexPercentage; 
         }
     }
     
@@ -118,5 +154,23 @@ module Antares.Activity.Commands {
         groundRentAmount: number;
         groundRentNote: string;
         otherCondition: string;
+        priceTypeId: string;
+        activityPrice: number;
+        matchFlexibilityId: string;
+        matchFlexValue: number;
+        matchFlexPercentage: number;
+        rentPaymentPeriodId: string;
+        shortAskingWeekRent: number;
+        shortAskingMonthRent: number;
+        longAskingWeekRent: number;
+        longAskingMonthRent: number;
+        shortMatchFlexibilityId: string;
+        shortMatchFlexWeekValue: number;
+        shortMatchFlexMonthValue: number;
+        shortMatchFlexPercentage: number;
+        longMatchFlexibilityId: string;
+        longMatchFlexWeekValue: number;
+        longMatchFlexMonthValue: number;
+        longMatchFlexPercentage: number; 
     }
 }

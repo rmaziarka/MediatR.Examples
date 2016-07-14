@@ -35,8 +35,9 @@ module Antares {
             ownershipType: [],
             salutationFormat: [
                 { id: '1', code: 'MrJohnSmith' },
-                { id: '2', code: 'JohnSmithEsq' }
-            ]
+                { id: '2', code: 'JohnSmithEsq' },
+            ],
+            rentPaymentPeriod: []
         };
 
         beforeEach(inject((

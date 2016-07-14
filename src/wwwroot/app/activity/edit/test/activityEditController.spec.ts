@@ -4,6 +4,7 @@ module Antares {
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
     import Enums = Common.Models.Enums;
+    import Commands = Common.Models.Commands;
     import runDescribe = TestHelpers.runDescribe;
 
     describe('Given edit activity controller', () => {
@@ -17,7 +18,7 @@ module Antares {
             controller: ActivityEditController,
             $q: ng.IQService,
             $scope: ng.IScope,
-            activityService: Activity.ActivityService,
+            activityService: Services.ActivityService,
             enumProvider: Providers.EnumProvider,
             latestViewsProvider: Providers.LatestViewsProvider,
             obj = 'an object';
@@ -33,7 +34,7 @@ module Antares {
             $httpBackend: ng.IHttpBackendService,
             _enumProvider_: Providers.EnumProvider,
             _$q_: ng.IQService,
-            _activityService_: Activity.ActivityService,
+            _activityService_: Services.ActivityService,
             _latestViewsProvider_: Providers.LatestViewsProvider) => {
 
             // init
@@ -45,13 +46,18 @@ module Antares {
             $q = _$q_;
             latestViewsProvider = _latestViewsProvider_;
             enumProvider = _enumProvider_;
+            enumProvider.enums = TestHelpers.EnumDictionaryGenerator.generateDictionary();;
+            
 
             $scope = $rootScope.$new();
             controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
-            controller.activity = new Activity.ActivityEditModel();
+            controller.activity = new Business.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
-            controller.config = TestHelpers.ConfigGenerator.generateActivityEditConfig();
+            controller.config = <Activity.IActivityEditViewConfig>{
+                editConfig: TestHelpers.ConfigGenerator.generateActivityEditConfig(),
+                viewConfig: {}
+            };
         }));
 
         describe('when departmentIsRelatedWithNegotiator is called', () => {
@@ -140,8 +146,8 @@ module Antares {
                 describe('for edit mode', () => {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
-                    var requestData: Antares.Activity.Commands.IActivityEditCommand;
-                    var activity: Activity.ActivityEditModel;
+                    var requestData: Commands.Activity.IActivityEditCommand;
+                    var activity: Business.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
@@ -151,7 +157,7 @@ module Antares {
 
                         activityFromService = TestHelpers.ActivityGenerator.generateDto();
 
-                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityEditCommand) => {
+                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Commands.Activity.IActivityEditCommand) => {
                             requestData = activityCommand;
                             return deferred.promise;
                         });
@@ -182,8 +188,8 @@ module Antares {
                 describe('for add mode', () => {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
-                    var requestData: Antares.Activity.Commands.IActivityAddCommand;
-                    var activity: Activity.ActivityEditModel;
+                    var requestData: Commands.Activity.IActivityAddCommand;
+                    var activity: Business.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
@@ -194,7 +200,7 @@ module Antares {
 
                         activityFromService = TestHelpers.ActivityGenerator.generateDto();
 
-                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityAddCommand) => {
+                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Commands.Activity.IActivityAddCommand) => {
                             requestData = activityCommand;
                             return deferred.promise;
                         });
@@ -233,7 +239,7 @@ module Antares {
                     });
                 });
 
-                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Activity.ActivityEditModel) => {
+                var expectCorrectRequest = (requestData: Commands.Activity.IActivityBaseCommand, activity: Business.ActivityEditModel) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
@@ -244,8 +250,8 @@ module Antares {
                     expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
                     expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
                     expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
-                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
-                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Antares.Activity.Commands.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Commands.Activity.ActivityAttendeeCommandPart) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Commands.Activity.ActivityAttendeeCommandPart) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
 
                     expect(requestData.kfValuationPrice).toEqual(activity.kfValuationPrice);
@@ -264,6 +270,24 @@ module Antares {
                     expect(requestData.groundRentAmount).toEqual(activity.groundRentAmount);
                     expect(requestData.groundRentNote).toEqual(activity.groundRentNote);
                     expect(requestData.otherCondition).toEqual(activity.otherCondition);
+                    expect(requestData.priceTypeId).toEqual(activity.priceTypeId);
+                    expect(requestData.activityPrice).toEqual(activity.activityPrice);
+                    expect(requestData.matchFlexibilityId).toEqual(activity.matchFlexibilityId);
+                    expect(requestData.matchFlexValue).toEqual(activity.matchFlexValue);
+                    expect(requestData.matchFlexPercentage).toEqual(activity.matchFlexPercentage);
+                    expect(requestData.rentPaymentPeriodId).toEqual(activity.rentPaymentPeriodId);
+                    expect(requestData.shortAskingWeekRent).toEqual(activity.shortAskingWeekRent);
+                    expect(requestData.shortAskingMonthRent).toEqual(activity.shortAskingMonthRent);
+                    expect(requestData.longAskingWeekRent).toEqual(activity.longAskingWeekRent);
+                    expect(requestData.longAskingMonthRent).toEqual(activity.longAskingMonthRent);
+                    expect(requestData.shortMatchFlexibilityId).toEqual(activity.shortMatchFlexibilityId);
+                    expect(requestData.shortMatchFlexWeekValue).toEqual(activity.shortMatchFlexWeekValue);
+                    expect(requestData.shortMatchFlexMonthValue).toEqual(activity.shortMatchFlexMonthValue);
+                    expect(requestData.shortMatchFlexPercentage).toEqual(activity.shortMatchFlexPercentage);
+                    expect(requestData.longMatchFlexibilityId).toEqual(activity.longMatchFlexibilityId);
+                    expect(requestData.longMatchFlexWeekValue).toEqual(activity.longMatchFlexWeekValue);
+                    expect(requestData.longMatchFlexMonthValue).toEqual(activity.longMatchFlexMonthValue);
+                    expect(requestData.longMatchFlexPercentage).toEqual(activity.longMatchFlexPercentage);
                 }
             });
         });
@@ -386,7 +410,7 @@ module Antares {
         describe('when in edit mode', () => {
             var deferred: ng.IDeferred<any>;
             var activityFromService: Dto.IActivity;
-            var activity: Activity.ActivityEditModel;
+            var activity: Business.ActivityEditModel;
             var userData: Dto.ICurrentUser;
 
             beforeEach(() => {
@@ -433,7 +457,7 @@ module Antares {
         describe('when in add mode', () => {
             var deferred: ng.IDeferred<any>;
             var activityFromService: Dto.IActivity;
-            var activity: Activity.ActivityEditModel;
+            var activity: Business.ActivityEditModel;
             var userData: Dto.ICurrentUser;
 
             beforeEach(() => {
@@ -480,25 +504,6 @@ module Antares {
             });
         });
 
-        describe('when isValuationPricesSectionVisible is called', () => {
-            type TestCase = [any, any, boolean];
-            runDescribe('with specific config')
-                .data<TestCase>([
-                    [{}, {}, true],
-                    [null, {}, true],
-                    [{}, null, true],
-                    [null, null, false]])
-                .dataIt((data: TestCase) =>
-                    `where askingPrice is ${data[0]} and shortLetPricePerWeek is ${data[1]} then isValuationPricesSectionVisible must return ${data[2]}`)
-                .run((data: TestCase) => {
-                    controller.config.askingPrice = data[0];
-                    controller.config.shortLetPricePerWeek = data[1];
-
-                    // act & assert
-                    expect(controller.isValuationPricesSectionVisible()).toBe(data[2]);
-                });
-        });
-
         describe('when isBasicInformationSectionVisible is called', () => {
             type TestCase = [any, any, any, any, any, any, boolean];
             runDescribe('with specific config')
@@ -514,12 +519,12 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where property is ${data[0]} and source is ${data[1]} and sourceDescription is ${data[2]} and sellingReason is ${data[3]} and pitchingThreats is ${data[4]} and disposalType is ${data[5]} then isBasicInformationSectionVisible must return ${data[6]}`)
                 .run((data: TestCase) => {
-                    controller.config.property = data[0];
-                    controller.config.source = data[1];
-                    controller.config.sourceDescription = data[2];
-                    controller.config.sellingReason = data[3];
-                    controller.config.pitchingThreats = data[4];
-                    controller.config.disposalType = data[5];
+                    controller.config.editConfig.property = data[0];
+                    controller.config.editConfig.source = data[1];
+                    controller.config.editConfig.sourceDescription = data[2];
+                    controller.config.editConfig.sellingReason = data[3];
+                    controller.config.editConfig.pitchingThreats = data[4];
+                    controller.config.editConfig.disposalType = data[5];
                     
                     // act & assert
                     expect(controller.isBasicInformationSectionVisible()).toBe(data[6]);
@@ -537,8 +542,8 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where keyNumber is ${data[0]} and accessArrangements is ${data[1]} then isAdditionalInformationSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.keyNumber = data[0];
-                    controller.config.accessArrangements = data[1];
+                    controller.config.editConfig.keyNumber = data[0];
+                    controller.config.editConfig.accessArrangements = data[1];
 
                     // act & assert
                     expect(controller.isAdditionalInformationSectionVisible()).toBe(data[2]);
@@ -557,9 +562,9 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where appraisalMeetingDate is ${data[0]} and appraisalMeetingAttendees is ${data[1]} and appraisalMeetingInvitation is ${data[2]} then isAppraisalMeetingSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.appraisalMeetingDate = data[0];
-                    controller.config.appraisalMeetingAttendees = data[1];
-                    controller.config.appraisalMeetingInvitation = data[2];
+                    controller.config.editConfig.appraisalMeetingDate = data[0];
+                    controller.config.editConfig.appraisalMeetingAttendees = data[1];
+                    controller.config.editConfig.appraisalMeetingInvitation = data[2];
 
                     // act & assert
                     expect(controller.isAppraisalMeetingSectionVisible()).toBe(data[3]);
@@ -577,8 +582,8 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.decoration = data[0];
-                    controller.config.otherCondition = data[1];
+                    controller.config.editConfig.decoration = data[0];
+                    controller.config.editConfig.otherCondition = data[1];
 
                     // act & assert
                     expect(controller.isOtherSectionVisible()).toBe(data[2]);
@@ -597,9 +602,9 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isValuationInfoSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.kfValuationPrice = data[0];
-                    controller.config.vendorValuationPrice = data[1];
-                    controller.config.agreedInitialMarketingPrice = data[2];
+                    controller.config.editConfig.kfValuationPrice = data[0];
+                    controller.config.editConfig.vendorValuationPrice = data[1];
+                    controller.config.editConfig.agreedInitialMarketingPrice = data[2];
 
                     // act & assert
                     expect(controller.isValuationInfoSectionVisible()).toBe(data[3]);
@@ -621,12 +626,12 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} and 4th is ${data[3]} and 5th is ${data[4]} and 6th is ${data[5]} then isValuationInfoShortLongSectionVisible must return ${data[6]}`)
                 .run((data: TestCase) => {
-                    controller.config.shortKfValuationPrice = data[0];
-                    controller.config.longKfValuationPrice = data[1];
-                    controller.config.shortVendorValuationPrice = data[2];
-                    controller.config.longVendorValuationPrice = data[3];
-                    controller.config.shortAgreedInitialMarketingPrice = data[4];
-                    controller.config.longAgreedInitialMarketingPrice = data[5];
+                    controller.config.editConfig.shortKfValuationPrice = data[0];
+                    controller.config.editConfig.longKfValuationPrice = data[1];
+                    controller.config.editConfig.shortVendorValuationPrice = data[2];
+                    controller.config.editConfig.longVendorValuationPrice = data[3];
+                    controller.config.editConfig.shortAgreedInitialMarketingPrice = data[4];
+                    controller.config.editConfig.longAgreedInitialMarketingPrice = data[5];
 
                     // act & assert
                     expect(controller.isValuationInfoShortLongSectionVisible()).toBe(data[6]);
@@ -645,12 +650,146 @@ module Antares {
                 .dataIt((data: TestCase) =>
                     `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isChargesSectionVisible must return ${data[3]}`)
                 .run((data: TestCase) => {
-                    controller.config.serviceChargeAmount = data[0];
-                    controller.config.groundRentAmount = data[1];
-                    controller.config.groundRentNote = data[2];
+                    controller.config.editConfig.serviceChargeAmount = data[0];
+                    controller.config.editConfig.groundRentAmount = data[1];
+                    controller.config.editConfig.groundRentNote = data[2];
 
                     // act & assert
                     expect(controller.isChargesSectionVisible()).toBe(data[3]);
+                });
+        });
+
+        describe('when change rent period is month', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Business.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    rentPaymentPeriod: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Monthly] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Weekly] }
+                    ]
+                };
+
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit({
+                    rentPaymentPeriodId: enumProvider.enums.rentPaymentPeriod[0].id, // Month
+                    shortAskingMonthRent: 13,
+                    longAskingMonthRent: 26,
+                    shortMatchFlexMonthValue: 39,
+                    longMatchFlexMonthValue: 52
+                });
+
+                controller.activity = activity;
+            });
+
+            it('and copyRentValues then week values must be equal to month' , () => {
+                // act
+                controller.copyRentValues();
+
+                // assert
+                expect(controller.activity.shortAskingWeekRent).toBe(controller.activity.shortAskingMonthRent);
+                expect(controller.activity.longAskingWeekRent).toBe(controller.activity.longAskingMonthRent);
+                expect(controller.activity.shortMatchFlexWeekValue).toBe(controller.activity.shortMatchFlexMonthValue);
+                expect(controller.activity.longMatchFlexWeekValue).toBe(controller.activity.longMatchFlexMonthValue);
+            });
+
+            it('and calculateRentPayments then week values must be calculated accoridng to formula', () => {
+                // act
+                controller.calculateRentPayments();
+
+                // assert
+                expect(controller.activity.shortAskingWeekRent).toBe(3);
+                expect(controller.activity.longAskingWeekRent).toBe(6);
+                expect(controller.activity.shortMatchFlexWeekValue).toBe(9);
+                expect(controller.activity.longMatchFlexWeekValue).toBe(12);
+            });
+        });
+
+        describe('when change rent period is week', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Business.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    rentPaymentPeriod: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Monthly] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.RentPaymentPeriod[Enums.RentPaymentPeriod.Weekly] }
+                    ]
+                };
+
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit({
+                    rentPaymentPeriodId: enumProvider.enums.rentPaymentPeriod[1].id, // week
+                    shortAskingWeekRent: 3,
+                    longAskingWeekRent: 6,
+                    shortMatchFlexWeekValue: 9,
+                    longMatchFlexWeekValue: 12
+                });
+
+                controller.activity = activity;
+            });
+
+            it('and copyRentValues then month values must be equal to week', () => {
+                // act
+                controller.copyRentValues();
+
+                // assert
+                expect(controller.activity.shortAskingMonthRent).toBe(controller.activity.shortAskingWeekRent);
+                expect(controller.activity.longAskingMonthRent).toBe(controller.activity.longAskingWeekRent);
+                expect(controller.activity.shortMatchFlexMonthValue).toBe(controller.activity.shortMatchFlexWeekValue);
+                expect(controller.activity.longMatchFlexMonthValue).toBe(controller.activity.longMatchFlexWeekValue);
+            });
+
+            it('and calculateRentPayments then month values must be calculated accoridng to formula', () => {
+                // act
+                controller.calculateRentPayments();
+
+                // assert
+                expect(controller.activity.shortAskingMonthRent).toBe(13);
+                expect(controller.activity.longAskingMonthRent).toBe(26);
+                expect(controller.activity.shortMatchFlexMonthValue).toBe(39);
+                expect(controller.activity.longMatchFlexMonthValue).toBe(52);
+            });
+        });
+
+        describe('when convertPerWeekValueToPerMonthValue is called', () => {
+            type TestCase = [number, number];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [null, null],
+                    [1, 5],
+                    [2, 9],
+                    [3, 13],
+                    [4.5, 20]])
+                .dataIt((data: TestCase) =>
+                    `where weekValue is ${data[0]} then result must return ${data[1]}`)
+                .run((data: TestCase) => {
+                    // act & assert
+                    expect(controller.convertPerWeekValueToPerMonthValue(data[0])).toBe(data[1]);
+                });
+        });
+
+        describe('when convertPerMonthValueToPerWeekValue is called', () => {
+            type TestCase = [number, number];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [null, null],
+                    [1, 1],
+                    [2, 1],
+                    [3, 1],
+                    [4, 1],
+                    [6, 2],
+                    [13, 3]])
+                .dataIt((data: TestCase) =>
+                    `where monthValue is ${data[0]} then result must return ${data[1]}`)
+                .run((data: TestCase) => {
+                    // act & assert
+                    expect(controller.convertPerMonthValueToPerWeekValue(data[0])).toBe(data[1]);
                 });
         });
     });
