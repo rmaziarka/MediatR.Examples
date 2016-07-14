@@ -21,7 +21,7 @@ module Antares {
         };
 
         var pageObjectSelectors = {
-            formName: 'ng-form[name="' + termDateSchema.formName + '"]'
+            formName: 'ng-form[name="vm.' + termDateSchema.formName + '"]'
         };
 
         beforeEach(inject((

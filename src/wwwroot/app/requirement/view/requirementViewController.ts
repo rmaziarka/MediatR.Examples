@@ -283,7 +283,7 @@ module Antares.Requirement.View {
         }
 
         canTenancyBeNegotiated = (offerModel: Business.Offer) => {
-            return offerModel.canTenancyBeNegotiated() && this.requirement.tenancy === null && this.requirement.isLettingType();
+            return offerModel !== null && offerModel.isOfferAccepted() && this.requirement.tenancy === null && this.requirement.isLettingType();
         }
 
         onUpdateOffer = (offerModel: Dto.IOffer) => {

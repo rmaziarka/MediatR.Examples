@@ -109,7 +109,7 @@ module Antares.Common.Models.Business {
             }
         }
 
-        canTenancyBeNegotiated = (): boolean => {
+        isOfferAccepted = (): boolean => {
             return this.status.code === Antares.Common.Models.Enums.OfferStatus[Antares.Common.Models.Enums.OfferStatus.Accepted];
         }
 
