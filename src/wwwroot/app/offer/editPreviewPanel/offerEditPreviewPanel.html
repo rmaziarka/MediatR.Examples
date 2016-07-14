@@ -1,6 +1,6 @@
 ﻿﻿<kf-side-panel>
     <side-panel-cards>
-        <offer-preview-card offer="vm.offer" config="vm.config" ng-if="vm.isPreviewCardVisible" on-edit="vm.edit()"></offer-preview-card>
+        <offer-preview-card offer="vm.offer" config="vm.config" ng-if="vm.isPreviewCardVisible" can-edit="vm.canEdit" on-edit="vm.edit()"></offer-preview-card>
         <offer-edit-card
             offer="vm.offer"
             on-save="vm.save(offer)" on-cancel="vm.cancel()"

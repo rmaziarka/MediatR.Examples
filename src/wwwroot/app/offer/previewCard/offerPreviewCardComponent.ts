@@ -8,6 +8,7 @@ module Antares.Offer {
         bindings: {
             config: '<',
             offer: '<',
+            canEdit: '<',
             onEdit: '&'
         }
     });

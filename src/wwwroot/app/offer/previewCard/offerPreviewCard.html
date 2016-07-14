@@ -51,7 +51,7 @@
 
     </side-panel-content>
     <side-panel-footer>
-        <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()" ng-if="vm.canEdit">
             <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
         </button>
     </side-panel-footer>
