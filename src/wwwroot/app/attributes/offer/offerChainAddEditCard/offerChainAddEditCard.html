@@ -22,25 +22,7 @@
                                             schema="vm.controlSchemas.agentType">
                 </radio-buttons-edit-control>
 
-                <search ng-show="vm.isThirdPartyAgentInEditMode && vm.isKnightFrankAgent" id="thirdPartyAgent-search"
-                        options="vm.thirdPartyAgentSearchOptions"
-                        focus-on="vm.isThirdPartyAgentInEditMode"
-                        blur-on="!vm.isThirdPartyAgentInEditMode"
-                        on-select-item="vm.changeAgentUser" on-cancel="vm.cancelChangeAgentUser" load-items="vm.getUsers"
-                        item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="OFFER.CHAIN.EDIT.FIND_AGENT"></search>
-                <div id="agent-user-edit-btn-wrapper" ng-hide="vm.isThirdPartyAgentInEditMode || !vm.isKnightFrankAgent" class="form-group">
-                    <button class="btn btn-default" id="agent-user-btn" type="button" ng-click="vm.editThirdPartyAgent()"><i class="fa fa-pencil"></i></button>
-                </div>
-
-                <div class="section-row row" ng-if="vm.isKnightFrankAgent">
-                    <div class="col-xs-12">
-                        <div class="panel panel-default applicant">
-                            <div class="panel-body">
-                                {{ vm.chain.agentUser.getName() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <search-user schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser"></search-user>
 
                 <company-contact-edit-control schema="vm.controlSchemas.agentCompanyContact" ng-if="!vm.isKnightFrankAgent"
                                               config="vm.config.agentCompanyContact"

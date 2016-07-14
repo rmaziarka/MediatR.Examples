@@ -1,0 +1,22 @@
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+    <search ng-show="vm.isInEditMode" id="user-search"
+            options="vm.searchOptions"
+            focus-on="vm.isInEditMode"
+            blur-on="!vm.isInEditMode"
+            on-select-item="vm.changeUser" on-cancel="vm.cancelChangeUser" load-items="vm.getUsers"
+            item-template-url="{{vm.schema.itemTemplateUrl}}" search-placeholder="{{vm.schema.searchPlaceholderTranslationKey}}"></search>
+
+    <div id="user-edit-btn-wrapper" ng-hide="vm.isInEditMode" class="form-group">
+        <button class="btn btn-default" id="user-btn" type="button" ng-click="vm.editUser()"><i class="fa fa-pencil"></i></button>
+    </div>
+
+    <div class="section-row row" ng-show="vm.user">
+        <div class="col-xs-12">
+            <div class="panel panel-default applicant">
+                <div class="panel-body">
+                    {{ vm.user.getName() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
