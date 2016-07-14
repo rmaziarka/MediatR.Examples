@@ -31,9 +31,11 @@
                         <h5 translate="OFFER.CHAIN.PREVIEW.VENDOR"></h5>
                     </div>
                     <div class="col-xs-12">
-                        <div class="panel panel-default applicant">
-                            <div class="panel-body">
-                                {{ vm.chain.vendor }}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item">
+                                    {{ vm.chain.vendor }}    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,9 +45,11 @@
                         <h5 translate="OFFER.CHAIN.PREVIEW.BUYER"></h5>
                     </div>
                     <div class="col-xs-12">
-                        <div class="panel panel-default applicant">
-                            <div class="panel-body">
-                                {{ vm.chain.parent.vendor }}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item">
+                                    {{ vm.chain.parent.vendor }}    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -58,9 +62,11 @@
                         <h5 translate="OFFER.CHAIN.PREVIEW.AGENT"></h5>
                     </div>
                     <div class="col-xs-12">
-                        <div class="panel panel-default applicant">
-                            <div class="panel-body">
-                                {{ vm.chain.agentUser.getName() }}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item">
+                                    {{ vm.chain.agentUser.getName() }}
+                                </div>                                
                             </div>
                         </div>
                     </div>
