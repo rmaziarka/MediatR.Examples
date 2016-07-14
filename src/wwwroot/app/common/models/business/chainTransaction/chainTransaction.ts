@@ -18,10 +18,14 @@ module Antares.Common.Models.Business {
         vendor: string = null;
         agentUserId: string = null;
         agentUser: Business.User = null;
+        agentContactId: string = null;
         agentContact: Business.Contact = null;
+        agentCompanyId: string = null;
         agentCompany: Business.Company = null;
         agentCompanyContact: Business.CompanyContactRelation = null;
+        solicitorContactId: string = null;
         solicitorContact: Business.Contact = null;
+        solicitorCompanyId: string = null;
         solicitorCompany: Business.Company = null;
         solicitorCompanyContact: Business.CompanyContactRelation = null;
         mortgage: Business.EnumTypeItem = null;

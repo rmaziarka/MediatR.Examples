@@ -11,16 +11,13 @@ module Antares {
             required: false
         };
 
-        var onChangeMock = () => { console.log('a');}
-
         var schemaMock: Attributes.IRadioButtonsEditControlSchema = {
             formName: "offerContractApprovedControlForm",
             fieldName: "offerContractApproved",
             translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
             radioButtons: [
                 { value: true, translationKey: "COMMON.YES" },
-                { value: false, translationKey: "COMMON.NO" }],
-            onChangeValue: onChangeMock
+                { value: false, translationKey: "COMMON.NO" }]
         }
 
         var pageObjectSelectors = {
@@ -31,8 +28,6 @@ module Antares {
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService) => {
-
-            spyOn(schemaMock, 'onChangeValue').and.callThrough();
 
             scope = $rootScope.$new();
             scope['vm'] = { config: configMock, schema: schemaMock, model: true };

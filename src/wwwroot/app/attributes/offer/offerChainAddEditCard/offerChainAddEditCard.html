@@ -20,7 +20,7 @@
             </div>
 
             <div class="section-details">
-                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isAgentUserType" schema="vm.controlSchemas.agentType"></radio-buttons-edit-control>
+                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isAgentUserType" schema="vm.controlSchemas.agentType" on-change="vm.onAgentUserTypeChange(value)"></radio-buttons-edit-control>
 
                 <search-user schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser"></search-user>
 

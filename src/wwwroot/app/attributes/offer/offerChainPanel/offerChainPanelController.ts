@@ -102,7 +102,10 @@ module Antares.Attributes.Offer.OfferChain {
 
         protected onChanges = (changesObj: IOfferChainPanelChange) => {
             if (changesObj.chain && changesObj.chain.currentValue) {
-                this.isAgentUserType = !!changesObj.chain.currentValue.agentUser;                
+                var agentUserDefined = !!changesObj.chain.currentValue.agentUser;
+                var agentContactDefined = !! changesObj.chain.currentValue.agentContact;
+
+                this.isAgentUserType = agentUserDefined || !agentContactDefined;           
                 this.reloadConfig(this.isAgentUserType);
                 this.cardPristine = new Object();
             }
@@ -179,6 +182,30 @@ module Antares.Attributes.Offer.OfferChain {
 
             // TODO: chang to use dedicated ChainTransactionCommand in IChainTransactionCommand
             var command = angular.copy(chain);
+
+            if(this.isAgentUserType && command.agentUser){
+                command.agentContactId = null;
+                command.agentCompanyId = null;
+                command.agentUserId = command.agentUser.id;
+            } else if(command.agentCompanyContact){
+                command.agentUserId = null;
+                command.agentContactId = command.agentCompanyContact.contact.id;
+                command.agentCompanyId = command.agentCompanyContact.company.id;
+            }
+            else{
+                command.agentContactId = null;
+                command.agentCompanyId = null;
+                command.agentUserId = null;
+            }
+
+            if(command.solicitorCompanyContact){
+                command.solicitorContactId = command.solicitorCompanyContact.contact.id;
+                command.solicitorCompanyId = command.solicitorCompanyContact.company.id;
+            } else{
+                command.solicitorContactId = null;
+                command.solicitorCompanyId = null;
+            }
+
             command.activity = null;
             command.requirement = null;
             command.parent = null;

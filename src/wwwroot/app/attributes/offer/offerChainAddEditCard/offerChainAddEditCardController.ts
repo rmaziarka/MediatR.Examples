@@ -117,9 +117,8 @@ module Antares.Attributes.Offer.OfferChain {
                 fieldName: "chainEditAgentType",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT",
                 radioButtons: [
-                    { value: false, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
-                    { value: true, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }],
-                onChangeValue: () => { this.onReloadConfig({ isAgentUserType: this.isAgentUserType }); }
+                    { value: true, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
+                    { value: false, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }]
             }
         }
 
@@ -134,6 +133,10 @@ module Antares.Attributes.Offer.OfferChain {
                     this.offerChainAddEditCardForm.$setPristine();
                 }
             }
+        }
+
+        public onAgentUserTypeChange =  (value: boolean) => { 
+            this.onReloadConfig({ isAgentUserType: value }); 
         }
 
         public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {

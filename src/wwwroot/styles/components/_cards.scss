@@ -4,7 +4,6 @@
   background-color: $color-white;
   border: 1px solid $color-silver;
   margin-bottom: 15px;
-  min-height: 46px;
   position: relative;
 }
 
@@ -25,6 +24,7 @@
 }
 
 .card-body {
+  min-height: 46px;
   padding: 12px;
   width: calc(100% - 47px);
 
