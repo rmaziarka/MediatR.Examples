@@ -9,7 +9,7 @@
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
                 <!-- name -->
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.name.$dirty) && editCompanyForm.name.$invalid}">
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('name')}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="editCompanyForm.name.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.name.$dirty">
@@ -18,7 +18,7 @@
                 </div>
 
                 <!-- category -->
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.category.$dirty) && addCompanyForm.category.$invalid}">
+                <div class="form-group">
                     <label for="name" translate="COMPANY.CATEGORY"></label>
                     <div class="row">
                         <div class="col-md-6">
@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- type -->
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.type.$dirty) && addCompanyForm.type.$invalid}">
+                <div class="form-group">
                     <label for="name" translate="COMPANY.TYPE"></label>
                     <div class="row">
                         <div class="col-md-6">
@@ -38,18 +38,18 @@
                 </div>
 
                 <!-- description -->
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.description.$dirty) && addCompanyForm.description.$invalid}">
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('description')}">
                     <label for="description" translate="COMPANY.DESCRIPTION"></label>
-                    <span class="pull-right character-limit">{{addCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
+                    <span class="pull-right character-limit">{{editCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
                     <textarea id="description" kf-max-count="vm.descriptionMaxLength" rows="8" class="form-control" ng-required="false"
                               name="description" ng-model="vm.company.description"></textarea>
-                    <div ng-messages="addCompanyForm.description.$error" ng-show="addCompanyForm.$submitted ||addCompanyForm.description.$dirty">
+                    <div ng-messages="editCompanyForm.description.$error" ng-show="editCompanyForm.$submitted ||editCompanyForm.description.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
                 <!-- website -->
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('website')}">
                     <label for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
@@ -65,17 +65,17 @@
                 </div>
 
                 <!-- clientcareurl -->
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('clientCarePageUrl')}">
                     <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <input type="text" class="form-control" id="clientcareurl" name="clientCarePageUrl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
                             <div class="form-control-feedback">
                                 <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
                             </div>
                         </div>
                     </div>
-                    <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
+                    <div ng-messages="editCompanyForm.clientCarePageUrl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientCarePageUrl.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>

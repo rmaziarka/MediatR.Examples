@@ -13,10 +13,6 @@ module Antares.Company {
         goToEdit = () => {
             this.$state.go('app.company-edit', { id: this.$state.params['id'] });
         }
-
-        getCompanyIsValidTranslationKey = () =>{
-            return (!!this.company.valid ? "COMMON.YES" : "COMMON.NO");
-        }
     }
 
     angular.module('app').controller('CompanyViewController', CompanyViewController);

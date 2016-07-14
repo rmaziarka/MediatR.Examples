@@ -79,6 +79,11 @@ module Antares.Company {
                 });
         }
 
+        hasControlError = (name: string): boolean => {
+            return (this.editCompanyForm.$submitted || this.editCompanyForm[name].$dirty)
+                && this.editCompanyForm[name].$invalid;
+        }
+
         defineComponentIds() {
             this.componentIds = {
                 contactSidePanelId: 'editCompany:contactSidePanelComponent',
