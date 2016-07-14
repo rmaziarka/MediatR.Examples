@@ -18,13 +18,11 @@
             </div>
 
             <div class="section-details">
-                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isKnightFrankAgent"
-                                            schema="vm.controlSchemas.agentType">
-                </radio-buttons-edit-control>
+                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isAgentUserType" schema="vm.controlSchemas.agentType"></radio-buttons-edit-control>
 
                 <search-user schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser"></search-user>
 
-                <company-contact-edit-control schema="vm.controlSchemas.agentCompanyContact" ng-if="!vm.isKnightFrankAgent"
+                <company-contact-edit-control schema="vm.controlSchemas.agentCompanyContact"
                                               config="vm.config.agentCompanyContact"
                                               type="vm.companyContactType.ChainAgent"
                                               company-contact="vm.chain.agentCompanyContact"

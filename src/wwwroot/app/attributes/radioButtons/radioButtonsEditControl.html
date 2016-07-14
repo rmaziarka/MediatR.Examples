@@ -5,7 +5,7 @@
                 <div class="col-md-9">
                     <h5 ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></h5>
                     <label class="radio-inline" ng-repeat="radio in vm.schema.radioButtons">
-                        <input type="radio" ng-model="vm.ngModel" ng-value="radio.value"><span translate="{{radio.translationKey}}"></span>
+                        <input type="radio" ng-model="vm.ngModel" ng-value="radio.value" ng-change="vm.schema.onChangeValue()"><span translate="{{radio.translationKey}}"></span>
                     </label>
                 </div>
             </div>

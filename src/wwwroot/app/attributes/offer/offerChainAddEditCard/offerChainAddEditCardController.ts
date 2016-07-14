@@ -12,10 +12,11 @@ module Antares.Attributes.Offer.OfferChain {
     export class OfferChainAddEditCardController {
         // bindings
         chain: Business.ChainTransaction;
+        isAgentUserType: boolean;
         config: any;
         onCancel: () => void;
         onSave: (obj: { chain: Business.ChainTransaction }) => void;
-        onReloadConfig: (chain: Business.ChainTransaction) => void;
+        onReloadConfig: (obj: { isAgentUserType: boolean }) => void;
         onEditCompanyContact: (obj: { companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType }) => void;
         pristineFlag: any;
 
@@ -23,7 +24,6 @@ module Antares.Attributes.Offer.OfferChain {
         offerChainAddEditCardForm: ng.IFormController;
         configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
 
-        public isKnightFrankAgent: boolean = true;
 
         isThirdPartyAgentEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         public companyContactType = Common.Models.Enums.CompanyContactType;
@@ -120,8 +120,9 @@ module Antares.Attributes.Offer.OfferChain {
                 fieldName: "chainEditAgentType",
                 translationKey: "OFFER.CHAIN.EDIT.AGENT",
                 radioButtons: [
-                    { value: true, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
-                    { value: false, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }]
+                    { value: false, translationKey: "OFFER.CHAIN.EDIT.KNIGHT_FRANK" },
+                    { value: true, translationKey: "OFFER.CHAIN.EDIT.THIRD_PARTY" }],
+                onChangeValue: () => { this.onReloadConfig({ isAgentUserType: this.isAgentUserType }); }
             }
         }
 
