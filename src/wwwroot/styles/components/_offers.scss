@@ -1,5 +1,9 @@
 // Offers
 
+.chain-status {
+  @extend %status;
+}
+
 .chain-list {
   display: block;
   position: relative;
