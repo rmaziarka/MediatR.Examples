@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Portal;
 
     public class Activity : BaseAuditableEntity
     {
@@ -146,5 +147,25 @@
         public decimal? LongMatchFlexMonthValue { get; set; }
 
         public decimal? LongMatchFlexPercentage { get; set; }
+
+        public string MarketingStrapline { get; set; }
+
+        public string MarketingFullDescription { get; set; }
+
+        public bool AdvertisingPublishToWeb { get; set; }
+
+        public string AdvertisingNote { get; set; }
+
+        public string MarketingLocationDescription { get; set; }
+
+        public bool SalesBoardUpToDate { get; set; }
+
+        public DateTime SalesBoardRemovalDate { get; set; }
+
+        public string SalesBoardSpecialInstructions { get; set; }
+        public bool AdvertisingPrPermitted { get; set; }
+        public string AdvertisingPrContent { get; set; }
+
+        public virtual ICollection<Portal> AdvertisingPortals { get; set; }
     }
 }

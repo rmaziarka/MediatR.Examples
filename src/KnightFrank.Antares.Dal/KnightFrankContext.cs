@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.LatestView;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Model.Portal;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
@@ -39,7 +40,6 @@
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<DateTime>()
                         .Configure(c => c.HasColumnType("datetime2"));
-
             this.LoadConfigurations(modelBuilder);
         }
 
@@ -92,6 +92,8 @@
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
         public DbSet<LatestView> LatestView { get; set; }
         public DbSet<CompanyContact> CompanyContacts { get; set; }
+        public DbSet<Portal> Portals { get; set; }
+        public DbSet<PortalDefinition> PortalDefinitions { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
