@@ -53,9 +53,7 @@
             var details = table.CreateInstance<EditActivityDetails>();
 
             this.page.SelectActivityStatus(details.ActivityStatus)
-                .SetShortLetPricePerWeek(details.ShortLetPricePerWeek)
-                .SetAskingPrice(details.AskingPrice)
-                .SetKfValuationPricePerWeek(details.KfValuationPricePerWeek);
+                .SetKfValuationPricePerWeek(details.KfValuationShortLet, details.KfValuationLongLet);
         }
 
         [When(@"User fills in KF Valuation (.*) on edit activity page")]
@@ -124,6 +122,30 @@
         public void DepartmentUpdate(string departmentName)
         {
             this.page.SetDepartmentAsManaging(departmentName);
+        }
+
+        [When(@"User fills in rent details on edit activity page")]
+        public void FillInRentDetails(Table table)
+        {
+            var rentDetails = table.CreateInstance<LettingRent>();
+
+            this.page.SelectRent(rentDetails.Rent)
+                .SetAskingRentShortLet(rentDetails.RentShortLet)
+                .SelectShortLetMatchFlexibility(rentDetails.RentShortLetMatchFlexibility)
+                .SetShortLetMatchFlexibilityPercentage(rentDetails.RentShortLetMatchFlexibilityRentPercentage)
+                .SetAskingRentLongLet(rentDetails.RentLongLet)
+                .SelectLongLetMatchFlexibility(rentDetails.RentLongLetMatchFlexibility)
+                .SetLongLetMatchFlexibilityRentValue(rentDetails.RentLongLetMatchFlexibilityRentValue);
+        }
+
+        [When(@"User fills in price details on edit activity page")]
+        public void FillInPriceDetails(Table table)
+        {
+            var priceDetails = table.CreateInstance<Prices>();
+            this.page.SelectPriceType(priceDetails.PriceType)
+                .SetPrice(priceDetails.Price)
+                .SelectMatchFlexibility(priceDetails.MatchFlexibility)
+                .SetMatchFlexibilityValue(priceDetails.MatchFlexibility, priceDetails.MatchFlexibilityValue);
         }
 
         [Then(@"Lead negotiator next call is set to current date on edit activity page")]

@@ -17,6 +17,7 @@
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatusId");
         private readonly ElementLocator type = new ElementLocator(Locator.Id, "type");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-vendors-edit span.ng-binding");
+        private readonly ElementLocator landlord = new ElementLocator(Locator.CssSelector, "#activity-landlords-edit span.ng-binding");
         // negotiators & departments locators
         private readonly ElementLocator negotiator = new ElementLocator(Locator.Id, "negotiator-");
         private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, ".well > div:nth-of-type(1)");
@@ -62,12 +63,30 @@
         //other locators
         private readonly ElementLocator decoration = new ElementLocator(Locator.Id, "decorationId");
         private readonly ElementLocator otherConditions = new ElementLocator(Locator.Id, "otherCondition");
+        //Type: Open Market Letting,  Status: To Let Unavailable locators
+        private readonly ElementLocator rent = new ElementLocator(Locator.Id, "rentPaymentPeriodId");
+        private readonly ElementLocator askingRentShortWeekLet = new ElementLocator(Locator.Id, "shortAskingWeekRent");
+        private readonly ElementLocator askingRentShortLetMatchFlexibility = new ElementLocator(Locator.Id, "shortMatchFlexibilityId");
+        private readonly ElementLocator askingRentShortLetMatchFlexibilityWeekRentValue = new ElementLocator(Locator.Id, "shortMatchFlexWeekValue");
+        private readonly ElementLocator askingRentShortLetMatchFlexibilityRentPercentage = new ElementLocator(Locator.Id, "shortMatchFlexPercentage");
+        private readonly ElementLocator askingRentLongLet = new ElementLocator(Locator.Id, "longAskingWeekRent");
+        private readonly ElementLocator askingRentLongLetMatchFlexibility = new ElementLocator(Locator.Id, "longMatchFlexibilityId");
+        private readonly ElementLocator askingRentLongLetMatchFlexibilityRentWeekValue = new ElementLocator(Locator.Id, "longMatchFlexWeekValue");
+        private readonly ElementLocator askingRentLongLetMatchFlexibilityRentPercentage = new ElementLocator(Locator.Id, "longMatchFlexPercentage");
+        //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
+        private readonly ElementLocator priceType = new ElementLocator(Locator.Id, "priceTypeId");
+        private readonly ElementLocator price = new ElementLocator(Locator.Id, "activityPrice");
+        private readonly ElementLocator matchFlexibility = new ElementLocator(Locator.Id, "matchFlexibilityId");
+        private readonly ElementLocator matchFlexibilityValue = new ElementLocator(Locator.Id, "matchFlexValue");
+        private readonly ElementLocator matchFlexibilityPercentage = new ElementLocator(Locator.Id, "matchFlexPercentage");
 
         public CreateActivityPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
         public string ActivityVendor => this.Driver.GetElement(this.vendor).Text;
+
+        public string ActivityLandlord => this.Driver.GetElement(this.landlord).Text;
 
         public string ActivityNegotiator => this.Driver.GetElement(this.negotiator).Text;
 
@@ -184,9 +203,9 @@
             return this;
         }
 
-        public CreateActivityPage SetAgreedInitialMarketingPrice(string price)
+        public CreateActivityPage SetAgreedInitialMarketingPrice(string text)
         {
-            this.Driver.SendKeys(this.agreedinitialMarketingPrice, price);
+            this.Driver.SendKeys(this.agreedinitialMarketingPrice, text);
             return this;
         }
 
@@ -214,15 +233,15 @@
             return this;
         }
 
-        public CreateActivityPage SetAgreedInitialMarketingPriceShortLet(string price)
+        public CreateActivityPage SetAgreedInitialMarketingPriceShortLet(string text)
         {
-            this.Driver.SendKeys(this.agreedInitialMarketingPriceShortLet, price);
+            this.Driver.SendKeys(this.agreedInitialMarketingPriceShortLet, text);
             return this;
         }
 
-        public CreateActivityPage SetAgreedInitialMarketingPriceLongLet(string price)
+        public CreateActivityPage SetAgreedInitialMarketingPriceLongLet(string text)
         {
-            this.Driver.SendKeys(this.agreedInitialMarketingPriceLongLet, price);
+            this.Driver.SendKeys(this.agreedInitialMarketingPriceLongLet, text);
             return this;
         }
 
@@ -238,9 +257,9 @@
             return this;
         }
 
-        public CreateActivityPage SetGroundRent(string rent)
+        public CreateActivityPage SetGroundRent(string text)
         {
-            this.Driver.SendKeys(this.groundRent, rent);
+            this.Driver.SendKeys(this.groundRent, text);
             return this;
         }
 
@@ -267,6 +286,73 @@
             this.Driver.GetElement<Select>(this.disposalType).SelectByText(disposal);
             return this;
         }
+
+        public CreateActivityPage SelectPriceType(string selectPrice)
+        {
+            this.Driver.GetElement<Select>(this.priceType).SelectByText(selectPrice);
+            return this;
+        }
+
+        public CreateActivityPage SetPrice(string value)
+        {
+            this.Driver.SendKeys(this.price, value);
+            return this;
+        }
+
+        public CreateActivityPage SelectMatchFlexibility(string text)
+        {
+            this.Driver.GetElement<Select>(this.matchFlexibility).SelectByText(text);
+            return this;
+        }
+
+        public CreateActivityPage SetMatchFlexibilityValue(string type, string value)
+        {
+            this.Driver.SendKeys(type == "Minimum price" ? this.matchFlexibilityValue : this.matchFlexibilityPercentage, value);
+            return this;
+        }
+
+        public CreateActivityPage SelectRent(string rentType)
+        {
+            this.Driver.GetElement<Select>(this.rent).SelectByText(rentType);
+            return this;
+        }
+
+        public CreateActivityPage SetAskingRentShortLet(string shortLet)
+        {
+            this.Driver.SendKeys(this.askingRentShortWeekLet, shortLet);
+            return this;
+        }
+
+        public CreateActivityPage SelectShortLetMatchFlexibility(string flexibility)
+        {
+            this.Driver.GetElement<Select>(this.askingRentShortLetMatchFlexibility).SelectByText(flexibility);
+            return this;
+        }
+
+        public CreateActivityPage SetShortLetMatchFlexibilityRentValue(string value)
+        {
+            this.Driver.SendKeys(this.askingRentShortLetMatchFlexibilityWeekRentValue, value);
+            return this;
+        }
+
+        public CreateActivityPage SetAskingRentLongLet(string shortLet)
+        {
+            this.Driver.SendKeys(this.askingRentLongLet, shortLet);
+            return this;
+        }
+
+        public CreateActivityPage SelectLongLetMatchFlexibility(string flexibility)
+        {
+            this.Driver.GetElement<Select>(this.askingRentLongLetMatchFlexibility).SelectByText(flexibility);
+            return this;
+        }
+
+        public CreateActivityPage SetLongLetMatchFlexibilityRentPercentage(string value)
+        {
+            this.Driver.SendKeys(this.askingRentLongLetMatchFlexibilityRentPercentage, value);
+            return this;
+        }
+
     }
 
     internal class ActivityDetails
@@ -310,6 +396,8 @@
         public string StartTime { get; set; }
 
         public string EndTime { get; set; }
+
+        public string Landlord { get; set; }
     }
 
     internal class ValuationInformation
@@ -341,5 +429,59 @@
         public string GroundRentNote { get; set; }
 
         public string DisposalType { get; set; }
+    }
+
+    internal class Prices
+    {
+        public string PriceType { get; set; }
+
+        public string Price { get; set; }
+
+        public string MatchFlexibility { get; set; }
+
+        public string MatchFlexibilityValue { get; set; }
+
+        public string PriceFlexibility { get; set; }
+    }
+
+    internal class LettingRent
+    {
+        public string Rent { get; set; }
+
+        public string RentShortLet { get; set; }
+
+        public string RentShortLetMatchFlexibility { get; set; }
+
+        public string RentShortLetMatchFlexibilityRentValue { get; set; }
+
+        public string RentShortLetMatchFlexibilityRentPercentage { get; set; }
+
+        public string RentLongLet { get; set; }
+
+        public string RentLongLetMatchFlexibility { get; set; }
+
+        public string RentLongLetMatchFlexibilityRentValue { get; set; }
+
+        public string RentLongLetMatchFlexibilityRentPercentage { get; set; }
+
+        public string RentShortLetMonth { get; set; }
+
+        public string RentShortLetWeek { get; set; }
+
+        public string RentShortMatchFlexibilityMonth { get; set; }
+
+        public string RentShortMatchFlexibilityWeek { get; set; }
+
+        public string RentLongLetMonth { get; set; }
+
+        public string RentLongtLetWeek { get; set; }
+
+        public string RentLongMatchFlexibilityPercentage { get; set; }
+
+        public string RentLongMatchFlexibilityMonth { get; set; }
+
+        public string RentLongMatchFlexibilityWeek { get; set; }
+
+        public string RentShortMatchFlexibilityPercentage { get; set; }
     }
 }
