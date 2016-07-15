@@ -103,15 +103,15 @@ module Antares.Attributes.Offer.OfferChain {
         protected onChanges = (changesObj: IOfferChainPanelChange) => {
             if (changesObj.chain && changesObj.chain.currentValue) {
                 var agentUserDefined = !!changesObj.chain.currentValue.agentUser;
-                var agentContactDefined = !! changesObj.chain.currentValue.agentContact;
+                var agentContactDefined = !!changesObj.chain.currentValue.agentContact;
 
-                this.isAgentUserType = agentUserDefined || !agentContactDefined;           
+                this.isAgentUserType = agentUserDefined || !agentContactDefined;
                 this.reloadConfig(this.isAgentUserType);
                 this.cardPristine = new Object();
             }
             if (changesObj.inPreviewMode) {
-                this.panelMode = this.inPreviewMode 
-                    ? OfferChainPanelMode.Preview 
+                this.panelMode = this.inPreviewMode
+                    ? OfferChainPanelMode.Preview
                     : OfferChainPanelMode.AddEdit;
             }
 
@@ -148,17 +148,17 @@ module Antares.Attributes.Offer.OfferChain {
         loadProperties = () => {
             this.isBusy = true;
             this.propertyService.getProperties()
-            .then((data: Dto.IPreviewProperty[]) => {
-                this.properties = data.map((dataItem: Dto.IPreviewProperty) => {
-                    var property = new Business.PreviewPropertyWithSelection(dataItem);
-                    if(property.id == this.initiallySelectedPropertyId){
-                        property.selected = true;
-                    }
-                    return property;
+                .then((data: Dto.IPreviewProperty[]) => {
+                    this.properties = data.map((dataItem: Dto.IPreviewProperty) => {
+                        var property = new Business.PreviewPropertyWithSelection(dataItem);
+                        if (property.id == this.initiallySelectedPropertyId) {
+                            property.selected = true;
+                        }
+                        return property;
+                    });
+                }).finally(() => {
+                    this.isBusy = false;
                 });
-            }).finally(() => {
-                this.isBusy = false;
-            });
         }
 
         private defineControlConfig = (isAgentUserType: boolean) => {
@@ -168,7 +168,7 @@ module Antares.Attributes.Offer.OfferChain {
                 vendor: { vendor: { required: true, active: true } },
                 agentUser: isAgentUserType ? { agentUserId: { required: true, active: true } } : null,
                 agentCompanyContact: isAgentUserType ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
-                solicitorCompanyContact: { solicitorContactId: { required: false, active: true }, solicitorCompanyId: { required: false, active: true } },
+                solicitorCompanyContact: { solicitorCompanyContact: { required: true, active: true } },
                 mortgage: { mortgageId: { required: true, active: true } },
                 survey: { surveyId: { required: true, active: true } },
                 searches: { searchesId: { required: true, active: true } },
@@ -183,25 +183,25 @@ module Antares.Attributes.Offer.OfferChain {
             // TODO: chang to use dedicated ChainTransactionCommand in IChainTransactionCommand
             var command = angular.copy(chain);
 
-            if(this.isAgentUserType && command.agentUser){
+            if (this.isAgentUserType && command.agentUser) {
                 command.agentContactId = null;
                 command.agentCompanyId = null;
                 command.agentUserId = command.agentUser.id;
-            } else if(command.agentCompanyContact){
+            } else if (command.agentCompanyContact) {
                 command.agentUserId = null;
                 command.agentContactId = command.agentCompanyContact.contact.id;
                 command.agentCompanyId = command.agentCompanyContact.company.id;
             }
-            else{
+            else {
                 command.agentContactId = null;
                 command.agentCompanyId = null;
                 command.agentUserId = null;
             }
 
-            if(command.solicitorCompanyContact){
+            if (command.solicitorCompanyContact) {
                 command.solicitorContactId = command.solicitorCompanyContact.contact.id;
                 command.solicitorCompanyId = command.solicitorCompanyContact.company.id;
-            } else{
+            } else {
                 command.solicitorContactId = null;
                 command.solicitorCompanyId = null;
             }
