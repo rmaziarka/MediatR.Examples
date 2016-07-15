@@ -58,9 +58,6 @@ Scenario: Get company details
 	Given Contacts exists in database
 			| FirstName | LastName | Title |
 			| Michael   | Angel    | ceo   |
-	    And Users exists in database
-		| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
-		| AD                    | tester               | John      | Smith    |
 		And Company exists in database
 	When User gets company details
 	Then User should get OK http status code
@@ -71,9 +68,6 @@ Scenario: Update company
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
-		And Users exists in database
-		| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
-		| AD                    | tester               | John      | Smith    |
 		And Company exists in database
 	When User updates company using api
 	Then User should get OK http status code
@@ -84,7 +78,7 @@ Scenario Outline: Update company with invalid data
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
-	    And Users exists in database
+		And Users exists in database
 		| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
 		| AD                    | tester               | John      | Smith    |
 		And Company exists in database

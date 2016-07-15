@@ -59,7 +59,7 @@
                 this.fixture.DataContext.EnumTypeItems.Single(
                     eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("Banks")).Id;
             company.Valid = true;
-            company.RelationshipManagerId = this.scenarioContext.Get<List<User>>("User List").First().Id;
+            company.RelationshipManagerId = this.fixture.DataContext.Users.First().Id;
 
             this.fixture.DataContext.Companies.Add(company);
             this.fixture.DataContext.SaveChanges();
