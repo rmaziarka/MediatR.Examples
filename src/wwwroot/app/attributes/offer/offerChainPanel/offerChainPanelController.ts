@@ -12,7 +12,6 @@ module Antares.Attributes.Offer.OfferChain {
         chainCommand: Common.Models.Commands.IChainTransactionCommand;
         chain: Business.ChainTransaction;
         chainType: Enums.OfferChainsType;
-        isLastChain: boolean;
 
         // properties
         isAgentUserType: boolean;
@@ -163,7 +162,7 @@ module Antares.Attributes.Offer.OfferChain {
 
         private defineControlConfig = (isAgentUserType: boolean) => {
             return {
-                isEnd: { isEnd: { required: false, active: true } },
+                isEnd: { isEnd: { required: false, active: this.chain.lastElementInChainLink } },
                 property: { propertyId: { required: true, active: true } },
                 vendor: { vendor: { required: true, active: true } },
                 agentUser: isAgentUserType ? { agentUserId: { required: true, active: true } } : null,

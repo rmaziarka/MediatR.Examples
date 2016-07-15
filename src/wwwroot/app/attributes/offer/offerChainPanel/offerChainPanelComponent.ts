@@ -11,8 +11,7 @@ module Antares.Attributes.Offer.OfferChain {
             inPreviewMode: '<',
             chainCommand: '<',
             chain: '<',
-            chainType: '<',
-            isLastChain: '<'
+            chainType: '<'
         }
     });
 }

@@ -5,6 +5,7 @@
                 <input ng-model="vm.ngModel"
                        id="{{vm.schema.controlId}}"
                        ng-required="vm.config[vm.schema.fieldName].required"
+                       ng-disabled="!vm.config[vm.schema.fieldName].active"
                        type="checkbox">{{vm.schema.translationKey | translate}}
             </label>
             <div ng-messages="vm[vm.schema.formName].text.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].text.$dirty">

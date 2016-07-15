@@ -4,12 +4,16 @@
             <h3 translate="OFFER.CHAIN.PREVIEW.CHAIN_PREVIEW"></h3>
         </side-panel-header>
         <side-panel-content>
-        <!--
-        <div class="side-panel-nav">
-            <a href="#" class="side-panel-prev text-small">Previous</a>
-            <a href="#" class="side-panel-next pull-right">Next</a>
-        </div>
-         -->
+            <!--
+            <div class="side-panel-nav">
+                <a href="#" class="side-panel-prev text-small">Previous</a>
+                <a href="#" class="side-panel-next pull-right">Next</a>
+            </div>
+             -->
+
+            <div class="section-details" ng-if="vm.chain.isEnd">
+                <span translate="OFFER.CHAIN.PREVIEW.IS_END" class="chain-status"></span>
+            </div>
 
             <div class="section-details">
                 <h5 translate="OFFER.CHAIN.PREVIEW.PROPERTY"></h5>
@@ -34,7 +38,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-item">
-                                    {{ vm.chain.vendor }}    
+                                    {{ vm.chain.vendor }}
                                 </div>
                             </div>
                         </div>
@@ -48,7 +52,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-item">
-                                    {{ vm.chain.parent.vendor }}    
+                                    {{ vm.chain.parent.vendor }}
                                 </div>
                             </div>
                         </div>
@@ -66,12 +70,12 @@
                             <div class="card-body">
                                 <div class="card-item">
                                     {{ vm.chain.agentUser.getName() }}
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            
+
                 <company-contact-view-control company-contact="vm.chain.agentCompanyContact"
                                               config="vm.config.agentCompanyContact"
                                               schema="vm.controlSchemas.agentCompanyContact">
