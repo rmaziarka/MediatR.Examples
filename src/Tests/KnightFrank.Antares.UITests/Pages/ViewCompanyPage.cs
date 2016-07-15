@@ -46,7 +46,7 @@
 
         public ViewCompanyPage EditCompany()
         {
-            this.Driver.GetElement(this.editCompanyButton).Click();
+            this.Driver.Click(this.editCompanyButton);
             this.Driver.WaitForAngularToFinish();
             return this;
         }

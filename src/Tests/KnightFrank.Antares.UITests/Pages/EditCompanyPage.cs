@@ -44,7 +44,7 @@
 
         public EditCompanyPage AddContactToCompany()
         {
-            this.Driver.GetElement(this.addContact).Click();
+            this.Driver.Click(this.addContact);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
@@ -75,7 +75,7 @@
 
         public EditCompanyPage SaveCompany()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 
