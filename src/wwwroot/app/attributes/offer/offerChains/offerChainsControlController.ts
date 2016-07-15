@@ -74,12 +74,9 @@ module Antares.Attributes.Offer {
                     }
                 });
         };
-        isEndOfChainVisibleInPanel = () => {
-            return false;
-        }
 
         public isAddChainButtonVisible = () => {
-            if (!this.chains || this.chains.length == 0) {
+            if (!this.chains || this.chains.length === 0) {
                 return true;
             }
 
