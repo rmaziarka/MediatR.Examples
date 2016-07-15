@@ -4,7 +4,7 @@ module Antares.Attributes.Offer {
     import Enums = Common.Models.Enums;
     import RequirementService = Requirement.RequirementService;
     import KfModalService = Services.KfModalService;
-    import ActivityService = Antares.Services.ActivityService;
+    import ActivityService = Services.ActivityService;
     import ChainTransaction = Common.Models.Business.ChainTransaction;
     import Property = Common.Models.Dto.IProperty;
 
