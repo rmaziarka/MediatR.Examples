@@ -12,7 +12,7 @@
     public class ViewCompanyPage : ProjectPageBase
     {
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector, "#clientCarePageUrl [name = 'url']");
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "clientCareStatus");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator companyViewForm = new ElementLocator(Locator.CssSelector, "company-view");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");

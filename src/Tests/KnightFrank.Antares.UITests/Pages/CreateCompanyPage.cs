@@ -16,7 +16,7 @@
     {
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
         private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
