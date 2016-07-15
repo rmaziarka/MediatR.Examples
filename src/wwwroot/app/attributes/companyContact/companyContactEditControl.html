@@ -1,11 +1,15 @@
 <ng-form name='vm.{{vm.schema.formName}}' ng-if="vm.config" id="{{vm.schema.controlId}}-section" class="form-group">
-    <h5>{{vm.schema.translationKey | translate}}</h5>
-    <div class="form-group">
+    <h5 ng-class="{'required': vm.config[vm.schema.fieldName].required}">{{vm.schema.translationKey | translate}}</h5>
+    <div class="form-group" show-errors>
         <button  id="{{vm.schema.controlId}}-add-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
             <i class="fa"  ng-class="{'fa-plus-circle': !vm.companyContact, 'fa-pencil': vm.companyContact}" aria-hidden="true"></i>
         </button>
         <div ng-if="!vm.companyContact">
             <p class="help-block" id="no-contacts-help-block" ng-show="vm[vm.schema.formName].$submitted === false">{{vm.schema.emptyTranslationKey | translate}}</p>
+        </div>
+        <input class="form-control" type="hidden" name="companyContact" ng-model="vm.companyContact" ng-required="vm.config[vm.schema.fieldName].required" />
+        <div ng-messages="vm[vm.schema.formName].companyContact.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].companyContact.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
     <div id="{{vm.schema.controlId}}" class="row" ng-if="vm.companyContact">
@@ -16,7 +20,7 @@
             </card-list-item>
         </div>
     </div>
-    <company-contacts-add-panel is-visible="vm.isPanelVisible" on-save="vm.onContactSelected(contacts)" allow-multiple-select="false"
+    <company-contacts-add-panel ng-if="!vm.onEdit" is-visible="vm.isPanelVisible" on-save="vm.onContactSelected(contacts)" allow-multiple-select="false"
                                 initialy-selected-company-contacts="vm.selectedCompanyContacts">
     </company-contacts-add-panel>
 </ng-form>

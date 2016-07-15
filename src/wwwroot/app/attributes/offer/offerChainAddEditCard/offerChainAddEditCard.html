@@ -28,7 +28,6 @@
                                               config="vm.config.agentCompanyContact"
                                               type="vm.companyContactType.ChainAgent"
                                               company-contact="vm.chain.agentCompanyContact"
-                                              is-panel-visible="vm.isThirdPartyAgentEditPanelVisible"
                                               on-edit="vm.editCompanyContact(companyContact, type)">
                 </company-contact-edit-control>
 
@@ -54,7 +53,7 @@
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">
                 <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
             </button>
-            <button class="btn btn-primary" id="activity-add-button" type="submit">
+            <button class="btn btn-primary" id="chain-add-edit-button" type="submit">
                 <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
             </button>
         </side-panel-footer>

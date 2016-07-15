@@ -16,14 +16,21 @@ module Antares.Common.Models.Enums
 	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ChainMortgageStatus,
 	 	ClientCareStatus,
 	 	MortgageSurveyStatus,
+	 	ChainMortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
+	 	ChainSearchStatus,
 	 	Enquiries,
+	 	ChainEnquiries,
+	 	ChainContractAgreedStatus,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
+	 	DisposalType,
+	 	Decoration,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 }
@@ -102,11 +109,19 @@ module Antares.Common.Models.Enums
 
 	export enum MortgageStatus
 	{
+		Agreed,
 		Unknown,
 		NotRequiredCashFromSale,
 		NotRequiredCashInBank,
 		InProgress,
-		Agreed,
+	}
+
+	export enum ChainMortgageStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
 	}
 
 	export enum ClientCareStatus
@@ -124,6 +139,14 @@ module Antares.Common.Models.Enums
 		Outstanding,
 	}
 
+	export enum ChainMortgageSurveyStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
+	}
+
 	export enum AdditionalSurveyStatus
 	{
 		Unknown,
@@ -139,6 +162,12 @@ module Antares.Common.Models.Enums
 		Complete,
 	}
 
+	export enum ChainSearchStatus
+	{
+		Complete,
+		Outstanding,
+	}
+
 	export enum Enquiries
 	{
 		NotStarted,
@@ -146,26 +175,22 @@ module Antares.Common.Models.Enums
 		Complete,
 	}
 
+	export enum ChainEnquiries
+	{
+		Complete,
+		Outstanding,
+	}
+
+	export enum ChainContractAgreedStatus
+	{
+		Complete,
+		Outstanding,
+	}
+
 	export enum SalutationFormat
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
-	}
-
-	export enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	export enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
 	}
 
 	export enum ActivitySource
@@ -211,5 +236,36 @@ module Antares.Common.Models.Enums
 		Relocation,
 		Retiring,
 		SurpliceToRequirement,
+	}
+
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	export enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }

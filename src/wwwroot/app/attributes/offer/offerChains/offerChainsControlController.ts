@@ -46,7 +46,7 @@ module Antares.Attributes.Offer {
         public previewChain = (chain: ChainTransaction) => {
 
             if (chain.parentId) {
-                var parentChain = this.chains.filter((parentChain: ChainTransaction) =>{ return parentChain.id === chain.parentId; })[0];
+                var parentChain = this.chains.filter((parentChain: ChainTransaction) => { return parentChain.id === chain.parentId; })[0];
                 chain.parent = new Business.ChainTransaction(parentChain);
             }
 
@@ -60,24 +60,29 @@ module Antares.Attributes.Offer {
             var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             promise.then(this.onRemoveConfirm);
         };
-        private onRemoveConfirm = () =>{
+        private onRemoveConfirm = () => {
             this.chainTransationsService
                 .removeChain(this.currentChain, this.chainCommand, this.chainType)
-                .then((model: Dto.IActivity | Dto.IRequirement) =>{
+                .then((model: Dto.IActivity | Dto.IRequirement) => {
                     if (this.chainType === Enums.OfferChainsType.Activity) {
-                        var activity = <Dto.IActivity> model;
+                        var activity = <Dto.IActivity>model;
                         this.eventAggregator.publish(new ActivityUpdatedOfferChainsEvent(activity));
                     }
                     else {
-                        var requirement = <Dto.IRequirement> model;
+                        var requirement = <Dto.IRequirement>model;
                         this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
                     }
                 });
         };
-        isEndOfChainVisibleInPanel = () =>{
-            return false;
-        };
+
+        public isAddChainButtonVisible = () => {
+            if (!this.chains || this.chains.length === 0) {
+                return true;
+            }
+
+            return !this.chains[this.chains.length - 1].isEnd;
         }
+    }
 
     angular.module('app').controller('OfferChainsControlController', OfferChainsControlController);
 }

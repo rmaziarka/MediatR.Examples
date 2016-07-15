@@ -24,10 +24,7 @@ module Antares.Attributes.Offer.OfferChain {
         //properties
         offerChainAddEditCardForm: ng.IFormController;
         configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
-
-
-        isThirdPartyAgentEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
-        public companyContactType = Common.Models.Enums.CompanyContactType;
+        companyContactType = Common.Models.Enums.CompanyContactType;
 
         // controls
         controlSchemas: any = {
@@ -126,6 +123,7 @@ module Antares.Attributes.Offer.OfferChain {
 
         constructor(
             private dataAccessService: Services.DataAccessService,
+            private enumProvider: Providers.EnumProvider,
             private eventAggregator: Core.EventAggregator) {
         }
 
@@ -134,6 +132,10 @@ module Antares.Attributes.Offer.OfferChain {
                 if (this.offerChainAddEditCardForm) {
                     this.offerChainAddEditCardForm.$setPristine();
                 }
+            }
+
+            if (obj.chain && obj.chain.currentValue && !obj.chain.currentValue.id) {
+                this.setDefaultStatuses(this.chain);
             }
         }
 
@@ -159,6 +161,37 @@ module Antares.Attributes.Offer.OfferChain {
 
         public save = () => {
             this.onSave({ chain: angular.copy(this.chain) });
+        }
+
+        private setDefaultStatuses(chain: Business.ChainTransaction) {
+            chain.mortgageId = this.getDefaultStatus(
+                Common.Models.Enums.ChainMortgageStatus[Common.Models.Enums.ChainMortgageStatus.Unknown],
+                Dto.EnumTypeCode.ChainMortgageStatus);
+
+            chain.surveyId = this.getDefaultStatus(
+                Common.Models.Enums.ChainMortgageSurveyStatus[Common.Models.Enums.ChainMortgageSurveyStatus.Unknown],
+                Dto.EnumTypeCode.ChainMortgageSurveyStatus);
+
+            chain.searchesId = this.getDefaultStatus(
+                Common.Models.Enums.ChainSearchStatus[Common.Models.Enums.ChainSearchStatus.Outstanding],
+                Dto.EnumTypeCode.ChainSearchStatus);
+
+            chain.enquiriesId = this.getDefaultStatus(
+                Common.Models.Enums.ChainEnquiries[Common.Models.Enums.ChainEnquiries.Outstanding],
+                Dto.EnumTypeCode.ChainEnquiries);
+
+            chain.contractAgreedId = this.getDefaultStatus(
+                Common.Models.Enums.ChainContractAgreedStatus[Common.Models.Enums.ChainContractAgreedStatus.Outstanding],
+                Dto.EnumTypeCode.ChainContractAgreedStatus);
+        }
+
+        private getDefaultStatus = (defaultStatusCode: string, enumDictionary: any): string => {
+            var statuses = this.enumProvider.enums[enumDictionary];
+            var defaultStatus: Dto.IEnumItem = _.find(statuses, { 'code': defaultStatusCode });
+            if (defaultStatus) {
+                return defaultStatus.id;
+            }
+            return null;
         }
     }
 

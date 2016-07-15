@@ -1,7 +1,7 @@
 <div class="section-details" ng-if="vm.config">
     <h3 class="page-header">Upward chain</h3>
 
-    <div class="form-group">
+    <div class="form-group" ng-if="vm.isAddChainButtonVisible()">
         <button type="button" class="btn btn-default" ng-click="vm.addChain()"><i class="fa fa-plus-circle"></i></button>
     </div>
 
@@ -18,7 +18,6 @@
         in-preview-mode="vm.panelInPreviewMode"
         chain-command="vm.chainCommand"
         chain="vm.currentChain"
-        chain-type="vm.chainType"
-        is-last-chain="vm.isEndOfChainVisibleInPanel()">
+        chain-type="vm.chainType">
     </offer-chain-panel>
 </div>

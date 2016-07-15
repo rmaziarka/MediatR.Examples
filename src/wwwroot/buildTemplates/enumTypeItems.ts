@@ -10,93 +10,10 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
-	 	OfferStatus,
-	 	UserType,
-	 	ActivityDepartmentType,
-	 	SalutationFormat,
-	 }
-
-	
-	export enum EntityType
-	{
-		Property,
-		Requirement,
-	}
-
-	export enum OwnershipType
-	{
-		Freeholder,
-		Leaseholder,
-	}
-
-	export enum ActivityStatus
-	{
-		PreAppraisal,
-		MarketAppraisal,
-		NotSelling,
-	}
-
-	export enum Division
-	{
-		Residential,
-		Commercial,
-	}
-
-	export enum ActivityDocumentType
-	{
-		TermsOfBusiness,
-		MarketingSignOff,
-		CDDDocument,
-		Photograph,
-		FloorPlan,
-		Brochure,
-		VideoTour,
-		EPC,
-		GasCertificate,
-	}
-
-	export enum OfferStatus
-	{
-		New,
-		Withdrawn,
-		Rejected,
-		Accepted,
-	}
-
-	export enum UserType
-	{
-		LeadNegotiator,
-		SecondaryNegotiator,
-	}
-
-	export enum ActivityDepartmentType
-	{
-		Managing,
-		Standard,
-	}
-
-	export enum SalutationFormat
-	{
-		MrJohnSmith,
-		JohnSmithEsq,
-	}
-}
-// <copyright file="enumTypeItems.tt">
-// </copyright>
-// ReSharper disable InconsistentNaming
-module Antares.Common.Models.Enums
-{
-	export enum EnumType
-	{
-	 	EntityType,
-	 	OwnershipType,
-	 	ActivityStatus,
-	 	Division,
-	 	ActivityDocumentType,
 	 	RequirementDocumentType,
 	 	PropertyDocumentType,
 	 	OfferStatus,
-	 	ActivityUserType,
+	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ChainMortgageStatus,
@@ -114,6 +31,8 @@ module Antares.Common.Models.Enums
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	MailingSalutation,
+	 	EventSalutation,
 	 }
 
 	
@@ -176,7 +95,7 @@ module Antares.Common.Models.Enums
 		Accepted,
 	}
 
-	export enum ActivityUserType
+	export enum UserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,
@@ -332,5 +251,21 @@ module Antares.Common.Models.Enums
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }
