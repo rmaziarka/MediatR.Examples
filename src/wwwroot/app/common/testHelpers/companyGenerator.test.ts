@@ -18,7 +18,7 @@ module Antares.TestHelpers {
                 description: CompanyGenerator.makeRandom('desc'),
                 companyCategoryId: CompanyGenerator.makeRandom('categoryid'),
                 companyTypeId: CompanyGenerator.makeRandom('typeid'),
-                valid: false,
+                valid: true,
                 relationshipManager: UserGenerator.generateDto()
             }
 

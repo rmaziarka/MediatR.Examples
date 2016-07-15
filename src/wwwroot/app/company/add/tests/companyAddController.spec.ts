@@ -24,7 +24,7 @@ module Antares {
             clientCarePageSelector : "input#clientcareurl"
         };
 
-        const enumProviderMockedValues = <Dto.IEnumDictionary>{
+        const enumProviderMockedValues :any = {
             companyCategory: [{ id: "123", "code": "big" }],
             companyType: [{ id: "1234", "code": "red" }]
         };
@@ -39,14 +39,14 @@ module Antares {
             $http = $httpBackend;
             state = $state;
 
-            enumProvider.enums = enumProviderMockedValues;
+            enumProvider.enums = <Dto.IEnumDictionary>enumProviderMockedValues;
 
             scope = $rootScope.$new();
             element = $compile('<company-add></company-add>')(scope);
             scope.$apply();
             controller = element.controller("companyAdd");
 
-            assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
         it('when name value is missing then required message should be displayed', () =>{
@@ -123,7 +123,6 @@ module Antares {
 
         it('when form filled and save then should be send data', () =>{
             // arrange
-            var button = element.find(pageObjectSelectors.companySaveBtnSelector);
             var requestData: Dto.ICreateCompanyResource;
             var company = TestHelpers.CompanyGenerator.generate();
             var expectedContactIds = company.contacts.map((contact: Dto.IContact) =>{ return contact.id });
@@ -148,6 +147,11 @@ module Antares {
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
             expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
+            expect(requestData.description).toEqual(company.description);
+            expect(requestData.companyCategoryId).toEqual(company.companyCategoryId);
+            expect(requestData.companyTypeId).toEqual(company.companyTypeId);
+            expect(requestData.relationshipManagerId).toEqual(company.relationshipManager.id);
+            expect(requestData.valid).toEqual(company.valid);
             expect(angular.equals(requestData.contactIds, expectedContactIds)).toBe(true);
         });
 
