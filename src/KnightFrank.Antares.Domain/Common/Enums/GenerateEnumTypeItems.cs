@@ -32,6 +32,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityMatchFlexPrice,
 	 	ActivityMatchFlexRent,
 	 	RentPaymentPeriod,
+	 	SalesBoardType,
+	 	SalesBoardStatus,
 	 }
 
 	
@@ -263,5 +265,22 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	{
 		Weekly,
 		Monthly,
+	}
+
+	public enum SalesBoardType
+	{
+		None,
+		Flag,
+		VBoard,
+	}
+
+	public enum SalesBoardStatus
+	{
+		ForSale,
+		Sold,
+		SoldSTC,
+		UnderOffer,
+		ToLet,
+		Let,
 	}
 }

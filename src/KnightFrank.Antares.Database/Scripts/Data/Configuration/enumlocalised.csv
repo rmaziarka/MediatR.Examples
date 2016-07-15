@@ -137,3 +137,12 @@ ActivityMatchFlexRent;MinimumRent;en;Minimum rent
 ActivityMatchFlexRent;Percentage;en;Percentage
 RentPaymentPeriod;Weekly;en;per week
 RentPaymentPeriod;Monthly;en;per month
+SalesBoardType;None;en;None
+SalesBoardType;Flag;en; Flag
+SalesBoardType;VBoard;en;V Board
+SalesBoardStatus;ForSale;en;For Sale
+SalesBoardStatus;Sold;en;Sold
+SalesBoardStatus;SoldSTC;en;Sold STC
+SalesBoardStatus;UnderOffer;en;Under Offer
+SalesBoardStatus;ToLet;en;To Let
+SalesBoardStatus;Let;en;Let

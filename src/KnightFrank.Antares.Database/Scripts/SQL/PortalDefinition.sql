@@ -8,7 +8,7 @@ CREATE TABLE #TempPortal (
 );
 
 BULK INSERT #TempPortalDefinition
-    FROM '$(OutputPath)Scripts\Data\Configuration\portaldefinition.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\portaldefinition.csv'
                WITH
     (
 		FIRSTROW = 2,
