@@ -17,6 +17,7 @@ module Antares.Attributes.Offer {
 
         //fields
         currentChain: ChainTransaction;
+        chainToRemove: ChainTransaction;
         panelInPreviewMode: boolean = false;
         chains: Dto.IChainTransaction[];
         titleCode: string = "OFFER.VIEW.DELETE_CHAIN_TITLE";
@@ -31,6 +32,15 @@ module Antares.Attributes.Offer {
             var tempCommand = angular.copy(this.chainCommand);
             this.chains = tempCommand.chainTransactions;
         };
+
+        public removeCurrentChainIfNotAvailable = () => {
+            var chainFromList = this.chains.filter(c => c.id == this.currentChain.id)[0];
+
+            if(chainFromList){
+                return;
+            }
+        }
+
         public addChain = () => {
             this.currentChain = new ChainTransaction();
             this.panelInPreviewMode = false;
@@ -56,24 +66,35 @@ module Antares.Attributes.Offer {
             this.eventAggregator.publish(new OpenChainPanelEvent());
         };
         public removeChain = (chain: ChainTransaction) => {
-            this.currentChain = chain;
+            this.chainToRemove = chain;
             var promise = this.kfModalService.showModal(this.titleCode, this.messageCode, this.confirmCode);
             promise.then(this.onRemoveConfirm);
         };
+
         private onRemoveConfirm = () => {
             this.chainTransationsService
-                .removeChain(this.currentChain, this.chainCommand, this.chainType)
-                .then((model: Dto.IActivity | Dto.IRequirement) => {
-                    if (this.chainType === Enums.OfferChainsType.Activity) {
-                        var activity = <Dto.IActivity>model;
-                        this.eventAggregator.publish(new ActivityUpdatedOfferChainsEvent(activity));
-                    }
-                    else {
-                        var requirement = <Dto.IRequirement>model;
-                        this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
-                    }
-                });
+                .removeChain(this.chainToRemove, this.chainCommand, this.chainType)
+                .then((model: Dto.IActivity | Dto.IRequirement) => this.chainRemoved);
         };
+
+        private chainRemoved = (model: Dto.IActivity | Dto.IRequirement) => {
+            if(this.currentChain && this.currentChain.id == this.chainToRemove.id){
+                this.currentChain = null;
+
+                if(this.isPanelVisible){
+                    this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+                }
+            }
+            
+            if (this.chainType === Enums.OfferChainsType.Activity) {
+                var activity = <Dto.IActivity>model;
+                this.eventAggregator.publish(new ActivityUpdatedOfferChainsEvent(activity));
+            }
+            else {
+                var requirement = <Dto.IRequirement>model;
+                this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
+            }
+        }
 
         public isAddChainButtonVisible = () => {
             if (!this.chains || this.chains.length === 0) {

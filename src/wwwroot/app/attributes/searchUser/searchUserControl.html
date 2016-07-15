@@ -10,13 +10,12 @@
         <button class="btn btn-default" id="user-btn" type="button" ng-click="vm.editUser()">
             <i class="fa" ng-class="{'fa-plus-circle': !vm.user, 'fa-pencil': vm.user}"></i>
         </button>
+        <div ng-if="!vm.user && !vm.isInEditMode">
+            <p class="help-block" id="no-contacts-help-block" ng-show="vm[vm.schema.formName].$submitted === false">{{vm.schema.emptyTranslationKey | translate}}</p>
+        </div>
     </div>
 
-    <div ng-if="!vm.user && !vm.isInEditMode">
-        <p class="help-block" id="no-contacts-help-block" ng-show="vm[vm.schema.formName].$submitted === false">{{vm.schema.emptyTranslationKey | translate}}</p>
-    </div>
-
-    <div class="section-row row" ng-show="vm.user">
+    <div class="row" ng-show="vm.user">
         <div class="col-xs-12">
             <div class="panel panel-default applicant">
                 <div class="panel-body">
