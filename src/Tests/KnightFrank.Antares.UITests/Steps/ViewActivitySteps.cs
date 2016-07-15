@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     using FluentAssertions;
@@ -69,28 +68,7 @@
             this.page.EditActivity();
         }
 
-        [When(@"User clicks add attachment button on view activity page")]
-        public void OpenAttachFilePanel()
-        {
-            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
-        }
-
-        [When(@"User adds (.*) file with (.*) type on view activity page")]
-        public void AddAttachment(string file, string type)
-        {
-            this.page.AttachFile.SelectType(type)
-                .AddFiletoAttachment(file)
-                .SaveAttachment();
-            this.page.WaitForSidePanelToHide(60);
-        }
-
-        [When(@"User clicks attachment card on view activity page")]
-        public void OpenAttachmentPreview()
-        {
-            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
-        }
-
-        [When(@"User clicks (.*) viewings details link on view activity page")]
+        [When(@"User clicks (.*) viewings details link on overview tab on view activity page")]
         public void OpenViewingsDetails(int position)
         {
             this.page.OpenViewingDetails(position).WaitForSidePanelToShow();
@@ -131,20 +109,16 @@
             this.page.OpenDetailsTab();
         }
 
-        [When(@"User switchs to overview tab on view activity page")]
+        [When(@"User switches to overview tab on view activity page")]
         public void SwitchToOverviewTab()
         {
             this.page.OpenOverviewTab();
         }
 
-        [Then(@"Activity attachment (.*) should be downloaded")]
-        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        [When(@"User switches to attachments tab on view activity page")]
+        public void SwitchToAttachmentsTab()
         {
-            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
-
-            Verify.That(this.driverContext,
-                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
-                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
+            this.page.OpenAttachmentsTab();
         }
 
         [Then(@"Address details on view activity page are following")]
@@ -179,43 +153,23 @@
                 () => Assert.Equal(details.ActivityStatus, this.page.Status));
         }
 
-        [Then(@"Attachment should be displayed on view activity page")]
-        public void CheckIfAttachmentIsDisplayed(Table table)
-        {
-            ViewActivityPage.Attachment actual = this.page.AttachmentDetails;
-            var expected = table.CreateInstance<ViewActivityPage.Attachment>();
-            expected.Date = DateTime.UtcNow.ToString(Format);
-
-            actual.ShouldBeEquivalentTo(expected);
-        }
-
-        [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
-        public void ChackAttachmentDetails()
-        {
-            ViewActivityPage.Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
-            actual.Date = actual.Date.Split(',')[0];
-            ViewActivityPage.Attachment expected = this.page.AttachmentDetails;
-            expected.User = "John Smith";
-
-            actual.ShouldBeEquivalentTo(expected);
-        }
-
         [Then(@"View activity page should be displayed")]
         public void CheckIfViewActivityPresent()
         {
             Assert.True(this.page.IsViewActivityFormPresent());
         }
 
-        [Then(@"Viewing details on (.*) position on view activity page are same as the following")]
+        [Then(@"Viewing details on (.*) position on overview tab on view activity page are same as the following")]
         public void CheckViewing(int position, Table table)
         {
             var expectedDetails = table.CreateInstance<ViewingData>();
             List<string> actualDetails = this.page.GetViewingDetails(position);
 
             Verify.That(this.driverContext, () => Assert.Equal(this.page.ViewingsNumber, 1),
-                () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
+                () => Assert.Equal(expectedDetails.Name, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Date + ",", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Time, actualDetails[2]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[3]));
         }
 
         [Then(@"Viewing details on view activity page are same as the following")]
@@ -231,13 +185,6 @@
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
                 () => Assert.Equal(expectedDetails.PostViewingComment, this.page.ViewingDetails.PostViewingComment));
-        }
-
-        [Then(@"User closes attachment preview page on view activity page")]
-        public void CloseAttachmentPreviewPanel()
-        {
-            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
-            this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"(.*) is set as lead negotiator on view activity page")]
@@ -262,22 +209,46 @@
             expectedSecondary.Should().Equal(actual, (n1, n2) => n1.Name.Equals(n2.Name) && n1.NextCall.Equals(n2.NextCall));
         }
 
-        [Then(@"Offer should be displayed on view activity page")]
+        [Then(@"Offer should be displayed on overview tab on view activity page")]
         public void CheckIfOfferDisplayed()
         {
             Assert.Equal(1, this.page.OffersNumber);
+            Assert.Equal(1, int.Parse(this.page.OffersCounter));
         }
 
-        [Then(@"Offer details on (.*) position on view activity page are same as the following")]
-        public void CheckOffer(int position, Table table)
+        [Then(@"Viewing should be displayed on overview tab on view activity page")]
+        public void CheckIViewingDisplayed()
+        {
+            Assert.Equal(1, this.page.ViewingsNumber);
+            Assert.Equal(1, int.Parse(this.page.ViewingsCounter));
+        }
+
+        [Then(@"Letting offer details on (.*) position on overview tab on view activity page are same as the following")]
+        public void CheckLettingOffer(int position, Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             List<string> actualDetails = this.page.GetOfferDetails(position);
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer + " GBP", actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[2]),
+                () => Assert.Equal(this.scenarioContext.Get<OfferData>("Offer").ExchangeDate, actualDetails[3]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[4]));
+        }
+
+        [Then(@"Sale offer details on (.*) position on overview tab on view activity page are same as the following")]
+        public void CheckSalesOffer(int position, Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails[2]),
+                () => Assert.Equal(this.scenarioContext.Get<OfferData>("Offer").ExchangeDate, actualDetails[3]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[4]));
         }
 
         [Then(@"Offer details on view activity page are same as the following")]
