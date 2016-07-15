@@ -190,8 +190,7 @@ module Antares.Attributes.Offer.OfferChain {
                 command.agentUserId = null;
                 command.agentContactId = command.agentCompanyContact.contact.id;
                 command.agentCompanyId = command.agentCompanyContact.company.id;
-            }
-            else {
+            } else {
                 command.agentContactId = null;
                 command.agentCompanyId = null;
                 command.agentUserId = null;
