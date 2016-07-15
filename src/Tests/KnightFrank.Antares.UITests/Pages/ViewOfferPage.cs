@@ -24,11 +24,13 @@
         // Activity
         private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, ".offer-view-activity .ng-binding");
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, ".offer-view-activity .card-body");
+        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
         // Requirement
         private readonly ElementLocator requirementDetails = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .ng-binding");
         private readonly ElementLocator requirement = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .card-body");
         private readonly ElementLocator requirementActions = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .card-menu-button");
         private readonly ElementLocator openRequirement = new ElementLocator(Locator.CssSelector, ".offer-view-requirement [action *= 'navigateToRequirement'] li");
+        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
         // Messages
         private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
         private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
@@ -50,9 +52,11 @@
         private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additionalSurveyor .ng-binding");
         // Other details
         private readonly ElementLocator comment = new ElementLocator(Locator.Id, "offer-progress-comment");
-        // Solicitors
-        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
-        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
+        // Upward chain
+        private readonly ElementLocator addUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-control [ng-click *= 'addChain']");
+        private readonly ElementLocator upwardChains = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain'] .card");
+        private readonly ElementLocator upwardChainDetails = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card .ng-binding");
+        private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "offer-chains-list address-form-view .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
         {
@@ -60,12 +64,14 @@
 
         public ActivityPreviewPage ActivityPreview => new ActivityPreviewPage(this.DriverContext);
 
+        public CreateChainTransactionPage ChainTransaction => new CreateChainTransactionPage(this.DriverContext);
+
         public List<string> OfferDetails => this.Driver.GetElements(this.details).Select(el => el.Text).ToList();
 
         public int ActivityNumber => this.Driver.GetElements(this.activity).Count;
 
         public int RequirementNumber => this.Driver.GetElements(this.requirement).Count;
-
+        
         public string RequirementDetails => this.Driver.GetElement(this.requirementDetails).Text;
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
@@ -101,6 +107,12 @@
         public List<string> VendorSolicitor => this.Driver.GetElements(this.vendorSolicitor).Select(el => el.Text).ToList();
 
         public List<string> ApplicantSolicitor => this.Driver.GetElements(this.applicantSolicitor).Select(el => el.Text).ToList();
+
+        public int UpwardChainNumber => this.Driver.GetElements(this.upwardChains).Count;
+
+        public string UpwardChainDetails => this.Driver.GetElement(this.upwardChainDetails).Text;
+
+        public string PropertyDetails => this.Driver.GetElements(this.property).Select(el => el.Text).ToList().Aggregate((i, j) => i + " " + j);
 
         public ViewOfferPage OpenViewOfferPageWithId(string id)
         {
@@ -166,6 +178,12 @@
                     .Select(el => el.GetTextContent())
                     .ToList();
             return string.Join(" ", list).Trim();
+        }
+
+        public ViewOfferPage AddUpwardChain()
+        {
+            this.Driver.Click(this.addUpwardChain);
+            return this;
         }
     }
 

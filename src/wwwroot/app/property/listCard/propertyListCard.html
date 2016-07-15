@@ -5,7 +5,8 @@
     <side-panel-content>
         <div ng-show="vm.isLoading" translate="COMMON.LOADINGDATA"></div>
         <card-list-item class="property-card" ng-repeat="property in vm.properties track by property.id">
-            <card show-context-menu="true"
+            <card id="property-card-{{property.id}}"
+                  show-context-menu="true"
                   show-item-details=""
                   display-new-control="true" 
                   card-selected="vm.cardSelected"
