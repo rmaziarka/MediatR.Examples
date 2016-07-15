@@ -3,7 +3,6 @@
 module Antares.Common.Component.Attachment {
     import AzureBlobUploadFactory = Antares.Factories.AzureBlobUploadFactory;
     import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
 
     interface IAttachmentUploadCardChange {
@@ -32,13 +31,13 @@ module Antares.Common.Component.Attachment {
             private $q: ng.IQService,
             private azureBlobUploadFactory: AzureBlobUploadFactory,
             private dataAccessService: Services.DataAccessService,
-            private eventAggregator: Antares.Core.EventAggregator) {
+            private eventAggregator: Core.EventAggregator) {
 
             this.urlResource = dataAccessService.getAzureUploadUrlResource();
         }
 
         $onChanges(changesObj: IAttachmentUploadCardChange) {
-            if (changesObj.attachmentClear && changesObj.attachmentClear.currentValue === true) {
+            if (changesObj.attachmentClear && changesObj.attachmentClear.currentValue) {
                 this.clearAttachmentForm();
             }
         }
