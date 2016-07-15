@@ -22,7 +22,7 @@
                     <label for="name" translate="COMPANY.CATEGORY"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory"></enum-select>
+                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory" sort="true"></enum-select>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <label for="name" translate="COMPANY.TYPE"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType"></enum-select>
+                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType"  sort="true"></enum-select>
                         </div>
                     </div>
                 </div>

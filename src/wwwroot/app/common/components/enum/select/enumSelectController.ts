@@ -11,6 +11,7 @@ module Antares.Common.Component {
         public ngModel: string; // set via binding
         public enumTypeCode: string; // set via binding
         public hideEmptyValue: boolean; // set via binding
+        public sort: boolean; // set via binding
         public selectOption: any;
 
         private items: Dto.IEnumItem[];
@@ -22,10 +23,13 @@ module Antares.Common.Component {
 
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
-
-
-        private onEnumLoaded = (result: any) => {
-            this.items = result[this.enumTypeCode];
+        
+        private onEnumLoaded = (result: any) =>{
+            let enumList: any[] = result[this.enumTypeCode];
+            if (this.sort) {
+                enumList = _.sortBy(enumList, 'code');
+            }
+            this.items = enumList;
         }
     }
 
