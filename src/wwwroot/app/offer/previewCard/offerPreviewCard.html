@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="section-details" ng-if="vm.showActivity">
+        <div id="offer-preview-activity" class="section-details" ng-if="vm.showActivity">
             <h5 translate="COMMON.ACTIVITY"></h5>
             <card-list-item class="offer-preview-activity">
                 <card show-context-menu="true" display-new-control="true"
@@ -24,7 +24,7 @@
             </card-list-item>
         </div>
 
-        <div class="section-details" ng-if="vm.showRequirement">
+        <div id="offer-preview-requirement" class="section-details" ng-if="vm.showRequirement">
             <requirement-card requirement="vm.offer.requirement" />
         </div>
 
@@ -55,7 +55,7 @@
 
     </side-panel-content>
     <side-panel-footer>
-        <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()" ng-if="vm.canEdit">
+        <button type="button" id="offer-preview-card-edit-button" class="btn btn-default pull-left" ng-click="vm.edit()" ng-if="vm.canEdit">
             <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
         </button>
     </side-panel-footer>
