@@ -1,10 +1,11 @@
 ﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
-    <search ng-show="vm.isInEditMode" id="user-search"
-            options="vm.searchOptions"
-            focus-on="vm.isInEditMode"
-            blur-on="!vm.isInEditMode"
-            on-select-item="vm.changeUser" on-cancel="vm.cancelChangeUser" load-items="vm.getUsers"
-            item-template-url="{{vm.schema.itemTemplateUrl}}" search-placeholder="{{vm.schema.searchPlaceholderTranslationKey}}"></search>
+    <div show-errors>
+        <search ng-show="vm.isInEditMode" id="user-search"
+                options="vm.searchOptions"
+                focus-on="vm.isInEditMode"
+                blur-on="!vm.isInEditMode"
+                on-select-item="vm.changeUser" on-cancel="vm.cancelChangeUser" load-items="vm.getUsers"
+                item-template-url="{{vm.schema.itemTemplateUrl}}" search-placeholder="{{vm.schema.searchPlaceholderTranslationKey}}"></search>
 
     <div id="user-add-edit-btn-wrapper" ng-hide="vm.isInEditMode" class="form-group">
         <button class="btn btn-default" id="user-btn" type="button" ng-click="vm.editUser()">
@@ -22,6 +23,8 @@
                     {{ vm.user.getName() }}
                 </div>
             </div>
+        </div>
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
 </ng-form>

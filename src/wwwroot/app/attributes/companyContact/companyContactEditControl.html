@@ -1,5 +1,5 @@
 <ng-form name='vm.{{vm.schema.formName}}' ng-if="vm.config" id="{{vm.schema.controlId}}-section" class="form-group">
-    <h5 ng-class="{'required': vm.config[vm.schema.fieldName].required}">{{vm.schema.translationKey | translate}}</h5>
+    <h5 ng-if="vm.schema.translationKey" ng-class="{'required': vm.config[vm.schema.fieldName].required}">{{vm.schema.translationKey | translate}}</h5>
     <div class="form-group" show-errors>
         <button  id="{{vm.schema.controlId}}-add-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
             <i class="fa"  ng-class="{'fa-plus-circle': !vm.companyContact, 'fa-pencil': vm.companyContact}" aria-hidden="true"></i>

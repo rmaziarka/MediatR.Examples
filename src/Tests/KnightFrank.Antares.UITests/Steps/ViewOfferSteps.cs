@@ -70,6 +70,12 @@
             this.page.EditOffer();
         }
 
+        [When(@"User clicks add upward chain button on view offer page")]
+        public void AddUpwardChain()
+        {
+            this.page.AddUpwardChain().WaitForSidePanelToShow();
+        }
+
         [Then(@"View offer page should be displayed")]
         public void CheckIfViewOfferPresent()
         {

@@ -18,6 +18,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
@@ -69,10 +70,10 @@
                    .ToList()
                    .ForEach(x => activity.ChainTransactions.Add(new ChainTransaction {Id = x.Id }));
 
-            IEnumerable<UpdateActivityChainTransaction> existingChains = message.ChainTransactions
+            IEnumerable<UpdateChainTransaction> existingChains = message.ChainTransactions
                                         .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id));
 
-            foreach (UpdateActivityChainTransaction existingChain in existingChains)
+            foreach (UpdateChainTransaction existingChain in existingChains)
             {
                 ChainTransaction chainToUpdate = activity.ChainTransactions.Single(x => x.Id == existingChain.Id);
                 Mapper.Map(existingChain, chainToUpdate);
@@ -86,7 +87,7 @@
                 throw new BusinessValidationException(ErrorMessage.Activity_ChainTransactions_IsEndCountMoreThenOne);
             }
 
-            foreach (UpdateActivityChainTransaction chainTransaction in message.ChainTransactions)
+            foreach (UpdateChainTransaction chainTransaction in message.ChainTransactions)
             {
                 this.enumTypeItemValidator.ItemExists(EnumType.ChainMortgageSurveyStatus, chainTransaction.SurveyId);
                 this.enumTypeItemValidator.ItemExists(EnumType.ChainMortgageStatus, chainTransaction.MortgageId);
@@ -122,7 +123,7 @@
                     throw new BusinessValidationException(ErrorMessage.ActivityVendor_ValueToLong);
                 }
 
-                UpdateActivityChainTransaction nextChainTransaction =
+                UpdateChainTransaction nextChainTransaction =
                     message.ChainTransactions.FirstOrDefault(x => x.ParentId == chainTransaction.Id);
                 if (chainTransaction.IsEnd && nextChainTransaction != null)
                 {
@@ -136,7 +137,7 @@
 
         private void ValidateAddRemove(ActivityCommandBase message, Activity activity)
         {
-            List<UpdateActivityChainTransaction> chainsToAdd = message.ChainTransactions
+            List<UpdateChainTransaction> chainsToAdd = message.ChainTransactions
                                 .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                 .ToList();
 
@@ -153,7 +154,7 @@
 
         private void ValidateAddedChains(ActivityCommandBase message, Activity activity)
         {
-            List<UpdateActivityChainTransaction> chainsToAdd = message.ChainTransactions
+            List<UpdateChainTransaction> chainsToAdd = message.ChainTransactions
                                 .Where(x => activity.ChainTransactions.Select(y => y.Id).Contains(x.Id) == false)
                                 .ToList();
 
@@ -166,7 +167,7 @@
             if (activity.ChainTransactions.Count == 0)
                 return;
 
-            UpdateActivityChainTransaction chainToAdd = chainsToAdd.Single();
+            UpdateChainTransaction chainToAdd = chainsToAdd.Single();
             ChainTransaction lastChain = this.FindLastChain(activity.ChainTransactions);
 
             if (chainToAdd.ParentId != lastChain.Id)

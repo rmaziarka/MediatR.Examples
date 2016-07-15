@@ -74,7 +74,12 @@ module Antares.Attributes.Offer.OfferChain {
         public save = (chain: Business.ChainTransaction) => {
             this.isBusy = true;
 
-            var serverChain = this.createChainForServer(chain, this.chainCommand.chainTransactions);
+            var serverChain: any = new Business.UpdateChainTransaction(chain);
+
+            if (serverChain.id == null && this.chainCommand.chainTransactions != null && this.chainCommand.chainTransactions.length > 0) {
+                serverChain.parentId = this.chainCommand.chainTransactions[this.chainCommand.chainTransactions.length - 1].id;
+            }
+
             var chainCommand = angular.copy(this.chainCommand);
 
             if (serverChain.id == null) {
@@ -176,57 +181,6 @@ module Antares.Attributes.Offer.OfferChain {
                 contractAgreed: { contractAgreedId: { required: true, active: true } },
                 surveyDate: { surveyDate: { required: false, active: true } }
             }
-        }
-
-        private createChainForServer = (chain: Business.ChainTransaction, chainTransactions: Dto.IChainTransaction[]): Business.ChainTransaction => {
-
-            // TODO: chang to use dedicated ChainTransactionCommand in IChainTransactionCommand
-            var command = angular.copy(chain);
-
-            if (this.isAgentUserType && command.agentUser) {
-                command.agentContactId = null;
-                command.agentCompanyId = null;
-                command.agentUserId = command.agentUser.id;
-            } else if (command.agentCompanyContact) {
-                command.agentUserId = null;
-                command.agentContactId = command.agentCompanyContact.contact.id;
-                command.agentCompanyId = command.agentCompanyContact.company.id;
-            } else {
-                command.agentContactId = null;
-                command.agentCompanyId = null;
-                command.agentUserId = null;
-            }
-
-            if (command.solicitorCompanyContact) {
-                command.solicitorContactId = command.solicitorCompanyContact.contact.id;
-                command.solicitorCompanyId = command.solicitorCompanyContact.company.id;
-            } else {
-                command.solicitorContactId = null;
-                command.solicitorCompanyId = null;
-            }
-
-            command.activity = null;
-            command.requirement = null;
-            command.parent = null;
-            command.property = null;
-            command.agentUser = null;
-            command.agentContact = null;
-            command.agentCompany = null;
-            command.agentCompanyContact = null;
-            command.solicitorContact = null;
-            command.solicitorCompany = null;
-            command.solicitorCompanyContact = null;
-            command.mortgage = null;
-            command.survey = null;
-            command.searches = null;
-            command.enquiries = null;
-            command.contractAgreed = null;
-
-            if (command.id == null && chainTransactions != null && chainTransactions.length > 0) {
-                command.parentId = chainTransactions[chainTransactions.length - 1].id;
-            }
-
-            return command;
         }
 
         private onSuccessAddEditChain = (chain: Business.ChainTransaction, model: Dto.IActivity | Dto.IRequirement) => {

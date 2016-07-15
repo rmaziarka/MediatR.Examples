@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.Enums;
@@ -20,8 +21,8 @@
     public class PropertySteps
     {
         private readonly KnightFrankContext dataContext;
-        private readonly ScenarioContext scenarioContext;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly ScenarioContext scenarioContext;
 
         public PropertySteps(ScenarioContext scenarioContext)
         {
@@ -204,7 +205,8 @@
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
                     },
                 AppraisalMeetingStart = this.date,
-                AppraisalMeetingEnd = this.date.AddHours(1)
+                AppraisalMeetingEnd = this.date.AddHours(1),
+                ChainTransactions = new List<ChainTransaction>()
             };
 
             this.dataContext.Activities.Add(activity);
