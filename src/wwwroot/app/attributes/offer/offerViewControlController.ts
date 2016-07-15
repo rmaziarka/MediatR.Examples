@@ -3,7 +3,6 @@
 module Antares.Attributes {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import Viewing = Common.Models.Business.Viewing;
     import Enums = Common.Models.Enums;
 
     export class OfferViewControlController {
