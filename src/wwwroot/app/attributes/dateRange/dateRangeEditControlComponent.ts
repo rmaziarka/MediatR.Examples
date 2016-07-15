@@ -8,6 +8,7 @@ module Antares.Attributes {
         bindings: {
             dateFrom: '=',
             dateTo: '=',
+            canDatesBeEqual: '<',
             config: '<',
             schema: '<'
         }

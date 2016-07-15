@@ -14,10 +14,15 @@ namespace Antares.Common.Directive {
                     ngModel.$setValidity('dateGreaterThan', true);
                     return inputValue;
                 }
+                var isEqualityAllowed = true; 
+                if(attrs['allowEquality']){
+                    isEqualityAllowed = attrs['allowEquality'] === 'true' ? true : false; 
+                }
+                 
                 var fromDateString : string = JSON.parse(attrs['dateGreaterThan']);
                 var fromDate: Date = new Date(fromDateString);
                 var toDate: Date = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy');
-                var isValid: boolean = this.validDateRange.isValidDateRange(fromDate, toDate);
+                var isValid: boolean = this.validDateRange.isValidDateRange(fromDate, toDate, isEqualityAllowed);
                 ngModel.$setValidity('dateGreaterThan', isValid);
                 return inputValue;
             };

@@ -30,7 +30,7 @@
                            ng-model="vm.dateTo"
                            ng-required="vm.config[vm.schema.fieldName].required"
                            ng-disabled="!vm.config[vm.schema.fieldName].active"
-                           date-greater-than="{{vm.dateFrom}}"
+                           date-greater-than="{{vm.dateFrom}}" allow-equality="vm.canDatesBeEqual"
                            is-open="vm.isDateToOpened"
                            uib-datepicker-popup="dd-MM-yyyy"
                            close-text="Close"

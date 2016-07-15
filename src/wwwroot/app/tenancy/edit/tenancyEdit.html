@@ -58,11 +58,11 @@
                     <!-- Terms -->
                     <fieldset>
                         <h3 class="page-header" translate="TENANCY.COMMON.TERMS"></h3>
-                        <date-range-edit-control date-from="vm.tenancy.startDate" date-to="vm.tenancy.endDate" config="vm.config.tenancy_Term" schema="vm.termDateSchema"></date-range-edit-control>
-                        
+                        <date-range-edit-control date-from="vm.tenancy.startDate" date-to="vm.tenancy.endDate" config="vm.config.tenancy_Term" schema="vm.termDateSchema" can-dates-be-equal="false"></date-range-edit-control>
+
                         <div class="row">
                             <div class="col-sm-8 col-md-6">
-                                <price-edit-control ng-model="vm.tenancy.agreedRent" config="vm.config.tenancy_Term" schema="vm.termAgreedRentSchema" ></price-edit-control>
+                                <price-edit-control ng-model="vm.tenancy.agreedRent" config="vm.config.tenancy_Term" schema="vm.termAgreedRentSchema"></price-edit-control>
                             </div>
                         </div>
                     </fieldset>

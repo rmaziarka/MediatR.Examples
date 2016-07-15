@@ -158,7 +158,7 @@
     "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
     "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
     "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater than create date",
-    "DATE_CAN_NOT_BE_LOWER_THEN_START_DATE": "Given date can not be earlier than start date"
+    "DATE_CAN_NOT_BE_LOWER_THEN_START_DATE": "Start date must be earlier than end date"
   },
   "PROPERTY": {
     "AREA": "Property area",
