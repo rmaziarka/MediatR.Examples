@@ -8,7 +8,7 @@ CREATE TABLE #TempPortal (
 );
 
 BULK INSERT #TempPortalDefinition
-    FROM 'C:\_Projects\KnightFrank.Antares\src\KnightFrank.Antares.Database\Scripts\Data\Configuration\portaldefinition.csv'
+    FROM '$(OutputPath)Scripts\Data\Configuration\portaldefinition.csv'
                WITH
     (
 		FIRSTROW = 2,
