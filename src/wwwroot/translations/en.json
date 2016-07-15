@@ -639,7 +639,8 @@
         "THIRD_PARTY": "3rd party",
         "VENDOR": "Vendor",
         "IS_END": "End of chain",
-        "FIND_AGENT": "Find an agent"
+        "FIND_NEGOTIATOR": "Find a negotiator",
+        "NAME_AND_SURNAME": "Name and surname"
       }
     }
   },

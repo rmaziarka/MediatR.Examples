@@ -7,6 +7,7 @@
                        id="{{vm.schema.controlId}}"
                        ng-required="vm.config[vm.schema.fieldName].required"
                        ng-maxlength="vm.schema.maxLength"
+                       placeholder="{{vm.schema.placeholder | translate}}"
                        name="text"
                        class="form-control" 
                        type="text"/>

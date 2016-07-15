@@ -6,11 +6,12 @@ module Antares.Common.Component {
     import Business = Common.Models.Business;
     import ISearchUserControlSchema = Attributes.ISearchUserControlSchema;
 
-    export class SearchUserController {
+    export class SearchUserControlController {
         // Bindings 
         public config: any;
         public schema: ISearchUserControlSchema;
         public user: User;
+        public onUserChanged: (obj: { user: Business.User }) => void;
 
         // Properties
         public isInEditMode: boolean = true;
@@ -23,6 +24,8 @@ module Antares.Common.Component {
         public changeUser = (user: Business.User) => {
             this.user = user;
             this.isInEditMode = false;
+
+            this.onUserChanged({ user: user });
         }
 
         public editUser = () => {
@@ -50,5 +53,5 @@ module Antares.Common.Component {
         }
     }
 
-    angular.module('app').controller('SearchUserController', SearchUserController);
+    angular.module('app').controller('SearchUserControlController', SearchUserControlController);
 };

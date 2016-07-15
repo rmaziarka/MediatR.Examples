@@ -22,7 +22,7 @@
             <div class="section-details">
                 <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isAgentUserType" schema="vm.controlSchemas.agentType" on-change="vm.onAgentUserTypeChange(value)"></radio-buttons-edit-control>
 
-                <search-user schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser"></search-user>
+                <search-user-control schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser" on-user-changed="vm.agentUserChanged(user)"></search-user-control>
 
                 <company-contact-edit-control schema="vm.controlSchemas.agentCompanyContact"
                                               config="vm.config.agentCompanyContact"

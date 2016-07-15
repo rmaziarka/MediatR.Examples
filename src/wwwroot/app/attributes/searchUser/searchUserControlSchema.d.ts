@@ -8,5 +8,6 @@ declare module Antares.Attributes {
         itemTemplateUrl: string;
         controlId: string;
         usersSearchMaxCount: number;
+        emptyTranslationKey: string;
     }
 }

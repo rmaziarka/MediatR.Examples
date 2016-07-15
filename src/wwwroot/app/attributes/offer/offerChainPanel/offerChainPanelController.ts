@@ -40,6 +40,7 @@ module Antares.Attributes.Offer.OfferChain {
             switch (this.companyContactType) {
                 case CompanyContactType.ChainAgent:
                     this.chain.agentCompanyContact = contacts[0];
+                    this.chain.agentUser = null;
                     break;
                 case CompanyContactType.ChainSolicitor:
                     this.chain.solicitorCompanyContact = contacts[0];

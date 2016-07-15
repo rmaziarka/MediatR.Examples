@@ -33,8 +33,9 @@ module Antares.Attributes.Offer.OfferChain {
         controlSchemas: any = {
             searchUser: <ISearchUserControlSchema>{
                 formName: "searchUserControlForm",
+                emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
                 controlId: "offer-chain-search-user",
-                searchPlaceholderTranslationKey: "OFFER.CHAIN.EDIT.FIND_AGENT",
+                searchPlaceholderTranslationKey: "OFFER.CHAIN.EDIT.FIND_NEGOTIATOR",
                 fieldName: "searchUser",
                 itemTemplateUrl: "app/attributes/activityNegotiators/userSearchTemplate.html",
                 usersSearchMaxCount: 100
@@ -49,7 +50,8 @@ module Antares.Attributes.Offer.OfferChain {
                 formName: "vendorControlForm",
                 controlId: "offer-chain-edit-vendor",
                 translationKey: "OFFER.CHAIN.EDIT.VENDOR",
-                fieldName: "vendor"
+                fieldName: "vendor",
+                placeholder: "OFFER.CHAIN.EDIT.NAME_AND_SURNAME"
             },
             agentUser: <any>{
                 formName: "agentUserForm",
@@ -133,6 +135,10 @@ module Antares.Attributes.Offer.OfferChain {
                     this.offerChainAddEditCardForm.$setPristine();
                 }
             }
+        }
+
+        public agentUserChanged = (user: Business.User) => {
+            this.chain.agentCompanyContact = null;
         }
 
         public onAgentUserTypeChange =  (value: boolean) => { 
