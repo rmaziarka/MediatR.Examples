@@ -15,6 +15,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
@@ -42,9 +43,9 @@
             Guid guid = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749");
             var command = new UpdateActivityCommand
             {
-                ChainTransactions = new List<UpdateActivityChainTransaction>
+                ChainTransactions = new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction { Id = guid }
+                    new UpdateChainTransaction { Id = guid }
                 }
             };
             var activity = new Activity
@@ -99,9 +100,9 @@
             // Arrange
             var command = new UpdateActivityCommand
             {
-                ChainTransactions = new List<UpdateActivityChainTransaction>
+                ChainTransactions = new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction()
+                    new UpdateChainTransaction()
                 }
             };
             var activity = new Activity
@@ -138,7 +139,7 @@
         [Theory]
         [MemberData("InvalidChainTransactions")]
         public void Given_InvalidCommand_When_Handling_Then_ShouldThrowException(
-            List<UpdateActivityChainTransaction> chainTransactions)
+            List<UpdateChainTransaction> chainTransactions)
         {
             // Arrange
             var activity = new Activity
@@ -174,13 +175,13 @@
         {
             new object[]
             {
-                new List<UpdateActivityChainTransaction>
+                new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         IsEnd = true,
                     },
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         IsEnd = true,
                     }
@@ -188,9 +189,9 @@
             },
             new object[]
             {
-                new List<UpdateActivityChainTransaction>
+                new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         AgentContactId = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749"),
                         AgentUserId = Guid.Parse("50FAB333-2584-41ED-ADA5-051110091749")
@@ -199,9 +200,9 @@
             },
             new object[]
             {
-                new List<UpdateActivityChainTransaction>
+                new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         Vendor =
                             "50FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-05111009174950FAB333-2584-41ED-ADA5-0511100917491"
@@ -210,14 +211,14 @@
             },
             new object[]
             {
-                new List<UpdateActivityChainTransaction>
+                new List<UpdateChainTransaction>
                 {
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         Id = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749"),
                         IsEnd = true
                     },
-                    new UpdateActivityChainTransaction
+                    new UpdateChainTransaction
                     {
                         ParentId = Guid.Parse("60FAB3B3-2584-41ED-ADA5-05111009C749")
                     }

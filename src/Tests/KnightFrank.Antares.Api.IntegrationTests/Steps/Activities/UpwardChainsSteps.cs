@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using Newtonsoft.Json;
@@ -109,7 +110,7 @@
             var property = this.scenarioContext.Get<Property>("Property");
             var company = this.scenarioContext.Get<Company>("Company");
 
-            var chainTransaction = new UpdateActivityChainTransaction
+            var chainTransaction = new UpdateChainTransaction
             {
                 ActivityId = activity.Id,
                 RequirementId = requirement.Id,
@@ -172,7 +173,7 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = new List<UpdateActivityChainTransaction>
+                ChainTransactions = new List<UpdateChainTransaction>
                 {
                     chainTransaction
                 }
@@ -189,7 +190,7 @@
             var property = this.scenarioContext.Get<Property>("Property");
             var company = this.scenarioContext.Get<Company>("Company");
 
-            var chainTransaction = new UpdateActivityChainTransaction
+            var chainTransaction = new UpdateChainTransaction
             {
                 ActivityId = data.Equals("ActivityId") ? Guid.NewGuid() : activity.Id,
                 RequirementId = data.Equals("RequirementId") ? Guid.NewGuid() : requirement.Id,
@@ -279,7 +280,7 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = new List<UpdateActivityChainTransaction>
+                ChainTransactions = new List<UpdateChainTransaction>
                 {
                     chainTransaction
                 }
@@ -295,11 +296,11 @@
             var activity = this.scenarioContext.Get<Activity>("Activity");
 
             List<ChainTransaction> chains = activity.ChainTransactions.Where(ct => ct.IsEnd != isEnd).ToList();
-            var chainTransactions = new List<UpdateActivityChainTransaction>();
+            var chainTransactions = new List<UpdateChainTransaction>();
 
             foreach (ChainTransaction ct in chains)
             {
-                chainTransactions.Add(new UpdateActivityChainTransaction
+                chainTransactions.Add(new UpdateChainTransaction
                 {
                     Id = ct.Id,
                     ActivityId = ct.ActivityId,
@@ -396,7 +397,7 @@
             activity.ChainTransactions.Clear();
             activity.ChainTransactions.Add(chain);
 
-            var chainCommand = new UpdateActivityChainTransaction
+            var chainCommand = new UpdateChainTransaction
             {
                 Id = activity.ChainTransactions.First().Id,
                 ActivityId = activity.ChainTransactions.First().ActivityId,
@@ -454,7 +455,7 @@
                         UserId = activity.ActivityUsers.First().UserId,
                         CallDate = this.date.AddDays(1)
                     },
-                ChainTransactions = new List<UpdateActivityChainTransaction> { chainCommand }
+                ChainTransactions = new List<UpdateChainTransaction> { chainCommand }
             };
             
             this.UpdateActivity(updateActivityCommand);

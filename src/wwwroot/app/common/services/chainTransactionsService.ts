@@ -2,9 +2,9 @@
 
 
 module Antares.Services {
-    import Commands = Antares.Common.Models.Commands;
-    import Dto = Antares.Common.Models.Dto;
-    import Enums = Antares.Common.Models.Enums;
+    import Commands = Common.Models.Commands;
+    import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 	
     export class ChainTransationsService {
 
