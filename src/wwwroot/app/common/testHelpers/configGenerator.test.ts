@@ -84,14 +84,14 @@ module Antares.TestHelpers {
 
         public static generateOfferBrokerConfig(): Attributes.IOfferBrokerControlConfig {
             var config: Attributes.IOfferBrokerControlConfig = {
-                brokerId: null
+                brokerId: { active: true, required: false }
             }
 
             return config;
         }
         public static generateOfferAdditionalSurveyorConfig(): Attributes.IOfferAdditionalSurveyorControlConfig {
             var config: Attributes.IOfferAdditionalSurveyorControlConfig = {
-                additionalSurveyorId: null
+                additionalSurveyorId: { active: true, required: false }
             }
 
             return config;
@@ -99,7 +99,7 @@ module Antares.TestHelpers {
 
         public static generateOfferLenderConfig(): Attributes.IOfferLenderControlConfig {
             var config: Attributes.IOfferLenderControlConfig = {
-                lenderId: null
+                lenderId: { active: true, required: false }
             }
 
             return config;
@@ -107,7 +107,7 @@ module Antares.TestHelpers {
 
         public static generateOfferSurveyorConfig(): Attributes.IOfferSurveyorControlConfig {
             var config: Attributes.IOfferSurveyorControlConfig = {
-                surveyorId: null
+                surveyorId: { active: true, required: false }
             }
 
             return config;
