@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Company.Commands;
 
     using Newtonsoft.Json;
@@ -39,6 +40,7 @@
         [Given(@"Company exists in database")]
         public void GivenCompanyExistsInDatabase()
         {
+            const int max = 4000;
             var company = new Company { Name = StringExtension.GenerateMaxAlphanumericString(20) };
             List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id).ToList();
 
@@ -49,20 +51,30 @@
                 this.fixture.DataContext.EnumTypeItems.Single(
                     eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("MassiveActionClient")).Id;
 
+            company.Description = StringExtension.GenerateMaxAlphanumericString(max);
+            company.CompanyTypeId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("CompanyType") && eti.Code.Equals("KnightFrankAffiliates")).Id;
+            company.CompanyCategoryId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("Banks")).Id;
+            company.Valid = true;
+            company.RelationshipManagerId = this.scenarioContext.Get<List<User>>("User List").First().Id;
+
             this.fixture.DataContext.Companies.Add(company);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(company, "Company");
         }
 
-        [When(@"User creates company with invalid (name|status|contact) using api")]
+        [When(@"User creates company with invalid (name|status|contact|company type|category|relationship) using api")]
         public void CreateCompanyWithInvalidDataUsingApi(string data)
         {
             var company = new CreateCompanyCommand
             {
                 ContactIds =
                     data.Equals("contact")
-                        ? new List<Guid>() { Guid.NewGuid() }
+                        ? new List<Guid> { Guid.NewGuid() }
                         : new List<Guid>(this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id)),
                 Name = data.Equals("name") ? string.Empty : StringExtension.GenerateMaxAlphanumericString(20),
                 ClientCareStatusId =
@@ -70,6 +82,16 @@
                         ? Guid.NewGuid()
                         : this.fixture.DataContext.EnumTypeItems.Single(
                             eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("KeyClient")).Id,
+                CompanyTypeId = data.Equals("company type")
+                    ? Guid.NewGuid()
+                    : this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyType") && eti.Code.Equals("KnightFrankGroup")).Id,
+                CompanyCategoryId = data.Equals("category")
+                    ? Guid.NewGuid()
+                    : this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("OilAndGas")).Id,
+                RelationshipManagerId =
+                    data.Equals("relationship") ? Guid.NewGuid() : this.scenarioContext.Get<List<User>>("User List").First().Id
             };
 
             this.CreateCompany(company);
@@ -78,11 +100,23 @@
         [When(@"User creates company using api")]
         public void CreateCompanyUsingApi(Table table)
         {
+            const int max = 4000;
             var company = table.CreateInstance<CreateCompanyCommand>();
+
             company.ClientCareStatusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("MassiveActionClient")).Id;
             company.ContactIds = new List<Guid>(this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id));
+
+            company.Description = StringExtension.GenerateMaxAlphanumericString(max);
+            company.CompanyTypeId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("CompanyType") && eti.Code.Equals("KnightFrankAffiliates")).Id;
+            company.CompanyCategoryId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("Banks")).Id;
+            company.Valid = true;
+            company.RelationshipManagerId = this.scenarioContext.Get<List<User>>("User List").First().Id;
 
             this.CreateCompany(company);
         }
@@ -113,14 +147,23 @@
                 ClientCarePageUrl = "www.update.com",
                 ClientCareStatusId = company.ClientCareStatusId,
                 WebsiteUrl = "www.update.com2",
-                Contacts = contactList.Select(c => new Contact { Id = c.Id }).ToList()
+                Contacts = contactList.Select(c => new Contact { Id = c.Id }).ToList(),
+                Description = StringExtension.GenerateMaxAlphanumericString(2000),
+                CompanyTypeId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyType") && eti.Code.Equals("KnightFrankGroup")).Id,
+                CompanyCategoryId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("Supermarkets")).Id,
+                Valid = false,
+                RelationshipManagerId = this.fixture.DataContext.Users.First().Id
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User updates company with invalid (name|status|contact) using api")]
+        [When(@"User updates company with invalid (name|status|contact|company type|category|relationship) using api")]
         public void UpdateCompanyWithInvalidData(string data)
         {
             string requestUrl = $"{ApiUrl}";
@@ -136,8 +179,18 @@
                 WebsiteUrl = company.WebsiteUrl,
                 Contacts =
                     data.Equals("contact")
-                        ? new List<Contact>() { new Contact { Id = Guid.NewGuid() } }
-                        : contactList.Select(c => new Contact { Id = c.Id }).ToList()
+                        ? new List<Contact> { new Contact { Id = Guid.NewGuid() } }
+                        : contactList.Select(c => new Contact { Id = c.Id }).ToList(),
+                CompanyTypeId = data.Equals("company type")
+                    ? Guid.NewGuid()
+                    : this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyType") && eti.Code.Equals("KnightFrankGroup")).Id,
+                CompanyCategoryId = data.Equals("category")
+                    ? Guid.NewGuid()
+                    : this.fixture.DataContext.EnumTypeItems.Single(
+                        eti => eti.EnumType.Code.Equals("CompanyCategory") && eti.Code.Equals("OilAndGas")).Id,
+                RelationshipManagerId =
+                    data.Equals("relationship") ? Guid.NewGuid() : this.scenarioContext.Get<List<User>>("User List").First().Id
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
@@ -168,7 +221,12 @@
             Company expectedCompany = this.fixture.DataContext.Companies.Single(c => c.Id.Equals(actualCompany.Id));
 
             expectedCompany.ShouldBeEquivalentTo(actualCompany,
-                opt => opt.Excluding(c => c.ClientCareStatus).Excluding(c => c.CompaniesContacts));
+                opt =>
+                    opt.Excluding(c => c.ClientCareStatus)
+                       .Excluding(c => c.CompaniesContacts)
+                       .Excluding(c => c.CompanyCategory)
+                       .Excluding(c => c.CompanyType)
+                       .Excluding(c => c.RelationshipManager));
 
             expectedCompany.CompaniesContacts.Should()
                            .Equal(actualCompany.CompaniesContacts,
