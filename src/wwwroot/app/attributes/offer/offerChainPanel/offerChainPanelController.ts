@@ -75,6 +75,11 @@ module Antares.Attributes.Offer.OfferChain {
             this.isBusy = true;
 
             var serverChain: any = new Business.UpdateChainTransaction(chain);
+
+            if (serverChain.id == null && this.chainCommand.chainTransactions != null && this.chainCommand.chainTransactions.length > 0) {
+                serverChain.parentId = this.chainCommand.chainTransactions[this.chainCommand.chainTransactions.length - 1].id;
+            }
+
             var chainCommand = angular.copy(this.chainCommand);
 
             if (serverChain.id == null) {
