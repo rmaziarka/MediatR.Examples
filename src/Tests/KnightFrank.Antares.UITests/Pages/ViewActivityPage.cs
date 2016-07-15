@@ -5,6 +5,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.ActivityTabs;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
@@ -22,30 +23,23 @@
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
-        private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(2)");
-        private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, ".nav-tabs li:nth-of-type(1)");
         private readonly ElementLocator activityTitle = new ElementLocator(Locator.CssSelector, "#activity-view-well div:nth-of-type(1)");
         private readonly ElementLocator activityType = new ElementLocator(Locator.Id, "activityType");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, ".active #activity-vendors-view list-item span");
         private readonly ElementLocator attendeeOnOverview = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-item");
         private readonly ElementLocator appraisalDate = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item div[ng-transclude='header']");
         private readonly ElementLocator appraisalTime = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-info");
-        // Attachment locators
-        private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
-        private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
-        private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
-        private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
-        private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
-        private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
         // Viewing locators
-        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item card[item='viewing']");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list .card");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator viewingCounter = new ElementLocator(Locator.CssSelector, "viewing-view-control .page-header .ng-binding");
         // Offer locators
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator offerCounter = new ElementLocator(Locator.CssSelector, "offer-view-control .page-header .ng-binding");
         // Negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, ".active #card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
@@ -58,14 +52,14 @@
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[@class='tab-pane ng-scope active']//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
         // Departments locators
         private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector,"#departments-section card-list-item .card-item .department-name");
-        //Property locators
+        // Property locators
         private readonly ElementLocator propertyNumber = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(1) >div:nth-of-type(1) span");
         private readonly ElementLocator propertyName = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(1) >div:nth-of-type(2) span");
         private readonly ElementLocator propertyLine2 = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(2) span");
         private readonly ElementLocator propertyPostCode = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(4) span");
         private readonly ElementLocator propertyCity = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(5) span");
         private readonly ElementLocator propertyCounty = new ElementLocator(Locator.CssSelector, ".active #activity-view-property .card-details ng-include > div:nth-of-type(6) span");
-        //details locators
+        // Details locators
         private readonly ElementLocator source = new ElementLocator(Locator.Id, "sourceId");
         private readonly ElementLocator sourceDescription = new ElementLocator(Locator.Id, "sourceDescriptionId");
         private readonly ElementLocator sellingReason = new ElementLocator(Locator.Id, "sellingReasonId");
@@ -75,7 +69,7 @@
         private readonly ElementLocator disposalType = new ElementLocator(Locator.Id, "disposalTypeId");
         private readonly ElementLocator decoration = new ElementLocator(Locator.Id, "decorationId");
         private readonly ElementLocator otherConditions = new ElementLocator(Locator.Id, "otherCondition");
-        //Valuation information locators
+        // Valuation information locators
         private readonly ElementLocator valuationInformationKfEstimatedPrice = new ElementLocator(Locator.Id, "kfValuationPrice");
         private readonly ElementLocator valuationInformationVendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorValuationPrice");
         private readonly ElementLocator valuationInformationkAgreedInitialMarketingPrice = new ElementLocator(Locator.Id, "agreedInitialMarketingPrice");
@@ -89,6 +83,10 @@
 //        private readonly ElementLocator chargesServiceChargeNotes = new ElementLocator(Locator.Id, "serviceChargeNote");
 //        private readonly ElementLocator chargesGroundRent = new ElementLocator(Locator.Id, "groundRentAmount");
 //        private readonly ElementLocator chargesGroundRentNotes = new ElementLocator(Locator.Id, "groundRentNote");
+        // Tabs locators
+        private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Details']");
+        private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Overview']");
+        private readonly ElementLocator attachmentsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Attachments']");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -96,8 +94,21 @@
         {
         }
 
+        public AttachmentsTabPage AttachmentsTab => new AttachmentsTabPage(this.DriverContext);
+
+        public PropertyPreviewPage PropertyPreview => new PropertyPreviewPage(this.DriverContext);
+
+        public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
+
+        public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
+
+        //TODO check if still valid data
         public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
 
+        public string OffersCounter => this.Driver.GetElement(this.offerCounter).Text;
+
+        public string ViewingsCounter => this.Driver.GetElement(this.viewingCounter).Text;
+        
         //TODO check if still valid data
         public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
 
@@ -105,33 +116,16 @@
 
         public string Status => this.Driver.GetElement(this.activityStatus).Text;
 
-        public PropertyPreviewPage PropertyPreview => new PropertyPreviewPage(this.DriverContext);
-
-        public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
-
-        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
-
-        public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
-
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
 
         public string LeadNegotiator => this.Driver.GetElement(this.leadNegotiator).Text;
 
         public int OffersNumber => this.Driver.GetElements(this.offers).Count;
 
-        public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
-
         public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCallDate).Text;
 
-        public List<Department> Departments => this.Driver.GetElements(this.departmentName).Select(el => new Department { Name = el.Text }).ToList();
-
-        public Attachment AttachmentDetails => new Attachment
-        {
-            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
-            Type = this.Driver.GetElement(this.attachmentType).Text,
-            Size = this.Driver.GetElement(this.attachmentSize).Text,
-            Date = this.Driver.GetElement(this.attachmentDate).Text
-        };
+        public List<Department> Departments
+            => this.Driver.GetElements(this.departmentName).Select(el => new Department { Name = el.Text }).ToList();
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -165,18 +159,6 @@
         {
             this.Driver.Click(this.editButton);
             this.Driver.WaitForAngularToFinish();
-            return this;
-        }
-
-        public ViewActivityPage OpenAttachFilePanel()
-        {
-            this.Driver.Click(this.addAttachmentButton);
-            return this;
-        }
-
-        public ViewActivityPage OpenAttachmentPreview()
-        {
-            this.Driver.Click(this.attachmentCard);
             return this;
         }
 
@@ -269,6 +251,12 @@
             return this;
         }
 
+        public ViewActivityPage OpenAttachmentsTab()
+        {
+            this.Driver.Click(this.attachmentsTab);
+            return this;
+        }
+
         public Dictionary<string, string> GetActivityDetails()
         {
             var actualDetails = new Dictionary<string, string>
@@ -310,7 +298,7 @@
             var appraisalDateTime = new Dictionary<string, string>
             {
                 { "date", this.Driver.GetElement(this.appraisalDate).Text },
-                { "time", this.Driver.GetElement(this.appraisalTime).Text },
+                { "time", this.Driver.GetElement(this.appraisalTime).Text }
             };
             return appraisalDateTime;
         }

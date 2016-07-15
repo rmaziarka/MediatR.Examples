@@ -18,12 +18,13 @@ Scenario: Upload attachment for activity
 			| 01-05-2015   | 1000000  |
 		And Property Long Leasehold Sale activity is defined
 	When User navigates to view activity page with id
-		And User clicks add attachment button on view activity page
-		And User adds PDF document.pdf file with Brochure type on view activity page
-	Then Attachment should be displayed on view activity page
+		And User switches to attachments tab on view activity page
+		And User clicks add attachment button on attachments tab on view activity page
+		And User adds PDF document.pdf file with Brochure type on attachments tab on view activity page
+	Then Attachment should be displayed on attachments tab on view activity page
 		| FileName         | Type     | Size   |
 		| PDF document.pdf | Brochure | 2.9 MB |
-	When User clicks attachment card on view activity page
-	Then Attachment details on attachment preview page are the same like on view activity page
+	When User clicks attachment card on attachments tab on view activity page
+	Then Attachment preview details are the same like on attachments tab on view activity page
 		And Activity attachment PDF document.pdf should be downloaded
-		And User closes attachment preview page on view activity page
+		And User closes attachment preview page on attachments tab on view activity page
