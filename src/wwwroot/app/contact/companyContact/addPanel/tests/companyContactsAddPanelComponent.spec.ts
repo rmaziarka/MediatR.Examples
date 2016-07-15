@@ -19,7 +19,7 @@ module Antares {
             cardItem: '.card-item',
             card: '.card',
             selectedCards: '.card.card-selected .card-item',
-            btnSave: '#ownership-save-button'
+            btnSave: '#company-contact-apply-button'
         };
 
         var companyContactsMock = TestHelpers.CompanyContactGenerator.generateMany(5);
