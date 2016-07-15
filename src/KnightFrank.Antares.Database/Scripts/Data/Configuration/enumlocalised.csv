@@ -49,11 +49,11 @@ CompanyCategory;CareHome;en;Care Home
 CompanyCategory;CharitiesAndChurches;en;Charities and Churches
 CompanyCategory;Chemist;en;Chemist
 CompanyCategory;DeptVariety;en;Dept/Variety
-CompanyCategory;EateriesBars;en;Eateries Bars
+CompanyCategory;EateriesBars;en;Eateries/Bars
 CompanyCategory;Education;en;Education
 CompanyCategory;ElectricalTelephones;en;Electrical/Telephones
 CompanyCategory;EmploymentAgency;en;Employment Agency
-CompanyCategory;EquestrianStud;en;Equestrian Stud
+CompanyCategory;EquestrianStud;en;Equestrian/Stud
 CompanyCategory;FamilyOffice;en;Family Office
 CompanyCategory;Finance;en;Finance (except Banks)
 CompanyCategory;FoodDrinkRetailers;en;Food/Drink Retailers
@@ -74,7 +74,7 @@ CompanyCategory;PropertyConsultantsSurveyors;en;Property Consultants/Surveyors
 CompanyCategory;RenewablesSustainability;en;Renewables/Sustainability
 CompanyCategory;Retailers;en;Retailers
 CompanyCategory;Supermarkets;en;Supermarkets
-CompanyCategory;TelecommunicationsTechnology;en;Telecommunications Technology
+CompanyCategory;TelecommunicationsTechnology;en;Telecommunications/Technology
 CompanyCategory;TourismLeisure;en;Tourism/Leisure
 CompanyCategory;Transport;en;Transport
 CompanyCategory;TravelAgents;en;Travel Agents
