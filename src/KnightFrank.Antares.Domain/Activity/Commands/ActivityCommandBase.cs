@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Domain.Common.Commands;
+
     using MediatR;
 
     public abstract class ActivityCommandBase : IRequest<Guid>
@@ -43,7 +45,7 @@
 
         public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
 
-        public IList<UpdateActivityChainTransaction> ChainTransactions { get; set; } = new List<UpdateActivityChainTransaction>();
+        public IList<UpdateChainTransaction> ChainTransactions { get; set; } = new List<UpdateChainTransaction>();
 
         public decimal? ServiceChargeAmount { get; set; }
         public string ServiceChargeNote { get; set; }

@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Domain.Activity.Commands
+﻿namespace KnightFrank.Antares.Domain.Common.Commands
 {
     using System;
 
-    public class UpdateActivityChainTransaction
+    public class UpdateChainTransaction
     {
         public Guid Id { get; set; }
 

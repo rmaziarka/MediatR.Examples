@@ -23,7 +23,7 @@ module Antares.Attributes.Offer.OfferChain {
 
         //properties
         offerChainAddEditCardForm: ng.IFormController;
-        configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ required: true, active: true };
+        configAgentType: Dto.IControlConfig = <Dto.IControlConfig>{ chainEditAgentType: { required: true, active: true } };
         companyContactType = Common.Models.Enums.CompanyContactType;
 
         // controls
@@ -33,7 +33,7 @@ module Antares.Attributes.Offer.OfferChain {
                 emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
                 controlId: "offer-chain-search-user",
                 searchPlaceholderTranslationKey: "OFFER.CHAIN.EDIT.FIND_NEGOTIATOR",
-                fieldName: "searchUser",
+                fieldName: "agentUserId",
                 itemTemplateUrl: "app/attributes/activityNegotiators/userSearchTemplate.html",
                 usersSearchMaxCount: 100
             },
@@ -61,7 +61,7 @@ module Antares.Attributes.Offer.OfferChain {
                 controlId: "offer-chain-edit-agent-company-contact",
                 translationKey: "",
                 emptyTranslationKey: "OFFER.CHAIN.EDIT.NO_AGENT",
-                fieldName: "agentCompanyContact"
+                fieldName: "agentContactId"
             },
             solicitorCompanyContact: <Attributes.ICompanyContactViewControlSchema>{
                 formName: "solicitorCompanyContactControlForm",
@@ -143,8 +143,8 @@ module Antares.Attributes.Offer.OfferChain {
             this.chain.agentCompanyContact = null;
         }
 
-        public onAgentUserTypeChange =  (value: boolean) => { 
-            this.onReloadConfig({ isAgentUserType: value }); 
+        public onAgentUserTypeChange = (value: boolean) => {
+            this.onReloadConfig({ isAgentUserType: value });
         }
 
         public editCompanyContact = (companyContact: Common.Models.Business.CompanyContactRelation, type: CompanyContactType) => {
