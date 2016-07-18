@@ -171,7 +171,7 @@ module Antares.Attributes.Offer.OfferChain {
                 isEnd: { isEnd: { required: false, active: this.chain.lastElementInChainLink || this.chain.id == null } },
                 property: { propertyId: { required: true, active: true } },
                 vendor: { vendor: { required: true, active: true } },
-                agentUser: isAgentUserType ? { agentUserId: { required: true, active: true } } : null,
+                agentUser: isAgentUserType ? { agentUserId: { required: true, active: true }, inEditMode: this.chain.id == null } : null,
                 agentCompanyContact: isAgentUserType ? null : { agentContactId: { required: true, active: true }, agentCompanyId: { required: true, active: true } },
                 solicitorCompanyContact: { solicitorCompanyContact: { required: true, active: true } },
                 mortgage: { mortgageId: { required: true, active: true } },
