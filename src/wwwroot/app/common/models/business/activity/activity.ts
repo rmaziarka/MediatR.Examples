@@ -44,7 +44,6 @@ module Antares.Common.Models.Business {
         serviceChargeNote: string = '';
         groundRentAmount: number = null;
         groundRentNote: string = '';
-        otherCondition: string = '';  
         priceTypeId: string = '';
         activityPrice: number = null;
         matchFlexibilityId: string = '';
