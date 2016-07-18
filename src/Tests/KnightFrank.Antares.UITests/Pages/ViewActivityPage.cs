@@ -71,17 +71,21 @@
         private readonly ElementLocator valuationInformationKfEstimatedPrice = new ElementLocator(Locator.Id, "kfValuationPrice");
         private readonly ElementLocator valuationInformationVendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorValuationPrice");
         private readonly ElementLocator valuationInformationkAgreedInitialMarketingPrice = new ElementLocator(Locator.Id, "agreedInitialMarketingPrice");
-        //private readonly ElementLocator valuationInformationkFvaluationShortLet = new ElementLocator(Locator.Id, "shortKfValuationPrice");
-        //private readonly ElementLocator valuationInformationkFvaluationLongLet = new ElementLocator(Locator.Id, "longKfValuationPrice");
-        //private readonly ElementLocator valuationInformationVendorValuationShortLet = new ElementLocator(Locator.Id, "shortVendorValuationPrice");
-        //private readonly ElementLocator valuationInformationVendorValuationLongLet = new ElementLocator(Locator.Id, "longVendorValuationPrice");
-        //private readonly ElementLocator valuationInformationAgreedInitialMarketingShortLet = new ElementLocator(Locator.Id, "shortAgreedInitialMarketingPrice");
-        //private readonly ElementLocator valuationInformationAgreedInitialMarketingLongLet = new ElementLocator(Locator.Id, "longAgreedInitialMarketingPrice");
-        //private readonly ElementLocator chargesServiceCharge = new ElementLocator(Locator.Id, "serviceChargeAmount");
-        //private readonly ElementLocator chargesServiceChargeNotes = new ElementLocator(Locator.Id, "serviceChargeNote");
-        //private readonly ElementLocator chargesGroundRent = new ElementLocator(Locator.Id, "groundRentAmount");
-        //private readonly ElementLocator chargesGroundRentNotes = new ElementLocator(Locator.Id, "groundRentNote");
-        //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
+//        private readonly ElementLocator valuationInformationkFvaluationShortLet = new ElementLocator(Locator.Id, "shortKfValuationPrice");
+//        private readonly ElementLocator valuationInformationkFvaluationLongLet = new ElementLocator(Locator.Id, "longKfValuationPrice");
+//        private readonly ElementLocator valuationInformationVendorValuationShortLet = new ElementLocator(Locator.Id, "shortVendorValuationPrice");
+//        private readonly ElementLocator valuationInformationVendorValuationLongLet = new ElementLocator(Locator.Id, "longVendorValuationPrice");
+//        private readonly ElementLocator valuationInformationAgreedInitialMarketingShortLet = new ElementLocator(Locator.Id, "shortAgreedInitialMarketingPrice");
+//        private readonly ElementLocator valuationInformationAgreedInitialMarketingLongLet = new ElementLocator(Locator.Id, "longAgreedInitialMarketingPrice");
+//        private readonly ElementLocator chargesServiceCharge = new ElementLocator(Locator.Id, "serviceChargeAmount");
+//        private readonly ElementLocator chargesServiceChargeNotes = new ElementLocator(Locator.Id, "serviceChargeNote");
+//        private readonly ElementLocator chargesGroundRent = new ElementLocator(Locator.Id, "groundRentAmount");
+//        private readonly ElementLocator chargesGroundRentNotes = new ElementLocator(Locator.Id, "groundRentNote");
+        // Tabs locators
+        private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Details']");
+        private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Overview']");
+        private readonly ElementLocator attachmentsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Attachments']");
+ //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
         private readonly ElementLocator priceType = new ElementLocator(Locator.Id, "priceTypeId");
         private readonly ElementLocator price = new ElementLocator(Locator.Id, "activityPrice");
         private readonly ElementLocator matchFlexibilityValue = new ElementLocator(Locator.Id, "matchFlexValue");
@@ -97,10 +101,6 @@
         private readonly ElementLocator rentShortMatchFlexibilityPercentage = new ElementLocator(Locator.Id, "shortMatchFlexPercentage");
         private readonly ElementLocator rentLongMatchFlexibilityMonth = new ElementLocator(Locator.Id, "longMatchFlexMonthValue");
         private readonly ElementLocator rentLongMatchFlexibilityWeek = new ElementLocator(Locator.Id, "longMatchFlexWeekValue");
-        // Tabs locators
-        private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Details']");
-        private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Overview']");
-        private readonly ElementLocator attachmentsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Attachments']");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -116,12 +116,10 @@
 
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
 
-        //TODO check if still valid data
         public string OffersCounter => this.Driver.GetElement(this.offerCounter).Text;
 
         public string ViewingsCounter => this.Driver.GetElement(this.viewingCounter).Text;
-        
-        //TODO check if still valid data
+
         public string Status => this.Driver.GetElement(this.activityStatus).Text;
 
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
