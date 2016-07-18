@@ -1,0 +1,14 @@
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+    <div class="form-group">
+        <label ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
+        <div class="checkbox" ng-repeat="checkbox in vm.schema.checkboxes">
+            <label>
+                <input type="checkbox"
+                       name="{{vm.schema.fieldName}}[]"
+                       ng-model="checkbox.selected"
+                       ng-value="checkbox.value"
+                       ng-change="vm.changeSelection(checkbox)"><span translate="{{checkbox.translationKey}}"></span>
+            </label>
+        </div>
+    </div>
+</ng-form>
