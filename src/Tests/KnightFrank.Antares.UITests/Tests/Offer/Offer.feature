@@ -138,9 +138,9 @@ Scenario: View residential letting offer details page
 			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
 			| Accepted | 3500         | Special conditions | John Smith |
 	When User clicks activity details on view offer page
-	Then Activity details on view offer page are same as the following 
-		| Status        | Negotiator | Vendor                      | Type                |
-		| Pre-appraisal | John Smith | Gene Hackman;Sidney Poitier | Open Market Letting |
+	Then Letting activity details on view offer page are same as the following 
+		| Status        | Landlord                    | Type                |
+		| Pre-appraisal | Gene Hackman;Sidney Poitier | Open Market Letting |
 	When User clicks view activity link from activity on view offer page
 	Then View activity page should be displayed
 	When User goes back to previous page
@@ -328,9 +328,9 @@ Scenario: View residential sale offer details page
 			| Status    | Offer | SpecialConditions     | Negotiator |
 			| Withdrawn | 95000 | My special conditions | John Smith |
 	When User clicks activity details on view offer page
-	Then Activity details on view offer page are same as the following 
-		| Status        | Negotiator | Vendor                        | Type          |
-		| Pre-appraisal | John Smith | Judith Greciet;Julius Chaloff | Freehold Sale |
+	Then Sale activity details on view offer page are same as the following 
+		| Status        | Vendor                        | Type          |
+		| Pre-appraisal | Judith Greciet;Julius Chaloff | Freehold Sale |
 	When User clicks view activity link from activity on view offer page
 	Then View activity page should be displayed
 	When User goes back to previous page
