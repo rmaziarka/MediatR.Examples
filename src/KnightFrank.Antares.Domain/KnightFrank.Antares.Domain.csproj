@@ -96,6 +96,7 @@
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAppraisalMeeting.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendeeValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityPortal.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartmentValidator.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityPortalsQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivitiesFilterQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Activity\Queries\ActivityUserQuery.cs" />
     <Compile Include="Activity\Queries\ActivityUserQueryValidator.cs" />
     <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandler.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityPortalsQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityUserQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandler.cs" />

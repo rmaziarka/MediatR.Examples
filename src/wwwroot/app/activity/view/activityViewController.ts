@@ -5,8 +5,8 @@
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
     import LatestViewsProvider = Providers.LatestViewsProvider;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Attachment = Common.Component.Attachment;
+    import Commands = Common.Models.Commands;
 
     export class ActivityViewController {
         // bindings
@@ -30,6 +30,7 @@
         selectedViewing: Dto.IViewing;
 
         isMarketingTabInEditMode: boolean = false;
+        editableActivity: Business.ActivityEditModel;
 
         activitySourceSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'sourceId',
@@ -281,6 +282,7 @@
             formName: 'advertisingPortalsForm',
             fieldName: 'advertisingPortals',
             itemTemplateUrl: 'app/attributes/listView/templates/listItemPortalTemplate.html',
+            compareMember: 'id',
             checkboxes: []
         }
 
@@ -330,7 +332,7 @@
         salesBoardTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'salesBoardType',
             translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.TYPE',
-            fieldName: 'salesBoardType',
+            fieldName: 'salesBoardTypeId',
             formName: 'salesBoardTypeForm',
             enumTypeCode: Dto.EnumTypeCode.SalesBoardType
         }
@@ -338,7 +340,7 @@
         salesBoardStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'salesBoardStatus',
             translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.STATUS',
-            fieldName: 'salesBoardStatus',
+            fieldName: 'salesBoardStatusId',
             formName: 'salesBoardStatusForm',
             enumTypeCode: Dto.EnumTypeCode.SalesBoardStatus
         }
@@ -353,6 +355,7 @@
         constructor(
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
+            private activityService: Services.ActivityService,
             private latestViewsProvider: LatestViewsProvider,
             private eventAggregator: Core.EventAggregator) {
 
@@ -389,6 +392,19 @@
                 });
 
             this.recreateAttachmentsData();
+            this.reloadPortals();
+        }
+
+        private reloadPortals = () =>{
+            this.activityService.getPortals().then((portals: Dto.IPortal[]) =>{
+                this.advertisingPortalsSchema.checkboxes =
+                    _.map(portals, (portal: Dto.IPortal):any =>{
+                        return {
+                            translationKey : portal.name,
+                            value : portal
+                        }
+                    });
+            });
         }
 
         public setActiveTabIndex = (tabIndex: number) => {
@@ -477,10 +493,17 @@
 
         toggleMarketingTabMode = () => {
             this.isMarketingTabInEditMode = !this.isMarketingTabInEditMode;
+            if (this.isMarketingTabInEditMode) {
+                this.editableActivity = new Business.ActivityEditModel(this.activity);
+            }
         };
 
         saveMarketing = () => {
-            this.toggleMarketingTabMode();
+            var editCommand = new Commands.Activity.ActivityEditCommand(this.editableActivity);
+            this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) =>{
+                this.activity = new Business.ActivityViewModel(activityDto);
+                this.toggleMarketingTabMode();
+            });
         }
 
         cancelMarketing = () => {

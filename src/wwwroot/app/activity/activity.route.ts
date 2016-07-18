@@ -75,7 +75,7 @@ module Antares.Activity {
                             return new Business.ActivityViewModel(activity);
                         });
                     },
-                    config: (activity: IActivity, configService: Services.ConfigService) => {
+                    viewConfig: (activity: IActivity, configService: Services.ConfigService) => {
                         return configService.getActivity(PageTypeEnum.Details,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
@@ -88,6 +88,11 @@ module Antares.Activity {
                             activity.activityTypeId,
                             entity);
                     },
+                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig, activityConfigUtils: ActivityConfigUtils) =>{
+                        var config: any = viewConfig;
+                        config.update = editConfig;
+                        return config;
+                    }
                 }
             });
     }

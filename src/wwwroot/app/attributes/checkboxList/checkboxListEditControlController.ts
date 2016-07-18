@@ -13,11 +13,18 @@ module Antares.Attribues {
         }
 
         private isSelected = (checkbox: Attributes.ICheckboxSchema) => {
-            return this.ngModel.indexOf(checkbox.value) > -1;
+            return this.getIndexOfValue(checkbox) > -1;
+        }
+
+        private getIndexOfValue = (checkbox: Attributes.ICheckboxSchema): number => {
+            var value = this.schema.compareMember ? checkbox.value[this.schema.compareMember] : checkbox.value;
+            return _.findIndex(this.ngModel, (item: any) => {
+                return (this.schema.compareMember ? item[this.schema.compareMember] : item) === value;
+            });
         }
 
         changeSelection = (checkbox: Attributes.ICheckboxSchema) => {
-            var indexOfValue = this.ngModel.indexOf(checkbox.value);
+            var indexOfValue = this.getIndexOfValue(checkbox);
             if (indexOfValue > -1) {
                 // is currently selected
                 this.ngModel.splice(indexOfValue, 1);
