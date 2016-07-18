@@ -50,6 +50,7 @@
         public void OpenActivityDetails()
         {
             this.page.OpenActivityPreview().WaitForSidePanelToShow();
+            this.page.ActivityPreview.WaitForDetailsToLoad();
         }
 
         [When(@"User clicks view activity link from activity on view offer page")]
@@ -162,8 +163,23 @@
                 () => Assert.Equal(expectedDetails.Details, this.page.RequirementDetails));
         }
 
-        [Then(@"Activity details on view offer page are same as the following")]
-        public void CheckActivityDetailsPanel(Table table)
+        [Then(@"Letting activity details on view offer page are same as the following")]
+        public void CheckLettingActivityDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            expectedDetails.CreationDate = this.scenarioContext.Get<Activity>("Activity").CreatedDate.ToString("dd-MM-yyyy");
+            List<string> details = this.page.ActivityPreview.GetActivityDetails();
+            string landlords = this.page.ActivityPreview.Landlords.Aggregate((i, j) => i + ";" + j);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Status, details[0]),
+                () => Assert.Equal(expectedDetails.CreationDate, details[1]),
+                () => Assert.Equal(expectedDetails.Type, details[2]),
+                () => Assert.Equal(expectedDetails.Landlord, landlords));
+        }
+
+        [Then(@"Sale activity details on view offer page are same as the following")]
+        public void CheckSaleActivityDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<ActivityDetails>();
             expectedDetails.CreationDate = this.scenarioContext.Get<Activity>("Activity").CreatedDate.ToString("dd-MM-yyyy");
@@ -172,9 +188,8 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Status, details[0]),
-                () => Assert.Equal(expectedDetails.Negotiator, details[1]),
-                () => Assert.Equal(expectedDetails.CreationDate, details[2]),
-                () => Assert.Equal(expectedDetails.Type, details[3]),
+                () => Assert.Equal(expectedDetails.CreationDate, details[1]),
+                () => Assert.Equal(expectedDetails.Type, details[2]),
                 () => Assert.Equal(expectedDetails.Vendor, vendors));
         }
 
