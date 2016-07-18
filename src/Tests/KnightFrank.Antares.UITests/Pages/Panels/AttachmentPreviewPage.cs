@@ -25,19 +25,16 @@
         {
         }
 
-        public Attachment GetAttachmentDetails()
+        public Attachment AttachmentDetails => new Attachment
         {
-            return new Attachment
-            {
-                FileName = this.Driver.GetElement(this.name).Text,
-                Type = this.Driver.GetElement(this.type).Text,
-                Size = this.Driver.GetElement(this.size).Text,
-                Date = this.Driver.GetElement(this.addedTime).Text,
-                User = this.Driver.GetElement(this.user).Text
-            };
-        }
+            FileName = this.Driver.GetElement(this.name).Text,
+            Type = this.Driver.GetElement(this.type).Text,
+            Size = this.Driver.GetElement(this.size).Text,
+            Date = this.Driver.GetElement(this.addedTime).Text,
+            User = this.Driver.GetElement(this.user).Text
+        };
 
-        public AttachmentPreviewPage CloseAttachmentPreviewPage()
+        public AttachmentPreviewPage CloseAttachmentPreview()
         {
             this.Driver.Click(this.closeButton);
             return this;
