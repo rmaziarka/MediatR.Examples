@@ -68,7 +68,12 @@
                 () => Assert.Equal(company.Name, this.page.CompanyName),
                 () => Assert.Equal(company.WebsiteUrl, this.page.Website),
                 () => Assert.Equal(company.ClientCarePageUrl, this.page.ClientCarePage),
-                () => Assert.Equal(company.ClientCareStatus, this.page.ClientCareStatus));
+                () => Assert.Equal(company.ClientCareStatus, this.page.ClientCareStatus),
+                () => Assert.Equal(company.CompanyType, this.page.CompanyType),
+                () => Assert.Equal(company.Description, this.page.CompanyDescription),
+                () => Assert.Equal(company.RelationshipManager, this.page.RelationshipManager),
+                () => Assert.Equal(company.IsValid, this.page.IsValid.Equals("Yes")),
+                () => Assert.Equal(company.CompanyCategory, this.page.CompanyCategory));
         }
 
         [Then(@"Company contacts should have following contacts on view company page")]

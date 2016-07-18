@@ -60,10 +60,15 @@
 
             this.scenarioContext.Set(details.WebsiteUrl, "Url");
 
-            this.page.SetCompanyName(details.Name);
-            this.page.SetWebsite(details.WebsiteUrl);
-            this.page.SetClientCarePage(details.ClientCarePageUrl);
-            this.page.SelectClientCareStatus(details.ClientCareStatus);
+            this.page.SetCompanyName(details.Name)
+                .SetWebsite(details.WebsiteUrl)
+                .SetClientCarePage(details.ClientCarePageUrl)
+                .SelectClientCareStatus(details.ClientCareStatus)
+                .SelectCategory(details.CompanyCategory)
+                .SelectCompanyType(details.CompanyType)
+                .SetDescription(details.Description)
+                .SelectRelationshipManager(details.RelationshipManager)
+                .SetValid(details.IsValid);
         }
 
         [When(@"User selects contacts on create company page")]

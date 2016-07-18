@@ -17,6 +17,13 @@
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
         private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
+        private readonly ElementLocator companyCategory = new ElementLocator(Locator.CssSelector, "#category > select");
+        private readonly ElementLocator companyType = new ElementLocator(Locator.CssSelector, "#type > select");
+        private readonly ElementLocator companyDescription = new ElementLocator(Locator.Id, "description");
+        private readonly ElementLocator addRelationshipManagerButton = new ElementLocator(Locator.Id, "edit-btn");
+        private readonly ElementLocator addRelationshipManagerInput = new ElementLocator(Locator.CssSelector, "#user-search input");
+        private readonly ElementLocator addRelationshipManager = new ElementLocator(Locator.XPath, "//search[@id='user-search']//span[starts-with(., '{0}')]");
+        private readonly ElementLocator validCheckbox = new ElementLocator(Locator.Id, "comapny-is-valid");
         private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
@@ -69,6 +76,42 @@
         public CreateCompanyPage SelectClientCareStatus(string status)
         {
             this.Driver.GetElement<Select>(this.clientCareStatus).SelectByText(status);
+            return this;
+        }
+
+        public CreateCompanyPage SelectCategory(string category)
+        {
+            this.Driver.GetElement<Select>(this.companyCategory).SelectByText(category);
+            return this;
+        }
+        public CreateCompanyPage SelectCompanyType(string comType)
+        {
+            this.Driver.GetElement<Select>(this.companyType).SelectByText(comType);
+            return this;
+        }
+
+        public CreateCompanyPage SelectRelationshipManager(string realtionshipManager)
+        {
+            this.Driver.Click(this.addRelationshipManagerButton);
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.SendKeys(this.addRelationshipManagerInput, realtionshipManager);
+            this.Driver.Click(this.addRelationshipManager.Format(realtionshipManager));
+            return this;
+        }
+
+        public CreateCompanyPage SetDescription(string description)
+        {
+            this.Driver.SendKeys(this.companyDescription, description);
+            return this;
+        }
+
+        public CreateCompanyPage SetValid(bool valid)
+        {
+            if ((valid && !this.Driver.GetElement(this.validCheckbox).Selected) || (!valid && this.Driver.GetElement(this.validCheckbox).Selected))
+            {
+                this.Driver.Click(this.validCheckbox);
+            }
+
             return this;
         }
 
