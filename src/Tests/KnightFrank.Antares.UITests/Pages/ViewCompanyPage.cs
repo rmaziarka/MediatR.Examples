@@ -11,9 +11,7 @@
 
     public class ViewCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector,
-            "#clientCarePageUrl [name = 'url']");
-
+        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector, "#clientCarePageUrl [name = 'url']");
         private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
         private readonly ElementLocator companyCategory = new ElementLocator(Locator.Id, "company-category");
         private readonly ElementLocator companyDescription = new ElementLocator(Locator.Id, "description");
@@ -79,9 +77,13 @@
             public string ClientCareStatus { get; set; }
 
             public string Description { get; set; }
+
             public string CompanyCategory { get; set; }
+
             public string CompanyType { get; set; }
+
             public string RelationshipManager { get; set; }
+
             public bool IsValid { get; set; }
         }
     }

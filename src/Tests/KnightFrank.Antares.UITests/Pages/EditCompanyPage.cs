@@ -13,41 +13,37 @@
 
     public class EditCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector,
-            "button[ng-click *= 'showContactList']");
-
-        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
-        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-edit");
-        private readonly ElementLocator companyCategory = new ElementLocator(Locator.CssSelector, "#category > select");
-        private readonly ElementLocator companyType = new ElementLocator(Locator.CssSelector, "#type > select");
-        private readonly ElementLocator companyDescription = new ElementLocator(Locator.Id, "description");
+        private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator addRelationshipManager = new ElementLocator(Locator.XPath, "//search[@id='user-search']//span[starts-with(., '{0}')]");
         private readonly ElementLocator addRelationshipManagerButton = new ElementLocator(Locator.Id, "edit-btn");
         private readonly ElementLocator addRelationshipManagerInput = new ElementLocator(Locator.CssSelector, "#user-search input");
-
-        private readonly ElementLocator addRelationshipManager = new ElementLocator(Locator.XPath,
-            "//search[@id='user-search']//span[starts-with(., '{0}')]");
-
-        private readonly ElementLocator validCheckbox = new ElementLocator(Locator.Id, "comapny-is-valid");
+        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
+        private readonly ElementLocator companyCategory = new ElementLocator(Locator.CssSelector, "#category > select");
+        private readonly ElementLocator companyDescription = new ElementLocator(Locator.Id, "description");
+        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-edit");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
+        private readonly ElementLocator companyType = new ElementLocator(Locator.CssSelector, "#type > select");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
+
+        private readonly ElementLocator validCheckbox = new ElementLocator(Locator.Id, "comapny-is-valid");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
 
         public EditCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
+        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
+
+        public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
+
         public EditCompanyPage OpenEditCompanyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("edit company", id);
             return this;
         }
-
-        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
-
-        public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
 
         public bool IsEditCompanyFormPresent()
         {
@@ -85,9 +81,9 @@
             return this;
         }
 
-        public EditCompanyPage SelectCompanyType(string companyType)
+        public EditCompanyPage SelectCompanyType(string compType)
         {
-            this.Driver.GetElement<Select>(this.companyType).SelectByText(companyType);
+            this.Driver.GetElement<Select>(this.companyType).SelectByText(compType);
             return this;
         }
 
