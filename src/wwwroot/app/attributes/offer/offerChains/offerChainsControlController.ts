@@ -74,7 +74,7 @@ module Antares.Attributes.Offer {
         private onRemoveConfirm = () => {
             this.chainTransationsService
                 .removeChain(this.chainToRemove, this.chainCommand, this.chainType)
-                .then((model: Dto.IActivity | Dto.IRequirement) => this.chainRemoved);
+                .then(this.chainRemoved);
         };
 
         private chainRemoved = (model: Dto.IActivity | Dto.IRequirement) => {
