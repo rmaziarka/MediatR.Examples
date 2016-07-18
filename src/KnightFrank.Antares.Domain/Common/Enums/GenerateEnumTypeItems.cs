@@ -3,71 +3,73 @@
 // ReSharper disable InconsistentNaming
 namespace KnightFrank.Antares.Domain.Common.Enums
 {
-    public enum EnumType
-    {
-        EntityType,
-        OwnershipType,
-        ActivityStatus,
-        Division,
-        ActivityDocumentType,
-        RequirementDocumentType,
-        PropertyDocumentType,
-        OfferStatus,
-        UserType,
-        ActivityDepartmentType,
-        MortgageStatus,
-        ClientCareStatus,
-        MortgageSurveyStatus,
-        AdditionalSurveyStatus,
-        SearchStatus,
-        Enquiries,
-        SalutationFormat,
-        MailingSalutation,
-        EventSalutation,
-        ActivitySource,
-        ActivitySellingReason,
-        DisposalType,
-        Decoration,
-    }
+	public enum EnumType
+	{
+	 	EntityType,
+	 	OwnershipType,
+	 	ActivityStatus,
+	 	Division,
+	 	ActivityDocumentType,
+	 	RequirementDocumentType,
+	 	PropertyDocumentType,
+	 	OfferStatus,
+	 	UserType,
+	 	ActivityDepartmentType,
+	 	MortgageStatus,
+	 	ClientCareStatus,
+	 	CompanyType,
+	 	CompanyCategory,
+	 	MortgageSurveyStatus,
+	 	AdditionalSurveyStatus,
+	 	SearchStatus,
+	 	Enquiries,
+	 	SalutationFormat,
+	 	ActivitySource,
+	 	ActivitySellingReason,
+	 	DisposalType,
+	 	Decoration,
+	 	MailingSalutation,
+	 	EventSalutation,
+	 }
 
+	
+	public enum EntityType
+	{
+		Property,
+		Requirement,
+	}
 
-    public enum EntityType
-    {
-        Property,
-        Requirement,
-    }
+	public enum OwnershipType
+	{
+		Freeholder,
+		Leaseholder,
+	}
 
-    public enum OwnershipType
-    {
-        Freeholder,
-        Leaseholder,
-    }
+	public enum ActivityStatus
+	{
+		PreAppraisal,
+		MarketAppraisal,
+		NotSelling,
+	}
 
-    public enum ActivityStatus
-    {
-        PreAppraisal,
-        MarketAppraisal,
-        NotSelling,
-    }
+	public enum Division
+	{
+		Residential,
+		Commercial,
+	}
 
-    public enum Division
-    {
-        Residential,
-        Commercial,
-    }
-
-    public enum ActivityDocumentType
-    {
-        TermsOfBusiness,
-        MarketingSignOff,
-        CDDDocument,
-        Photograph,
-        FloorPlan,
-        Brochure,
-        VideoTour,
-        EPC,
-        GasCertificate,
-    }
+	public enum ActivityDocumentType
+	{
+		TermsOfBusiness,
+		MarketingSignOff,
+		CDDDocument,
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+		EPC,
+		GasCertificate,
+	}
 
 	public enum RequirementDocumentType
 	{
@@ -82,34 +84,34 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		VideoTour,
 	}
 
-    public enum OfferStatus
-    {
-        New,
-        Withdrawn,
-        Rejected,
-        Accepted,
-    }
+	public enum OfferStatus
+	{
+		New,
+		Withdrawn,
+		Rejected,
+		Accepted,
+	}
 
-    public enum UserType
-    {
-        LeadNegotiator,
-        SecondaryNegotiator,
-    }
+	public enum UserType
+	{
+		LeadNegotiator,
+		SecondaryNegotiator,
+	}
 
-    public enum ActivityDepartmentType
-    {
-        Managing,
-        Standard,
-    }
+	public enum ActivityDepartmentType
+	{
+		Managing,
+		Standard,
+	}
 
-    public enum MortgageStatus
-    {
-        Unknown,
-        NotRequiredCashFromSale,
-        NotRequiredCashInBank,
-        InProgress,
-        Agreed,
-    }
+	public enum MortgageStatus
+	{
+		Unknown,
+		NotRequiredCashFromSale,
+		NotRequiredCashInBank,
+		InProgress,
+		Agreed,
+	}
 
 	public enum ClientCareStatus
 	{
@@ -118,56 +120,95 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		KeyClient,
 	}
 
-    public enum MortgageSurveyStatus
-    {
-        Unknown,
-        NotRequired,
-        Complete,
-        Outstanding,
-    }
+	public enum CompanyType
+	{
+		KnightFrankGroup,
+		KnightFrankAffiliates,
+	}
 
-    public enum AdditionalSurveyStatus
-    {
-        Unknown,
-        NotRequired,
-        InProgress,
-        Complete,
-    }
+	public enum CompanyCategory
+	{
+		Accountants,
+		AgriculturalAndFarming,
+		Apparel,
+		ArchitectsDesign,
+		AssetManagement,
+		Banks,
+		BooksStationery,
+		BuildingAndConstruction,
+		BusinessServices,
+		BuyingAgent,
+		CareHome,
+		CharitiesAndChurches,
+		Chemist,
+		DeptVariety,
+		EateriesBars,
+		Education,
+		ElectricalTelephones,
+		EmploymentAgency,
+		EquestrianStud,
+		FamilyOffice,
+		Finance,
+		FoodDrinkRetailers,
+		GeneralServices,
+		Hotel,
+		Industrial,
+		Insurance,
+		InvestorsFundManagers,
+		Legal,
+		LocalAuthorityGovernment,
+		MediaAndPublishing,
+		MedicalHealthcare,
+		MultiFamilyOffice,
+		OilAndGas,
+		Other,
+		PropertyCompany,
+		PropertyConsultantsSurveyors,
+		RenewablesSustainability,
+		Retailers,
+		Supermarkets,
+		TelecommunicationsTechnology,
+		TourismLeisure,
+		Transport,
+		TravelAgents,
+		Utilities,
+		Wholesale,
+	}
 
-    public enum SearchStatus
-    {
-        NotStarted,
-        AppliedFor,
-        Complete,
-    }
+	public enum MortgageSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		Complete,
+		Outstanding,
+	}
 
-    public enum Enquiries
-    {
-        NotStarted,
-        Sent,
-        Complete,
-    }
+	public enum AdditionalSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		InProgress,
+		Complete,
+	}
+
+	public enum SearchStatus
+	{
+		NotStarted,
+		AppliedFor,
+		Complete,
+	}
+
+	public enum Enquiries
+	{
+		NotStarted,
+		Sent,
+		Complete,
+	}
 
 	public enum SalutationFormat
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
-	}
-
-	public enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	public enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
 	}
 
 	public enum ActivitySource
@@ -228,5 +269,21 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	public enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	public enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }

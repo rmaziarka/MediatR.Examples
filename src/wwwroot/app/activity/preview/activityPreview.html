@@ -1,5 +1,5 @@
 <div class="row section-row">
-    <div class="col-xs-5">
+    <div class="col-xs-6">
         <a ui-sref="app.activity-view({id:vm.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
     </div>
 </div>
@@ -10,8 +10,8 @@
     <activity-status-preview-control status-id='vm.activity.activityStatusId'></activity-status-preview-control>
 </div>
 <div class="row section-row">
-    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
-    <div class="col-xs-7" id="activity-preview-created-date">{{vm.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+    <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+    <div class="col-xs-6" id="activity-preview-created-date">{{vm.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
 </div>
 <div class="row section-row">
     <activity-vendors-preview-control contacts='vm.activity.contacts'></activity-vendors-preview-control>

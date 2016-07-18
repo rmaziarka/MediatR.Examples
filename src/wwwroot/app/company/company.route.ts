@@ -1,23 +1,18 @@
 /// <reference path="../typings/_all.d.ts" />
 
 module Antares.Company {
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
-
     var app: ng.IModule = angular.module('app');
 
     app.config(initRoute);
 
     function initRoute($stateProvider: ng.ui.IStateProvider){
         $stateProvider
-            .state('app.company-add',
-            {
+            .state('app.company-add', {
                 url : '/company/add',
                 params : {},
                 template : '<company-add></company-add>'
             })
-            .state('app.company-view',
-            {
+            .state('app.company-view', {
                 url : '/company/:id',
                 template : '<company-view company="company"></company-view>',
                 controller: "CompanyRouteController",
@@ -28,8 +23,7 @@ module Antares.Company {
                     }
                 }
             })
-            .state('app.company-edit',
-            {
+            .state('app.company-edit', {
                 url : '/company/edit/:id',
                 params : {},
                 template: '<company-edit company="company"></company-edit>',

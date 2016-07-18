@@ -15,7 +15,8 @@ module Antares {
         var pageObjectSelector = {
             iconAsLink: 'div a>i.fa-external-link',
             iconNotAsLink: 'div>i.fa-external-link',
-            url: '[name=url]'
+            url: '[name=url]',
+            emptyMark: 'span.ng-binding'
         };
 
         beforeEach(inject((
@@ -60,23 +61,36 @@ module Antares {
          
         });
 
-        runDescribe('when showText')
-            .data<TestCaseShowText>([
-                [true, 'http://www.test.com'],
-                [false, ''],
-            ])
-            .dataIt((data: TestCaseShowText) =>
-                ` is set to "${data[0] ? 'true' : 'false'}" then url text should ${data[0] ? '' : 'not'} be displayed`)
-            .run((data: TestCaseShowText) => {
-                var expectedUrl = data[1];
+        it('when showText is true then url text should be displayed', () => {
+            var expectedUrl = 'http://www.test.com';
 
-                createComponent(expectedUrl, data[0]);
-                var urlElements = element.find(pageObjectSelector.url);
+            createComponent(expectedUrl, true);
+            var urlElements = element.find(pageObjectSelector.url);
 
-                //Assert
-                expect(urlElements.length).toBe(1);
-                expect(urlElements[0].innerText.trim()).toBe(expectedUrl);
-            });
+            //Assert
+            expect(urlElements.length).toBe(1);
+            expect(urlElements[0].innerText.trim()).toBe(expectedUrl);
+        });
+
+        it('when showText is false then url text should be not displayed', () => {
+            var expectedUrl = 'http://www.test.com';
+
+            createComponent(expectedUrl, false);
+            var urlElements = element.find(pageObjectSelector.url);
+
+            //Assert
+            expect(urlElements.length).toBe(1);
+            expect(urlElements[0].innerText.trim()).toBe('');
+        }); 
+
+        it('when showText is true and url is empty then dash should be displayed', () => {
+            createComponent('', true);
+            var urlElements = element.find(pageObjectSelector.emptyMark);
+
+            //Assert
+            expect(urlElements.length).toBe(1);
+            expect(urlElements[0].innerText.trim()).toBe('-');
+        });
 
         runDescribe('when url is')
             .data<TestCaseProtocolCheck>([
@@ -95,7 +109,6 @@ module Antares {
 
                 //Assert
                expect(anchorElement.href).toBe(expectedUrl);
-              
             });
     });
 }

@@ -32,22 +32,22 @@
             UpdateCompanyCommand command,
             UpdateCompanyCommandHandler handler)
         {
-			// Arrange
-			Company updatedCompany = this.CreateCompany(command.Id);
+            // Arrange
+            Company updatedCompany = this.CreateCompany(command.Id);
 
-			companyRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Company, bool>>>(), 
-														  It.IsAny<Expression<Func<Company, object>>[]>()))
-							 .Returns(new List<Company> { updatedCompany });
+            companyRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Company, bool>>>(),
+                                                          It.IsAny<Expression<Func<Company, object>>[]>()))
+                             .Returns(new List<Company> { updatedCompany });
 
-			contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.Contacts.Select(x => new Contact { Id = x.Id }));
 
             // Act
             handler.Handle(command);
 
-			// Assert
+            // Assert
             companyRepository.Verify(x => x.GetWithInclude(It.IsAny<Expression<Func<Company, bool>>>(),
-														  It.IsAny<Expression<Func<Company, object>>[]>()), Times.Once);
+                                                          It.IsAny<Expression<Func<Company, object>>[]>()), Times.Once);
             companyRepository.Verify(x => x.Save(), Times.Once);
         }
 
@@ -60,14 +60,14 @@
             UpdateCompanyCommandHandler handler,
             IFixture fixture)
         {
-			// Arrange
-			Company updatedCompany = this.CreateCompany(command.Id);
+            // Arrange
+            Company updatedCompany = this.CreateCompany(command.Id);
 
-			companyRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Company, bool>>>(),
-														  It.IsAny<Expression<Func<Company, object>>[]>()))
-							 .Returns(new List<Company> { updatedCompany });
+            companyRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Company, bool>>>(),
+                                                          It.IsAny<Expression<Func<Company, object>>[]>()))
+                             .Returns(new List<Company> { updatedCompany });
 
-			command.Contacts = fixture.CreateMany<Contact>(2).ToList();
+            command.Contacts = fixture.CreateMany<Contact>(2).ToList();
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(
@@ -82,15 +82,21 @@
             Assert.Equal(ErrorMessage.Missing_Company_Contacts_Id, businessValidationException.ErrorCode);
         }
 
-	    private Company CreateCompany(Guid id)
-	    {
-		    return new Company
-		    {
-			    Id = id,
-			    WebsiteUrl = "www.x.com",
-			    ClientCarePageUrl = "www.y.com",
-                CompaniesContacts = new List<CompanyContact>()
-		    };
-	    }
+        private Company CreateCompany(Guid id)
+        {
+            return new Company
+            {
+                Id = id,
+                WebsiteUrl = "www.x.com",
+                ClientCarePageUrl = "www.y.com",
+                Description = "desc",
+                Valid = true,
+                CompaniesContacts = new List<CompanyContact>(),
+                ClientCareStatusId = Guid.NewGuid(),
+                CompanyTypeId = Guid.NewGuid(),
+                CompanyCategoryId = Guid.NewGuid(),
+                RelationshipManagerId = Guid.NewGuid()
+            };
+        }
     }
 }

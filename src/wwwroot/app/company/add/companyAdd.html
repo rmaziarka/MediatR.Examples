@@ -3,12 +3,13 @@
         <h2 class="page-header" translate="COMPANY.CREATE_COMPANY"></h2>
     </div>
 
-    <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
+    <form ng-submit="addCompanyForm.isFormValid() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
+                <!-- name -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('name')}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
@@ -16,16 +17,46 @@
                     </div>
                 </div>
 
-                <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
+                <!-- category -->
+                <div class="form-group">
+                    <label for="name" translate="COMPANY.CATEGORY"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory" sort="true"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="form-group">
+                    <label for="name" translate="COMPANY.TYPE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType"  sort="true"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- description -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('description')}">
+                    <label for="description" translate="COMPANY.DESCRIPTION"></label>
+                    <span class="pull-right character-limit">{{addCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
+                    <textarea id="description" kf-max-count="vm.descriptionMaxLength" rows="8" class="form-control" ng-required="false"
+                              name="description" ng-model="vm.company.description"></textarea>
+                    <div ng-messages="addCompanyForm.description.$error" ng-show="addCompanyForm.$submitted ||addCompanyForm.description.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <!-- website -->
+                <div class="form-group has-feedback" ng-class="{'has-error': vm.hasControlError('website')}">
+                    <label class="control-label" for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="control-label" for="website" translate="COMPANY.WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
                             <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
@@ -33,32 +64,42 @@
                     </div>
                 </div>
 
-                <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                <!-- clientCarePageUrl -->
+                <div class="form-group has-feedback" ng-class="{'has-error': vm.hasControlError('clientCarePageUrl')}">
+                    <label class="control-label" for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="control-label" for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <input type="text" class="form-control" id="clientcareurl" name="clientCarePageUrl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
                             <div class="form-control-feedback">
                                 <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
                             </div>
                         </div>
                     </div>
-                    <div ng-messages="addCompanyForm.clientcareurl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty">
+                    <div ng-messages="addCompanyForm.clientCarePageUrl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientCarePageUrl.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
-       
 
+                <!-- clientCareStatusId -->
                 <div class="form-group">
+                    <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
-                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id"
-                                    ng-model="vm.selectedStatus">
-                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                            </select></div>
+                            <enum-select id="client-care-status" name="clientCareStatusId" ng-model="vm.company.clientCareStatusId" enum-type-code="clientCareStatus"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- relationshipManager -->
+                <select-user-edit-control user="vm.company.relationshipManager" config="vm.config.relationshipManager" schema="vm.controlSchemas.relationshipManager">
+                </select-user-edit-control>
+
+                <!-- isValid -->
+                <div class="form-group">
+                    <label for="comapny-is-valid" translate="COMPANY.IS_VALID"></label>
+                    <div>
+                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.valid" >
+                        <span translate="COMPANY.IS_VALID_YES"></span>
                     </div>
                 </div>
             </fieldset>

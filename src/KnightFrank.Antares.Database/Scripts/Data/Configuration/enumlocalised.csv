@@ -33,6 +33,53 @@ ActivityDepartmentType;Standard;en;Standard
 ClientCareStatus;MassiveActionClient;en;Massive Action Client
 ClientCareStatus;PrincipalClient;en;Principal Client
 ClientCareStatus;KeyClient;en;Key Client
+CompanyType;KnightFrankGroup;en;Knight Frank Group
+CompanyType;KnightFrankAffiliates;en;Knight Frank Affiliates
+CompanyCategory;Accountants;en;Accountants
+CompanyCategory;AgriculturalAndFarming;en;Agricultural and Farming
+CompanyCategory;Apparel;en;Apparel
+CompanyCategory;ArchitectsDesign;en;Architects/Design
+CompanyCategory;AssetManagement;en;Asset Management
+CompanyCategory;Banks;en;Banks
+CompanyCategory;BooksStationery;en;Books/Stationery
+CompanyCategory;BuildingAndConstruction;en;Building and Construction
+CompanyCategory;BusinessServices;en;Business Services
+CompanyCategory;BuyingAgent;en;Buying Agent
+CompanyCategory;CareHome;en;Care Home
+CompanyCategory;CharitiesAndChurches;en;Charities and Churches
+CompanyCategory;Chemist;en;Chemist
+CompanyCategory;DeptVariety;en;Dept/Variety
+CompanyCategory;EateriesBars;en;Eateries/Bars
+CompanyCategory;Education;en;Education
+CompanyCategory;ElectricalTelephones;en;Electrical/Telephones
+CompanyCategory;EmploymentAgency;en;Employment Agency
+CompanyCategory;EquestrianStud;en;Equestrian/Stud
+CompanyCategory;FamilyOffice;en;Family Office
+CompanyCategory;Finance;en;Finance (except Banks)
+CompanyCategory;FoodDrinkRetailers;en;Food/Drink Retailers
+CompanyCategory;GeneralServices;en;General Services
+CompanyCategory;Hotel;en;Hotel
+CompanyCategory;Industrial;en;Industrial
+CompanyCategory;Insurance;en;Insurance
+CompanyCategory;InvestorsFundManagers;en;Investors/Fund Managers
+CompanyCategory;Legal;en;Legal
+CompanyCategory;LocalAuthorityGovernment;en;Local Authority/Government
+CompanyCategory;MediaAndPublishing;en;Media and Publishing
+CompanyCategory;MedicalHealthcare;en;Medical/Healthcare
+CompanyCategory;MultiFamilyOffice;en;Multi Family Office
+CompanyCategory;OilAndGas;en;Oil & Gas
+CompanyCategory;Other;en;Other
+CompanyCategory;PropertyCompany;en;Property Company
+CompanyCategory;PropertyConsultantsSurveyors;en;Property Consultants/Surveyors
+CompanyCategory;RenewablesSustainability;en;Renewables/Sustainability
+CompanyCategory;Retailers;en;Retailers
+CompanyCategory;Supermarkets;en;Supermarkets
+CompanyCategory;TelecommunicationsTechnology;en;Telecommunications/Technology
+CompanyCategory;TourismLeisure;en;Tourism/Leisure
+CompanyCategory;Transport;en;Transport
+CompanyCategory;TravelAgents;en;Travel Agents
+CompanyCategory;Utilities;en;Utilities
+CompanyCategory;Wholesale;en;Wholesale
 MortgageStatus;Unknown;en;Unknown
 MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank

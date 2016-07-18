@@ -1,0 +1,46 @@
+CompanyCategoryEnumCode;LocaleCode;Value
+Accountants;en;Accountants
+AgriculturalAndFarming;en;Agricultural and Farming
+Apparel;en;Apparel
+ArchitectsDesign;en;Architects/Design
+AssetManagement;en;Asset Management
+Banks;en;Banks
+BooksStationery;en;Books/Stationery
+BuildingAndConstruction;en;Building and Construction
+BusinessServices;en;Business Services
+BuyingAgent;en;Buying Agent
+CareHome;en;Care Home
+CharitiesAndChurches;en;Charities and Churches
+Chemist;en;Chemist
+DeptVariety;en;Dept/Variety
+EateriesBars;en;Eateries Bars
+Education;en;Education
+ElectricalTelephones;en;Electrical/Telephones
+EmploymentAgency;en;Employment Agency
+EquestrianStud;en;Equestrian Stud
+FamilyOffice;en;Family Office
+Finance;en;Finance (except Banks)
+FoodDrinkRetailers;en;Food/Drink Retailers
+GeneralServices;en;General Services
+Hotel;en;Hotel
+Industrial;en;Industrial
+Insurance;en;Insurance
+InvestorsFundManagers;en;Investors/Fund Managers
+Legal;en;Legal
+LocalAuthorityGovernment;en;Local Authority/Government
+MediaAndPublishing;en;Media and Publishing
+MedicalHealthcare;en;Medical/Healthcare
+MultiFamilyOffice;en;Multi Family Office
+OilAndGas;en;Oil & Gas
+Other;en;Other
+PropertyCompany;en;Property Company
+PropertyConsultantsSurveyors;en;Property Consultants/Surveyors
+RenewablesSustainability;en;Renewables/Sustainability
+Retailers;en;Retailers
+Supermarkets;en;Supermarkets
+TelecommunicationsTechnology;en;Telecommunications Technology
+TourismLeisure;en;Tourism/Leisure
+Transport;en;Transport
+TravelAgents;en;Travel Agents
+Utilities;en;Utilities
+Wholesale;en;Wholesale
