@@ -7,12 +7,15 @@ module Antares.Common.Models.Business {
         websiteUrl: string = null;
         clientCarePageUrl: string = null;
         clientCareStatusId: string = null;
-        clientCareStatus: Business.EnumTypeItem;
         contacts: Contact[] = [];
         companiesContacts: Models.Dto.ICompanyContact[] = [];
+        description: string = null;
+        companyCategoryId: string = null;
+        companyTypeId: string = null;
+        valid: boolean = false;
+        relationshipManager: User = null;
 
         constructor(company?: Dto.ICompany) {
-
             if (company) {
                 angular.extend(this, company);
 
@@ -23,6 +26,10 @@ module Antares.Common.Models.Business {
 
                 if (company.companiesContacts && !company.contacts) {
                     this.contacts = company.companiesContacts.map((item) =>{ return new Contact(item.contact) });
+                }
+
+                if (company.relationshipManager) {
+                    this.relationshipManager = new User(company.relationshipManager);
                 }
             }
         }

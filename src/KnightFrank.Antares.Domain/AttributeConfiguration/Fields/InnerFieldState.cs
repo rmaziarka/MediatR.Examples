@@ -22,6 +22,9 @@
         public ControlCode ControlCode { get; set; }
         public string DictionaryCode { get; set; }
         public IList<string> AllowedCodes { get; set; }
+        public LambdaExpression TargetContainer { get; set; }
+
+        public Func<object, object> TargetContainerCompiled;
 
         public override string ToString()
         {

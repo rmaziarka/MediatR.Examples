@@ -18,8 +18,7 @@ module Antares {
             .registerAvailableLanguageKeys(['en'], {
                 'en_*': 'en'
             })
-            .preferredLanguage('en')
-            .useSanitizeValueStrategy('escape');
+            .preferredLanguage('en');
     }
 
     function extendOrderByWithEmptyFields($provider: angular.auto.IProvideService) {
