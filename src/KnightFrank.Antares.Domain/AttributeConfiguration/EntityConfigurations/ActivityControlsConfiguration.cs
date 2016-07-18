@@ -126,7 +126,7 @@
             this.AddControl(PageType.Details, ControlCode.AdvertisingNote, Field<Activity>.Create(x => x.AdvertisingNote));
             this.AddControl(PageType.Details, ControlCode.AdvertisingPrPermitted, Field<Activity>.Create(x => x.AdvertisingPrPermitted));
             this.AddControl(PageType.Details, ControlCode.AdvertisingPrContent, Field<Activity>.Create(x => x.AdvertisingPrContent));
-            this.AddControl(PageType.Details, ControlCode.SalesBoardRemovalDate, Field<Activity>.Create(x => x.AdvertisingNote));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardRemovalDate, Field<Activity>.Create(x => x.SalesBoardRemovalDate));
             this.AddControl(PageType.Details, ControlCode.SalesBoardSpecialInstructions, Field<Activity>.Create(x => x.SalesBoardSpecialInstructions));
             this.AddControl(PageType.Details, ControlCode.SalesBoardStatus, Field<Activity>.Create(x => x.SalesBoardStatus, x => x.SalesBoardStatusId));
             this.AddControl(PageType.Details, ControlCode.SalesBoardType, Field<Activity>.Create(x => x.SalesBoardType, x => x.SalesBoardTypeId));
@@ -207,7 +207,7 @@
             this.AddControl(PageType.Update, ControlCode.AdvertisingNote, Field<UpdateActivityCommand>.Create(x => x.AdvertisingNote));
             this.AddControl(PageType.Update, ControlCode.AdvertisingPrPermitted, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPrPermitted));
             this.AddControl(PageType.Update, ControlCode.AdvertisingPrContent, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPrContent));
-            this.AddControl(PageType.Update, ControlCode.SalesBoardRemovalDate, Field<UpdateActivityCommand>.Create(x => x.AdvertisingNote));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardRemovalDate, Field<UpdateActivityCommand>.Create(x => x.SalesBoardRemovalDate));
             this.AddControl(PageType.Update, ControlCode.SalesBoardSpecialInstructions, Field<UpdateActivityCommand>.Create(x => x.SalesBoardSpecialInstructions));
             this.AddControl(PageType.Update, ControlCode.SalesBoardStatus, Field<UpdateActivityCommand>.CreateDictionary(x => x.SalesBoardStatusId, nameof(SalesBoardStatus)));
             this.AddControl(PageType.Update, ControlCode.SalesBoardType, Field<UpdateActivityCommand>.CreateDictionary(x => x.SalesBoardTypeId, nameof(SalesBoardType)));

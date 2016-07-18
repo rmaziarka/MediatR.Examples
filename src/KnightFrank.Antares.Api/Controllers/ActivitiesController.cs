@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Api;
     using KnightFrank.Antares.Dal.Model.Attachment;
+    using KnightFrank.Antares.Dal.Model.Portal;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
@@ -37,6 +38,20 @@
         {
             this.mediator = mediator;
             this.userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// Gets the portals.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("portals")]
+        public IEnumerable<Portal> GetPortals([FromUri]ActivityPortalsQuery query)
+        {
+            query = query ?? new ActivityPortalsQuery();
+            IEnumerable<Portal> result = this.mediator.Send(query);
+            return result;
         }
 
         /// <summary>
@@ -81,7 +96,7 @@
         [Route("")]
         public IEnumerable<ActivitiesQueryResult> GetActivities([FromUri(Name = "")]ActivitiesFilterQuery query)
         {
-            if(query == null)
+            if (query == null)
                 query = new ActivitiesFilterQuery();
             return this.mediator.Send(query);
         }

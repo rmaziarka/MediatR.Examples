@@ -21,6 +21,12 @@ module Antares.Services {
             return this.$http.put(this.appConfig.rootUrl + this.url, activityCommand)
                 .then<Dto.IActivity>((result: ng.IHttpPromiseCallbackArg<Dto.IActivity>) => result.data);
         }
+
+        getPortals = (): ng.IHttpPromise<Dto.IPortal[]> => {
+            var portalsParams: ng.IRequestShortcutConfig = { params: { countryCode: 'GB' } };
+            return this.$http.get(this.appConfig.rootUrl + this.url + 'portals', portalsParams)
+                .then<Dto.IPortal[]>((result: ng.IHttpPromiseCallbackArg<Dto.IPortal[]>) => result.data);
+        }
     }
 
     angular.module('app').service('activityService', ActivityService);

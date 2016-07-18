@@ -123,7 +123,7 @@
 
         public bool SalesBoardUpToDate { get; set; }
 
-        public DateTime SalesBoardRemovalDate { get; set; }
+        public DateTime? SalesBoardRemovalDate { get; set; }
 
         public string SalesBoardSpecialInstructions { get; set; }
 
@@ -131,7 +131,10 @@
 
         public string AdvertisingPrContent { get; set; }
 
-        public virtual ICollection<Portal> AdvertisingPortals { get; set; }  = new List<Portal>();
-        
+        public virtual ICollection<UpdateActivityPortal> AdvertisingPortals { get; set; } = new List<UpdateActivityPortal>();
+
+        public Guid? SalesBoardTypeId { get; set; }
+
+        public Guid? SalesBoardStatusId { get; set; }
     }
 }

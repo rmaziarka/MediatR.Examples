@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class UpdateActivityCommand : ActivityCommandBase
+    public class UpdateActivityPortal
     {
         public Guid Id { get; set; }
     }

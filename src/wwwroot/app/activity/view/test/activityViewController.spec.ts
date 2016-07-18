@@ -26,6 +26,8 @@ module Antares {
             $http = $httpBackend;
             evtAggregator = eventAggregator;
 
+            $http.whenGET(/api\/activities\/portals/).respond(200, []);
+
             var bindings = { activity: activityMock };
             controller = <ActivityViewController>$controller('activityViewController', { $scope: scope }, bindings);
             controller.config = TestHelpers.ConfigGenerator.generateActivityViewConfig();
@@ -38,7 +40,7 @@ module Antares {
         describe('when AttachmentSavedEvent event is triggered', () => {
             it('then addSavedAttachmentToList should be called', () => {
                 // arrange
-                spyOn(controller, 'addSavedAttachmentToList')
+                spyOn(controller, 'addSavedAttachmentToList');
 
                 var attachmentDto = TestHelpers.AttachmentGenerator.generateDto();
                 var command = new Common.Component.Attachment.AttachmentSavedEvent(attachmentDto);

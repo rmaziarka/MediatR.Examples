@@ -1,8 +1,8 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Common.Models.Business  {
-    import Dto = Antares.Common.Models.Dto;
-    
+module Antares.Common.Models.Business {
+    import Dto = Models.Dto;
+
     export class ActivityEditModel extends ActivityBaseModel {
         chainTransactions: Business.ChainTransaction[] = [];
 

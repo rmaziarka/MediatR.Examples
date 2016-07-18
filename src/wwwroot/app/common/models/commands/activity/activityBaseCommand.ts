@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Commands.Activity {
-    import Business = Common.Models.Business;
-    import Dto = Common.Models.Dto;
+    import Business = Models.Business;
+    import Dto = Models.Dto;
     
     export class ActivityBaseCommand implements IActivityBaseCommand {
         activityStatusId: string = '';
@@ -60,6 +60,19 @@ module Antares.Common.Models.Commands.Activity {
         longMatchFlexWeekValue: number = null;
         longMatchFlexMonthValue: number = null;
         longMatchFlexPercentage: number = null; 
+        marketingStrapline: string = null;
+        marketingFullDescription: string = null;
+        marketingLocationDescription: string = null;
+        advertisingPublishToWeb: boolean = false;
+        advertisingPortals: any[] = [];
+        advertisingNote: string = null;
+        advertisingPrPermitted: boolean = false;
+        advertisingPrContent: string = null;
+        salesBoardTypeId: string = null;
+        salesBoardStatusId: string = null;
+        salesBoardUpToDate: boolean;
+        salesBoardRemovalDate: Date;
+        salesBoardSpecialInstructions: string = null;
 
         constructor(activity: Business.ActivityEditModel) {
             this.activityStatusId = activity.activityStatusId;
@@ -116,6 +129,20 @@ module Antares.Common.Models.Commands.Activity {
             this.longMatchFlexWeekValue = activity.longMatchFlexWeekValue;
             this.longMatchFlexMonthValue = activity.longMatchFlexMonthValue;
             this.longMatchFlexPercentage = activity.longMatchFlexPercentage; 
+
+            this.marketingStrapline = activity.marketingStrapline;
+            this.marketingFullDescription = activity.marketingFullDescription;
+            this.marketingLocationDescription = activity.marketingLocationDescription;
+            this.advertisingPublishToWeb = activity.advertisingPublishToWeb;
+            this.advertisingPortals = activity.advertisingPortals;
+            this.advertisingNote = activity.advertisingNote;
+            this.advertisingPrPermitted = activity.advertisingPrPermitted;
+            this.advertisingPrContent = activity.advertisingPrContent;
+            this.salesBoardTypeId = activity.salesBoardTypeId;
+            this.salesBoardStatusId = activity.salesBoardStatusId;
+            this.salesBoardUpToDate = activity.salesBoardUpToDate;
+            this.salesBoardRemovalDate = activity.salesBoardRemovalDate;
+            this.salesBoardSpecialInstructions = activity.salesBoardSpecialInstructions;
         }
     }
     
@@ -172,5 +199,19 @@ module Antares.Common.Models.Commands.Activity {
         longMatchFlexWeekValue: number;
         longMatchFlexMonthValue: number;
         longMatchFlexPercentage: number; 
+
+        marketingStrapline: string;
+        marketingFullDescription: string;
+        marketingLocationDescription: string;
+        advertisingPublishToWeb: boolean;
+        advertisingPortals: any[];
+        advertisingNote: string;
+        advertisingPrPermitted: boolean;
+        advertisingPrContent: string;
+        salesBoardTypeId: string;
+        salesBoardStatusId: string;
+        salesBoardUpToDate: boolean;
+        salesBoardRemovalDate: Date;
+        salesBoardSpecialInstructions: string;
     }
 }

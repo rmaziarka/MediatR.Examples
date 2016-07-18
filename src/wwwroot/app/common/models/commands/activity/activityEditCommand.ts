@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Commands.Activity {
-    import Business = Common.Models.Business;
+    import Business = Models.Business;
 
     export class ActivityEditCommand extends ActivityBaseCommand implements IActivityEditCommand, IChainTransactionCommand {
         id: string;
@@ -13,7 +13,7 @@ module Antares.Common.Models.Commands.Activity {
             this.chainTransactions = activity.chainTransactions;
         }
     }
-    
+
     export interface IActivityEditCommand extends IActivityBaseCommand {
         id: string;
     }

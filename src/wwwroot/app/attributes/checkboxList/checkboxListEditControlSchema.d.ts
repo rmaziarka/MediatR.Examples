@@ -4,6 +4,7 @@ declare module Antares.Attributes {
     interface ICheckboxListEditControlSchema extends IListViewControlSchema {
         formName: string,
         fieldName: string;
+        compareMember: string;
         checkboxes: ICheckboxSchema[]
     }
 

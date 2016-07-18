@@ -161,7 +161,7 @@
 
         public bool SalesBoardUpToDate { get; set; }
 
-        public DateTime SalesBoardRemovalDate { get; set; }
+        public DateTime? SalesBoardRemovalDate { get; set; }
 
         public string SalesBoardSpecialInstructions { get; set; }
 
