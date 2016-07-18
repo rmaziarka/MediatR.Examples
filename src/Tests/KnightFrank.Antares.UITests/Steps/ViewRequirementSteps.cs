@@ -139,10 +139,10 @@
         [When(@"User clicks view activity from offer on view requirement page")]
         public void ClickViewActivityOffer()
         {
-            this.page.OfferPreview.WaitForDetailsToLoad().ClickViewLink();
+            this.page.OfferPreview.WaitForDetailsToLoad().ClickActivityDetailsLink();
         }
 
-        [When(@"User clicks make an offer button for (.*) activity on view requirement page")]
+        [When(@"User clicks make an offer button for (.*) viewing on view requirement page")]
         public void MakeAnOffer(int position)
         {
             this.page.OpenViewingActions(position)
@@ -157,6 +157,7 @@
             this.page.OpenOfferActions(position)
                 .EditOffer(1)
                 .WaitForSidePanelToShow();
+            this.page.Offer.WaitForDetailsToLoad();
         }
 
         [When(@"User clicks details offer button for (.*) offer on view requirement page")]
@@ -447,7 +448,7 @@
         [Then(@"Attachment details on attachment preview page are the same like on view requirement page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentPreview.AttachmentDetails;
             actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
@@ -468,7 +469,7 @@
         [Then(@"User closes attachment preview page on view requirement page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreview();
             this.page.WaitForSidePanelToHide();
         }
     }

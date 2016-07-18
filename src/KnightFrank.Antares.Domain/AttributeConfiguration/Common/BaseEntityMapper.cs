@@ -19,7 +19,7 @@
             IEnumerable<InnerFieldState> fieldsToUpdate = fieldStates.Where(x => !x.Readonly);
             foreach (InnerFieldState field in fieldsToUpdate)
             {
-                this.SetFieldValue(entity, field, field.Compiled(source));
+                MapField(entity, field, field.Compiled(source));
             }
 
             return entity;
@@ -37,7 +37,7 @@
             foreach (InnerFieldState field in fieldsToNullify)
             {
                 object defaultValue = field.PropertyType.IsValueType ? Activator.CreateInstance(field.PropertyType) : null;
-                this.SetFieldValue(entity, field, defaultValue);
+                SetFieldValue(entity, field, defaultValue);
             }
 
             return entity;
@@ -47,18 +47,73 @@
 
         public abstract TEntity NullifyDisallowedValues(TEntity entity, PageType pageType);
 
-        private void SetFieldValue<T>(T entity, InnerFieldState field, object value)
+        private static void SetFieldValue<T>(T entity, InnerFieldState field, object value)
         {
-            var memberSelectorExpression = field.Expression.Body as MemberExpression;
-            var property = memberSelectorExpression?.Member as PropertyInfo;
-            if (property != null)
+            string propertyPath = GetFullPropertyPathName(field.Expression);
+            SetNestedPropertyValue(propertyPath, entity, value);
+        }
+
+        private static void MapField<T>(T entity, InnerFieldState field, object value)
+        {
+            string fullPropertyName = GetFullPropertyPathName(field.Expression);
+            object targetEntity = entity;
+            if (field.TargetContainer != null)
             {
-                PropertyInfo targetProperty = entity.GetType().GetProperty(property.Name);
-                if (property.PropertyType == targetProperty?.PropertyType)
+                targetEntity = field.TargetContainerCompiled(entity);
+            }
+
+            SetNestedPropertyValue(fullPropertyName, targetEntity, value);
+        }
+
+        private static void SetNestedPropertyValue(string propertyFullName, object entity, object value)
+        {
+            List<string> tokens = propertyFullName.Split('.').ToList();
+            if (tokens.Count == 1)
+            {
+                PropertyInfo targetProperty = entity.GetType().GetProperty(propertyFullName);
+                if (targetProperty?.PropertyType.IsInstanceOfType(value) == true)
                 {
-                    targetProperty?.SetValue(entity, value);
+                    targetProperty.SetValue(entity, value);
                 }
             }
+            else
+            {
+                string containingObjectFullPropertyName = string.Join(".", tokens.Take(tokens.Count - 1));
+                object containingObject = GetNestedPropertyValue(containingObjectFullPropertyName, entity);
+                string targetPropertyName = tokens.Last();
+                PropertyInfo targetProperty = containingObject?.GetType().GetProperty(targetPropertyName);
+                if (targetProperty?.PropertyType.IsInstanceOfType(value) == true)
+                {
+                    targetProperty.SetValue(containingObject, value);
+                }
+            }
+        }
+
+        private static string GetFullPropertyPathName(LambdaExpression expression)
+        {
+            return expression.Body.ToString().Replace(expression.Parameters[0] + ".", string.Empty);
+        }
+
+        private static object GetNestedPropertyValue(string propertyFullName, object entity)
+        {
+            if (entity == null)
+            {
+                return null;
+            }
+
+            foreach (string propertyNamePart in propertyFullName.Split('.'))
+            {
+                Type entityType = entity.GetType();
+                PropertyInfo info = entityType.GetProperty(propertyNamePart);
+                if (info == null)
+                {
+                    return null;
+                }
+
+                entity = info.GetValue(entity, null);
+            }
+
+            return entity;
         }
     }
 }

@@ -2,28 +2,23 @@
 
 module Antares.Common.Component.Attachment {
     import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
 
-    export class AttachmentUploadPanelController extends Common.Component.BaseSidePanelController {
+    export class AttachmentUploadPanelController extends Component.BaseSidePanelController {
         // bindings
         entityId: string;
         entityType: Enums.EntityTypeEnum;
         enumDocumentType: Dto.EnumTypeCode;
         onSaveAttachment: (obj: { attachment: AttachmentUploadCardModel }) => ng.IPromise<Dto.IAttachment>;
 
-        attachmentClear: boolean = false;
+        attachmentClear: any;
 
-        constructor(private eventAggregator: Antares.Core.EventAggregator) {
+        constructor(private eventAggregator: Core.EventAggregator) {
             super();
         }
 
-        panelShown = () => {
-            this.attachmentClear = true;
-        };
-
-        panelHidden = () => {
-            this.attachmentClear = false;
+        panelShown = () =>{
+            this.attachmentClear = {};
         };
 
         startUpload = () => {
@@ -38,7 +33,7 @@ module Antares.Common.Component.Attachment {
             this.onSaveAttachment({ attachment: attachment })
                 .then((attachmentDto: Dto.IAttachment) => {
                     this.eventAggregator.publish(new AttachmentSavedEvent(attachmentDto));
-                    this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+                    this.eventAggregator.publish(new Component.CloseSidePanelEvent());
                 }).finally(() => {
                     this.eventAggregator.publish(new BusySidePanelEvent(false));
                 });

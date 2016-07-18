@@ -35,20 +35,15 @@
                             </activity-negotiators-view-control>
                         </section>
                     </div>
-                    <div class="col-md-3">
-                        <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
-                        <section>
-                            <activity-appraisal-meeting-view-control config="avvm.config.appraisalMeeting" appraisal-meeting="avvm.activity.appraisalMeeting"
-                                                                     attendees="avvm.activity.appraisalMeetingAttendees"></activity-appraisal-meeting-view-control>
-                        </section>
-                        <attachments-manager header="ACTIVITY.VIEW.RECENT_FILES" files-number-limit="5" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
-
-
-                    </div>
                     <div class="col-md-6">
                         <section>
                             <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible" config="avvm.config.offers" offers="avvm.activity.offers">
                             </offer-view-control>
+                        </section>
+                        <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewings" config="avvm.config.viewings"></viewing-view-control>
+                        <section>
+                            <activity-appraisal-meeting-view-control config="avvm.config.appraisalMeeting" appraisal-meeting="avvm.activity.appraisalMeeting"
+                                                                     attendees="avvm.activity.appraisalMeetingAttendees"></activity-appraisal-meeting-view-control>
                         </section>
                     </div>
                 </div>
@@ -177,6 +172,14 @@
                         </div>
                     </div>
                 </div>
+            </uib-tab>
+
+            <uib-tab index="2" heading="{{'ACTIVITY.VIEW.ATTACHMENTS' | translate}}" select="avvm.setActiveTabIndex(2)">
+                <div class="row">
+                    <div class="col-md-3">
+                        <section class="section-no-header">
+                            <attachments-manager data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                        </section>
             </uib-tab>
             <uib-tab index="2" heading="{{'ACTIVITY.MARKETING.MARKETING' | translate}}" select="avvm.setActiveTabIndex(2)">
                 <div class="row">
