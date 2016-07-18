@@ -11,7 +11,7 @@ module Antares {
             $http: ng.IHttpBackendService,
             controller: ContactEditController;
         
-        var contactMock = TestHelpers.ContactGenerator.generate();
+        var contactMock: Business.Contact = null;
         
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -68,6 +68,8 @@ module Antares {
         
         function getMockedController($rootScope: ng.IRootScopeService, $controller: ng.IControllerService) {
             let scope = $rootScope.$new();
+
+            contactMock = TestHelpers.ContactGenerator.generate();
 
             let controller = $controller(ContactEditController, {
                 $scope: scope

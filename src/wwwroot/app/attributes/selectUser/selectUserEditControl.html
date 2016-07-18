@@ -1,0 +1,29 @@
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+    <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}" ng-if="vm.schema.translationKey"></label>
+
+    <div ng-messages="vm[vm.schema.formName].enumItem.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].enumItem.$dirty">
+        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+    </div>
+
+    <div class="form-group">
+        <search ng-show="vm.isEditMode" id="user-search"
+                options="vm.searchOptions"
+                focus-on="vm.isEditMode"
+                blur-on="!vm.isEditMode"
+                on-select-item="vm.changeUser" on-cancel="vm.cancelChange" load-items="vm.getUsers"
+                item-template-url="app/attributes/selectUser/userSearchTemplate.html" search-placeholder="{{vm.schema.placeholderTranslationKey}}"
+                class="form-group"></search>
+    </div>
+
+    <div id="edit-btn-wrapper" ng-hide="vm.isEditMode" class="form-group">
+        <button class="btn btn-default" id="edit-btn" type="button" ng-click="vm.edit()"><i class="fa fa-pencil"></i></button>
+    </div>
+
+    <card id="card-user" card-template-url="'app/attributes/selectUser/userCard.html'" show-context-menu="true" 
+          display-new-control="true" item="vm.user" ng-show="vm.user">
+        <card-context-menu>
+            <context-menu-item type="remove" item="user" action="vm.removeUser">
+            </context-menu-item>
+        </<card-context-menu>
+    </card>
+</ng-form>

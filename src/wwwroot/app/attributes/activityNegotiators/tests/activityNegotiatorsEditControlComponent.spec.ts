@@ -111,7 +111,7 @@ module Antares {
                     scope.secondaryNegotiators = null;
                     scope.$apply();
 
-                    assertValidator.assertShowElement(false, pageObjectSelector.noSecondaryNegotiators);
+                    assertValidator.assertElementHasHideClass(false, pageObjectSelector.noSecondaryNegotiators);
                 });
             });
 

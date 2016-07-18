@@ -17,6 +17,7 @@ module Antares.Common.Models.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
+	 	CompanyType,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,

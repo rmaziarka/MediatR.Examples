@@ -50,7 +50,7 @@ module Antares {
             scope.characteristic.isDisplayText = true;
             scope.$apply();
             
-            assertValidator.assertShowElement(isCharacteristicCommentVisible, pageObjectSelector.characteristicComment);
+            assertValidator.assertElementHasHideClass(isCharacteristicCommentVisible, pageObjectSelector.characteristicComment);
         });
         
         it('when characteristic is unselected then cloud icon invisible and comment is empty', () =>{
@@ -70,8 +70,8 @@ module Antares {
             // assert
             var commentValue = element.find(pageObjectSelector.characteristicComment).val();  
             
-            assertValidator.assertShowElement(isCharacteristicCommentInvisible, pageObjectSelector.characteristicComment); 
-            assertValidator.assertShowElement(isCharacteristicCommentTextInvisible, pageObjectSelector.characteristicCommentText);            
+            assertValidator.assertElementHasHideClass(isCharacteristicCommentInvisible, pageObjectSelector.characteristicComment); 
+            assertValidator.assertElementHasHideClass(isCharacteristicCommentTextInvisible, pageObjectSelector.characteristicCommentText);            
             expect(commentValue).toEqual('');
 		});
         
