@@ -163,7 +163,9 @@
         public DateTime SalesBoardRemovalDate { get; set; }
 
         public string SalesBoardSpecialInstructions { get; set; }
+
         public bool AdvertisingPrPermitted { get; set; }
+
         public string AdvertisingPrContent { get; set; }
 
         public virtual ICollection<Portal> AdvertisingPortals { get; set; }
