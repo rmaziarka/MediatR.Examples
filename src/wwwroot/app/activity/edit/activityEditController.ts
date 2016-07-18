@@ -380,6 +380,10 @@ module Antares.Activity {
 
         public activityTypeChanged = (activityTypeId: string) => {
             this.activity.activityTypeId = activityTypeId;
+            if (this.config != null && this.config.editConfig != null) {
+                this.config.editConfig.activityStatus.activityStatusId.active = false;
+            }
+
             this.reloadConfig(this.activity);
         }
 
