@@ -20,6 +20,13 @@ module Antares.Common.Component {
         constructor(
             private dataAccessService: Services.DataAccessService) {
         }
+        
+        //Remove when new user search is implemented
+        $onChanges = (changesObj: any) => {
+            if (changesObj.config && changesObj.config.currentValue != changesObj.config.previousValue && changesObj.config.currentValue) {
+                this.isInEditMode = changesObj.config.currentValue.inEditMode;
+            }
+        }
 
         public changeUser = (user: Business.User) => {
             this.user = user;
