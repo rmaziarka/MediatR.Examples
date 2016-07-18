@@ -50,7 +50,7 @@
 
         public CreateCompanyPage AddContactToCompany()
         {
-            this.Driver.GetElement(this.addContact).Click();
+            this.Driver.Click(this.addContact);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
@@ -117,7 +117,7 @@
 
         public CreateCompanyPage SaveCompany()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 
@@ -141,7 +141,7 @@
         public CreateCompanyPage ClickOnWebsiteLink()
         {
             this.currentWindowHandler = this.Driver.CurrentWindowHandle;
-            this.Driver.GetElement(this.websiteUrlIcon).Click();
+            this.Driver.Click(this.websiteUrlIcon);
             return this;
         }
 
