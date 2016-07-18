@@ -26,7 +26,8 @@ module Antares.Attributes.Offer.OfferChain {
             controlId : "offer-chain-edit-vendor",
             translationKey : "OFFER.CHAIN.EDIT.VENDOR",
             fieldName : "vendor",
-            placeholder : "OFFER.CHAIN.EDIT.NAME_AND_SURNAME"
+            placeholder: "OFFER.CHAIN.EDIT.NAME_AND_SURNAME",
+            maxLength: 128
         };
         static agentUser= <any>{
             formName : "agentUserForm",
