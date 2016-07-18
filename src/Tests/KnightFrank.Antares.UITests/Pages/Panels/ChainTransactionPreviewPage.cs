@@ -24,7 +24,6 @@
         private readonly ElementLocator searches = new ElementLocator(Locator.Id, "offer-chain-preview-searches");
         private readonly ElementLocator enquiries = new ElementLocator(Locator.Id, "offer-chain-preview-enquiries");
         private readonly ElementLocator contractAgreed = new ElementLocator(Locator.Id, "offer-chain-preview-contract-agreed");
-        private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "offer-chain-preview-card [ng-click *= 'edit']");
 
         public ChainTransactionPreviewPage(DriverContext driverContext) : base(driverContext)
         {
@@ -51,12 +50,6 @@
         public string Enquiries => this.Driver.GetElement(this.enquiries).Text;
 
         public string ContractAgreed => this.Driver.GetElement(this.contractAgreed).Text;
-
-        public ChainTransactionPreviewPage EditChain()
-        {
-            this.Driver.Click(this.editButton);
-            return this;
-        }
 
         public string GetProperty()
         {

@@ -83,6 +83,14 @@
             this.page.OpenChainPreview(position).WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks edit chain button for (.*) chain on view offer page")]
+        public void EditOffer(int position)
+        {
+            this.page.OpenChainActions(position)
+                .EditChain(1)
+                .WaitForSidePanelToShow();
+        }
+
         [Then(@"View offer page should be displayed")]
         public void CheckIfViewOfferPresent()
         {

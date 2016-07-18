@@ -57,6 +57,8 @@
         private readonly ElementLocator upwardChains = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain'] .card");
         private readonly ElementLocator upwardChainDetails = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card .ng-binding");
         private readonly ElementLocator upwardChainStatuses = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-info span");
+        private readonly ElementLocator upwardChainActions = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action");
+        private readonly ElementLocator editUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'edit'] li");
         private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "offer-chains-list address-form-view .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
@@ -210,6 +212,18 @@
         {
             return
                 this.Driver.GetElements(this.upwardChainStatuses.Format(position)).Select(el => el.GetAttribute("title")).ToList();
+        }
+
+        public ViewOfferPage OpenChainActions(int position)
+        {
+            this.Driver.Click(this.upwardChainActions.Format(position));
+            return this;
+        }
+
+        public ViewOfferPage EditChain(int position)
+        {
+            this.Driver.Click(this.editUpwardChain.Format(position));
+            return this;
         }
     }
 
