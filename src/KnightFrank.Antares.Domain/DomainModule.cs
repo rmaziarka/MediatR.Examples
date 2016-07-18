@@ -6,6 +6,7 @@
 
     using FluentValidation;
 
+    using KnightFrank.Antares.Dal.Model.Portal;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
@@ -43,6 +44,7 @@
             this.Bind<IActivityReferenceMapper<Dal.Model.Contacts.Contact>>().To<ActivityContactsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityDepartment>>().To<ActivityDepartmentsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityUser>>().To<ActivityUsersMapper>();
+            this.Bind<IActivityReferenceMapper<Portal>>().To<ActivityPortalsMapper>();
 
             this.ConfigureAttributeConfigurations();
 

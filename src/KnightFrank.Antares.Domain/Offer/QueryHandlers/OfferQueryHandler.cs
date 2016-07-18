@@ -30,6 +30,7 @@
                     .Include(v => v.Negotiator)
                     .Include(v => v.Activity)
                     .Include(v => v.Activity.Contacts)
+                    .Include(v => v.Activity.AdvertisingPortals)
                     .Include(v => v.Activity.Property.Address)
                     .Include(v => v.Activity.Solicitor)
                     .Include(v => v.Activity.SolicitorCompany)

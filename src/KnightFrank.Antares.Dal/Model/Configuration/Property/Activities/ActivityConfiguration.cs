@@ -121,6 +121,10 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                 x.MapLeftKey("ActivityId");
                 x.MapRightKey("PortalId");
             });
+
+            this.HasOptional(a => a.SalesBoardType).WithMany().HasForeignKey(s => s.SalesBoardTypeId).WillCascadeOnDelete(false);
+
+            this.HasOptional(a => a.SalesBoardStatus).WithMany().HasForeignKey(s => s.SalesBoardStatusId).WillCascadeOnDelete(false);
         }
     }
 }

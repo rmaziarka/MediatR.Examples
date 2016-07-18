@@ -80,7 +80,14 @@ module Antares.Activity {
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
                             activity);
-                    }
+                    },
+                    editConfig: (activity: Business.ActivityEditModel, configService: Services.ConfigService) => {
+                        var entity = new Commands.Activity.ActivityEditCommand(activity);
+                        return configService.getActivity(PageTypeEnum.Update,
+                            activity.property.propertyTypeId,
+                            activity.activityTypeId,
+                            entity);
+                    },
                 }
             });
     }
