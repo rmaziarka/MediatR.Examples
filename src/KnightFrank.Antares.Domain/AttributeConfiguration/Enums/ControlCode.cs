@@ -59,6 +59,21 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         LongMatchFlexWeekValue,
         LongMatchFlexMonthValue,
         LongMatchFlexPercentage,
+
+        MarketingFullDescription,
+        MarketingStrapline,
+        MarketingLocationDescription,
+        AdvertisingPublishToWeb,
+        AdvertisingNote,
+        AdvertisingPrPermitted,
+        AdvertisingPrContent,
+        AdvertisingPortals,
+        SalesBoardUpToDate,
+        SalesBoardRemovalDate,
+        SalesBoardSpecialInstructions,
+        SalesBoardType,
+        SalesBoardStatus,
+
         #endregion
 
         #region Requirement ControlCode
