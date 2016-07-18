@@ -21,7 +21,8 @@
                     <card show-context-menu="true"
                           display-new-control="true"
                           card-template-url="'app/attributes/offer/offerChainPreviewCard/templates/offerChainPropertyCard.html'"
-                          item="vm.chain.property">
+                          item="vm.chain.property"
+                          id="offer-chain-preview-property">
                         <card-context-menu>
                             <context-menu-item type="details" item="vm.chain.property" action="vm.navigateToProperty"></context-menu-item>
                         </card-context-menu>
@@ -37,7 +38,7 @@
                     <div class="col-xs-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="card-item">
+                                <div class="card-item" id="offer-chain-preview-vendor">
                                     {{ vm.chain.vendor }}
                                 </div>
                             </div>
@@ -51,7 +52,7 @@
                     <div class="col-xs-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="card-item">
+                                <div class="card-item" id="offer-chain-preview-buyer">
                                     {{ vm.chain.parent.vendor }}
                                 </div>
                             </div>
@@ -68,7 +69,7 @@
                     <div class="col-xs-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="card-item">
+                                <div class="card-item" id="offer-chain-preview-user-agent">
                                     {{ vm.chain.agentUser.getName() }}
                                 </div>
                             </div>
