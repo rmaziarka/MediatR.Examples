@@ -76,6 +76,12 @@
             this.page.AddUpwardChain().WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks (.*) chain transaction details on view offer page")]
+        public void OpenChainPreview(string position)
+        {
+            this.page.OpenChainPreview(position).WaitForSidePanelToShow();
+        }
+
         [Then(@"View offer page should be displayed")]
         public void CheckIfViewOfferPresent()
         {
@@ -235,6 +241,81 @@
                 () => Assert.Equal(details.VendorCompany, this.page.VendorSolicitor.Last()),
                 () => Assert.Equal(details.Applicant, this.page.ApplicantSolicitor.First()),
                 () => Assert.Equal(details.ApplicantCompany, this.page.ApplicantSolicitor.Last()));
+        }
+
+        [Then(@"Property details on view offer page are same as the following")]
+        public void CheckChainProperty(Table table)
+        {
+            var details = table.CreateInstance<ChainTransactionData>();
+
+            Verify.That(this.driverContext, () => Assert.Equal(details.Property, this.page.PropertyDetails));
+        }
+
+        [Then(@"Chain transaction cards details on view offer page are same as the following")]
+        public void CheckChainsDetails(Table table)
+        {
+            List<ChainTransactionData> details = table.CreateSet<ChainTransactionData>().ToList();
+            Assert.Equal(details.Count, this.page.UpwardChainNumber);
+
+            var i = 1;
+            foreach (ChainTransactionData data in details)
+            {
+                string currentData = this.page.GetUpwardChainDetails(i);
+                List<string> currentStatuses = this.page.GetUpwardChainStatuses(i).Select(el => el.Split(':')[1].Trim()).ToList();
+
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(data.Property, currentData),
+                    () => Assert.Equal(data.Mortgage, currentStatuses[0]),
+                    () => Assert.Equal(data.Survey, currentStatuses[1]),
+                    () => Assert.Equal(data.Searches, currentStatuses[2]),
+                    () => Assert.Equal(data.Enquiries, currentStatuses[3]),
+                    () => Assert.Equal(data.ContractAgreed, currentStatuses[4]));
+
+                i++;
+            }
+        }
+
+        [Then(@"Chain transaction details on view offer page are same as the following")]
+        public void CheckChainsPreviewDetails(Table table)
+        {
+            var details = table.CreateInstance<ChainTransactionData>();
+            details.SurveyDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(bool.Parse(details.EndOfChain), this.page.ChainTransactionPreview.IsEndOfChain()),
+                () => Assert.Equal(details.Property, this.page.ChainTransactionPreview.GetProperty()),
+                () => Assert.Equal(details.Vendor, this.page.ChainTransactionPreview.Vendor),
+                () => Assert.Equal(details.Solicitor, this.page.ChainTransactionPreview.Solicitor.First()),
+                () => Assert.Equal(details.SolicitorCompany, this.page.ChainTransactionPreview.Solicitor.Last()),
+                () => Assert.Equal(details.Mortgage, this.page.ChainTransactionPreview.Mortgage),
+                () => Assert.Equal(details.Survey, this.page.ChainTransactionPreview.Survey),
+                () => Assert.Equal(details.Searches, this.page.ChainTransactionPreview.Searches),
+                () => Assert.Equal(details.Enquiries, this.page.ChainTransactionPreview.Enquiries),
+                () => Assert.Equal(details.ContractAgreed, this.page.ChainTransactionPreview.ContractAgreed),
+                () => Assert.Equal(details.SurveyDate, this.page.ChainTransactionPreview.SurveyDate));
+
+            if (!string.IsNullOrEmpty(details.KnightFrankAgent))
+            {
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(details.KnightFrankAgent, this.page.ChainTransactionPreview.KnightFrankAgent));
+            }
+
+            if (!string.IsNullOrEmpty(details.OtherAgent))
+            {
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(details.OtherAgent, this.page.ChainTransactionPreview.OtherAgent.First()),
+                    () => Assert.Equal(details.OtherAgentCompany, this.page.ChainTransactionPreview.OtherAgent.Last()));
+            }
+            if (!string.IsNullOrEmpty(details.Buyer))
+            {
+                Verify.That(this.driverContext, () => Assert.Equal(details.Buyer, this.page.ChainTransactionPreview.Buyer));
+            }
+        }
+
+        [Then(@"Add upward chain button should not be displayed on view offer page")]
+        public void CheckIfAddButtonIsNotPresent()
+        {
+            Assert.True(this.page.CheckIfAddUpwardChainButtonNotPresent());
         }
     }
 }
