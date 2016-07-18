@@ -39,9 +39,34 @@ module Antares.Tenancy {
             this.$state.go('app.tenancy-edit', { id: this.tenancy.id });
         }
 
-        getTenantsNames = () => {
+        private getTenantsNames = () => {
             return this.tenancy.tenants.map((tenant: Business.Contact) => { return tenant.getName() }).join(", ");
         }
+
+        private getAddressTextHeader = (): string =>{
+            var addressCommaSeparatedElements: string[] = [];
+
+            if (this.tenancy.activity.property.address.propertyNumber) {
+                addressCommaSeparatedElements.push(this.tenancy.activity.property.address.propertyNumber);
+            }
+            if (this.tenancy.activity.property.address.propertyName) {
+                addressCommaSeparatedElements.push(this.tenancy.activity.property.address.propertyName);
+            }
+            if (this.tenancy.activity.property.address.line2) {
+                addressCommaSeparatedElements.push(this.tenancy.activity.property.address.line2);
+            }
+
+            if(addressCommaSeparatedElements.length > 0){
+                return addressCommaSeparatedElements.join(", ");
+            }
+
+            return null;
+        }
+
+        public getHeader = () => {
+            var headerParts: string[] = [this.getTenantsNames(), this.getAddressTextHeader()];
+            return headerParts.filter((part: string) => {return !!part}).join(' - ');
+        };
     }
 
     angular.module('app').controller('TenancyViewController', TenancyViewController);
