@@ -121,7 +121,7 @@
       "PERSONAL": "Personal",
       "ENVELOPE": "Envelope",
       "INVITE": "Invite"
-  },
+    },
     "NEGOTIATORS": {
       "HEADER": "Negotiators",
       "LEAD": "Lead negotiator",
@@ -350,21 +350,6 @@
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
-      "VIEWINGS": "Viewings"
-      },
-      "MARKETING": {
-        "MARKETING": "Marketing",
-        "DETAILS": "Marketing details"
-      }
-    },
-    "NEGOTIATORS": {
-      "RESIDENTIAL": {
-        "HEADER": "Negotiators",
-        "LEAD": "Lead negotiator",
-        "SECONDARY": "Secondary negotiators",
-        "EMPTY": "No negotiators added yet",
-        "ADD": "Add a negotiator",
-        "FIND": "Find a negotiator"
       "ATTACHMENTS": "Attachments",
       "OFFERS": {
         "HEADER": "Offers",
@@ -384,6 +369,10 @@
           "LEAD_NEGOTIATOR": "Lead negotiator"
         }
       }
+    },
+    "MARKETING": {
+      "MARKETING": "Marketing",
+      "DETAILS": "Marketing details"
     }
   },
   "NEGOTIATORS": {
@@ -424,7 +413,7 @@
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
       "RENT_REQUIREMENTS": "Rent requirements",
-      "RENT_WEEKLY":  "Rent (weekly)"
+      "RENT_WEEKLY": "Rent (weekly)"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
@@ -559,49 +548,49 @@
       "DATE": "Date",
       "NO_SOLICITOR": "Solicitor contact not specified"
     },
-  "EDIT": {
-    "EDIT_OFFER": "Edit offer",
-    "VENDOR": "Vendor",
-    "LANDLORD": "Landlord",
-    "APPLICANT": "Applicant",
-    "BASIC_INFORMATION": "Basic information",
-    "STATUS": "Status",
-    "OFFER": "Offer",
-    "OFFER_PER_WEEK": "GBP / week",
-    "OFFER_DATE": "Offer date",
-    "SPECIAL_CONDITIONS": "Special conditions",
-    "NEGOTIATOR": "Negotiator",
-    "EXCHANGE_DATE": "Proposed exchange date",
-    "COMPLETION_DATE": "Proposed completion date",
-    "OFFER_EDIT_SUCCESS": "Offer successfully saved",
-    "PROGRESS_SUMMARY": "Progress summary",
-    "MORTGAGE_STATUS": "Mortgage status",
-    "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-    "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-    "SEARCH_STATUS": "Search status",
-    "ENQUIRIES": "Enquiries",
-    "CONTRACT_APPROVED": "Contract approved",
-    "MORTGAGE_DETAILS": "Mortgage details",
-    "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-    "SOLICITOR": "Solicitor",
-    "BROKER": "Broker",
-    "LENDER": "Lender",
-    "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-    "SURVEYOR": "Surveyor",
-    "ADDITIONAL_SURVEY": "Additional survey",
-    "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-    "OTHER_DETAILS": "Other details",
-    "COMMENT": "Comment",
-    "YES": "Yes",
-    "NO": "No",
-    "NO_BROKER": "Broker contact not specified yet",
-    "NO_LENDER": "Lender contact not specified yet",
-    "NO_SURVEYOR": "Surveyor contact not specified yet",
-    "NO_SOLICITOR": "Solicitor contact not specified yet",
-    "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-    "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
-    "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
-  }
+    "EDIT": {
+      "EDIT_OFFER": "Edit offer",
+      "VENDOR": "Vendor",
+      "LANDLORD": "Landlord",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_EDIT_SUCCESS": "Offer successfully saved",
+      "PROGRESS_SUMMARY": "Progress summary",
+      "MORTGAGE_STATUS": "Mortgage status",
+      "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+      "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+      "SEARCH_STATUS": "Search status",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_APPROVED": "Contract approved",
+      "MORTGAGE_DETAILS": "Mortgage details",
+      "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
+      "BROKER": "Broker",
+      "LENDER": "Lender",
+      "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+      "SURVEYOR": "Surveyor",
+      "ADDITIONAL_SURVEY": "Additional survey",
+      "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+      "OTHER_DETAILS": "Other details",
+      "COMMENT": "Comment",
+      "YES": "Yes",
+      "NO": "No",
+      "NO_BROKER": "Broker contact not specified yet",
+      "NO_LENDER": "Lender contact not specified yet",
+      "NO_SURVEYOR": "Surveyor contact not specified yet",
+      "NO_SOLICITOR": "Solicitor contact not specified yet",
+      "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+      "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+      "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+    }
   },
   "DEPARTMENTS": {
     "COMMON": {
