@@ -35,6 +35,7 @@
                     .Include(a => a.Viewings.Select(v => v.Requirement.Contacts))
                     .Include(a => a.ActivityType)
                     .Include(a => a.ActivityUsers)
+                    .Include(a => a.AdvertisingPortals)
                     .Include(a => a.ActivityUsers.Select(an => an.User))
                     .Include(a => a.ActivityUsers.Select(an => an.UserType))
                     .Include(a => a.ActivityDepartments)

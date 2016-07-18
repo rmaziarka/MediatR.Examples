@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\Relations\ActivityAppraisalMeetingAttendeesMapper.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityPortalsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityContactsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityDepartmentsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityUsersMapper.cs" />
@@ -436,6 +437,7 @@
     <EmbeddedResource Include="Properties\BusinessErrorMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

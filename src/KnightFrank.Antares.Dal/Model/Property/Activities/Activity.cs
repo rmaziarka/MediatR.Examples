@@ -168,6 +168,14 @@
 
         public string AdvertisingPrContent { get; set; }
 
-        public virtual ICollection<Portal> AdvertisingPortals { get; set; }
+        public virtual ICollection<Portal> AdvertisingPortals { get; set; } = new List<Portal>();
+
+        public Guid? SalesBoardTypeId { get; set; }
+
+        public virtual EnumTypeItem SalesBoardType { get; set; }
+
+        public Guid? SalesBoardStatusId { get; set; }
+
+        public virtual EnumTypeItem SalesBoardStatus { get; set; }
     }
 }
