@@ -1,5 +1,5 @@
 ﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
-    <div show-errors>
+    <div ng-class="{'has-error': (vm[vm.schema.formName].$submitted || vm[vm.schema.formName].user.$dirty) && vm[vm.schema.formName].user.$invalid}">
         <search ng-show="vm.isInEditMode" id="user-search"
                 options="vm.searchOptions"
                 focus-on="vm.isInEditMode"
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <input class="form-control" type="hidden" name="user" ng-model="vm.user" ng-required="vm.config[vm.schema.fieldName].required" />
+        <input class="form-control" type="hidden" name="user" ng-model="vm.user" ng-required="vm.config[vm.schema.fieldName].required"/>
         <div ng-messages="vm[vm.schema.formName].user.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].user.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
