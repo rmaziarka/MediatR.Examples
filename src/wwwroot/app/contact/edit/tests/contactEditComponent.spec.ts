@@ -18,7 +18,7 @@ module Antares {
             saveButton: '#saveBtn'
         };
         
-        var contactMock: Business.Contact = TestHelpers.ContactGenerator.generate();
+        var contactMock: Business.Contact = null;
        
         beforeEach(angular.mock.module(($compileProvider: ng.ICompileProvider) => {
             $compileProvider.directive('editSalutations', () => {
@@ -43,6 +43,8 @@ module Antares {
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService,
             $state: ng.ui.IStateService) => {
+
+            contactMock = TestHelpers.ContactGenerator.generate();
 
             var scope = $rootScope.$new();
             scope["contact"] = contactMock;

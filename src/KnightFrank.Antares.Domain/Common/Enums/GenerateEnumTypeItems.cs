@@ -17,6 +17,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
+	 	CompanyType,
+	 	CompanyCategory,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -26,7 +28,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
-	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 }
@@ -117,6 +118,61 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		MassiveActionClient,
 		PrincipalClient,
 		KeyClient,
+	}
+
+	public enum CompanyType
+	{
+		KnightFrankGroup,
+		KnightFrankAffiliates,
+	}
+
+	public enum CompanyCategory
+	{
+		Accountants,
+		AgriculturalAndFarming,
+		Apparel,
+		ArchitectsDesign,
+		AssetManagement,
+		Banks,
+		BooksStationery,
+		BuildingAndConstruction,
+		BusinessServices,
+		BuyingAgent,
+		CareHome,
+		CharitiesAndChurches,
+		Chemist,
+		DeptVariety,
+		EateriesBars,
+		Education,
+		ElectricalTelephones,
+		EmploymentAgency,
+		EquestrianStud,
+		FamilyOffice,
+		Finance,
+		FoodDrinkRetailers,
+		GeneralServices,
+		Hotel,
+		Industrial,
+		Insurance,
+		InvestorsFundManagers,
+		Legal,
+		LocalAuthorityGovernment,
+		MediaAndPublishing,
+		MedicalHealthcare,
+		MultiFamilyOffice,
+		OilAndGas,
+		Other,
+		PropertyCompany,
+		PropertyConsultantsSurveyors,
+		RenewablesSustainability,
+		Retailers,
+		Supermarkets,
+		TelecommunicationsTechnology,
+		TourismLeisure,
+		Transport,
+		TravelAgents,
+		Utilities,
+		Wholesale,
 	}
 
 	public enum MortgageSurveyStatus
@@ -213,12 +269,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Fair,
 		Good,
 		VeryGood,
-	}
-
-	public enum TenancyContactType
-	{
-		Landlord,
-		Tenant,
 	}
 
 	public enum MailingSalutation

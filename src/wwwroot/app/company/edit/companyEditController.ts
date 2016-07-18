@@ -1,14 +1,18 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Company {
-
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
     export class CompanyEditController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
-        public enumTypeclientCareStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ClientCareStatus;
+
+        private descriptionMaxLength: number = CompanyControls.descriptionMaxLength;
+        private config = CompanyControls.config;
+        private controlSchemas = CompanyControls.controlSchemas;
+
+        private editCompanyForm: ng.IFormController | any;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -21,10 +25,13 @@ module Antares.Company {
             super(componentRegistry, $scope);
 
             this.companyResource = dataAccessService.getCompanyResource();
-         
         }
         
-       hasCompanyContacts = (): boolean => {
+        $postLink(){
+            this.editCompanyForm = this.$scope["editCompanyForm"];
+        }
+
+        hasCompanyContacts = (): boolean => {
             return this.company.contacts != null && this.company.contacts.length > 0;
         }
 
@@ -47,17 +54,9 @@ module Antares.Company {
             var selectedContacts = this.components.contactList().getSelected();            
             this.company.contacts = selectedContacts.map((contact: Dto.IContact) => { return new Business.Contact(contact) });
             this.components.sidePanels.contact().hide();
-        }
-     
-        formatUrlWithProtocol = (url: string): string => {
-            //regular expression for url with a protocol (case insensitive)
-            var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (url && url.length > 0) {
-                if (!r.test(url)) {
-                    return `http://${url}`;
-                }
-             }
-            return url;
+
+            let areContactsValid = this.hasCompanyContacts();
+            this.editCompanyForm.$setValidity("company.contacts.custom", areContactsValid);
         }
 
         cancelEditCompany= () =>{
@@ -65,21 +64,24 @@ module Antares.Company {
         }
 
         updateCompany = () =>{
-         
-            this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
-            this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
-           
-            var updatedCompany: Dto.ICompany = angular.copy(this.company); 
-            
+            this.company.websiteUrl = CompanyControls.formatUrlWithProtocol(this.company.websiteUrl);
+            this.company.clientCarePageUrl = CompanyControls    .formatUrlWithProtocol(this.company.clientCarePageUrl);
+
+            var updatedCompany: Dto.IEditCompanyResource = new Business.EditCompanyResource(this.company); 
+
             this.companyResource
                 .update(updatedCompany)
                 .$promise
                 .then((company: Dto.ICompany) => {                
-                   this.company = new Business.Company();
-                    var form = this.$scope["editCompanyForm"];
-                    form.$setPristine();
+                    this.company = new Business.Company();
+                    this.editCompanyForm.$setPristine();
                     this.$state.go('app.company-view', company);
                 });
+        }
+
+        hasControlError = (name: string): boolean => {
+            return (this.editCompanyForm.$submitted || this.editCompanyForm[name].$dirty)
+                && this.editCompanyForm[name].$invalid;
         }
 
         defineComponentIds() {

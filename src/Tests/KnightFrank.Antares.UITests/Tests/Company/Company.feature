@@ -8,8 +8,8 @@ Scenario: Create company
 		| Adam      | Sandler  | Sir   |
 	When User navigates to create company page
 		And User fills in company details on create company page 
-			| Name         | WebsiteUrl          | ClientCarePageUrl | ClientCareStatus      |
-			| Knight Frank | www.knightfrank.com | www.test.com      | Massive Action Client |
+			| Name         | WebsiteUrl          | ClientCarePageUrl | ClientCareStatus      | Description | CompanyCategory   | CompanyType        | RelationshipManager | IsValid |
+			| Knight Frank | www.knightfrank.com | www.test.com      | Massive Action Client | Test Desc   | Architects/Design | Knight Frank Group | Adam Sandler        | true    |
 		And User selects contacts on create company page
 			| FirstName | LastName |
 			| Indiana   | Jones    |
@@ -23,8 +23,8 @@ Scenario: Create company
 	When User clicks save company button on create company page
 	Then View company page should be displayed
 		And Company should have following details on view company page
-			| Name         | WebsiteUrl                 | ClientCarePageUrl   | ClientCareStatus      |
-			| Knight Frank | http://www.knightfrank.com | http://www.test.com | Massive Action Client |
+			| Name         | WebsiteUrl                 | ClientCarePageUrl   | ClientCareStatus      | Description | CompanyCategory   | CompanyType        | RelationshipManager | IsValid |
+			| Knight Frank | http://www.knightfrank.com | http://www.test.com | Massive Action Client | Test Desc   | Architects/Design | Knight Frank Group | Adam Sandler        | true    |
 		And Company contacts should have following contacts on view company page
 			| FirstName | LastName |
 			| Indiana   | Jones    |
@@ -33,12 +33,12 @@ Scenario: Create company
 @Company
 Scenario: Edit company
 	Given Contacts are created in database
-		| FirstName | LastName | Title |
+		| FirstName | LastName | Title | 
 		| Marlon    | Brando   | Dr    |
 		| Robert    | De Niro  | Sir   |
 		And Company is created in database
-			| Name   | WebsiteUrl             | ClientCarePageUrl      |
-			| Adidas | https://www.google.com | https://www.google.com |
+			| Name   | WebsiteUrl             | ClientCarePageUrl      | Description | IsValid |
+			| Adidas | https://www.google.com | https://www.google.com | Create Desc | true    |
 		And Contacts are created in database
 			| FirstName | LastName | Title |
 			| Humpty    | Dumpty   | Dr    |
@@ -46,8 +46,8 @@ Scenario: Edit company
 	When User navigates to view company page with id
 		And User clicks edit company button on view company page
 		And User fills in company details on edit company page 
-			| Name        | WebsiteUrl          | ClientCarePageUrl | ClientCareStatus |
-			| Objectivity | www.objectivity.com | www.test-2.com    | Principal Client |
+			| Name        | WebsiteUrl          | ClientCarePageUrl | ClientCareStatus | Description | CompanyCategory | CompanyType             | RelationshipManager | IsValid |
+			| Objectivity | www.objectivity.com | www.test-2.com    | Principal Client | Edit Desc   | Legal           | Knight Frank Affiliates | John Smith          | false   |
 		And User selects contacts on edit company page
 			| FirstName | LastName |
 			| Humpty    | Dumpty   |
@@ -63,8 +63,8 @@ Scenario: Edit company
 	When User clicks save company button on edit company page
 	Then View company page should be displayed
 		And Company should have following details on view company page
-			| Name        | WebsiteUrl                 | ClientCarePageUrl     | ClientCareStatus |
-			| Objectivity | http://www.objectivity.com | http://www.test-2.com | Principal Client |
+			| Name        | WebsiteUrl                 | ClientCarePageUrl     | ClientCareStatus | Description | CompanyCategory | CompanyType             | RelationshipManager | IsValid |
+			| Objectivity | http://www.objectivity.com | http://www.test-2.com | Principal Client | Edit Desc   | Legal           | Knight Frank Affiliates | John Smith          | false   |
 		And Company contacts should have following contacts on view company page
 			| FirstName | LastName |
 			| Humpty    | Dumpty  |

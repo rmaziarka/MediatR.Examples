@@ -127,10 +127,9 @@ module Antares.TestHelpers {
             return pageObject;
         }
 
-        // TODO: method name not valid for what it does... use everywhere method below (assertElementHasHideClass)
+        // todo!!!: (delete when in develop) method name not valid for what it does... use everywhere method below (assertElementHasHideClass)
         public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
-            var selectedElement = this.element.find(elementSelector);
-            expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
+            fail("Breaking change - Using assertShowElement() is just wrong - use: assertElementHasHideClass() with same parameters");
         }
 
         public assertElementHasHideClass = (expectedResult: boolean, elementSelector: string) => {

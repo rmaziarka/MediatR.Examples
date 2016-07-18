@@ -142,7 +142,7 @@
         public void AddContactToLatestViews()
         {
             Guid contactId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id;
-           
+
             var details = new LatestView
             {
                 CreatedDate = this.date,
@@ -329,7 +329,10 @@
             List<Company> expectedCompanies =
                 entitiesIds.Select(guid => this.fixture.DataContext.Companies.Single(c => c.Id.Equals(guid))).ToList();
 
-            expectedCompanies.ShouldAllBeEquivalentTo(currentCompanies, opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus));
+            expectedCompanies.ShouldAllBeEquivalentTo(currentCompanies,
+                opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus).Excluding(c => c.CompanyCategory)
+                          .Excluding(c => c.CompanyType)
+                          .Excluding(c => c.RelationshipManager));
 
             List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
                                                .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
@@ -399,7 +402,6 @@
         {
             const string entityTypeCode = nameof(EntityTypeEnum.Contact);
             Guid entityId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id;
-            
 
             LatestViewQueryResultItem response =
                 JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
@@ -466,7 +468,10 @@
             var currentCompany = JsonConvert.DeserializeObject<Company>(data.Single().Data.ToString());
             Company expectedCompany = this.fixture.DataContext.Companies.Single(c => c.Id.Equals(entityId));
 
-            expectedCompany.ShouldBeEquivalentTo(currentCompany, opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus));
+            expectedCompany.ShouldBeEquivalentTo(currentCompany,
+                opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus).Excluding(c => c.CompanyCategory)
+                          .Excluding(c => c.CompanyType)
+                          .Excluding(c => c.RelationshipManager));
 
             LatestView latestView = this.fixture.DataContext.LatestView.Single();
 

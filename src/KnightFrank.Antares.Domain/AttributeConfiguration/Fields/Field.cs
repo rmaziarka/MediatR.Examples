@@ -5,10 +5,8 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
     using System.Linq.Expressions;
     using System.Reflection;
 
-    using FluentValidation;
     using FluentValidation.Internal;
 
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;
 
     public class Field<TEntity, TProperty> : IField
@@ -28,12 +26,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         {
             this.Selector = selector;
             this.InnerField = field;
-        }
-
-        public void SetRequired()
-        {
-            this.InnerField.Required = true;
-            this.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(this.Selector).NotEmpty().NotNull()));
         }
     }
 

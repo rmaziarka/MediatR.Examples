@@ -102,28 +102,15 @@ module Antares {
         });
 
         describe('when panelShown is called', () => {
-            it('then attachmentClear is set to true', () => {
+            it('then attachmentClear is set to new object', () => {
                 // arrange
-                controller.attachmentClear = false;
+                controller.attachmentClear = {};
 
                 //act
                 controller.panelShown();
 
                 // assert
-                expect(controller.attachmentClear).toBe(true);
-            });
-        });
-
-        describe('when panelHidden is called', () => {
-            it('then attachmentClear is set to false', () => {
-                // arrange
-                controller.attachmentClear = true;
-
-                //act
-                controller.panelHidden();
-
-                // assert
-                expect(controller.attachmentClear).toBe(false);
+                expect(controller.attachmentClear).toBe(controller.attachmentClear);
             });
         });
 

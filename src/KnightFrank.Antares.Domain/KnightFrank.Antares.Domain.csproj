@@ -168,6 +168,7 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LengthExtension.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LessThanExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LessThanOrEqualToExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\MappingExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\Fields\RequiredExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
@@ -262,6 +263,8 @@
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\CommandHandlers\UpdateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CompanyCommandProfile.cs" />
+    <Compile Include="Company\CustomValidators\ICompanyCommandCustomValidator.cs" />
+    <Compile Include="Company\CustomValidators\CompanyCommandCustomValidator.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandValidator.cs" />
     <Compile Include="Company\Commands\UpdateCompanyCommand.cs" />

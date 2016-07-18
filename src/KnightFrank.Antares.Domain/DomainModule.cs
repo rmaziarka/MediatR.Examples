@@ -18,6 +18,7 @@
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Tenancy.CommandHandlers.Relations;
+    using KnightFrank.Antares.Domain.Company.CustomValidators;
     using KnightFrank.Antares.Domain.Tenancy.Commands;
 
     using Ninject.Modules;
@@ -42,6 +43,7 @@
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
             this.Bind<IOfferProgressStatusHelper>().To<OfferProgressStatusHelper>();
+            this.Bind<ICompanyCommandCustomValidator>().To<CompanyCommandCustomValidator>();
 
             this.Bind<IActivityReferenceMapper<ActivityAttendee>>().To<ActivityAppraisalMeetingAttendeesMapper>();
             this.Bind<IActivityReferenceMapper<Dal.Model.Contacts.Contact>>().To<ActivityContactsMapper>();

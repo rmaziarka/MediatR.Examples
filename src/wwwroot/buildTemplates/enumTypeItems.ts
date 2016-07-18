@@ -21,6 +21,7 @@ module Antares.Common.Models.Enums
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+	 	Enquiries,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
@@ -149,10 +150,92 @@ module Antares.Common.Models.Enums
 		Complete,
 	}
 
+	{
+		NotStarted,
+		Sent,
+		Complete,
+	}
+
 	export enum SalutationFormat
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
+	}
+
+	export enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	export enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToRequirement,
+	}
+
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	export enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 
 	export enum ActivitySource

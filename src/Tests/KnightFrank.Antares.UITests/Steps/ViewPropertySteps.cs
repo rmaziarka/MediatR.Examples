@@ -313,7 +313,7 @@
         [Then(@"Attachment details on attachment preview page are the same like on view property page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentPreview.AttachmentDetails;
             actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
@@ -324,7 +324,7 @@
         [Then(@"User closes attachment preview page on view property page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreview();
             this.page.WaitForSidePanelToHide();
         }
 
