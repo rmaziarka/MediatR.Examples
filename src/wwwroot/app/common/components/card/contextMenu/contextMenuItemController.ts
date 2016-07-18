@@ -5,6 +5,7 @@ module Antares.Common.Component {
         public type: string;
         public item: any;
         public action: (item: any) => void;
+        public external: boolean;
     }
 
     angular.module('app').controller('ContextMenuItemController', ContextMenuItemController);

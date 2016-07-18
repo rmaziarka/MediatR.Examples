@@ -7,7 +7,8 @@ module Antares.Attribues {
         bindings: {
             config: '<',
             ngModel: '=',
-            schema: '<'
+            schema: '<',
+            onChange: '&'
         }
     });
 }

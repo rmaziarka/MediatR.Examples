@@ -86,11 +86,18 @@ MortgageStatus;Unknown;en;Unknown
 MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank
 MortgageStatus;InProgress;en;In progress
-MortgageStatus;Agreed;en;Agreed
+ChainMortgageStatus;Unknown;en;Unknown
+ChainMortgageStatus;Complete;en;Complete
+ChainMortgageStatus;Outstanding;en;Outstanding
+ChainMortgageStatus;NotRequired;en;Not required
 MortgageSurveyStatus;Unknown;en;Unknown
 MortgageSurveyStatus;NotRequired;en;Not required
 MortgageSurveyStatus;Complete;en;Complete
 MortgageSurveyStatus;Outstanding;en;Outstanding
+ChainMortgageSurveyStatus;Unknown;en;Unknown
+ChainMortgageSurveyStatus;Complete;en;Complete
+ChainMortgageSurveyStatus;Outstanding;en;Outstanding
+ChainMortgageSurveyStatus;NotRequired;en;Not required
 AdditionalSurveyStatus;Unknown;en;Unknown
 AdditionalSurveyStatus;NotRequired;en;Not required
 AdditionalSurveyStatus;InProgress;en;In progress
@@ -98,9 +105,15 @@ AdditionalSurveyStatus;Complete;en;Complete
 SearchStatus;NotStarted;en;Not started
 SearchStatus;AppliedFor;en;Applied for
 SearchStatus;Complete;en;Complete
+ChainSearchStatus;Complete;en;Complete
+ChainSearchStatus;Outstanding;en;Outstanding
 Enquiries;NotStarted;en;Not started
 Enquiries;Sent;en;Sent
 Enquiries;Complete;en;Complete
+ChainEnquiries;Complete;en;Complete
+ChainEnquiries;Outstanding;en;Outstanding
+ChainContractAgreedStatus;Complete;en;Complete
+ChainContractAgreedStatus;Outstanding;en;Outstanding
 SalutationFormat;MrJohnSmith;en;Mr John Smith 
 SalutationFormat;JohnSmithEsq;en;John Smith, Esq
 SalutationFormat;MrJohnSmith;cs;Pan John Smith

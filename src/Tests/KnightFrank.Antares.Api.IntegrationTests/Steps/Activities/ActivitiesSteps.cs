@@ -57,8 +57,6 @@
         {
             string activityStatus = table.Rows[0]["ActivityStatus"];
             string activityType = table.Rows[0]["ActivityType"];
-            const string activitySource = "DirectEmail";
-            const string activitySellingReason ="Relocation";
 
             Guid activityStatusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
@@ -67,10 +65,12 @@
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
             Guid activitySourceId =
                 this.fixture.DataContext.EnumTypeItems.Single(
-                    i => i.EnumType.Code.Equals(nameof(ActivitySource)) && i.Code.Equals(activitySource)).Id;
+                    i => i.EnumType.Code.Equals(nameof(ActivitySource)) && i.Code.Equals(nameof(ActivitySource.DirectEmail))).Id;
             Guid activitySellingReasonId =
                 this.fixture.DataContext.EnumTypeItems.Single(
-                    i => i.EnumType.Code.Equals(nameof(ActivitySellingReason)) && i.Code.Equals(activitySellingReason)).Id;
+                    i =>
+                        i.EnumType.Code.Equals(nameof(ActivitySellingReason)) &&
+                        i.Code.Equals(nameof(ActivitySellingReason.Relocation))).Id;
 
             this.leadNegotiator = this.fixture.DataContext.Users.First();
 
@@ -112,7 +112,10 @@
                 ActivityUsers = activityNegotiatorList,
                 ActivityDepartments = this.activityDepartments,
                 SourceId = activitySourceId,
-                SellingReasonId = activitySellingReasonId
+                SellingReasonId = activitySellingReasonId,
+                AppraisalMeetingStart = this.date.AddHours(10),
+                AppraisalMeetingEnd = this.date.AddHours(12),
+                ChainTransactions = new List<ChainTransaction>()
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -164,9 +167,13 @@
                 SourceId = sourceId,
                 SellingReasonId = sellingReasonId,
                 LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today.AddDays(3) },
-                Departments = new List<UpdateActivityDepartment> { new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId } },
-                AppraisalMeetingStart = DateTime.Now.AddHours(24),
-                AppraisalMeetingEnd = DateTime.Now.AddHours(26)
+                Departments =
+                    new List<UpdateActivityDepartment>
+                    {
+                        new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId }
+                    },
+                AppraisalMeetingStart = this.date.AddHours(24),
+                AppraisalMeetingEnd = this.date.AddHours(26)
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -176,8 +183,6 @@
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
         public void UpdateActivitySaleValuation(string id, string status, Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Activity");
 
@@ -186,9 +191,8 @@
             updateActivityCommand.SourceId = activityFromDatabase.SourceId;
             updateActivityCommand.SellingReasonId = activityFromDatabase.SellingReasonId;
 
-
-            updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(24);
-            updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(26);
+            updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? this.date.AddHours(24);
+            updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? this.date.AddHours(26);
 
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
@@ -227,19 +231,18 @@
                 LongAgreedInitialMarketingPrice = updateActivityCommand.LongAgreedInitialMarketingPrice,
                 LongKfValuationPrice = updateActivityCommand.LongKfValuationPrice,
                 LongVendorValuationPrice = updateActivityCommand.LongVendorValuationPrice,
-                DisposalTypeId =  updateActivityCommand.DisposalTypeId,
+                DisposalTypeId = updateActivityCommand.DisposalTypeId,
                 ServiceChargeAmount = updateActivityCommand.ServiceChargeAmount,
                 ServiceChargeNote = updateActivityCommand.ServiceChargeNote,
                 GroundRentAmount = updateActivityCommand.GroundRentAmount,
                 GroundRentNote = updateActivityCommand.GroundRentNote,
                 OtherCondition = updateActivityCommand.OtherCondition,
-                DecorationId = updateActivityCommand.DecorationId,
+                DecorationId = updateActivityCommand.DecorationId
             };
 
             this.scenarioContext["Activity"] = activityFromDatabase;
 
-            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.UpdateActivity(updateActivityCommand);
         }
 
         [When(@"User gets activity with (.*) id")]
@@ -278,7 +281,8 @@
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
-                .Excluding(x => x.SellingReason));
+                .Excluding(x => x.SellingReason)
+                .Excluding(x => x.ChainTransactions));
         }
 
         [Then(@"Activity details should be the same as already added")]
@@ -298,6 +302,7 @@
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
+                .Excluding(x => x.ChainTransactions)
                 .Excluding(x => x.SellingReason));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
@@ -386,6 +391,14 @@
             string requestUrl = $"{ApiUrl}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        private void UpdateActivity(UpdateActivityCommand updateActivityCommand)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
     }

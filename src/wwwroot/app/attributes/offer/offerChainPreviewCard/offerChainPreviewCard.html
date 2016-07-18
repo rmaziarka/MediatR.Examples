@@ -1,0 +1,110 @@
+﻿<form name="vm.offerAddCardForm" ng-submit="vm.offerAddCardForm.isFormValid() && vm.save()" novalidate>
+    <kf-side-panel-card>
+        <side-panel-header>
+            <h3 translate="OFFER.CHAIN.PREVIEW.CHAIN_PREVIEW"></h3>
+        </side-panel-header>
+        <side-panel-content>
+            <!--
+            <div class="side-panel-nav">
+                <a href="#" class="side-panel-prev text-small">Previous</a>
+                <a href="#" class="side-panel-next pull-right">Next</a>
+            </div>
+             -->
+
+            <div class="section-details" ng-if="vm.chain.isEnd">
+                <span translate="OFFER.CHAIN.PREVIEW.IS_END" class="chain-status"></span>
+            </div>
+
+            <div class="section-details">
+                <h5 translate="OFFER.CHAIN.PREVIEW.PROPERTY"></h5>
+                <card-list-item>
+                    <card show-context-menu="true"
+                          display-new-control="true"
+                          card-template-url="'app/attributes/offer/offerChainPreviewCard/templates/offerChainPropertyCard.html'"
+                          item="vm.chain.property"
+                          id="offer-chain-preview-property">
+                        <card-context-menu>
+                            <context-menu-item type="details" item="vm.chain.property" action="vm.navigateToProperty"></context-menu-item>
+                        </card-context-menu>
+                    </card>
+                </card-list-item>
+            </div>
+
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.CHAIN.PREVIEW.VENDOR"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item" id="offer-chain-preview-vendor">
+                                    {{ vm.chain.vendor }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-row row" ng-if="vm.chain.parentId">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.CHAIN.PREVIEW.BUYER"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item" id="offer-chain-preview-buyer">
+                                    {{ vm.chain.parent.vendor }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-details">
+                <div class="section-row row" ng-if="vm.config.agentUser">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.CHAIN.PREVIEW.AGENT"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-item" id="offer-chain-preview-user-agent">
+                                    {{ vm.chain.agentUser.getName() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <company-contact-view-control company-contact="vm.chain.agentCompanyContact"
+                                              config="vm.config.agentCompanyContact"
+                                              schema="vm.controlSchemas.agentCompanyContact">
+                </company-contact-view-control>
+            </div>
+
+            <div class="section-details">
+                <company-contact-view-control company-contact="vm.chain.solicitorCompanyContact"
+                                              config="vm.config.solicitorCompanyContact"
+                                              schema="vm.controlSchemas.solicitorCompanyContact">
+                </company-contact-view-control>
+            </div>
+
+            <div class="section-details">
+                <h4 translate="OFFER.CHAIN.PREVIEW.PROGRESS">Progress</h4>
+                <enum-item-view-control ng-model="vm.chain.mortgageId" config="vm.config.mortgage" schema="vm.controlSchemas.mortgage"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.surveyId" config="vm.config.survey" schema="vm.controlSchemas.survey"></enum-item-view-control>
+                <date-view-control date="vm.chain.surveyDate" config="vm.config.surveyDate" schema="vm.controlSchemas.surveyDate"></date-view-control>
+                <enum-item-view-control ng-model="vm.chain.searchesId" config="vm.config.searches" schema="vm.controlSchemas.searches"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.enquiriesId" config="vm.config.enquiries" schema="vm.controlSchemas.enquiries"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.chain.contractAgreedId" config="vm.config.contractAgreed" schema="vm.controlSchemas.contractAgreed"></enum-item-view-control>
+            </div>
+
+        </side-panel-content>
+        <side-panel-footer>
+            <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
+                <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+            </button>
+        </side-panel-footer>
+    </kf-side-panel-card>
+</form>

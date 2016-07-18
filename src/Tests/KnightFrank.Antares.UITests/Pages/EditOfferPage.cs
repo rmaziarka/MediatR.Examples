@@ -18,10 +18,10 @@
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
         // Vendor
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
-        private readonly ElementLocator editVendorSolicitor = new ElementLocator(Locator.Id, "vendorSolicitor-edit");
+        private readonly ElementLocator editVendorSolicitor = new ElementLocator(Locator.Id, "vendorSolicitor-add-edit");
         private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
         // Applicant
-        private readonly ElementLocator editApplicantSolicitor = new ElementLocator(Locator.Id, "applicantSolicitor-edit");
+        private readonly ElementLocator editApplicantSolicitor = new ElementLocator(Locator.Id, "applicantSolicitor-add-edit");
         private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
         // Basic information
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
@@ -40,16 +40,16 @@
         private readonly ElementLocator contractNotApproved = new ElementLocator(Locator.CssSelector, "#contact-approved [value = 'false']");
         // Mortgage details
         private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.Id, "mortgage-loan-to-value");
-        private readonly ElementLocator editBroker = new ElementLocator(Locator.Id, "broker-edit");
+        private readonly ElementLocator editBroker = new ElementLocator(Locator.Id, "broker-add-edit");
         private readonly ElementLocator broker = new ElementLocator(Locator.CssSelector, "#broker .ng-binding");
-        private readonly ElementLocator editLender = new ElementLocator(Locator.Id, "lender-edit");
+        private readonly ElementLocator editLender = new ElementLocator(Locator.Id, "lender-add-edit");
         private readonly ElementLocator lender = new ElementLocator(Locator.CssSelector, "#lender .ng-binding");
         private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, "offer-mortgage-survey-date");
-        private readonly ElementLocator mortgageEditSurveyor = new ElementLocator(Locator.Id, "surveyor-edit");
+        private readonly ElementLocator mortgageEditSurveyor = new ElementLocator(Locator.Id, "surveyor-add-edit");
         private readonly ElementLocator mortgageSurveyor = new ElementLocator(Locator.CssSelector, "#surveyor .ng-binding");
         // Additional survey
         private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, "offer-additional-survey-date");
-        private readonly ElementLocator editAdditionalSurveyor = new ElementLocator(Locator.Id, "additionalSurveyor-edit");
+        private readonly ElementLocator editAdditionalSurveyor = new ElementLocator(Locator.Id, "additionalSurveyor-add-edit");
         private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additionalSurveyor .ng-binding");
         // Other details
         private readonly ElementLocator comment = new ElementLocator(Locator.Id, "offer-progress-comment");

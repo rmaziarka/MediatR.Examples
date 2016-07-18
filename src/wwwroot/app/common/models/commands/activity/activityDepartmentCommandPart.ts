@@ -9,7 +9,7 @@ module Antares.Common.Models.Commands.Activity {
 
         constructor(activityDepartment?: Business.ActivityDepartment) {
             if (activityDepartment) {
-                this.departmentId = activityDepartment.department.id;
+                this.departmentId = activityDepartment.departmentId;
                 this.departmentTypeId = activityDepartment.departmentTypeId;
             }
         }

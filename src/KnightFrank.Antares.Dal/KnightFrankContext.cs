@@ -94,6 +94,7 @@
         public DbSet<CompanyContact> CompanyContacts { get; set; }
         public DbSet<Portal> Portals { get; set; }
         public DbSet<PortalDefinition> PortalDefinitions { get; set; }
+        public DbSet<ChainTransaction> ChainTransactions { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

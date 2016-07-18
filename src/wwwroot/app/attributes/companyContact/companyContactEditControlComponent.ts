@@ -10,7 +10,8 @@ module Antares.Attributes {
                 config:'<',
                 schema: '<',
                 type: '<',
-                isPanelVisible:'<'
+                isPanelVisible: '<',
+                onEdit: '&?'
             }
     });
 }

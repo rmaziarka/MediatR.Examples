@@ -14,5 +14,6 @@ declare module Antares.Offer {
         offer_ContractApproved: Attributes.IOfferContractApprovedControlConfig;
         offer_AdditionalSurveyor: Attributes.IOfferAdditionalSurveyorControlConfig;
         offer_ProgressComment: Attributes.IOfferProgressCommentControlConfig;
+        offer_UpwardChain: Attributes.IOfferChainsControlConfig;
     }
 }

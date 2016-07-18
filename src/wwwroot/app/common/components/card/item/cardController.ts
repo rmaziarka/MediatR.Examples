@@ -11,7 +11,10 @@ module Antares.Common.Component {
         public selected: boolean = false;
 
         clicked = () => {
-            if (this.allowSelection) {
+            if(this.showItemDetails){
+                this.showItemDetails(this.item);
+            }
+            else if (this.allowSelection) {
                 this.selected = !this.selected;
                 if (this.cardSelected != undefined) this.cardSelected(this.item, this.selected);
             }

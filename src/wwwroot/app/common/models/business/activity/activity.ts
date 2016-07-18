@@ -63,7 +63,9 @@ module Antares.Common.Models.Business {
         longMatchFlexWeekValue: number = null;
         longMatchFlexMonthValue: number = null;
         longMatchFlexPercentage: number = null;    
-
+        otherCondition: string = '';
+        chainTransactions: Business.ChainTransaction[] = [];
+         
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
@@ -107,8 +109,15 @@ module Antares.Common.Models.Business {
                     this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
-            this.secondaryNegotiator = this.secondaryNegotiator || [];
-            this.leadNegotiator = this.leadNegotiator || new ActivityUser();
+                if (activity.chainTransactions) {
+                    this.chainTransactions = activity.chainTransactions.map((chainTransaction: Dto.IChainTransaction) => { return new Business.ChainTransaction(chainTransaction) });
+                }
+                else {
+                    this.chainTransactions = [];
+                }
+
+                this.secondaryNegotiator = this.secondaryNegotiator || [];
+                this.leadNegotiator = this.leadNegotiator || new ActivityUser();
             }
         }
 

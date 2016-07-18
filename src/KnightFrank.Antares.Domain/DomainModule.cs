@@ -7,6 +7,7 @@
     using FluentValidation;
 
     using KnightFrank.Antares.Dal.Model.Portal;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
@@ -46,6 +47,7 @@
             this.Bind<IActivityReferenceMapper<Dal.Model.Contacts.Contact>>().To<ActivityContactsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityDepartment>>().To<ActivityDepartmentsMapper>();
             this.Bind<IActivityReferenceMapper<ActivityUser>>().To<ActivityUsersMapper>();
+            this.Bind<IActivityReferenceMapper<ChainTransaction>>().To<ActivityChainMapper>();
             this.Bind<IActivityReferenceMapper<Portal>>().To<ActivityPortalsMapper>();
 
             this.ConfigureAttributeConfigurations();
@@ -75,12 +77,12 @@
         private void ConfigureAttributeConfigurations()
         {
             this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>();
-            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType>>>().To<OfferControlsConfiguration>();
+            this.Bind<IControlsConfiguration<Tuple<Common.Enums.OfferType, RequirementType>>>().To<OfferControlsConfiguration>();
             this.Bind<IControlsConfiguration<Tuple<RequirementType>>>().To<RequirementControlsConfiguration>();
 
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
             this.Bind<IAttributeValidator<Tuple<RequirementType>>>().To(typeof(AttributeValidator<>));
-            this.Bind<IAttributeValidator<Tuple<OfferType, RequirementType>>>().To(typeof(AttributeValidator<>));
+            this.Bind<IAttributeValidator<Tuple<Common.Enums.OfferType, RequirementType>>>().To(typeof(AttributeValidator<>));
 
             this.Bind<IEntityMapper<Dal.Model.Property.Activities.Activity>>().To<ActivityEntityMapper>();
             this.Bind<IEntityMapper<Dal.Model.Offer.Offer>>().To<OfferEntityMapper>();

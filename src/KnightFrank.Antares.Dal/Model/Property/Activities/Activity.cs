@@ -5,7 +5,6 @@
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Dal.Model.Configuration.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -101,6 +100,8 @@
         public decimal? LongVendorValuationPrice { get; set; }
 
         public decimal? LongAgreedInitialMarketingPrice { get; set; }
+
+        public virtual ICollection<ChainTransaction> ChainTransactions { get; set; }
 
         public Guid? PriceTypeId { get; set; }
 

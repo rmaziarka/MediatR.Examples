@@ -21,7 +21,7 @@ declare module Antares.Common.Models.Dto {
         appraisalMeetingInvitationText: string;
         keyNumber: string;
         accessArrangements: string;
-        appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        appraisalMeetingAttendees: IActivityAttendee[];
         kfValuationPrice?: number;
         agreedInitialMarketingPrice?: number;
         vendorValuationPrice?: number;
@@ -56,5 +56,6 @@ declare module Antares.Common.Models.Dto {
         longMatchFlexWeekValue: number;
         longMatchFlexMonthValue: number;
         longMatchFlexPercentage: number;
+        chainTransactions: IChainTransaction[];
     }
 }

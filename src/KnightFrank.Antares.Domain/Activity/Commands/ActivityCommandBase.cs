@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Portal;
-
+    using KnightFrank.Antares.Domain.Common.Commands;
     using MediatR;
 
     public abstract class ActivityCommandBase : IRequest<Guid>
@@ -18,7 +18,7 @@
         public IList<UpdateActivityUser> SecondaryNegotiators { get; set; } = new List<UpdateActivityUser>();
 
         public IList<UpdateActivityDepartment> Departments { get; set; } = new List<UpdateActivityDepartment>();
-
+        
         public IList<Guid> ContactIds { get; set; } = new List<Guid>();
 
         public Guid? SourceId { get; set; }
@@ -40,6 +40,8 @@
         public string AppraisalMeetingInvitationText { get; set; }
 
         public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
+
+        public IList<UpdateChainTransaction> ChainTransactions { get; set; } = new List<UpdateChainTransaction>();
 
         public decimal? ServiceChargeAmount { get; set; }
 

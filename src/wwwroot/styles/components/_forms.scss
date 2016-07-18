@@ -19,7 +19,16 @@
   top: 1px;
 }
 
-label,
+label {
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 2px 0 0;
+}
+
 .help-block {
   font-size: 12px;
 }
@@ -88,13 +97,20 @@ label,
 
   label {
     font-size: $font-size-base;
-    line-height: 21px;
+    line-height: 18px;
+    min-height: initial;
   }
 }
+
 
 .radio-inline {
   font-size: $font-size-base;
   line-height: 21px;
+}
+
+.radio-inline,
+.checkbox-inline {
+  line-height: inherit;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

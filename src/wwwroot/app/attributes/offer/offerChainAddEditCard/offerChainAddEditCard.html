@@ -1,0 +1,61 @@
+﻿<form name="vm.offerChainAddEditCardForm" ng-submit="vm.offerChainAddEditCardForm.isFormValid() && vm.save()" novalidate>
+    <kf-side-panel-card>
+        <side-panel-header>
+            <h3 translate="OFFER.CHAIN.EDIT.CHAIN_TRANSACTION"></h3>
+        </side-panel-header>
+        <side-panel-content>
+            <div class="section-details">
+                <checkbox-edit-control ng-model="vm.chain.isEnd" config="vm.config.isEnd" schema="vm.controlSchemas.isEnd"></checkbox-edit-control>
+            </div>
+
+            <div class="section-details">
+                <property-card-edit-control property="vm.chain.property" 
+                                            config="vm.config.property" 
+                                            on-add-edit="vm.addEditProperty(property)"> 
+                </property-card-edit-control>
+            </div>
+
+            <div class="section-details">
+                <text-edit-control ng-model="vm.chain.vendor" config="vm.config.vendor" schema="vm.controlSchemas.vendor"></text-edit-control>
+            </div>
+
+            <div class="section-details">
+                <radio-buttons-edit-control id="agent" config="vm.configAgentType" ng-model="vm.isAgentUserType" schema="vm.controlSchemas.agentType" on-change="vm.onAgentUserTypeChange(value)"></radio-buttons-edit-control>
+
+                <search-user-control schema="vm.controlSchemas.searchUser" config="vm.config.agentUser" user="vm.chain.agentUser" on-user-changed="vm.agentUserChanged(user)"></search-user-control>
+
+                <company-contact-edit-control schema="vm.controlSchemas.agentCompanyContact"
+                                              config="vm.config.agentCompanyContact"
+                                              type="vm.companyContactType.ChainAgent"
+                                              company-contact="vm.chain.agentCompanyContact"
+                                              on-edit="vm.editCompanyContact(companyContact, type)">
+                </company-contact-edit-control>
+
+                <company-contact-edit-control schema="vm.controlSchemas.solicitorCompanyContact"
+                                              config="vm.config.solicitorCompanyContact"
+                                              type="vm.companyContactType.ChainSolicitor"
+                                              company-contact="vm.chain.solicitorCompanyContact"
+                                              on-edit="vm.editCompanyContact(companyContact, type)">
+                </company-contact-edit-control>
+            </div>
+
+            <div class="section-details">
+                <h4 translate="OFFER.CHAIN.EDIT.PROGRESS">Progress</h4>
+                <enum-item-edit-control ng-model="vm.chain.mortgageId" config="vm.config.mortgage" schema="vm.controlSchemas.mortgage" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.surveyId" config="vm.config.survey" schema="vm.controlSchemas.survey" hide-empty-value="true"></enum-item-edit-control>
+                <date-edit-control ng-model="vm.chain.surveyDate" config="vm.config.surveyDate" schema="vm.controlSchemas.surveyDate"></date-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.searchesId" config="vm.config.searches" schema="vm.controlSchemas.searches" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.enquiriesId" config="vm.config.enquiries" schema="vm.controlSchemas.enquiries" hide-empty-value="true"></enum-item-edit-control>
+                <enum-item-edit-control ng-model="vm.chain.contractAgreedId" config="vm.config.contractAgreed" schema="vm.controlSchemas.contractAgreed" hide-empty-value="true"></enum-item-edit-control>
+            </div>
+        </side-panel-content>
+        <side-panel-footer>
+            <button class="btn btn-default" type="button" ng-click="vm.cancel()">
+                <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            </button>
+            <button class="btn btn-primary" id="chain-add-edit-button" type="submit">
+                <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+            </button>
+        </side-panel-footer>
+    </kf-side-panel-card>
+</form>

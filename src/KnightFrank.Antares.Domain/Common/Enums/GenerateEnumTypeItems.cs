@@ -16,13 +16,18 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ChainMortgageStatus,
 	 	ClientCareStatus,
 	 	CompanyType,
 	 	CompanyCategory,
 	 	MortgageSurveyStatus,
+	 	ChainMortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
+	 	ChainSearchStatus,
 	 	Enquiries,
+	 	ChainEnquiries,
+	 	ChainContractAgreedStatus,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
@@ -114,11 +119,19 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 
 	public enum MortgageStatus
 	{
+		Agreed,
 		Unknown,
 		NotRequiredCashFromSale,
 		NotRequiredCashInBank,
 		InProgress,
-		Agreed,
+	}
+
+	public enum ChainMortgageStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
 	}
 
 	public enum ClientCareStatus
@@ -191,6 +204,14 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Outstanding,
 	}
 
+	public enum ChainMortgageSurveyStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
+	}
+
 	public enum AdditionalSurveyStatus
 	{
 		Unknown,
@@ -206,11 +227,29 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Complete,
 	}
 
+	public enum ChainSearchStatus
+	{
+		Complete,
+		Outstanding,
+	}
+
 	public enum Enquiries
 	{
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	public enum ChainEnquiries
+	{
+		Complete,
+		Outstanding,
+	}
+
+	public enum ChainContractAgreedStatus
+	{
+		Complete,
+		Outstanding,
 	}
 
 	public enum SalutationFormat

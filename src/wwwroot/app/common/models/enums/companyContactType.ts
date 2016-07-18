@@ -6,5 +6,7 @@ module Antares.Common.Models.Enums {
         AdditionalSurveyor = <any>'AdditionalSurveyor',
         ActivitySolicitor = <any>'ActivitySolicitor',
         RequirementSolicitor = <any>'RequirementSolicitor',
+        ChainAgent = <any>'ChainAgent',
+        ChainSolicitor = <any>'ChainSolicitor'
     }
 }

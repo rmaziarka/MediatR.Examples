@@ -29,20 +29,20 @@ module Antares.TestHelpers {
                 appraisalMeetingStart: moment().toDate().toDateString(),
                 appraisalMeetingInvitationText: StringGenerator.generate(),
                 appraisalMeetingAttendees: [],
-                kfValuationPrice: NumberGenerator.generate(),
-                agreedInitialMarketingPrice: NumberGenerator.generate(),
-                vendorValuationPrice: NumberGenerator.generate(),
-                shortKfValuationPrice: NumberGenerator.generate(),
-                shortAgreedInitialMarketingPrice: NumberGenerator.generate(),
-                shortVendorValuationPrice: NumberGenerator.generate(),
-                longKfValuationPrice: NumberGenerator.generate(),
-                longAgreedInitialMarketingPrice: NumberGenerator.generate(),
-                longVendorValuationPrice: NumberGenerator.generate(),
+                kfValuationPrice: 21,
+                agreedInitialMarketingPrice: 21,
+                vendorValuationPrice: 21,
+                shortKfValuationPrice: 23,
+                shortAgreedInitialMarketingPrice: 24,
+                shortVendorValuationPrice: 25,
+                longKfValuationPrice: 26,
+                longAgreedInitialMarketingPrice: 27,
+                longVendorValuationPrice: 28,
                 disposalTypeId: StringGenerator.generate(),
                 decorationId: StringGenerator.generate(),
-                serviceChargeAmount: NumberGenerator.generate(),
+                serviceChargeAmount: 29,
                 serviceChargeNote: StringGenerator.generate(),
-                groundRentAmount: NumberGenerator.generate(),
+                groundRentAmount: 30,
                 groundRentNote: StringGenerator.generate(),
                 otherCondition: StringGenerator.generate(),
                 priceTypeId: StringGenerator.generate(),
@@ -62,10 +62,11 @@ module Antares.TestHelpers {
                 longMatchFlexibilityId: StringGenerator.generate(),
                 longMatchFlexWeekValue: NumberGenerator.generate(),
                 longMatchFlexMonthValue: NumberGenerator.generate(),
-                longMatchFlexPercentage: NumberGenerator.generate()
+                longMatchFlexPercentage: NumberGenerator.generate(),
+                chainTransactions: []
             }
-
             return angular.extend(activity, specificData || {});
+
         }
 
         public static generateManyDtos(n: number): Dto.IActivity[] {
@@ -82,6 +83,6 @@ module Antares.TestHelpers {
 
         public static generateActivityEdit(specificData?: any): Business.ActivityEditModel {
             return new Business.ActivityEditModel(ActivityGenerator.generateDto(specificData));
-    }
+        }
     }
 }

@@ -16,12 +16,16 @@ module Antares.Common.Models.Enums
 	 	UserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ChainMortgageStatus,
 	 	ClientCareStatus,
-	 	CompanyType,
 	 	MortgageSurveyStatus,
+	 	ChainMortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
+	 	ChainSearchStatus,
 	 	Enquiries,
+	 	ChainEnquiries,
+	 	ChainContractAgreedStatus,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
@@ -29,10 +33,6 @@ module Antares.Common.Models.Enums
 	 	Decoration,
 	 	MailingSalutation,
 	 	EventSalutation,
-	 	ActivityPriceType,
-	 	ActivityMatchFlexPrice,
-	 	ActivityMatchFlexRent,
-	 	RentPaymentPeriod,
 	 }
 
 	
@@ -53,8 +53,6 @@ module Antares.Common.Models.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
-		ForSaleUnavailable,
-		ToLetUnavailable,
 	}
 
 	export enum Division
@@ -111,11 +109,19 @@ module Antares.Common.Models.Enums
 
 	export enum MortgageStatus
 	{
+		Agreed,
 		Unknown,
 		NotRequiredCashFromSale,
 		NotRequiredCashInBank,
 		InProgress,
-		Agreed,
+	}
+
+	export enum ChainMortgageStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
 	}
 
 	export enum ClientCareStatus
@@ -133,6 +139,14 @@ module Antares.Common.Models.Enums
 		Outstanding,
 	}
 
+	export enum ChainMortgageSurveyStatus
+	{
+		Unknown,
+		Complete,
+		Outstanding,
+		NotRequired,
+	}
+
 	export enum AdditionalSurveyStatus
 	{
 		Unknown,
@@ -148,11 +162,29 @@ module Antares.Common.Models.Enums
 		Complete,
 	}
 
+	export enum ChainSearchStatus
+	{
+		Complete,
+		Outstanding,
+	}
+
 	export enum Enquiries
 	{
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	export enum ChainEnquiries
+	{
+		Complete,
+		Outstanding,
+	}
+
+	export enum ChainContractAgreedStatus
+	{
+		Complete,
+		Outstanding,
 	}
 
 	export enum SalutationFormat
@@ -235,34 +267,5 @@ module Antares.Common.Models.Enums
 		EventSemiformal,
 		EventInformal,
 		EventPersonal,
-	}
-
-	export enum ActivityPriceType
-	{
-		AskingPrice,
-		PriceOnApplication,
-		GuidePrice,
-		OffersInRegionOf,
-		OffersInExcessOf,
-		FixedPrice,
-		PriceReducedTo,
-	}
-
-	export enum ActivityMatchFlexPrice
-	{
-		MinimumPrice,
-		Percentage,
-	}
-
-	export enum ActivityMatchFlexRent
-	{
-		MinimumRent,
-		Percentage,
-	}
-
-	export enum RentPaymentPeriod
-	{
-		Weekly,
-		Monthly,
 	}
 }

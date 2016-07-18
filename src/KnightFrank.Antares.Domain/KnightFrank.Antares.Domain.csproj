@@ -93,6 +93,7 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendee.cs" />
+    <Compile Include="Common\Commands\UpdateChainTransaction.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAppraisalMeeting.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendeeValidator.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Attachment\Commands\CreateAttachment.cs" />
     <Compile Include="Attachment\Commands\CreateAttachmentProfile.cs" />
     <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
+    <Compile Include="Common\ChainTransactionProfile.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
@@ -306,6 +308,7 @@
     <Compile Include="Common\Validator\DateInPastValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityChainMapper.cs" />
     <Compile Include="Offer\OfferHelpers\IOfferProgressStatusHelper.cs" />
     <Compile Include="Offer\OfferHelpers\OfferProgressStatusHelper.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />
@@ -316,6 +319,8 @@
     <Compile Include="Offer\QueryResults\OfferTypeQueryResult.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
+    <Compile Include="Property\Queries\PropertiesQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertiesQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />

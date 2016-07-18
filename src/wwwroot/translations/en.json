@@ -39,7 +39,11 @@
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
-    "SETASMANAGING": "Set as managing"
+    "SETASMANAGING": "Set as managing",
+    "MODALS": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
   },
   "OWNERSHIP": {
     "ADD": {
@@ -189,6 +193,10 @@
       "EDIT_PROPERTY": "Edit property",
       "ADDRESS": "Address"
     },
+    "CARDEDIT": {
+      "PROPERTY": "Property",
+      "PROPERTYEMPTY": "Property not specified"
+    },
     "VIEW": {
       "CHARACTERISTICS": "Characteristics",
       "VIEW_PROPERTY": "View property",
@@ -198,6 +206,9 @@
     "LIST": {
       "OWNERSHIPS": "Ownerships",
       "NO_ITEMS": "Ownership information not configured yet"
+    },
+    "LISTCARD": {
+      "SELECTPROPERTY": "Select property"
     },
     "PREVIEW": {
       "PROPERTY_PREVIEW": "Property preview",
@@ -353,6 +364,7 @@
       },
       "VIEWING_DETAILS": "Viewing details",
       "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
+      "NO_VIEWINGS": "No viewings",
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
@@ -412,238 +424,359 @@
       "ADD": "Add a negotiator",
       "FIND": "Find a negotiator"
     },
-    "NEGOTIATORS": {
-      "RESIDENTIAL": {
-        "HEADER": "Negotiators",
-        "LEAD": "Lead negotiator",
-        "SECONDARY": "Secondary negotiators",
-        "EMPTY": "No negotiators added yet",
-        "ADD": "Add a negotiator",
-        "FIND": "Find a negotiator"
-      },
-      "COMMERCIAL": {
-        "HEADER": "Surveyor",
-        "LEAD": "Lead surveyor",
-        "SECONDARY": "Secondary surveyors",
-        "EMPTY": "No surveyor added yet",
-        "ADD": "Add a surveyor",
-        "FIND": "Find a surveyor"
-      },
-      "COMMON": {
-        "NEXTCALL": "Next call"
-      }
+    "COMMERCIAL": {
+      "HEADER": "Surveyor",
+      "LEAD": "Lead surveyor",
+      "SECONDARY": "Secondary surveyors",
+      "EMPTY": "No surveyor added yet",
+      "ADD": "Add a surveyor",
+      "FIND": "Find a surveyor"
     },
-    "REQUIREMENT": {
-      "ADD": {
-        "ADD_REQUIREMENT": "Create requirement",
-        "APPLICANT": "Applicant",
-        "ADD": "Add",
-        "FINDCONTACT": "Find contact",
-        "PRICE": "Price",
-        "BEDROOMS": "Bedrooms",
-        "RECEPTIONROOMS": "Reception rooms",
-        "BATHROOMS": "Bathrooms",
-        "PARKINGSPACES": "Parking spaces",
-        "AREA": "Area",
-        "LANDAREA": "Land area",
-        "DESCRIPTION": "Requirement description",
-        "TYPE": "Requirement type",
-        "BASIC_INFORMATION": "Basic information",
-        "RENT_REQUIREMENTS": "Rent requirements",
-        "RENT_WEEKLY": "Rent (weekly)"
-      },
-      "VIEW": {
-        "REQUIREMENT_DETAILS": "Requirement details",
-        "EDIT": "Edit",
-        "NOTES": "Notes",
-        "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
-        "LOCATION": "Location requirements",
-        "BASIC_REQUIREMENTS": "Basic property requirements",
-        "PRICE": "Price",
-        "BEDROOMS": "Bedrooms",
-        "RECEPTIONROOMS": "Reception rooms",
-        "BATHROOMS": "Bathrooms",
-        "PARKINGSPACES": "Parking spaces",
-        "AREA": "Area",
-        "LANDAREA": "Land area",
-        "DESCRIPTION": "Requirement description",
-        "APPLICANT": "Applicant",
-        "CREATEDDATE": "Created",
-        "VIEWINGS": "Viewings",
-        "OFFERS": "Offers",
-        "VIEWINGADD": "Viewing details",
-        "NO_VIEWINGS": "No viewings",
-        "SELECTACTIVITY": "Select activity",
-        "OFFERPREVIEW": "Offer preview",
-        "OFFERDETAILS": "Offer details",
-        "OFFERPREVIEW": "Offer preview",
-        "OFFERDETAILS": "Offer details",
-        "NEWOFFER": "New offer",
-        "TYPE": "Requirement type",
-        "BASIC_INFORMATION": "Basic information",
-        "RENT_REQUIREMENTS": "Rent requirements",
-        "RENT_WEEKLY": "Rent (weekly)",
-        "OFFER_PER_WEEK": "GBP / week"
-      }
+    "COMMON": {
+      "NEXTCALL": "Next call"
+    }
+  },
+  "REQUIREMENT": {
+    "ADD": {
+      "ADD_REQUIREMENT": "Create requirement",
+      "APPLICANT": "Applicant",
+      "ADD": "Add",
+      "FINDCONTACT": "Find contact",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)"
     },
-    "NOTES": {
+    "VIEW": {
+      "REQUIREMENT_DETAILS": "Requirement details",
+      "EDIT": "Edit",
       "NOTES": "Notes",
-      "ADDNOTE": "Add note",
-      "RECENTNOTES": "Recent notes"
+      "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
+      "LOCATION": "Location requirements",
+      "BASIC_REQUIREMENTS": "Basic property requirements",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "APPLICANT": "Applicant",
+      "CREATEDDATE": "Created",
+      "VIEWINGS": "Viewings",
+      "OFFERS": "Offers",
+      "VIEWINGADD": "Viewing details",
+      "NO_VIEWINGS": "No viewings",
+      "SELECTACTIVITY": "Select activity",
+      "OFFERPREVIEW": "Offer preview",
+      "OFFERDETAILS": "Offer details",
+      "OFFERPREVIEW": "Offer preview",
+      "OFFERDETAILS": "Offer details",
+      "NEWOFFER": "New offer",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)",
+      "OFFER_PER_WEEK": "GBP / week"
+    }
+  },
+  "NOTES": {
+    "NOTES": "Notes",
+    "ADDNOTE": "Add note",
+    "RECENTNOTES": "Recent notes"
+  },
+  "VIEWING": {
+    "ADD": {
+      "ACTIVITY": "Activity",
+      "REQUIREMENT": "Requirement",
+      "DATE": "Date",
+      "STARTTIME": "Start time",
+      "ENDTIME": "End time",
+      "ATTENDEES": "Attendees",
+      "NEGOTIATOR": "Negotiator",
+      "INVITATIONTEXT": "Invitation text",
+      "POSTVIEWINGCOMMENT": "Post-viewing comment",
+      "SAVING_VIEWING_IN_PROGRESS": "Saving viewing ..."
+    }
+  },
+  "ATTACHMENT": {
+    "ADD": {
+      "ATTACH_FILE": "Attach file",
+      "FILE": "File",
+      "TYPE": "Type",
+      "BROWSE": "Browse"
     },
-    "VIEWING": {
-      "ADD": {
-        "ACTIVITY": "Activity",
-        "REQUIREMENT": "Requirement",
-        "DATE": "Date",
-        "STARTTIME": "Start time",
-        "ENDTIME": "End time",
-        "ATTENDEES": "Attendees",
-        "NEGOTIATOR": "Negotiator",
-        "INVITATIONTEXT": "Invitation text",
-        "POSTVIEWINGCOMMENT": "Post-viewing comment",
-        "SAVING_VIEWING_IN_PROGRESS": "Saving viewing ..."
+    "PREVIEW": {
+      "ATTACHMENT_PREVIEW": "Attachment preview",
+      "NAME": "Name",
+      "TYPE": "Type",
+      "SIZE": "Size",
+      "ADDED": "Added",
+      "BY": "By"
+    },
+    "LIST": {
+      "ATTACHMENTS": "Attachments",
+      "NO_ATTACHMENTS": "No attachments"
+    }
+  },
+  "OFFER": {
+    "ADD": {
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "VIEW": "View",
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+      "NEW_OFFER": "New offer",
+      "OFFER_PER_WEEK": "GBP / week"
+    },
+    "PREVIEW": {
+      "PREVIEW": "Offer preview",
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_PER_WEEK": "GBP / week"
+    },
+    "VIEW": {
+      "VIEW_OFFER": "View offer",
+      "VENDOR": "Vendor",
+      "LANDLORD": "Landlord",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "PROGRESS_SUMMARY": "Progress summary",
+      "MORTGAGE_STATUS": "Mortgage status",
+      "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+      "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+      "SEARCH_STATUS": "Search status",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_APPROVED": "Contract approved",
+      "MORTGAGE_DETAILS": "Mortgage details",
+      "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
+      "BROKER": "Broker",
+      "LENDER": "Lender",
+      "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+      "SURVEYOR": "Surveyor",
+      "ADDITIONAL_SURVEY": "Additional survey",
+      "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+      "OTHER_DETAILS": "Other details",
+      "COMMENT": "Comment",
+      "DATE": "Date",
+      "NO_SOLICITOR": "Solicitor contact not specified"
+    },
+    "EDIT": {
+      "EDIT_OFFER": "Edit offer",
+      "VENDOR": "Vendor",
+      "LANDLORD": "Landlord",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_EDIT_SUCCESS": "Offer successfully saved",
+      "PROGRESS_SUMMARY": "Progress summary",
+      "MORTGAGE_STATUS": "Mortgage status",
+      "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+      "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+      "SEARCH_STATUS": "Search status",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_APPROVED": "Contract approved",
+      "MORTGAGE_DETAILS": "Mortgage details",
+      "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
+      "BROKER": "Broker",
+      "LENDER": "Lender",
+      "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+      "SURVEYOR": "Surveyor",
+      "ADDITIONAL_SURVEY": "Additional survey",
+      "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+      "OTHER_DETAILS": "Other details",
+      "COMMENT": "Comment",
+      "YES": "Yes",
+      "NO": "No",
+      "NO_BROKER": "Broker contact not specified yet",
+      "NO_LENDER": "Lender contact not specified yet",
+      "NO_SURVEYOR": "Surveyor contact not specified yet",
+      "NO_SOLICITOR": "Solicitor contact not specified yet",
+      "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+      "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+      "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+    }
+  },
+  "DEPARTMENTS": {
+    "COMMON": {
+      "HEADER": "Departments",
+      "EMPTY": "No departments added yet",
+      "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
+        "TITLE": "No negotiator assigned to new department",
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
+    }
+  },
+  "VIEW": {
+    "VIEW_OFFER": "View offer",
+    "VENDOR": "Vendor",
+    "LANDLORD": "Landlord",
+    "APPLICANT": "Applicant",
+    "BASIC_INFORMATION": "Basic information",
+    "STATUS": "Status",
+    "OFFER": "Offer",
+    "OFFER_PER_WEEK": "GBP / week",
+    "OFFER_DATE": "Offer date",
+    "SPECIAL_CONDITIONS": "Special conditions",
+    "NEGOTIATOR": "Negotiator",
+    "EXCHANGE_DATE": "Proposed exchange date",
+    "COMPLETION_DATE": "Proposed completion date",
+    "PROGRESS_SUMMARY": "Progress summary",
+    "MORTGAGE_STATUS": "Mortgage status",
+    "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+    "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+    "SEARCH_STATUS": "Search status",
+    "ENQUIRIES": "Enquiries",
+    "CONTRACT_APPROVED": "Contract approved",
+    "MORTGAGE_DETAILS": "Mortgage details",
+    "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+    "SOLICITOR": "Solicitor",
+    "BROKER": "Broker",
+    "LENDER": "Lender",
+    "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+    "SURVEYOR": "Surveyor",
+    "ADDITIONAL_SURVEY": "Additional survey",
+    "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+    "OTHER_DETAILS": "Other details",
+    "COMMENT": "Comment",
+    "DATE": "Date",
+    "NO_SOLICITOR": "Solicitor contact not specified",
+    "DELETE_CHAIN_TITLE": "Are you sure you want to delete this chain transaction?",
+    "DELETE_CHAIN_MESSAGE": "Deleting chain transaction is permanent and can't be reversed.",
+    "DELETE_CHAIN_CONFIRM": "Delete"
+  },
+  "PREFERENCES": {
+    "HEADER": "Preferences",
+    "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
+  },
+  "EDIT": {
+    "EDIT_OFFER": "Edit offer",
+    "VENDOR": "Vendor",
+    "LANDLORD": "Landlord",
+    "APPLICANT": "Applicant",
+    "BASIC_INFORMATION": "Basic information",
+    "STATUS": "Status",
+    "OFFER": "Offer",
+    "OFFER_PER_WEEK": "GBP / week",
+    "OFFER_DATE": "Offer date",
+    "SPECIAL_CONDITIONS": "Special conditions",
+    "NEGOTIATOR": "Negotiator",
+    "EXCHANGE_DATE": "Proposed exchange date",
+    "COMPLETION_DATE": "Proposed completion date",
+    "OFFER_EDIT_SUCCESS": "Offer successfully saved",
+    "PROGRESS_SUMMARY": "Progress summary",
+    "MORTGAGE_STATUS": "Mortgage status",
+    "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+    "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+    "SEARCH_STATUS": "Search status",
+    "ENQUIRIES": "Enquiries",
+    "CONTRACT_APPROVED": "Contract approved",
+    "MORTGAGE_DETAILS": "Mortgage details",
+    "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+    "SOLICITOR": "Solicitor",
+    "BROKER": "Broker",
+    "LENDER": "Lender",
+    "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+    "SURVEYOR": "Surveyor",
+    "ADDITIONAL_SURVEY": "Additional survey",
+    "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+    "OTHER_DETAILS": "Other details",
+    "COMMENT": "Comment",
+    "YES": "Yes",
+    "NO": "No",
+    "NO_BROKER": "Broker contact not specified yet",
+    "NO_LENDER": "Lender contact not specified yet",
+    "NO_SURVEYOR": "Surveyor contact not specified yet",
+    "NO_SOLICITOR": "Solicitor contact not specified yet",
+    "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+    "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+    "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+  },
+  "CHAIN": {
+    "PREVIEW": {
+      "CHAIN_PREVIEW": "Chain preview",
+      "IS_END": "End of chain",
+      "PROPERTY": "Property",
+      "VENDOR": "Vendor",
+      "BUYER": "Buyer",
+      "AGENT": "Agent",
+      "NO_AGENT": "Agent contact not specified",
+      "SOLICITOR": "Solicitor",
+      "NO_SOLICITOR": "Solicitor contact not specified",
+      "PROGRESS": "Progress",
+      "MORTGAGE": "Mortgage",
+      "SURVEY": "Survey",
+      "SURVEY_DATE": "Survey date",
+      "SEARCHES": "Searches",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_AGREED": "Contract agreed"
     },
-    "ATTACHMENT": {
-      "ADD": {
-        "ATTACH_FILE": "Attach file",
-        "FILE": "File",
-        "TYPE": "Type",
-        "BROWSE": "Browse"
+    "VIEW": {
+      "STATUSES": {
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SEARCHES": "Searches",
+        "ENQUERIES": "Enquiries",
+        "CONTACT_AGREED": "Contract agreed"
       },
-      "PREVIEW": {
-        "ATTACHMENT_PREVIEW": "Attachment preview",
-        "NAME": "Name",
-        "TYPE": "Type",
-        "SIZE": "Size",
-        "ADDED": "Added",
-        "BY": "By"
-      },
-      "LIST": {
-        "ATTACHMENTS": "Attachments",
-        "NO_ATTACHMENTS": "No attachments"
-      }
+      "NO_UPWARD_CHAIN": "No Upward chain specified"
     },
-    "OFFER": {
-      "ADD": {
-        "ACTIVITY": "Activity",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "VIEW": "View",
-        "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
-        "NEW_OFFER": "New offer",
-        "OFFER_PER_WEEK": "GBP / week"
-      },
-      "PREVIEW": {
-        "PREVIEW": "Offer preview",
-        "ACTIVITY": "Activity",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "OFFER_PER_WEEK": "GBP / week"
-      },
-      "VIEW": {
-        "VIEW_OFFER": "View offer",
-        "VENDOR": "Vendor",
-        "LANDLORD": "Landlord",
-        "APPLICANT": "Applicant",
-        "BASIC_INFORMATION": "Basic information",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_PER_WEEK": "GBP / week",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "PROGRESS_SUMMARY": "Progress summary",
-        "MORTGAGE_STATUS": "Mortgage status",
-        "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-        "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-        "SEARCH_STATUS": "Search status",
-        "ENQUIRIES": "Enquiries",
-        "CONTRACT_APPROVED": "Contract approved",
-        "MORTGAGE_DETAILS": "Mortgage details",
-        "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-        "SOLICITOR": "Solicitor",
-        "BROKER": "Broker",
-        "LENDER": "Lender",
-        "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-        "SURVEYOR": "Surveyor",
-        "ADDITIONAL_SURVEY": "Additional survey",
-        "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-        "OTHER_DETAILS": "Other details",
-        "COMMENT": "Comment",
-        "DATE": "Date",
-        "NO_SOLICITOR": "Solicitor contact not specified"
-      },
-      "EDIT": {
-        "EDIT_OFFER": "Edit offer",
-        "VENDOR": "Vendor",
-        "LANDLORD": "Landlord",
-        "APPLICANT": "Applicant",
-        "BASIC_INFORMATION": "Basic information",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_PER_WEEK": "GBP / week",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "OFFER_EDIT_SUCCESS": "Offer successfully saved",
-        "PROGRESS_SUMMARY": "Progress summary",
-        "MORTGAGE_STATUS": "Mortgage status",
-        "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-        "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-        "SEARCH_STATUS": "Search status",
-        "ENQUIRIES": "Enquiries",
-        "CONTRACT_APPROVED": "Contract approved",
-        "MORTGAGE_DETAILS": "Mortgage details",
-        "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-        "SOLICITOR": "Solicitor",
-        "BROKER": "Broker",
-        "LENDER": "Lender",
-        "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-        "SURVEYOR": "Surveyor",
-        "ADDITIONAL_SURVEY": "Additional survey",
-        "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-        "OTHER_DETAILS": "Other details",
-        "COMMENT": "Comment",
-        "YES": "Yes",
-        "NO": "No",
-        "NO_BROKER": "Broker contact not specified yet",
-        "NO_LENDER": "Lender contact not specified yet",
-        "NO_SURVEYOR": "Surveyor contact not specified yet",
-        "NO_SOLICITOR": "Solicitor contact not specified yet",
-        "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-        "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
-        "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
-      }
-    },
-    "DEPARTMENTS": {
-      "COMMON": {
-        "HEADER": "Departments",
-        "EMPTY": "No departments added yet",
-        "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
-          "TITLE": "No negotiator assigned to new department",
-          "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
-        }
-      }
-    },
-    "PREFERENCES": {
-      "HEADER": "Preferences",
-      "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
+    "EDIT": {
+      "CHAIN_TRANSACTION": "Chain transaction",
+      "AGENT": "Agent",
+      "NO_AGENT": "Agent contact not specified",
+      "SOLICITOR": "Solicitor",
+      "NO_SOLICITOR": "Solicitor contact not specified",
+      "PROGRESS": "Progress",
+      "MORTGAGE": "Mortgage",
+      "SURVEY": "Survey",
+      "SURVEY_DATE": "Survey date",
+      "SEARCHES": "Searches",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_AGREED": "Contract agreed",
+      "KNIGHT_FRANK": "Knight Frank",
+      "THIRD_PARTY": "3rd party",
+      "VENDOR": "Vendor",
+      "IS_END": "End of chain",
+      "FIND_NEGOTIATOR": "Find a negotiator",
+      "NAME_AND_SURNAME": "Name and surname"
     }
   }
 }

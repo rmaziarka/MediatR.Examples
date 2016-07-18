@@ -145,6 +145,7 @@
             this.AddControl(PageType.Details, ControlCode.Offer_Negotiator, Field<Offer>.Create(x => x.NegotiatorId, x => x.Negotiator));
             this.AddControl(PageType.Details, ControlCode.Offer_CreatedDate, Field<Offer>.Create(x => x.CreatedDate));
             this.AddControl(PageType.Details, ControlCode.Offer_LastModifiedDate, Field<Offer>.Create(x => x.LastModifiedDate));
+            this.AddControl(PageType.Details, ControlCode.Offer_UpwardChain, Field<Offer>.Create(x => x.Activity.ChainTransactions));
 
             this.AddControl(PageType.Details, ControlCode.Offer_Activity_Solicitor,
                 Field<Offer>.Create(x => x.Activity.SolicitorId, x => x.Activity.Solicitor).Concat(
@@ -243,6 +244,13 @@
                     ControlCode.Offer_Landlord
                 },
                 this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Update, PageType.Details));
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.Offer_UpwardChain
+                },
+                this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Details));
 
             this.Use(
                 new List<ControlCode>

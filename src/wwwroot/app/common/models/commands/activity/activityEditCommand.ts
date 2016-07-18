@@ -3,12 +3,14 @@
 module Antares.Common.Models.Commands.Activity {
     import Business = Common.Models.Business;
 
-    export class ActivityEditCommand extends ActivityBaseCommand implements IActivityEditCommand {
+    export class ActivityEditCommand extends ActivityBaseCommand implements IActivityEditCommand, IChainTransactionCommand {
         id: string;
+        chainTransactions: Business.ChainTransaction[] = [];
 
         constructor(activity: Business.ActivityEditModel) {
             super(activity);
             this.id = activity.id;
+            this.chainTransactions = activity.chainTransactions;
         }
     }
     

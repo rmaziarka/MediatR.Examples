@@ -119,6 +119,8 @@
     <Compile Include="Pages\EditContactPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
     <Compile Include="Pages\EditCompanyPage.cs" />
+    <Compile Include="Pages\Panels\CreateChainTransactionPage.cs" />
+    <Compile Include="Pages\Panels\PropertiesListPage.cs" />
     <Compile Include="Pages\ViewCompanyPage.cs" />
     <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
@@ -155,6 +157,8 @@
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\Database\ActivitySteps.cs" />
+    <Compile Include="Steps\CreateChainTransactionSteps.cs" />
+    <Compile Include="Steps\Database\ChainTransactionSteps.cs" />
     <Compile Include="Steps\EditCompanySteps.cs" />
     <Compile Include="Steps\EditContactSteps.cs" />
     <Compile Include="Steps\PreferencesSteps.cs" />
@@ -238,6 +242,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Search.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\UpwardChains\UpwardChains.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UpwardChains.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Viewing\Viewing.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -309,6 +318,10 @@
     <None Include="Tests\Search\Search.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Search.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\UpwardChains\UpwardChains.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UpwardChains.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Viewing\Viewing.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

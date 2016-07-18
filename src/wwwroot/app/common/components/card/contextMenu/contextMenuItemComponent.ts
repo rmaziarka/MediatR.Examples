@@ -8,7 +8,8 @@ module Antares.Common.Component {
         bindings: {
             type: '@',
             action: '<',
-            item: '<'
+            item: '<',
+            external: '<'
         }
     });
 }

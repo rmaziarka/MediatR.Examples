@@ -14,6 +14,6 @@
 
         public string Filename { get; set; }
 
-        public CloudStorageContainerType cloudStorageContainerType;
+        public CloudStorageContainerType CloudStorageContainerType;
     }
 }

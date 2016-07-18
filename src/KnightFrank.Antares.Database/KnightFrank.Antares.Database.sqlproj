@@ -197,11 +197,13 @@
     <None Include="Scripts\Data\Configuration\portaldefinition.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SQL\PortalDefinition.sql"/>
+    <None Include="Scripts\SQL\PortalDefinition.sql" />
     <None Include="Scripts\Data\Configuration\companyCategory.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv" />
+    <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

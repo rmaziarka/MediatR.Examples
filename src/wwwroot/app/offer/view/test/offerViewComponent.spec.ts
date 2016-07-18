@@ -35,6 +35,7 @@ module Antares {
         beforeEach(() => {
             angular.mock.module(($provide: any) => {
                 $provide.factory('addressFormViewDirective', () => { return {}; });
+                $provide.factory('activityPreviewPanelDirective', () => { return {}; });
             });
         });
 
@@ -42,7 +43,7 @@ module Antares {
             $compile: ng.ICompileService,
             $state: ng.ui.IStateService,
             $httpBackend: ng.IHttpBackendService,
-			enumService: Mock.EnumServiceMock) => {
+            enumProvider: Providers.EnumProvider) => {
 
             $http = $httpBackend;
             compile = $compile;
@@ -51,7 +52,9 @@ module Antares {
             scope["offer"] = offerMock;
             scope["config"] = TestHelpers.ConfigGenerator.generateOfferViewConfig();
 
-            enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
+            enumProvider.enums = <Dto.IEnumDictionary>{
+                offerStatus: offerStatuses
+            };
 
             element = compile('<offer-view offer="offer" config="config"></offer-view>')(scope);
             scope.$apply();

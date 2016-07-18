@@ -1,0 +1,17 @@
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+    <div class="form-group">
+        <div class="checkbox">
+            <label ng-class="{'required': vm.config[vm.schema.fieldName].required}">
+                <input ng-model="vm.ngModel"
+                       id="{{vm.schema.controlId}}"
+                       ng-required="vm.config[vm.schema.fieldName].required"
+                       ng-disabled="!vm.config[vm.schema.fieldName].active"
+                       type="checkbox">{{vm.schema.translationKey | translate}}
+            </label>
+            <div ng-messages="vm[vm.schema.formName].text.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].text.$dirty">
+                <ng-transclude ng-transclude-slot="overrideErrors"></ng-transclude>
+                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            </div>
+        </div>
+    </div>
+</ng-form>

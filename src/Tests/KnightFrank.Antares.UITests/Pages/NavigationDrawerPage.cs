@@ -106,10 +106,10 @@
             Properties,
             Requirements
         }
+    }
 
-        internal class LatestViews
-        {
-            public string LatestData { get; set; }
-        }
+    internal class LatestViews
+    {
+        public string LatestData { get; set; }
     }
 }

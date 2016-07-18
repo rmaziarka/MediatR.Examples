@@ -52,7 +52,7 @@
 
             return new AzureUploadUrlContainer
             {
-                Url = this.GetSasUrl(parameters, externalDocumentId, documentType, parameters.cloudStorageContainerType),
+                Url = this.GetSasUrl(parameters, externalDocumentId, documentType, parameters.CloudStorageContainerType),
                 ExternalDocumentId = externalDocumentId
             };
         }
@@ -65,7 +65,7 @@
 
             return new AzureDownloadUrlContainer
             {
-                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, documentType, parameters.cloudStorageContainerType),
+                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, documentType, parameters.CloudStorageContainerType),
             };
         }
 

@@ -31,6 +31,11 @@ module Antares.Common.Models.Dto {
         ActivityMatchFlexRent = <any>'activityMatchFlexRent',
         RentPaymentPeriod = <any>'rentPaymentPeriod',
         SalesBoardStatus = <any>'salesBoardStatus',
-        SalesBoardType = <any>'salesBoardType'
+        SalesBoardType = <any>'salesBoardType',
+        ChainMortgageStatus = <any>'chainMortgageStatus',
+        ChainMortgageSurveyStatus = <any>'chainMortgageSurveyStatus',
+        ChainSearchStatus = <any>'chainSearchStatus',
+        ChainEnquiries = <any>'chainEnquiries',
+        ChainContractAgreedStatus = <any>'chainContractAgreedStatus'    
     }
 }

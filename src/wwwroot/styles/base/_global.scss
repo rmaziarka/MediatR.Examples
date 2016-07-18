@@ -53,20 +53,21 @@ small {
 h3,
 .h3 {
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 23px;
 }
 
 h4,
 .h4 {
   font-size: 18px;
+  margin-bottom: 18px;
 }
 
 h5,
 .h5 {
+  font-size: 13px;
   font-weight: bold;
-  line-height: inherit;
   margin: {
-    bottom: 5px;
+    bottom: 10px;
     top: 0;
   }
 }
@@ -91,4 +92,8 @@ ol {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.external-link-icon {
+  color: $color-nobel;
 }

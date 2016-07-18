@@ -74,6 +74,7 @@
             this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
             this.AddControl(PageType.Details, ControlCode.KeyNumber, Field<Activity>.Create(x => x.KeyNumber));
             this.AddControl(PageType.Details, ControlCode.AccessArrangements, Field<Activity>.Create(x => x.AccessArrangements));
+            this.AddControl(PageType.Details, ControlCode.Offer_UpwardChain, Field<Activity>.Create(x => x.ChainTransactions));
             this.AddControl(PageType.Details, ControlCode.AppraisalMeeting,
                 new List<IField>
                 {
@@ -178,6 +179,7 @@
                 this.AddControl(pageType, ControlCode.LongVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.LongAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.LongAgreedInitialMarketingPrice));
                 this.AddControl(pageType, ControlCode.PriceType, Field<ActivityCommandBase>.Create(x => x.PriceTypeId));
+                this.AddControl(pageType, ControlCode.Offer_UpwardChain, Field<ActivityCommandBase>.Create(x => x.ChainTransactions));
                 this.AddControl(pageType, ControlCode.ActivityPrice, Field<ActivityCommandBase>.Create(x => x.ActivityPrice).Required());
                 this.AddControl(pageType, ControlCode.MatchFlexibility, Field<ActivityCommandBase>.Create(x => x.MatchFlexibilityId));
                 this.AddControl(pageType, ControlCode.MatchFlexValue, Field<ActivityCommandBase>.Create(x => x.MatchFlexValue));
@@ -406,6 +408,13 @@
                 .WithAllowedValues<UpdateActivityCommand, Guid?, SalesBoardStatus>(
                     x => x.SalesBoardStatusId,
                     new[] { SalesBoardStatus.ToLet, SalesBoardStatus.UnderOffer, SalesBoardStatus.Let });
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.Offer_UpwardChain
+                },
+                this.When(residentialSale, PageType.Details, PageType.Update));
         }
 
         private void DefineMappingsForPrices(List<Tuple<PropertyType, ActivityType>> openMarketLetting, List<Tuple<PropertyType, ActivityType>> residentialSale)

@@ -3,7 +3,7 @@
         <!-- Property details -->
         <h2 class="page-header" translate="REQUIREMENT.VIEW.REQUIREMENT_DETAILS"></h2>
         <div class="well requirement-details-header">
-            <div translate="REQUIREMENT.VIEW.TEMPORARY_RESIDENTIAL_SALES"></div>
+            <div>{{vm.requirement.requirementTypeId | dynamicTranslate}}</div>
             <div>
                 <span translate="REQUIREMENT.VIEW.CREATEDDATE"></span>
                 <span>{{ vm.requirement.createDate | date: 'longDate' }}</span>
