@@ -17,6 +17,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
+	 	CompanyType,
+	 	CompanyCategory,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -126,12 +128,10 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		KeyClient,
 	}
 
-	public enum MortgageSurveyStatus
+	public enum CompanyType
 	{
-		Unknown,
-		NotRequired,
-		Complete,
-		Outstanding,
+		KnightFrankGroup,
+		KnightFrankAffiliates,
 	}
 
 	public enum CompanyCategory
@@ -326,8 +326,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 
 	public enum SalesBoardType
 	{
-		None,
-		Flag,
+		None ,
+		Flag ,
 		VBoard,
 	}
 
