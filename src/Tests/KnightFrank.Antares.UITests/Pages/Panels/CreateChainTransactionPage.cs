@@ -14,7 +14,7 @@
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator endOfChain = new ElementLocator(Locator.Id, "offer-chain-edit-is-end");
-        private readonly ElementLocator addProperty = new ElementLocator(Locator.Id, "property-card-edit-add");
+        private readonly ElementLocator addProperty = new ElementLocator(Locator.Id, "property-card-edit-add-edit");
         private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "#property-card-edit .ng-binding");
         private readonly ElementLocator vendor = new ElementLocator(Locator.Id, "offer-chain-edit-vendor");
         // KF agent
