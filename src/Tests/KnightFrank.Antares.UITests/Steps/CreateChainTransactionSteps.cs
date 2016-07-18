@@ -4,6 +4,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
@@ -32,7 +33,7 @@
 
             if (this.page == null)
             {
-                this.page = new CreateChainTransactionPage(this.driverContext);
+                this.page = new ViewOfferPage(this.driverContext).ChainTransaction;
             }
         }
 
@@ -77,6 +78,11 @@
         [When(@"User selects 3rd party agent in chain transaction on view offer page")]
         public void SelectThirdPartyAgent(Table table)
         {
+            var details = table.CreateInstance<ChainTransactionData>();
+            this.page.SelectOtherAgent().AddOtherAgent();
+            this.page.ContactsList.WaitForContactsListToLoad()
+                .SelectContact(details.OtherAgent, details.OtherAgentCompany)
+                .ApplyContact();
         }
 
         [When(@"User selects progress details in chain transaction on view offer page")]
@@ -91,7 +97,7 @@
                 .SelectContractAgreed(details.ContractAgreed);
         }
 
-        [When(@"User clicks save chain button on view offer page")]
+        [When(@"User clicks save chain transaction button on view offer page")]
         public void ClickSaveButton()
         {
             this.page.SaveChainTransaction().WaitForSidePanelToHide();
@@ -113,6 +119,16 @@
             var details = table.CreateInstance<ChainTransactionData>();
 
             Verify.That(this.driverContext, () => Assert.Equal(details.KnightFrankAgent, this.page.KnightFrankAgent));
+        }
+
+        [Then(@"Chain 3rd party agent details on view offer page are same as the following")]
+        public void CheckChainAgent(Table table)
+        {
+            var details = table.CreateInstance<ChainTransactionData>();
+
+            Verify.That(this.driverContext, 
+                () => Assert.Equal(details.OtherAgent, this.page.OtherAgent.First()),
+                () => Assert.Equal(details.OtherAgentCompany, this.page.OtherAgent.Last()));
         }
 
         [Then(@"Chain property details on view offer page are same as the following")]

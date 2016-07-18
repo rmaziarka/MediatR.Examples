@@ -23,9 +23,9 @@
         private readonly ElementLocator listKnightFrankAgent = new ElementLocator(Locator.XPath, "//search[@id = 'user-search']//span[contains(., '{0}')]");
         private readonly ElementLocator selectedKnightFrankAgent = new ElementLocator(Locator.CssSelector, "search-user-control .ng-binding");
         // 3rd party agent
-        private readonly ElementLocator partyAgent = new ElementLocator(Locator.CssSelector, "#agent label:nth-of-type(2) span");
-        private readonly ElementLocator addPartyAgent = new ElementLocator(Locator.Id, "offer-chain-edit-agent-company-contact-edit");
-        private readonly ElementLocator agent = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator otherAgent = new ElementLocator(Locator.CssSelector, "#agent label:nth-of-type(2) span");
+        private readonly ElementLocator addOtherAgent = new ElementLocator(Locator.Id, "offer-chain-edit-agent-company-contact-add-edit");
+        private readonly ElementLocator selectedOtherAgent = new ElementLocator(Locator.CssSelector, "#offer-chain-edit-agent-company-contact .ng-binding");
         private readonly ElementLocator addSolicitor = new ElementLocator(Locator.Id, "offer-chain-edit-solicitor-add-edit");
         private readonly ElementLocator solicitor = new ElementLocator(Locator.CssSelector, "#offer-chain-edit-solicitor .ng-binding");
         private readonly ElementLocator mortgage = new ElementLocator(Locator.Id, "offer-chain-edit-mortgage");
@@ -44,7 +44,7 @@
 
         public PropertiesListPage PropertiesList => new PropertiesListPage(this.DriverContext);
 
-        public string Agent => this.Driver.GetElement(this.agent).Text;
+        public List<string> OtherAgent => this.Driver.GetElements(this.selectedOtherAgent).Select(el => el.Text).ToList();
 
         public List<string> Solicitor => this.Driver.GetElements(this.solicitor).Select(el => el.Text).ToList();
 
@@ -90,15 +90,15 @@
             return this;
         }
 
-        public CreateChainTransactionPage SelectPartyAgent()
+        public CreateChainTransactionPage SelectOtherAgent()
         {
-            this.Driver.Click(this.partyAgent);
+            this.Driver.Click(this.otherAgent);
             return this;
         }
 
-        public CreateChainTransactionPage AddPartyAgent()
+        public CreateChainTransactionPage AddOtherAgent()
         {
-            this.Driver.Click(this.addPartyAgent);
+            this.Driver.Click(this.addOtherAgent);
             return this;
         }
 
@@ -174,6 +174,7 @@
         public CreateChainTransactionPage SaveChainTransaction()
         {
             this.Driver.Click(this.saveButton);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
     }
@@ -185,6 +186,8 @@
         public string Property { get; set; }
 
         public string Vendor { get; set; }
+
+        public string Buyer { get; set; }
 
         public string KnightFrankAgent { get; set; }
 

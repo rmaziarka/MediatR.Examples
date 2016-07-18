@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     using FluentAssertions;
@@ -69,27 +68,6 @@
             this.page.EditActivity();
         }
 
-        [When(@"User clicks add attachment button on view activity page")]
-        public void OpenAttachFilePanel()
-        {
-            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
-        }
-
-        [When(@"User adds (.*) file with (.*) type on view activity page")]
-        public void AddAttachment(string file, string type)
-        {
-            this.page.AttachFile.SelectType(type)
-                .AddFiletoAttachment(file)
-                .SaveAttachment();
-            this.page.WaitForSidePanelToHide(60);
-        }
-
-        [When(@"User clicks attachment card on view activity page")]
-        public void OpenAttachmentPreview()
-        {
-            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
-        }
-
         [When(@"User clicks (.*) viewings details link on overview tab on view activity page")]
         public void OpenViewingsDetails(int position)
         {
@@ -131,20 +109,16 @@
             this.page.OpenDetailsTab();
         }
 
-        [When(@"User switchs to overview tab on view activity page")]
+        [When(@"User switches to overview tab on view activity page")]
         public void SwitchToOverviewTab()
         {
             this.page.OpenOverviewTab();
         }
 
-        [Then(@"Activity attachment (.*) should be downloaded")]
-        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        [When(@"User switches to attachments tab on view activity page")]
+        public void SwitchToAttachmentsTab()
         {
-            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
-
-            Verify.That(this.driverContext,
-                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
-                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
+            this.page.OpenAttachmentsTab();
         }
 
         [Then(@"Address details on view activity page are following")]
@@ -180,27 +154,6 @@
                 () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N0") + " GBP", this.page.AskingPrice));
         }
 
-        [Then(@"Attachment should be displayed on view activity page")]
-        public void CheckIfAttachmentIsDisplayed(Table table)
-        {
-            ViewActivityPage.Attachment actual = this.page.AttachmentDetails;
-            var expected = table.CreateInstance<ViewActivityPage.Attachment>();
-            expected.Date = DateTime.UtcNow.ToString(Format);
-
-            actual.ShouldBeEquivalentTo(expected);
-        }
-
-        [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
-        public void ChackAttachmentDetails()
-        {
-            ViewActivityPage.Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
-            actual.Date = actual.Date.Split(',')[0];
-            ViewActivityPage.Attachment expected = this.page.AttachmentDetails;
-            expected.User = "John Smith";
-
-            actual.ShouldBeEquivalentTo(expected);
-        }
-
         [Then(@"View activity page should be displayed")]
         public void CheckIfViewActivityPresent()
         {
@@ -233,13 +186,6 @@
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
                 () => Assert.Equal(expectedDetails.PostViewingComment, this.page.ViewingDetails.PostViewingComment));
-        }
-
-        [Then(@"User closes attachment preview page on view activity page")]
-        public void CloseAttachmentPreviewPanel()
-        {
-            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
-            this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"(.*) is set as lead negotiator on view activity page")]

@@ -190,7 +190,7 @@ Scenario: Edit negotiators next call dates
             | Adam Williams | 0        |
             | Eva Sandler   | 20       |
             | John Doe      | -        |
-	When User switchs to overview tab on view activity page
+	When User switches to overview tab on view activity page
 	Then Lead negotiator next call is set to 30 days from current day on view activity page
 
 @Activity
