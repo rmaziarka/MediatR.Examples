@@ -396,6 +396,7 @@
                 ControlCode.SalesBoardUpToDate
             }, this.ForAll(PageType.Details, PageType.Update));
 
+            this.Use(ControlCode.SalesBoardStatus, this.ForAll(PageType.Details));
             this.Use(ControlCode.SalesBoardStatus, this.When(residentialSale, PageType.Update))
                 .WithAllowedValues<UpdateActivityCommand, Guid?, SalesBoardStatus>(
                     x => x.SalesBoardStatusId,

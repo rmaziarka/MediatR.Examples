@@ -4,6 +4,6 @@ declare module Antares.Attributes {
     interface IRadioButtonsViewControlSchema {
         fieldName: string;
         translationKey: string,
-        templateUrl: string
+        templateUrl?: string
     }
 }

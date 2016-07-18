@@ -1,8 +1,7 @@
 ﻿<div class="section-row row" ng-if="vm.config">
     <div class="col-xs-6 section-title" translate="{{vm.schema.translationKey}}"></div>
     <div class="col-xs-6">
-        <ul>
-            <li ng-repeat="item in vm.list" ng-include="vm.schema.itemTemplateUrl"></li>
-        </ul>
+        <span ng-if="vm.ngModel" translate="COMMON.YES"></span>
+        <span ng-if="!vm.ngModel" translate="COMMON.NO"></span>
     </div>
 </div>

@@ -8,8 +8,7 @@ module Antares.Attribues {
         bindings: {
             config: '<',
             list: '<',
-            schema: '<',
-            itemTemplateUrl: '<?'
+            schema: '<'
         }
     });
 }

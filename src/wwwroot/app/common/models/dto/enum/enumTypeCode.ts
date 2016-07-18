@@ -27,6 +27,8 @@ module Antares.Common.Models.Dto {
         ActivityPriceType = <any>'activityPriceType',
         ActivityMatchFlexPrice = <any>'activityMatchFlexPrice',
         ActivityMatchFlexRent = <any>'activityMatchFlexRent',
-        RentPaymentPeriod = <any>'rentPaymentPeriod'
+        RentPaymentPeriod = <any>'rentPaymentPeriod',
+        SalesBoardStatus = <any>'salesBoardStatus',
+        SalesBoardType = <any>'salesBoardType'
     }
 }

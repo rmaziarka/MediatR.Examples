@@ -372,7 +372,29 @@
     },
     "MARKETING": {
       "MARKETING": "Marketing",
-      "DETAILS": "Marketing details"
+      "DETAILS": "Marketing details",
+      "DESCRIPTION": {
+        "DESCRIPTION": "Marketing description",
+        "FULL_DESCRIPTION": "Full description",
+        "STRAPLINE": "Strapline",
+        "LOCATION_DESCRIPTION": "Location description"
+      },
+      "ADVERTISING": {
+        "ADVERTISING": "Advertising",
+        "PUBLISH_TO_WEB": "Publish to web",
+        "PORTALS": "Portals to market on",
+        "NOTE": "Advertising note",
+        "PR_PERMITTED": "PR permitted",
+        "PR_CONTENT": "PR content"
+      },
+      "SALES_BOARDS": {
+        "SALES_BOARDS": "Sales boards",
+        "SPECIAL_INSTRUCTIONS": "Special instructions",
+        "TYPE": "Type",
+        "STATUS": "Status",
+        "UP_TO_DATE": "Board up to date",
+        "REMOVAL_DATE": "Board removal date"
+      }
     }
   },
   "NEGOTIATORS": {

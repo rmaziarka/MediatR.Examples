@@ -1,10 +1,9 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 declare module Antares.Attributes {
-    interface ICheckboxListEditControlSchema {
-        fieldName: string;
-        translationKey: string,
+    interface ICheckboxListEditControlSchema extends IListViewControlSchema {
         formName: string,
+        fieldName: string;
         checkboxes: ICheckboxSchema[]
     }
 

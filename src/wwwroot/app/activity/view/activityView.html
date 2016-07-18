@@ -187,39 +187,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="section-heading" translate="ACTIVITY.MARKETING.DETAILS"></h3>
-                        <button type="button" class="btn btn-no-style"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-no-style" ng-click="avvm.toggleMarketingTabMode()" ng-if="!avvm.isMarketingTabInEditMode"><i class="fa fa-pencil"></i></button>
                     </div>
                 </div>
 
                 <!-- Marketing details view -->
-                <div class="row">
+                <div class="row" ng-if="!avvm.isMarketingTabInEditMode">
                     <div class="col-md-3">
-
+                        
                         <!-- Marketing description -->
                         <section>
-                            <h4 class="page-header">Marketing description</h4>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Price</div>
-                                <div class="col-xs-12 section-price">&pound;1,500,000</div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Strapline</div>
-                                <div class="col-xs-12">
-                                    <p>Flat for sale in One Hyde Park, Knightsbridge, London, SW1X</p>
-                                </div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Full description</div>
-                                <div class="col-xs-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta magni, odit at suscipit ex voluptatem. Laboriosam voluptatibus officia, velit, dolorem quibusdam tenetur ipsa corporis natus, vitae suscipit, totam provident vel nulla. Facere neque id porro excepturi inventore. Exercitationem, quod! Perferendis, excepturi suscipit. Obcaecati autem, ullam modi, fuga et, quasi repellat assumenda accusamus unde repellendus deleniti voluptates amet omnis numquam provident.</p>
-                                </div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Location description</div>
-                                <div class="col-xs-12">
-                                    <p>-</p>
-                                </div>
-                            </div>
+                            <h4 class="page-header" translate="ACTIVITY.MARKETING.DESCRIPTION.DESCRIPTION"></h4>
+                            <textarea-view-control text="avvm.activity.marketingStrapline" config="avvm.config.marketingStrapline" schema="avvm.marketingStraplineSchema"></textarea-view-control>
+                            <textarea-view-control text="avvm.activity.marketingFullDescription" config="avvm.config.marketingFullDescription" schema="avvm.marketingFullDescriptionSchema"></textarea-view-control>
+                            <textarea-view-control text="avvm.activity.marketingLocationDescription" config="avvm.config.marketingLocationDescription" schema="avvm.marketingLocationDescriptionSchema"></textarea-view-control>
                         </section>
                         <!-- // Marketing description -->
 
@@ -228,55 +209,23 @@
 
                         <!-- Advertising -->
                         <section>
-                            <h4 class="page-header">Advertising</h4>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Publish to web</div>
-                                <div class="col-xs-6">No</div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Portals to market on</div>
-                                <div class="col-xs-6">
-                                    <ul>
-                                        <li>Lorem</li>
-                                        <li>ipsum</li>
-                                        <li>dolor...</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Advertising note</div>
-                                <div class="col-xs-12">
-                                    <p>Do not put this on any portal other than KF website.</p>
-                                </div>
-                            </div>
+                            <h4 class="page-header" translate="ACTIVITY.MARKETING.ADVERTISING.ADVERTISING"></h4>
+                            <radio-buttons-view-control ng-model="avvm.activity.advertisingPublishToWeb" config="avvm.config.advertisingPublishToWeb" schema="avvm.advertisingPublishToWebSchema"></radio-buttons-view-control>
+                            <list-view-control list="avvm.activity.advertisingPortals" config="avvm.config.advertisingPortals" schema="avvm.advertisingPortalsSchema"></list-view-control>
+                            <textarea-view-control text="avvm.activity.advertisingNote" config="avvm.config.advertisingNote" schema="avvm.advertisingNoteSchema"></textarea-view-control>
+                            <radio-buttons-view-control ng-model="avvm.activity.advertisingPrPermitted" config="avvm.config.advertisingPrPermitted" schema="avvm.advertisingPrPermittedSchema"></radio-buttons-view-control>
+                            <textarea-view-control text="avvm.activity.advertisingPrContent" config="avvm.config.advertisingPrContent" schema="avvm.advertisingPrContentSchema"></textarea-view-control>
                         </section>
                         <!-- // Advertising -->
 
                         <!-- Sales boards -->
                         <section>
-                            <h4 class="page-header">Sales boards</h4>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Type</div>
-                                <div class="col-xs-6">Lorem ipsum</div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Status</div>
-                                <div class="col-xs-6">Dolor sit</div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Board up to date</div>
-                                <div class="col-xs-6">Yes</div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-6 section-title">Board removal date</div>
-                                <div class="col-xs-6"><time>12-08-2016</time></div>
-                            </div>
-                            <div class="section-row row">
-                                <div class="col-xs-12 section-title">Special instructions</div>
-                                <div class="col-xs-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique consequuntur officiis eos corporis! Aspernatur unde quam minima voluptatibus facere, totam aut odio, voluptate ratione sint esse assumenda a! Vero, omnis.</p>
-                                </div>
-                            </div>
+                            <h4 class="page-header" translate="ACTIVITY.MARKETING.SALES_BOARDS.SALES_BOARDS"></h4>
+                            <enum-item-view-control ng-model="avvm.activity.salesBoardTypeId" config="avvm.config.salesBoardType" schema="avvm.salesBoardTypeSchema"></enum-item-view-control>
+                            <enum-item-view-control ng-model="avvm.activity.salesBoardStatusId" config="avvm.config.salesBoardStatus" schema="avvm.salesBoardStatusSchema"></enum-item-view-control>
+                            <radio-buttons-view-control ng-model="avvm.activity.salesBoardUpToDate" config="avvm.config.salesBoardUpToDate" schema="avvm.salesBoardUpToDateSchema"></radio-buttons-view-control>
+                            <date-view-control date="avvm.activity.salesBoardRemovalDate" config="avvm.activity.salesBoardRemovalDate" schema="avvm.salesBoardRemovalDateSchema"></date-view-control>
+                            <textarea-view-control text="avvm.activity.salesBoardSpecialInstructions" config="avvm.config.salesBoardSpecialInstructions" schema="avvm.salesBoardSpecialInstructionsSchema"></textarea-view-control>
                         </section>
                         <!-- // Sales boards -->
 
@@ -285,7 +234,7 @@
                 <!-- // Marketing details view -->
 
                 <!-- Marketing details edit -->
-                <form action="" ng-hide="true">
+                <form action="" ng-if="avvm.isMarketingTabInEditMode">
                     <div class="row">
                         <div class="col-md-3">
 
@@ -424,7 +373,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <button type="button" class="btn btn-default"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                                <button type="button" class="btn btn-default" ng-click="avvm.cancelMarketing()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                             </div>
                         </div>

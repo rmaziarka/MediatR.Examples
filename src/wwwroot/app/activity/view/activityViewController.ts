@@ -29,6 +29,8 @@
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
 
+        isMarketingTabInEditMode: boolean = false;
+
         activitySourceSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'sourceId',
             translationKey: 'ACTIVITY.COMMON.SOURCE'
@@ -245,6 +247,109 @@
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
 
+        marketingStraplineSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingStrapline',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.STRAPLINE',
+            fieldName: 'marketingStrapline',
+            formName: 'marketingStraplineForm'
+        }
+
+        marketingFullDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingFullDescription',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.FULL_DESCRIPTION',
+            fieldName: 'marketingFullDescription',
+            formName: 'marketingFullDescriptionForm'
+        }
+
+        marketingLocationDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingLocationDescription',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.LOCATION_DESCRIPTION',
+            fieldName: 'marketingLocationDescription',
+            formName: 'marketingLocationDescriptionForm'
+        }
+
+        advertisingNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'advertisingNote',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.NOTE',
+            fieldName: 'advertisingNote',
+            formName: 'advertisingNoteForm'
+        }
+
+        advertisingPortalsSchema: Antares.Attributes.ICheckboxListEditControlSchema ={
+            controlId: 'advertisingPortals',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PORTALS',
+            formName: 'advertisingPortalsForm',
+            fieldName: 'advertisingPortals',
+            itemTemplateUrl: 'app/attributes/listView/templates/listItemPortalTemplate.html',
+            checkboxes: []
+        }
+
+        private yesNoRadioButtons:Antares.Attributes.IRadioButtonSchema[] = [
+            { value: true, translationKey: "COMMON.YES" },
+            { value: false, translationKey: "COMMON.NO" }
+        ];
+
+        advertisingPublishToWebSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            fieldName: 'advertisingPublishToWeb',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PUBLISH_TO_WEB',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'advertisingPublishToWebForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        advertisingPrContentSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'advertisingPrContent',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PR_CONTENT',
+            fieldName: 'advertisingPrContent',
+            formName: 'advertisingPrContentForm'
+        }
+
+        advertisingPrPermittedSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            fieldName: 'advertisingPrPermitted',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PR_PERMITTED',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'advertisingPrPermittedForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        salesBoardUpToDateSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            fieldName: 'salesBoardUpToDate',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.UP_TO_DATE',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'salesBoardUpToDateForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        salesBoardSpecialInstructionsSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'salesBoardSpecialInstructions',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.SPECIAL_INSTRUCTIONS',
+            fieldName: 'salesBoardSpecialInstructions',
+            formName: 'salesBoardSpecialInstructionsForm'
+        }
+
+        salesBoardTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'salesBoardType',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.TYPE',
+            fieldName: 'salesBoardType',
+            formName: 'salesBoardTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.SalesBoardType
+        }
+
+        salesBoardStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'salesBoardStatus',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.STATUS',
+            fieldName: 'salesBoardStatus',
+            formName: 'salesBoardStatusForm',
+            enumTypeCode: Dto.EnumTypeCode.SalesBoardStatus
+        }
+
+        salesBoardRemovalDateSchema: Attributes.IDateEditControlSchema = {
+            formName: 'salesBoardRemovalDateForm',
+            controlId: 'salesBoardRemovalDate',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.REMOVAL_DATE',
+            fieldName: 'salesBoardRemovalDate'
+        }
+
         constructor(
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
@@ -369,6 +474,18 @@
         goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         };
+
+        toggleMarketingTabMode = () => {
+            this.isMarketingTabInEditMode = !this.isMarketingTabInEditMode;
+        };
+
+        saveMarketing = () => {
+            this.toggleMarketingTabMode();
+        }
+
+        cancelMarketing = () => {
+            this.toggleMarketingTabMode();
+        }
     }
 
     angular.module('app').controller('activityViewController', ActivityViewController);
