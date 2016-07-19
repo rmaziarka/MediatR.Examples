@@ -4,6 +4,7 @@
 
         id: string;
         requirementTypeId: string;
+        requirementType: Dto.IResourceType;
 
         contacts: IContact[];
         address: IAddress;
@@ -21,5 +22,7 @@
         attachments: IAttachment[];
         solicitor: IContact;
         solicitorCompany: ICompany;
+
+        tenancy: ITenancy;
     }
 }

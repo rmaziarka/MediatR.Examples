@@ -37,6 +37,7 @@
       "RECENTCONTACTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
+    "CREATE_TENANCY": "Create tenancy",
     "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
     "SETASMANAGING": "Set as managing",
@@ -168,6 +169,7 @@
     "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
     "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
     "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater than create date"
+    "DATE_CAN_NOT_BE_LOWER_THEN_START_DATE": "Start date must be earlier than end date"
   },
   "PROPERTY": {
     "AREA": "Property area",
@@ -484,7 +486,8 @@
       "BASIC_INFORMATION": "Basic information",
       "RENT_REQUIREMENTS": "Rent requirements",
       "RENT_WEEKLY": "Rent (weekly)",
-      "OFFER_PER_WEEK": "GBP / week"
+      "OFFER_PER_WEEK": "GBP / week",
+      "TENANCY": "Tenancy"
     }
   },
   "NOTES": {
@@ -694,6 +697,20 @@
         "TITLE": "No negotiator assigned to new department",
         "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
+  },
+  "TENANCY": {
+    "COMMON": {
+      "BASIC_INFORMATION": "Basic information",
+      "TENANTS": "Tenants",
+      "LANDLORDS": "Landlords",
+      "TERMS": "Terms",
+      "START_DATE": "Start date",
+      "END_DATE": "End date",
+      "AGREED_RENT": "Agreed rent"
+    },
+    "CREATE_TENANCY": "Create tenancy",
+    "EDIT_TENANCY": "Edit tenancy",
+    "VIEW_TENANCY": "View tenancy"
     }
   },
   "PREFERENCES": {

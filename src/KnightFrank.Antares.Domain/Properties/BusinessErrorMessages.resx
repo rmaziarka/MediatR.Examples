@@ -225,8 +225,14 @@
   <data name="Missing_Activity_Negotiators_Id" xml:space="preserve">
     <value>One or more negotiators do not exist.</value>
   </data>
+  <data name="Tenancy_Contacts_Not_Unique" xml:space="preserve">
+    <value>One or more contact are duplicated.</value>
+    </data>
   <data name="Negotiators_Not_Unique" xml:space="preserve">
     <value>One or more negotiators are duplicated.</value>
+  </data>
+  <data name="Missing_Tenancy_Contacts_Id" xml:space="preserve">
+    <value>One or more contacts do not exist.</value>
   </data>
   <data name="Activity_ChainTransactions_IsEndCountMoreThenOne" xml:space="preserve">
     <value>More then one chain transaction is marked as last chain transaction.</value>

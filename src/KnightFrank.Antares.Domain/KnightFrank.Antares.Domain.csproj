@@ -180,8 +180,10 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\TypeExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\TenancyEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\RequirementEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\OfferEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\TenancyControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
@@ -234,6 +236,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Common\Enums\IEnumParser.cs" />
+    <Compile Include="Common\Enums\TenancyType.cs">
+      <DependentUpon>TenancyType.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Common\Enums\PropertyType.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,6 +256,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OfferType.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\IReferenceMapper.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
@@ -329,6 +337,22 @@
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
     <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
+    <Compile Include="Tenancy\CommandHandlers\UpdateTenancyCommandHandler.cs" />
+    <Compile Include="Tenancy\CommandHandlers\CreateTenancyCommandHandler.cs" />
+    <Compile Include="Tenancy\Commands\CreateTenancyTermValidator.cs" />
+    <Compile Include="Tenancy\Commands\TenancyCommandBase.cs" />
+    <Compile Include="Tenancy\Commands\UpdateTenancyCommand.cs" />
+    <Compile Include="Tenancy\Commands\CreateTenancyCommand.cs" />
+    <Compile Include="Tenancy\Commands\UpdateTenancyTerm.cs" />
+    <Compile Include="Tenancy\Queries\TenancyQueryValidator.cs" />
+    <Compile Include="Tenancy\Queries\TenancyTypeQuery.cs" />
+    <Compile Include="Tenancy\Queries\TenancyQuery.cs" />
+    <Compile Include="Tenancy\QueryHandlers\TenancyQueryHandler.cs" />
+    <Compile Include="Tenancy\CommandHandlers\Relations\ITenancyReferenceMapper.cs" />
+    <Compile Include="Tenancy\CommandHandlers\Relations\TenancyContactMapper.cs" />
+    <Compile Include="Tenancy\CommandHandlers\Relations\TenancyTermsMapper.cs" />
+    <Compile Include="Tenancy\QueryHandlers\TenancyTypeQueryHandler.cs" />
+    <Compile Include="Tenancy\QueryResults\TenancyTypeQueryResult.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
     <Compile Include="User\Commands\UserCommandProfile.cs" />
     <Compile Include="User\Commands\UpdateUserCommand.cs" />
@@ -466,6 +490,10 @@
     <Content Include="Common\Enums\ActivityType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ActivityType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\TenancyType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TenancyType.cs</LastGenOutput>
     </Content>
     <Content Include="Common\Enums\PropertyType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

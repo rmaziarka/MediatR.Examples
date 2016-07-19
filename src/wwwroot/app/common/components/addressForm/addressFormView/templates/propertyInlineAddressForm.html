@@ -1,5 +1,5 @@
-﻿<span class="address-view" ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" ng-if="!vm.isRowEmpty(row)">
-    <span class="address-view-item" ng-repeat="field in row | orderBy: 'columnOrder'" ng-class="{ 'last': $last }">
-        <span>{{vm.address[field.name]}}</span>
-    </span><span ng-hide="$last" class="space">,</span>
-</span>
+﻿<div class="address-view-inline" ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" ng-if="!vm.isRowEmpty(row)">
+    <div class="address-view-item" ng-repeat="field in row | orderBy: 'columnOrder'" ng-class="{ 'last': $last }">
+        {{vm.address[field.name]}}
+    </div><div ng-hide="$last" class="space">,</div>
+</div>

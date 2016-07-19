@@ -7,6 +7,7 @@ module Antares.Services {
     import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
     import IRequirementConfig = Requirement.IRequirementConfig;
     import IOfferConfig = Offer.IOfferConfig;
+    import ITenancyConfig = Tenancy.ITenancyEditConfig;
 
     export class ConfigService {
 
@@ -57,6 +58,21 @@ module Antares.Services {
             return this.$http
                 .post<IOfferConfig>(postUrl, entity, { params: params })
                 .then<IOfferConfig>((result: ng.IHttpPromiseCallbackArg<IOfferConfig>) => result.data);
+        }
+
+        public getTenancy = (pageType: PageTypeEnum, requirementTypeId: string, tenancyTypeId: string, entity: any): ng.IHttpPromise<ITenancyConfig> =>{
+            var routeUrl = '/attributes/tenancy';
+            var postUrl = this.appConfig.rootUrl + this.apiUrl + routeUrl;
+
+            var params = {
+                pageType: pageType,
+                tenancyTypeId: tenancyTypeId || '00000000-0000-0000-0000-000000000000',
+                requirementTypeId: requirementTypeId || '00000000-0000-0000-0000-000000000000'
+            }
+
+            return this.$http
+                .post<ITenancyConfig>(postUrl, entity, { params: params })
+                .then<ITenancyConfig>((result: ng.IHttpPromiseCallbackArg<ITenancyConfig>) => result.data);
         }
     }
 

@@ -75,6 +75,17 @@
                 <attachments-manager header="ATTACHMENT.LIST.ATTACHMENTS" data="vm.attachmentManagerData" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
+                <section ng-if="!!vm.requirement.tenancy">
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.TENANCY"></h3>
+                    <card-list-item class="requirement-view-tenancy">
+                        <card show-context-menu="true" card-template-url="'app/requirement/view/requirementTenancyCard.html'" item="vm.requirement.tenancy" display-new-control="true">
+                            <card-context-menu>
+                                <context-menu-item type="edit" item="vm.requirement.tenancy" action="vm.showTenancyEditPage"></context-menu-item>
+                                <context-menu-item type="details" item="vm.requirement.tenancy" action="vm.showTenancyDetailsPage"></context-menu-item>
+                            </card-context-menu>
+                        </card>
+                    </card-list-item>
+                </section>                
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
                     <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
@@ -83,6 +94,7 @@
                             <card-context-menu>
                                 <context-menu-item type="edit" item="offer" action="vm.showOfferEditPanel"></context-menu-item>
                                 <context-menu-item type="details" item="offer" action="vm.showOfferDetailsView"></context-menu-item>
+                                <context-menu-item type="create_tenancy" item="offer" action="vm.showTenancyAddPage" ng-if="vm.canTenancyBeNegotiated(offer)"></context-menu-item>
                             </card-context-menu>
                         </card>
                     </card-list-item>

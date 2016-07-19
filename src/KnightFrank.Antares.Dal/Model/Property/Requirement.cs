@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Model.Tenancy;
 
     public class Requirement : BaseEntity
     {
@@ -46,5 +47,9 @@
         public virtual Company SolicitorCompany { get; set; }
 
         public virtual ICollection<ChainTransaction> ChainTransactions { get; set; }
+
+        public virtual Tenancy Tenancy { get; set; }
+
+        public Guid? TenancyId { get; set; }
     }
 }

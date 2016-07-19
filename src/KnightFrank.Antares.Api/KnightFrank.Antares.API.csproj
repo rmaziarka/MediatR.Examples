@@ -220,6 +220,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\TenanciesController.cs" />
     <Compile Include="Core\CachingFilterAttribute.cs" />
     <Compile Include="ModelBinders\ConfigurableModelBinder.cs" />
     <Compile Include="ModelBinders\ConfigurableRequirementModelBinder.cs" />

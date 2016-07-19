@@ -31,6 +31,10 @@ module Antares.Attributes {
         navigateToOfferView = (offer: Common.Models.Dto.IOffer) => {
             this.$state.go('app.offer-view', { id: offer.id });
         };
+
+        navigateToEditTenancy = (offer: Common.Models.Dto.IOffer) => {
+            this.$state.go('app.tenancy-edit', { activityId: offer.activityId, requirementId: offer.requirementId });
+        };
     }
 
     angular.module('app').controller('OfferViewControlController', OfferViewControlController);

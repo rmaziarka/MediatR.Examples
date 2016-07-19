@@ -204,6 +204,14 @@
     <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\SQL\TenancyType.sql" />
+    <None Include="Scripts\SQL\TenancyTypeLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\tenancytype.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\tenancytypelocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

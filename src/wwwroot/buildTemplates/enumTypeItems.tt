@@ -29,6 +29,30 @@ module Antares.Common.Models.Enums
 	<#  } #>
 }
 <# } #>
+
+<#
+	string requirementTypefileName = this.Host.ResolvePath("..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\requirementtype.csv");
+	var requirementTypes = ParseResourceFile(requirementTypefileName);
+#>
+	export enum RequirementType
+	{
+	<#foreach (var enumTypeItemName in requirementTypes) { #>
+	<#=enumTypeItemName#>,
+	<#  } #>
+}
+
+<#
+	string tenancyTypefileName = this.Host.ResolvePath("..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\tenancytype.csv");
+	var tenancyTypes = ParseResourceFile(requirementTypefileName);
+#>
+	export enum TenancyType
+	{
+	<#foreach (var enumTypeItemName in tenancyTypes) { #>
+	<#=enumTypeItemName#>,
+	<#  } #>
+}
+
+
 }
 <#+
 	public Dictionary<string,List<string>> ParseFile( string path) {
@@ -69,4 +93,35 @@ module Antares.Common.Models.Enums
             }
 			return enumDictionary;
     }
+	
+	public List<string> ParseResourceFile( string path) {
+		List<string> enumDictionary = new List<string> ();
+		using (StreamReader reader = new StreamReader(path))
+            {
+                bool firstLine = true;
+                int enumItem = 1;
+
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // skip first line
+                    if (firstLine)
+                    {
+                        firstLine = !firstLine;
+                        continue;
+                    }
+
+                    //Define pattern
+                    Regex CSVParser = new Regex(";(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    //Separating columns to array
+                    string[] csvCollection = CSVParser.Split(line);
+                    string enumTypeName = csvCollection[enumItem];
+
+					enumDictionary.Add(enumTypeName);
+                }
+            }
+			return enumDictionary;
+    }	
 #>

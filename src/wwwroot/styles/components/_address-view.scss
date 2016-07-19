@@ -1,8 +1,29 @@
-// Address View Styles
+// Address view
 
+.address-view-inline,
 .address-view {
-  &-item {
+  .address-view-item {
     display: inline-block;
-    margin-right: 5px;
+  }
+
+  &:first-child {
+    .address-view-item {
+      &:nth-child(2) {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.address-view-inline {
+  float: left;
+  margin-right: 5px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .space {
+    display: inline-block;
   }
 }

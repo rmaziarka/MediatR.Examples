@@ -24,6 +24,7 @@ ActivitySource
 ActivitySellingReason
 DisposalType
 Decoration
+TenancyContactType
 ActivityPriceType
 ActivityMatchFlexPrice
 ActivityMatchFlexRent

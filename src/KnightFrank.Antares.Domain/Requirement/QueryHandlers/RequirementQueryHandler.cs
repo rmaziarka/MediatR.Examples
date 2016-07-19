@@ -33,10 +33,14 @@
                     .Include(req => req.Viewings.Select(v => v.Activity.Property.Address))
                     .Include(req => req.RequirementNotes.Select(rn => rn.User))
                     .Include(req => req.Offers)
+                    .Include(req => req.Offers.Select(v => v.OfferType))
+                    .Include(req => req.Offers.Select(v => v.Status))
                     .Include(req => req.Offers.Select(v => v.Negotiator))
                     .Include(req => req.Offers.Select(v => v.Activity.Property.Address))
                     .Include(req => req.Attachments)
                     .Include(req => req.Attachments.Select(at => at.User))
+                    .Include(req => req.Tenancy.Terms)
+                    .Include(req => req.Tenancy.Activity.Property.Address)
                     .SingleOrDefault(req => req.Id == message.Id);
 
             return requirement;

@@ -161,6 +161,8 @@ Decoration;Unmodernised
 Decoration;Fair
 Decoration;Good
 Decoration;VeryGood
+TenancyContactType;Landlord
+TenancyContactType;Tenant
 MailingSalutation;MailingFormal
 MailingSalutation;MailingSemiformal
 MailingSalutation;MailingInformal

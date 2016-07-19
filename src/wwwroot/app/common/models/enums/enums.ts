@@ -33,6 +33,7 @@ module Antares.Common.Models.Enums
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 	ActivityPriceType,
@@ -318,6 +319,12 @@ module Antares.Common.Models.Enums
 		VeryGood,
 	}
 
+	export enum TenancyContactType
+	{
+		Landlord,
+		Tenant,
+	}
+
 	export enum MailingSalutation
 	{
 		MailingFormal,
@@ -379,4 +386,18 @@ module Antares.Common.Models.Enums
 		ToLet,
 		Let,
 	}
+
+	export enum RequirementType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
+	export enum TenancyType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
+
 }

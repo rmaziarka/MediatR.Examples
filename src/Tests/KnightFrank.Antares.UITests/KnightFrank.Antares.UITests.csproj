@@ -118,6 +118,7 @@
     <Compile Include="Pages\ActivityTabs\OverviewTabPage.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\CreateTenancyPage.cs" />
     <Compile Include="Pages\EditContactPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
     <Compile Include="Pages\EditCompanyPage.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Pages\Panels\ChainTransactionPreviewPage.cs" />
     <Compile Include="Pages\Panels\CreateChainTransactionPage.cs" />
     <Compile Include="Pages\Panels\PropertiesListPage.cs" />
+    <Compile Include="Pages\EditTenancyPage.cs" />
     <Compile Include="Pages\ViewCompanyPage.cs" />
     <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\Panels\ActivityPreviewPage.cs" />
     <Compile Include="Pages\ViewPropertyPage.cs" />
+    <Compile Include="Pages\ViewTenancyPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,8 +167,11 @@
     <Compile Include="Steps\Database\ActivitySteps.cs" />
     <Compile Include="Steps\CreateChainTransactionSteps.cs" />
     <Compile Include="Steps\Database\ChainTransactionSteps.cs" />
+    <Compile Include="Steps\CreateTenancySteps.cs" />
+    <Compile Include="Steps\Database\TenancySteps.cs" />
     <Compile Include="Steps\EditCompanySteps.cs" />
     <Compile Include="Steps\EditContactSteps.cs" />
+    <Compile Include="Steps\EditTenancySteps.cs" />
     <Compile Include="Steps\PreferencesSteps.cs" />
     <Compile Include="Steps\ViewCompanySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
@@ -187,6 +193,7 @@
     <Compile Include="Steps\ViewOfferSteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
+    <Compile Include="Steps\ViewTenancySteps.cs" />
     <Compile Include="Tests\Activities\Activities.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -251,6 +258,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Search.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Tenancy\Tenancies.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tenancies.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\UpwardChains\UpwardChains.feature.cs">
       <AutoGen>True</AutoGen>
@@ -336,6 +348,10 @@
     <None Include="Tests\UpwardChains\UpwardChains.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UpwardChains.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Tenancy\Tenancies.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Tenancies.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Viewing\Viewing.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

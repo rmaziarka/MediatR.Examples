@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="TENANCY.VIEW_TENANCY"></h2>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- Details -->
+                <div class="well">
+                    <button type="button" class="btn btn-default pull-right" ng-click="vm.goToEdit()">
+                        <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+                    </button>
+                    <div id="tenancy-page-header">
+                        {{vm.getHeader()}}
+                    </div>
+                </div>
+                <!-- // Details -->
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+
+                <!-- Basic information -->
+                <section>
+                    <h3 class="page-header" translate="TENANCY.COMMON.BASIC_INFORMATION"></h3>
+                    <div>
+                        <h5 translate="COMMON.ACTIVITY"></h5>
+                        <card-list-item>
+                            <card show-context-menu="true" display-new-control="true" card-template-url="'app/tenancy/templates/tenancyActivityCard.html'"
+                                  item="vm.tenancy.activity">
+                                <card-context-menu>
+                                    <context-menu-item type="details" item="vm.tenancy.activity" action="vm.navigateToActivity"></context-menu-item>
+                                </card-context-menu>
+                            </card>
+                        </card-list-item>
+                        <div>
+                            <h5 translate="COMMON.REQUIREMENT"></h5>
+                            <card-list-item>
+                                <card show-context-menu="true" display-new-control="true" card-template-url="'app/tenancy/templates/tenancyRequirementCard.html'"
+                                      item="vm.tenancy.requirement">
+                                    <card-context-menu>
+                                        <context-menu-item type="details" item="vm.tenancy.requirement" action="vm.navigateToRequirement"></context-menu-item>
+                                    </card-context-menu>
+                                </card>
+                            </card-list-item>
+                        </div>
+                    </div>
+                </section>
+                <!-- // Basic information -->
+                <!-- Tenants -->
+                <section>
+                    <list id="tenancy-tenants-view">
+                        <list-header>
+                            <h3 class="page-header" translate="TENANCY.COMMON.TENANTS"></h3>
+                        </list-header>
+                        <list-item id="list-item-{{tenant.id}}" ng-repeat="tenant in vm.tenancy.tenants">
+                            {{tenant.getName()}}
+                        </list-item>
+                    </list>
+                </section>
+                <!-- // Tenants -->
+                <!-- Landlords -->
+                <section>
+                    <list id="tenancy-landlords-view">
+                        <list-header>
+                            <h3 class="page-header" translate="TENANCY.COMMON.LANDLORDS"></h3>
+                        </list-header>
+                        <list-item id="list-item-{{landlord.id}}" ng-repeat="landlord in vm.tenancy.landlords">
+                            {{landlord.getName()}}
+                        </list-item>
+                    </list>
+                </section>
+                <!-- // Landlords -->
+
+            </div>
+            <div class="col-sm-6 col-md-4">
+
+                <!-- Terms -->
+                <section>
+                    <h3 class="page-header" translate="TENANCY.COMMON.TERMS"></h3>
+
+                    <date-view-control date="vm.tenancy.startDate" config="vm.config.tenancy_Term" schema="vm.termStartDateSchema"></date-view-control>
+                    <date-view-control date="vm.tenancy.endDate" config="vm.config.tenancy_Term" schema="vm.termEndDateSchema"></date-view-control>
+                    <price-view-control price="vm.tenancy.agreedRent" config="vm.config.tenancy_Term" schema="vm.termAgreedRentSchema"></price-view-control>
+                </section>
+                <!-- // Terms -->
+
+            </div>
+        </div>
+    </div>
+</div>

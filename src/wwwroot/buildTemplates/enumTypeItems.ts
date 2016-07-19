@@ -26,11 +26,13 @@ module Antares.Common.Models.Enums
 	 	Enquiries,
 	 	ChainEnquiries,
 	 	ChainContractAgreedStatus,
+	 	Enquiries,
 	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
 	 	DisposalType,
 	 	Decoration,
+	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
 	 }
@@ -268,4 +270,100 @@ module Antares.Common.Models.Enums
 		EventInformal,
 		EventPersonal,
 	}
+
+	export enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	export enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToRequirement,
+	}
+
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
+	export enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
+	}
+
+	export enum TenancyContactType
+	{
+		Landlord,
+		Tenant,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
+	}
+
+	export enum RequirementType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
+	export enum TenancyType
+	{
+		ResidentialSale,
+		ResidentialLetting,
+	}
+
+
 }

@@ -19,6 +19,7 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Dal.Model.Tenancy;
     using KnightFrank.Antares.Dal.Model.User;
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
@@ -95,6 +96,9 @@
         public DbSet<Portal> Portals { get; set; }
         public DbSet<PortalDefinition> PortalDefinitions { get; set; }
         public DbSet<ChainTransaction> ChainTransactions { get; set; }
+        public DbSet<Tenancy> Tenancies { get; set; }
+        public DbSet<TenancyTerm> Terms { get; set; }
+        public DbSet<TenancyType> TenancyTypes { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

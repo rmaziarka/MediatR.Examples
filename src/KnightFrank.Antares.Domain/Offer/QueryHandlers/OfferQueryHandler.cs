@@ -57,6 +57,7 @@
                     .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorCompany))
                     .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorContact))
                     .Include(v => v.Activity.ChainTransactions.Select(c => c.SolicitorContact))
+                    .Include(v => v.Status)
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return offer;

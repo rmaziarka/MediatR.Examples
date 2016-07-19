@@ -13,11 +13,11 @@ namespace Antares.Common.Directive {
                     ngModel.$setValidity('dateLowerThan', true);
                     return inputValue;
                 }
-                
+                var isEqualityAllowed = true;
                 var toDateString : string = JSON.parse(attrs['dateLowerThan']);
                 var fromDate : Date = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy');
                 var toDate: Date = new Date(toDateString);
-                var isValid = this.validDateRange.isValidDateRange(fromDate, toDate);
+                var isValid = this.validDateRange.isValidDateRange(fromDate, toDate, isEqualityAllowed);
                 ngModel.$setValidity('dateLowerThan', isValid);
                 return inputValue;
             };

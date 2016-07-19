@@ -46,7 +46,7 @@
         private readonly ElementLocator offerPrice = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-price");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) address-form-view .ng-binding");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferEditPanel'] li");
-        private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
+        private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");        
         // Attachments
         private readonly ElementLocator addAttachment = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
@@ -54,6 +54,13 @@
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
         private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
+        //Tenancy
+        private readonly ElementLocator createTenancy = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showTenancyAddPage'] li");
+        private readonly ElementLocator tenancyTitle = new ElementLocator(Locator.CssSelector, ".requirement-view-tenancy .card-item");
+        private readonly ElementLocator tenancyDate = new ElementLocator(Locator.CssSelector, ".requirement-view-tenancy .card-info .ng-binding");
+        private readonly ElementLocator tenancyAction = new ElementLocator(Locator.CssSelector, ".requirement-view-tenancy .card-menu-button");
+        private readonly ElementLocator detailsTenancy = new ElementLocator(Locator.CssSelector, ".requirement-view-tenancy [action *= 'showTenancyDetailsPage'] li");
+        private readonly ElementLocator editTenancy = new ElementLocator(Locator.CssSelector, ".requirement-view-tenancy [action *= 'showTenancyEditPage'] li");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -84,6 +91,8 @@
         public string RequirementDescription => this.Driver.GetElement(this.requirementDescription).Text;
 
         public string Rent => this.Driver.GetElement(this.rent).Text;
+
+        public string Date => this.Driver.GetElement(this.tenancyDate).Text;
 
         public Attachment AttachmentDetails => new Attachment
         {
@@ -207,6 +216,12 @@
             return this;
         }
 
+        public ViewRequirementPage CreateTenancyOffer(int position)
+        {
+            this.Driver.Click(this.createTenancy.Format(position));
+            return this;
+        }
+
         public ViewRequirementPage WaitForSidePanelToShow()
         {
             this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
@@ -234,6 +249,29 @@
         public ViewRequirementPage OpenAttachmentPreview()
         {
             this.Driver.Click(this.attachmentCard);
+            return this;
+        }
+
+        public string GetTenancyTitle()
+        {
+            List<string> list =
+                this.Driver.GetElements(this.tenancyTitle, element => element.Enabled)
+                    .Select(el => el.GetTextContent())
+                    .ToList();
+            return string.Join(" ", list).Trim();
+        }
+
+        public ViewRequirementPage OpenViewTenancy()
+        {
+            this.Driver.Click(this.tenancyAction);
+            this.Driver.Click(this.detailsTenancy);
+            return this;
+        }
+
+        public ViewRequirementPage OpenEditTenancy()
+        {
+            this.Driver.Click(this.tenancyAction);
+            this.Driver.Click(this.editTenancy);
             return this;
         }
     }

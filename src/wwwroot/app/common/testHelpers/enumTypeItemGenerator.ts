@@ -5,17 +5,15 @@ module Antares.TestHelpers {
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
     export class EnumTypeItemGenerator {
-        public static generateDto(): Dto.IEnumTypeItem {
+        public static generateDto(code?: string): Dto.IEnumTypeItem {
+            code = code || StringGenerator.generate();
+
             var enumTypeItem: Dto.IEnumTypeItem = {
-                id: EnumTypeItemGenerator.makeRandom('enumTypeItemId'),
-                code: EnumTypeItemGenerator.makeRandom('code'),
-                enumTypeId: EnumTypeItemGenerator.makeRandom('enumTypeId')
+                id: StringGenerator.generate(),
+                code: code,
+                enumTypeId: StringGenerator.generate()
             }
             return enumTypeItem;
-        }
-
-        private static makeRandom(text: string): string {
-            return text + _.random(1, 1000000);
         }
     }
 }

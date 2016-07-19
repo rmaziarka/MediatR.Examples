@@ -121,7 +121,11 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_Requirement_Solicitor,
         Offer_Vendor,
         Offer_Landlord,
-        Offer_UpwardChain
+        Offer_UpwardChain,
+        #endregion
+
+        #region Tenancy ControlCode
+        Tenancy_Term
         #endregion
     }
 }
