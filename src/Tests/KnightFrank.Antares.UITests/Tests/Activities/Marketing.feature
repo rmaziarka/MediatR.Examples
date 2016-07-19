@@ -16,9 +16,20 @@ Scenario: Set marketing details on residential letting activity
 		And Property ownership is defined
 			| PurchaseDate | BuyPrice |
 			| 01-05-2016   | 375000   |
-		And Open market letting activity with To Let Unavailable status is defined
-	When User navigates to view activity page with id
-		And User switches to marketing tab on view activity page
+	When User navigates to view property page with id
+		And User clicks add activites button on view property page
+		And User selects activity status and type on create actvity page
+			| Type                | Status             |
+			| Open Market Letting | To Let Unavailable |
+		And User fills in basic information on create activity page
+			| Source     | SourceDescription | PitchingThreats |
+			| Magazine A | Text              | Text            |
+		And User fills in attendees on create activity page
+			| Attendees       | InvitationText |
+			| Ellen DeGeneres | Text           |
+		And User clicks save button on create activity page
+	Then View activity page should be displayed
+	When User switches to marketing tab on view activity page
 	Then Marketing description details on marketing tab on view activity page are same as the following
 		| Strapline | FullDescription | LocationDescription |
 		| -         | -               | -                   |
@@ -27,14 +38,14 @@ Scenario: Set marketing details on residential letting activity
 			| No           | -               | No          | -         |
 		And Sales boards details on marketing tab on view activity page are same as the following
 			| Type | Status | BoardUpToDate | SpecialInstructions |
-			| -    | -      | No            | -                   |
+			| None | -      | No            | -                   |
 	When User clicks edit marketing button on marketing tab on view activity page
 		And User fills in marketing description on marketing tab on view activity page
 			| Strapline  | FullDescription  | LocationDescription  |
 			| Strap line | Full description | Location description |
 		And User fills in advertising on marketing tab on view activity page
 			| PublishToWeb | AdvertisingNote  | PrPermitted | PrContent  |
-			| No           | Advertising note | No          | Pr Content |
+			| No           | Advertising note | No          | Pr content |
 		And User fills in sales boards on marketing tab on view activity page
 			| Type | Status | BoardUpToDate | SpecialInstructions  |
 			|      | To Let | No            | Special instructions |

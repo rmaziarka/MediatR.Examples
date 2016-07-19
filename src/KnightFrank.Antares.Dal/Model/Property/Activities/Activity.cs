@@ -101,7 +101,7 @@
 
         public decimal? LongAgreedInitialMarketingPrice { get; set; }
 
-        public virtual ICollection<ChainTransaction> ChainTransactions { get; set; }
+        public virtual ICollection<ChainTransaction> ChainTransactions { get; set; } = new List<ChainTransaction>();
 
         public Guid? PriceTypeId { get; set; }
 

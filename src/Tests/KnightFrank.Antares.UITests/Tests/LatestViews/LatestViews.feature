@@ -203,8 +203,8 @@ Scenario: Display latest viewed companies
 		| Dustin    | Hoffman  | Dr    |
 	When User navigates to create company page
 		And User fills in company details on create company page 
-			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
-			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
+			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      | CompanyCategory   | CompanyType        | RelationshipManager | IsValid | Description |
+			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client | Architects/Design | Knight Frank Group | Adam Sandler        | true    | Description |
 		And User selects contacts on create company page
 			| FirstName | LastName |
 			| Dustin    | Hoffman  |
@@ -227,8 +227,8 @@ Scenario: Display latest viewed companies
 	When User clicks latest company on 2 position in drawer menu
 	Then View company page should be displayed
 		And Company should have following details on view company page
-			| Name        | WebsiteUrl                   | ClientCarePageUrl             | ClientCareStatus      |
-			| Hoffman Inc | http://www.DustinHoffman.com | http://www.DustinHoffman.test | Massive Action Client |
+			| Name        | WebsiteUrl                   | ClientCarePageUrl             | ClientCareStatus      | CompanyCategory   | CompanyType        | RelationshipManager | IsValid | Description |
+			| Hoffman Inc | http://www.DustinHoffman.com | http://www.DustinHoffman.test | Massive Action Client | Architects/Design | Knight Frank Group | Adam Sandler        | true    | Description |
 		And Latest 2 company should contain following data
 			| LatestData  |
 			| Hoffman Inc |

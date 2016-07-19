@@ -8,7 +8,7 @@ Scenario: Update residential property
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000 | 4000 | 6000     | 10000     | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000    | 4000    | 6000        | 10000       | 3                   | 5                   |
 		And Property characteristics are defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2        | Postcode | City   | County           |
@@ -24,7 +24,7 @@ Scenario: Update residential property
 		And User selects Residential property and House type on edit property page
 		And User fills in property details on edit property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 2           | 1             | 2             | 3            | 4            | 1000    | 3000 | 5000     | 9000      | 2                   | 3                   |
+			| 1           | 2           | 1             | 2             | 3            | 4            | 1000    | 3000    | 5000        | 9000        | 2                   | 3                   |
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W2U 8AN  |      |        |
@@ -93,7 +93,7 @@ Scenario: Create residential property
 		And User selects Residential property and Flat type on create property page
 		And User fills in property details on create property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000 | 4000 | 6000     | 10000     | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000    | 4000    | 6000        | 10000       | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
@@ -113,7 +113,7 @@ Scenario: Create residential property
 			| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
 		And New property should be created with Flat property type and following attributes
-			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
+			| Bedrooms | Receptions | Bathrooms | PropertyArea         | LandArea              | CarParkingSpaces |
 			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000 - 4,000 sq. ft | 6,000 - 10,000 sq. ft | 3 - 5            |
 		And Characteristics are displayed on view property page
 			| Name          | Comment              |

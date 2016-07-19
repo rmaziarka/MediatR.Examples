@@ -125,7 +125,7 @@
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             var offer = this.scenarioContext.Get<OfferData>("Offer");
-            List<string> details = this.page.OfferDetails;
+            List<string> details = this.page.GetOfferDetails();
 
             expectedDetails.OfferDate = offer.OfferDate;
             expectedDetails.CompletionDate = offer.CompletionDate;
@@ -146,7 +146,7 @@
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             var offer = this.scenarioContext.Get<OfferData>("Offer");
-            List<string> details = this.page.OfferDetails;
+            List<string> details = this.page.GetOfferDetails();
 
             expectedDetails.OfferDate = offer.OfferDate;
             expectedDetails.CompletionDate = offer.CompletionDate;
