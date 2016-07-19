@@ -4,12 +4,14 @@ module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given activity view controller', () => {
         var scope: ng.IScope,
             evtAggregator: Antares.Core.EventAggregator,
             controller: ActivityViewController,
-            $http: ng.IHttpBackendService;
+            $http: ng.IHttpBackendService,
+            obj = 'an object';
 
         var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
@@ -26,6 +28,7 @@ module Antares {
 
             var bindings = { activity: activityMock };
             controller = <ActivityViewController>$controller('activityViewController', { $scope: scope }, bindings);
+            controller.config = TestHelpers.ConfigGenerator.generateActivityViewConfig();
         }));
 
         beforeAll(() => {
@@ -124,20 +127,20 @@ module Antares {
         });
 
         describe('when selected tab is changed', () => {
-            beforeEach(() => {                
+            beforeEach(() => {
                 controller.isOfferPreviewPanelVisible = Enums.SidePanelState.Opened;
                 controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
                 controller.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Opened
                 controller.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Opened;
-                controller.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;                
+                controller.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
 
             it("when 'Overview' tab is selected then selected tab index must be 0 and all side panels must have state 'Untouched'", () => {
                 // act
                 controller.setActiveTabIndex(0);
-                
+
                 // assert  
-                expect(controller.selectedTabIndex).toBe(0);                              
+                expect(controller.selectedTabIndex).toBe(0);
                 assertPanelState(controller, Enums.SidePanelState.Untouched);
             });
 
@@ -158,6 +161,5 @@ module Antares {
                 expect(controller.isOfferPreviewPanelVisible).toBe(state);
             };
         });
-
     });
 }

@@ -49,8 +49,7 @@
 
         public bool IsViewContactFormPresent()
         {
-            this.Driver.WaitForElementToBeDisplayed(this.viewContactForm, BaseConfiguration.LongTimeout);
-            return true;
+            return this.Driver.IsElementPresent(this.viewContactForm, BaseConfiguration.LongTimeout);
         }
 
         public void OpenEditContactPage()

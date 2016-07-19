@@ -31,6 +31,10 @@ module Antares.Common.Models.Enums
 	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
+	 	ActivityPriceType,
+	 	ActivityMatchFlexPrice,
+	 	ActivityMatchFlexRent,
+	 	RentPaymentPeriod,
 	 }
 
 	
@@ -51,6 +55,8 @@ module Antares.Common.Models.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
+		ForSaleUnavailable,
+		ToLetUnavailable,
 	}
 
 	export enum Division
@@ -257,12 +263,25 @@ module Antares.Common.Models.Enums
 		SurpliceToRequirement,
 	}
 
+	export enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		Auction,
+	}
+
 	export enum Decoration
 	{
 		Unmodernised,
 		Fair,
 		Good,
 		VeryGood,
+	}
+
+	export enum TenancyContactType
+	{
+		Landlord,
+		Tenant,
 	}
 
 	export enum MailingSalutation
@@ -281,17 +300,33 @@ module Antares.Common.Models.Enums
 		EventPersonal,
 	}
 
-	export enum DisposalType
+	export enum ActivityPriceType
 	{
-		PrivateTreaty,
-		FormalTender,
-		Auction,
+		AskingPrice,
+		PriceOnApplication,
+		GuidePrice,
+		OffersInRegionOf,
+		OffersInExcessOf,
+		FixedPrice,
+		PriceReducedTo,
 	}
 
-	export enum TenancyContactType
+	export enum ActivityMatchFlexPrice
 	{
-		Landlord,
-		Tenant,
+		MinimumPrice,
+		Percentage,
+	}
+
+	export enum ActivityMatchFlexRent
+	{
+		MinimumRent,
+		Percentage,
+	}
+
+	export enum RentPaymentPeriod
+	{
+		Weekly,
+		Monthly,
 	}
 
 	export enum RequirementType

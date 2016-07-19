@@ -22,13 +22,13 @@ module Antares {
             { id: "status1", code: "code1" },
             { id: "status2", code: "code2" }
         ];
-
+        
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $controller: any,
             $httpBackend: ng.IHttpBackendService,
             _enumProvider_: Antares.Providers.EnumProvider) => {
-
+            
             // init
             $scope = $rootScope.$new();
             enumProvider = _enumProvider_;
@@ -47,7 +47,7 @@ module Antares {
             var configMock: Attributes.IActivityStatusEditControlConfig = TestHelpers.ConfigGenerator.generateActivityStatusEditConfig();
             configMock.activityStatusId.allowedCodes = null;
             controller.config = configMock;
-            
+
             // act
             var enumItems = controller.getEnumItems();
 
@@ -70,5 +70,15 @@ module Antares {
             expect(enumItems[0]).toBe(enumProvider.enums.activityStatus[1]);
         });
 
+        it('when enum items does not contain selected item then default value should be selected', () =>{
+            var configMock: Attributes.IActivityStatusEditControlConfig = TestHelpers.ConfigGenerator.generateActivityStatusEditConfig();
+            configMock.activityStatusId.allowedCodes = ['code2'];
+            controller.config = configMock;
+            controller.ngModel = 'foo';
+
+            controller.getEnumItems();
+
+            expect(controller.ngModel).toEqual('');
+        });
     });
 }

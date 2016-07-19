@@ -8,7 +8,7 @@ module Antares.Activity {
 
     export class ActivityRouteController {
 
-        constructor(private $scope: ng.IScope, private activity: Dto.IActivity, private latestViewsProvider: LatestViewsProvider, config: any){
+        constructor(private $scope: ng.IScope, private activity: Dto.IActivity, private latestViewsProvider: LatestViewsProvider, config: IActivityEditViewConfig){
             $scope['config'] = config;
             $scope['activity'] = activity;
 

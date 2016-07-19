@@ -42,7 +42,7 @@ Scenario: Update residential property
 			| LatestData |
 			| -          |
 		And Property should be updated with House property type and following attributes
-			| Bedrooms | Receptions | Bathrooms | LandArea                  | PropertyArea            | CarParkingSpaces |
+			| Bedrooms | Receptions | Bathrooms | LandArea             | PropertyArea         | CarParkingSpaces |
 			| 1 - 2    | 1 - 2      | 3 - 4     | 5,000 - 9,000 sq. ft | 1,000 - 3,000 sq. ft | 2 - 3            |
 		And Characteristics are displayed on view property page
 			| Name                   | Comment  |
@@ -155,8 +155,8 @@ Scenario: Create residential property
 		And User adds PDF document.pdf file with Brochure type on attachments tab on view activity page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | ShortLetPricePerWeek | KfValuationPricePerWeek |
-			| Market appraisal | 3000                 | 100                     |
+			| ActivityStatus   | KfValuationShortLet | KfValuationLongLet |
+			| Market appraisal | 3000                | 2900               |
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 	When User clicks property details on view activity page

@@ -1,4 +1,26 @@
 ﻿{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "edge_ngram_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 50
+        }
+      },
+      "analyzer": {
+        "edge_ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "edge_ngram_filter"
+          ]
+        }
+      }
+    },
+    "number_of_shards": 1
+  },
   "mappings": {
     "contact": {
       "properties": {
@@ -24,7 +46,15 @@
               "type": "string"
             },
             "City": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "Country": {
               "properties": {
@@ -40,28 +70,84 @@
               "type": "string"
             },
             "County": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "Id": {
               "type": "string"
             },
             "Line1": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "Line2": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "Line3": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "Postcode": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "PropertyName": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             },
             "PropertyNumber": {
-              "type": "string"
+              "type": "string",
+              "analyzer": "edge_ngram_analyzer",
+              "search_analyzer": "standard",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "analyzer": "standard"
+                }
+              }
             }
           }
         },

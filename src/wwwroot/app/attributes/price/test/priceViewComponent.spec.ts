@@ -1,14 +1,12 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-	import ControlConfig = Antares.Common.Models.Dto.IControlConfig;
-
 	describe('Given price view control', () =>{
 	    var scope: ng.IScope,
 	        element: ng.IAugmentedJQuery;
 
 	    var priceMock: number = 1;
-		var configMock: ControlConfig = TestHelpers.ConfigGenerator.generateActivityAskingPriceConfig();
+        var configMock: Antares.Common.Models.Dto.IFieldConfig = TestHelpers.ConfigGenerator.generateFieldConfig();
 	    var schemaMock: Attributes.IPriceControlSchema =
 	    {
 		    controlId : "mock-price",
@@ -29,7 +27,7 @@ module Antares {
                 scope['price'] = priceMock;
                 scope['config'] = configMock;
                 scope['schema'] = schemaMock;
-                element = $compile('<price-view-control price="price" config="config.askingPrice" schema="schema"></price-view-control>')(scope);
+                element = $compile('<price-view-control price="price" config="config" schema="schema"></price-view-control>')(scope);
 				
                 scope.$apply();
             }));
@@ -49,7 +47,7 @@ module Antares {
                 scope = $rootScope.$new();
                 scope['price'] = priceMock;
                 scope['schema'] = schemaMock;
-                element = $compile('<price-view-control price="price" config="config.askingPrice" schema="schema"></price-view-control>')(scope);
+                element = $compile('<price-view-control price="price" config="config" schema="schema"></price-view-control>')(scope);
 				
                 scope.$apply();
             }));

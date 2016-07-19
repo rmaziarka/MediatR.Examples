@@ -3,7 +3,6 @@
 module Antares.Attributes {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import Viewing = Common.Models.Business.Viewing;
     import Enums = Common.Models.Enums;
 
     export class OfferViewControlController {
@@ -14,6 +13,7 @@ module Antares.Attributes {
         
         //fields
         selectedOffer: Dto.IOffer;
+        panelMode: Enums.PanelMode = Enums.PanelMode.Preview;
 
         constructor(private eventAggregator: Core.EventAggregator,
             private $state: ng.ui.IStateService) {

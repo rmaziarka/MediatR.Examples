@@ -6,6 +6,8 @@ OwnershipType;Leaseholder
 ActivityStatus;PreAppraisal
 ActivityStatus;MarketAppraisal
 ActivityStatus;NotSelling
+ActivityStatus;ForSaleUnavailable
+ActivityStatus;ToLetUnavailable
 Division;Residential
 Division;Commercial
 ActivityDocumentType;TermsOfBusiness
@@ -155,3 +157,16 @@ EventSalutation;EventInvite
 EventSalutation;EventSemiformal
 EventSalutation;EventInformal
 EventSalutation;EventPersonal
+ActivityPriceType;AskingPrice
+ActivityPriceType;PriceOnApplication
+ActivityPriceType;GuidePrice
+ActivityPriceType;OffersInRegionOf
+ActivityPriceType;OffersInExcessOf
+ActivityPriceType;FixedPrice
+ActivityPriceType;PriceReducedTo
+ActivityMatchFlexPrice;MinimumPrice
+ActivityMatchFlexPrice;Percentage
+ActivityMatchFlexRent;MinimumRent
+ActivityMatchFlexRent;Percentage
+RentPaymentPeriod;Weekly
+RentPaymentPeriod;Monthly

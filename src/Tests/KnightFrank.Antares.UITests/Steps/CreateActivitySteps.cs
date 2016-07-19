@@ -21,6 +21,7 @@
     {
         private readonly DriverContext driverContext;
         private readonly CreateActivityPage page;
+
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
 
@@ -48,12 +49,18 @@
                 .SelectActivityStatus(details.Status);
         }
 
+        [When(@"User select (.*) from disposal type list on create activity page")]
+        public void SelectDisposalType(string type)
+        {
+            this.page.SelectDisposalType(type);
+        }
+
         [When(@"User fills in basic information on create activity page")]
         public void FillInBasicInformation(Table table)
         {
             var basicInformation = table.CreateInstance<ActivityDetails>();
-            this.page.SelectDisposalType(basicInformation.DisposalType)
-                .SelectSource(basicInformation.Source)
+
+            this.page.SelectSource(basicInformation.Source)
                 .SetSourceDescription(basicInformation.SourceDescription)
                 .SetPitchingThreats(basicInformation.PitchingThreats);
         }
@@ -62,6 +69,7 @@
         public void AddAdditionalInformation(Table table)
         {
             var additionalInformation = table.CreateInstance<ActivityDetails>();
+
             this.page.SetKeyNumber(additionalInformation.KeyNumber)
                 .SetAccessArangements(additionalInformation.AccessArrangements);
         }
@@ -70,6 +78,7 @@
         public void AddAttendees(Table table)
         {
             var attendees = table.CreateInstance<ActivityDetails>();
+
             this.page.SelectAttendee(attendees.Attendees)
                 .SetInvitationText(attendees.InvitationText);
         }
@@ -78,10 +87,11 @@
         public void SetDateAndTime(Table table)
         {
             var dateAndTime = table.CreateInstance<ActivityDetails>();
+
             this.page.SetTime(dateAndTime.StartTime, dateAndTime.EndTime).SetDate();
         }
 
-        [When(@"User fills in valuation information for activity with freehold sale type on create activity page")]
+        [When(@"User fills in valuation information for freehold sale activity on create activity page")]
         public void AddValutationinformation(Table table)
         {
             var valutationInformation = table.CreateInstance<ValuationInformation>();
@@ -139,6 +149,7 @@
         [When(@"User selects (.*) from attendees on create activity page")]
         public void SelectAttendee(string attendee)
         {
+            //TODO change to list select
             this.page.SelectAttendee(attendee);
         }
 
@@ -158,6 +169,29 @@
         public void SelectSource(string source)
         {
             this.page.SelectSource(source);
+        }
+
+        [When(@"User fills in price details on create activity page")]
+        public void FillInPriceDetails(Table table)
+        {
+            var priceDetails = table.CreateInstance<Prices>();
+            this.page.SelectPriceType(priceDetails.PriceType)
+                .SetPrice(priceDetails.Price)
+                .SelectMatchFlexibility(priceDetails.MatchFlexibility)
+                .SetMatchFlexibilityValue(priceDetails.MatchFlexibility, priceDetails.MatchFlexibilityValue);
+        }
+
+        [When(@"User fills in rent details on create activity page")]
+        public void FillInRentDetails(Table table)
+        {
+            var rentDetails = table.CreateInstance<LettingRent>();
+            this.page.SelectRent(rentDetails.Rent)
+                .SetAskingRentShortLet(rentDetails.RentShortLet)
+                .SelectShortLetMatchFlexibility(rentDetails.RentShortLetMatchFlexibility)
+                .SetShortLetMatchFlexibilityRentValue(rentDetails.RentShortLetMatchFlexibilityRentValue)
+                .SetAskingRentLongLet(rentDetails.RentLongLet)
+                .SelectLongLetMatchFlexibility(rentDetails.RentLongLetMatchFlexibility)
+                .SetLongLetMatchFlexibilityRentPercentage(rentDetails.RentLongLetMatchFlexibilityRentPercentage);
         }
 
         [Then(@"Property details are set on create activity page")]
@@ -182,13 +216,25 @@
             expectedAttendees.ShouldBeEquivalentTo(actualAttendess);
         }
 
-        [Then(@"Activity details are set on create activity page")]
-        public void CheckActivityDetailsOnActivityPanel(Table table)
+        [Then(@"Sales activity details are set on create activity page")]
+        public void CheckSalesActivityDetailsOnActivityPanel(Table table)
         {
             var details = table.CreateInstance<ActivityDetails>();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.Vendor, this.page.ActivityVendor),
+                () => Assert.Equal(details.Negotiator, this.page.ActivityNegotiator),
+                () => Assert.Equal(details.ActivityTitle, this.page.ActivityTitle),
+                () => Assert.Equal(details.Department, this.page.ActivityDepartment));
+        }
+
+        [Then(@"Letting activity details are set on create activity page")]
+        public void CheckLettingActivityDetailsOnActivityPanel(Table table)
+        {
+            var details = table.CreateInstance<ActivityDetails>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Landlord, this.page.ActivityLandlord),
                 () => Assert.Equal(details.Negotiator, this.page.ActivityNegotiator),
                 () => Assert.Equal(details.ActivityTitle, this.page.ActivityTitle),
                 () => Assert.Equal(details.Department, this.page.ActivityDepartment));

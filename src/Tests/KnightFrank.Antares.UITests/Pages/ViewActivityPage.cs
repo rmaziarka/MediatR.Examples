@@ -19,13 +19,11 @@
         private readonly ElementLocator addressElement = new ElementLocator(Locator.XPath, "//card[@id = 'card-property']//span[text()='{0}']");
         private readonly ElementLocator propertyCard = new ElementLocator(Locator.CssSelector, ".active #card-property");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'goToEdit']");
-        private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
-        private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, "activityStatus");
-        private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
         private readonly ElementLocator activityTitle = new ElementLocator(Locator.CssSelector, "#activity-view-well div:nth-of-type(1)");
         private readonly ElementLocator activityType = new ElementLocator(Locator.Id, "activityType");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, ".active #activity-vendors-view list-item span");
+        private readonly ElementLocator landlord = new ElementLocator(Locator.CssSelector, ".active #activity-landlords-view list-item span");
         private readonly ElementLocator attendeeOnOverview = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-item");
         private readonly ElementLocator appraisalDate = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item div[ng-transclude='header']");
         private readonly ElementLocator appraisalTime = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card-info");
@@ -87,6 +85,22 @@
         private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Details']");
         private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Overview']");
         private readonly ElementLocator attachmentsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Attachments']");
+ //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
+        private readonly ElementLocator priceType = new ElementLocator(Locator.Id, "priceTypeId");
+        private readonly ElementLocator price = new ElementLocator(Locator.Id, "activityPrice");
+        private readonly ElementLocator matchFlexibilityValue = new ElementLocator(Locator.Id, "matchFlexValue");
+        private readonly ElementLocator matchFlexibilityPercentage = new ElementLocator(Locator.Id, "matchFlexPercentage");
+        //Type: Open Market Letting, Status: To Let Unavailable
+        private readonly ElementLocator rentShortLetMonth = new ElementLocator(Locator.Id, "shortAskingMonthRent");
+        private readonly ElementLocator rentShortLetWeek = new ElementLocator(Locator.Id, "shortAskingWeekRent");
+        private readonly ElementLocator rentShortMatchFlexibilityMonth = new ElementLocator(Locator.Id, "shortMatchFlexMonthValue");
+        private readonly ElementLocator rentShortMatchFlexibilityWeek = new ElementLocator(Locator.Id, "shortMatchFlexWeekValue");
+        private readonly ElementLocator rentLongLetMonth = new ElementLocator(Locator.Id, "longAskingMonthRent");
+        private readonly ElementLocator rentLongtLetWeek = new ElementLocator(Locator.Id, "longAskingWeekRent");
+        private readonly ElementLocator rentLongMatchFlexibilityPercentage = new ElementLocator(Locator.Id, "longMatchFlexPercentage");
+        private readonly ElementLocator rentShortMatchFlexibilityPercentage = new ElementLocator(Locator.Id, "shortMatchFlexPercentage");
+        private readonly ElementLocator rentLongMatchFlexibilityMonth = new ElementLocator(Locator.Id, "longMatchFlexMonthValue");
+        private readonly ElementLocator rentLongMatchFlexibilityWeek = new ElementLocator(Locator.Id, "longMatchFlexWeekValue");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -102,17 +116,9 @@
 
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
 
-        //TODO check if still valid data
-        public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
-
         public string OffersCounter => this.Driver.GetElement(this.offerCounter).Text;
 
         public string ViewingsCounter => this.Driver.GetElement(this.viewingCounter).Text;
-        
-        //TODO check if still valid data
-        public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
-
-        public string VendorEstimatedPrice => this.Driver.GetElement(this.vendorEstimatedPrice).Text;
 
         public string Status => this.Driver.GetElement(this.activityStatus).Text;
 
@@ -282,11 +288,22 @@
             return propertyAddress;
         }
 
-        public Dictionary<string, string> GetActivityDetailsOnOverviewTab()
+        public Dictionary<string, string> GetActivityDetailsForSaleTypeOnOverviewTab()
         {
             var activityDetails = new Dictionary<string, string>
             {
                 { "vendor", this.Driver.GetElement(this.vendor).Text },
+                { "negotiator", this.Driver.GetElement(this.leadNegotiator).Text },
+                { "attendee", this.Driver.GetElement(this.attendeeOnOverview).Text }
+            };
+            return activityDetails;
+        }
+
+        public Dictionary<string, string> GetActivityDetailsForLettingTypeOnOverviewTab()
+        {
+            var activityDetails = new Dictionary<string, string>
+            {
+                { "landlord", this.Driver.GetElement(this.landlord).Text },
                 { "negotiator", this.Driver.GetElement(this.leadNegotiator).Text },
                 { "attendee", this.Driver.GetElement(this.attendeeOnOverview).Text }
             };
@@ -303,7 +320,7 @@
             return appraisalDateTime;
         }
 
-        public Dictionary<string, string> GetActivityDetailsOnDetailsTab()
+        public Dictionary<string, string> GetSalesActivityDetailsOnDetailsTab()
         {
             var details = new Dictionary<string, string>
             {
@@ -315,7 +332,61 @@
                 { "sellingReason", this.Driver.GetElement(this.sellingReason).Text },
                 { "pitchingThreats", this.Driver.GetElement(this.pitchingThreats).Text },
                 { "keyNumber", this.Driver.GetElement(this.keyNumber).Text },
-                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text },
+                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text }
+            };
+            return details;
+        }
+
+        public Dictionary<string, string> GetLettingActivityDetailsOnDetailsTab()
+        {
+            var details = new Dictionary<string, string>
+            {
+                { "landlord", this.Driver.GetElement(this.landlord).Text },
+                { "negotiator", this.Driver.GetElement(this.leadNegotiator).Text },
+                { "department", this.Driver.GetElement(this.departmentName).Text },
+                { "source", this.Driver.GetElement(this.source).Text },
+                { "sourceDescription", this.Driver.GetElement(this.sourceDescription).Text },
+                { "pitchingThreats", this.Driver.GetElement(this.pitchingThreats).Text },
+                { "keyNumber", this.Driver.GetElement(this.keyNumber).Text },
+                { "accessArangements", this.Driver.GetElement(this.accessArangements).Text }
+            };
+            return details;
+        }
+
+        public Dictionary<string, string> GetLettingActivityRentDetailsOnDetailsTab()
+        {
+            var details = new Dictionary<string, string>
+            {
+                { "rentShortLetMonth", this.Driver.GetElement(this.rentShortLetMonth).Text },
+                { "rentShortLetWeek", this.Driver.GetElement(this.rentShortLetWeek).Text },
+                { "rentShortMatchFlexibilityMonth", this.Driver.GetElement(this.rentShortMatchFlexibilityMonth).Text },
+                { "rentShortMatchFlexibilityWeek", this.Driver.GetElement(this.rentShortMatchFlexibilityWeek).Text },
+                { "rentLongLetMonth", this.Driver.GetElement(this.rentLongLetMonth).Text },
+                { "rentLongtLetWeek", this.Driver.GetElement(this.rentLongtLetWeek).Text },
+                { "rentLongMatchFlexibilityPercentage", this.Driver.GetElement(this.rentLongMatchFlexibilityPercentage).Text }
+            };
+            return details;
+        }
+
+        public Dictionary<string, string> GetEditedLettingActivityRentDetailsOnDetailsTab()
+        {
+            var details = new Dictionary<string, string>
+            {
+                { "rentShortLetMonth", this.Driver.GetElement(this.rentShortLetMonth).Text },
+                { "rentShortLetWeek", this.Driver.GetElement(this.rentShortLetWeek).Text },
+                { "rentShortMatchFlexibilityPercentage", this.Driver.GetElement(this.rentShortMatchFlexibilityPercentage).Text },
+                { "rentLongLetMonth", this.Driver.GetElement(this.rentLongLetMonth).Text },
+                { "rentLongtLetWeek", this.Driver.GetElement(this.rentLongtLetWeek).Text },
+                { "rentLongMatchFlexibilityMonth", this.Driver.GetElement(this.rentLongMatchFlexibilityMonth).Text },
+                { "rentLongMatchFlexibilityWeek", this.Driver.GetElement(this.rentLongMatchFlexibilityWeek).Text }
+            };
+            return details;
+        }
+
+        public Dictionary<string, string> GetOtherActivityDetailsOnDetailsTab()
+        {
+            var details = new Dictionary<string, string>
+            {
                 { "decoration", this.Driver.GetElement(this.decoration).Text },
                 { "otherConditions", this.Driver.GetElement(this.otherConditions).Text }
             };
@@ -331,6 +402,30 @@
                 { "vendorValuation", this.Driver.GetElement(this.valuationInformationVendorEstimatedPrice).Text },
                 { "agreedInitialMarketingPrice", this.Driver.GetElement(this.valuationInformationkAgreedInitialMarketingPrice).Text }
             };
+            return details;
+        }
+
+        public Dictionary<string, string> GetActivityPriceDetailsFormMinimumPriceOnDetailsTab()
+        {
+          
+             var details = new Dictionary<string, string>
+             {
+                 { "priceType", this.Driver.GetElement(this.priceType).Text },
+                 { "price", this.Driver.GetElement(this.price).Text },
+                 { "matchFlexibilityValue", this.Driver.GetElement(this.matchFlexibilityValue).Text}
+             };
+             return details;
+        }
+
+        public Dictionary<string, string> GetActivityPriceDetailsForPercentageOnDetailsTab()
+        {
+
+            var details = new Dictionary<string, string>
+             {
+                 { "priceType", this.Driver.GetElement(this.priceType).Text },
+                 { "price", this.Driver.GetElement(this.price).Text },
+                 { "matchFlexibilityValue", this.Driver.GetElement(this.matchFlexibilityPercentage).Text}
+             };
             return details;
         }
 

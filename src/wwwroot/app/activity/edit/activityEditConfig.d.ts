@@ -22,8 +22,6 @@ declare module Antares.Activity {
         shortKfValuationPrice: any;
         shortVendorValuationPrice: any;
         vendorValuationPrice: any;
-        askingPrice: any;
-        shortLetPricePerWeek: any;
         source: any;
         sourceDescription: any;
         sellingReason: any;

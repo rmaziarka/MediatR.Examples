@@ -30,6 +30,10 @@ module Antares.Common.Models.Enums
 	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
+	 	ActivityPriceType,
+	 	ActivityMatchFlexPrice,
+	 	ActivityMatchFlexRent,
+	 	RentPaymentPeriod,
 	 }
 
 	
@@ -50,6 +54,8 @@ module Antares.Common.Models.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
+		ForSaleUnavailable,
+		ToLetUnavailable,
 	}
 
 	export enum Division
@@ -236,6 +242,35 @@ module Antares.Common.Models.Enums
 		EventSemiformal,
 		EventInformal,
 		EventPersonal,
+	}
+
+	export enum ActivityPriceType
+	{
+		AskingPrice,
+		PriceOnApplication,
+		GuidePrice,
+		OffersInRegionOf,
+		OffersInExcessOf,
+		FixedPrice,
+		PriceReducedTo,
+	}
+
+	export enum ActivityMatchFlexPrice
+	{
+		MinimumPrice,
+		Percentage,
+	}
+
+	export enum ActivityMatchFlexRent
+	{
+		MinimumRent,
+		Percentage,
+	}
+
+	export enum RentPaymentPeriod
+	{
+		Weekly,
+		Monthly,
 	}
 
 	export enum ActivitySource

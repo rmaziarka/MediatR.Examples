@@ -79,9 +79,9 @@
 
         private void ConfigureAttributeConfigurations()
         {
-            this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>();
-            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType>>>().To<OfferControlsConfiguration>();
-            this.Bind<IControlsConfiguration<Tuple<RequirementType>>>().To<RequirementControlsConfiguration>();
+            this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>().InSingletonScope();
+            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType>>>().To<OfferControlsConfiguration>().InSingletonScope();
+            this.Bind<IControlsConfiguration<Tuple<RequirementType>>>().To<RequirementControlsConfiguration>().InSingletonScope();
             this.Bind<IControlsConfiguration<Tuple<TenancyType, RequirementType>>>().To<TenancyControlsConfiguration>();
            
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));

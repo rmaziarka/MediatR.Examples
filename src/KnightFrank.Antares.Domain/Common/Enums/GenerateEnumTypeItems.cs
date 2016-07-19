@@ -31,9 +31,12 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	TenancyContactType,
 	 	MailingSalutation,
 	 	EventSalutation,
+	 	ActivityPriceType,
+	 	ActivityMatchFlexPrice,
+	 	ActivityMatchFlexRent,
+	 	RentPaymentPeriod,
 	 }
 
-	
 	public enum EntityType
 	{
 		Property,
@@ -51,6 +54,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
+		ForSaleUnavailable,
+		ToLetUnavailable,
 	}
 
 	public enum Division
@@ -292,5 +297,34 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		EventSemiformal,
 		EventInformal,
 		EventPersonal,
+	}
+
+	public enum ActivityPriceType
+	{
+		AskingPrice,
+		PriceOnApplication,
+		GuidePrice,
+		OffersInRegionOf,
+		OffersInExcessOf,
+		FixedPrice,
+		PriceReducedTo,
+	}
+
+	public enum ActivityMatchFlexPrice
+	{
+		MinimumPrice,
+		Percentage,
+	}
+
+	public enum ActivityMatchFlexRent
+	{
+		MinimumRent,
+		Percentage,
+	}
+
+	public enum RentPaymentPeriod
+	{
+		Weekly,
+		Monthly,
 	}
 }
