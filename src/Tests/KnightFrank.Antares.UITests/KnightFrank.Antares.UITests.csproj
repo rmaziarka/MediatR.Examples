@@ -119,6 +119,7 @@
     <Compile Include="Pages\EditContactPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
     <Compile Include="Pages\EditCompanyPage.cs" />
+    <Compile Include="Pages\Modals\DeleteChainModalPage.cs" />
     <Compile Include="Pages\Panels\ChainTransactionPreviewPage.cs" />
     <Compile Include="Pages\Panels\CreateChainTransactionPage.cs" />
     <Compile Include="Pages\Panels\PropertiesListPage.cs" />

@@ -174,7 +174,9 @@ Scenario: Update new residential letting offer
 			| Status   | OfferPerWeek | SpecialConditions  |
 			| Accepted | 2000         | Special conditions |
 		And User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Letting offer details on view offer page are same as the following
 			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
 			| Accepted | 2000         | Special conditions | John Smith |
@@ -380,7 +382,9 @@ Scenario: Update new residential sale offer
 		| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
 		| John Adams | Testing       | Sarah Adams | Testing          |
 	When User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Sale offer details on view offer page are same as the following
 			| Status | Offer  | SpecialConditions     | Negotiator |
 			| New    | 450000 | My special conditions | John Smith |
@@ -456,7 +460,9 @@ Scenario: Create and update accepted residential sale offer
 		| Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany | AdditionalSurveyor | AdditionalSurveyorCompany |
 		| Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     | Bruce Dickinson    | Objectivity               |
 	When User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Sale offer details on view offer page are same as the following
 			| Status   | Offer  | SpecialConditions | Negotiator |
 			| Accepted | 120000 | Text              | John Smith |

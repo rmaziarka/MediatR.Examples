@@ -84,11 +84,31 @@
         }
 
         [When(@"User clicks edit chain button for (.*) chain on view offer page")]
-        public void EditOffer(int position)
+        public void EditChain(int position)
         {
             this.page.OpenChainActions(position)
-                .EditChain(1)
+                .EditChain(position)
                 .WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks delete chain button for (.*) chain on view offer page")]
+        public void DeleteChain(int position)
+        {
+            this.page.OpenChainActions(position)
+                .DeleteChain(position);
+        }
+
+        [When(@"User confirms modal dialog on view offer page")]
+        public void ConfirmDeleteAction()
+        {
+            this.page.Modal.WaitForModalToShow().ConfirmModal().WaitForModalToHide();
+        }
+
+        [Then(@"It should not be possible to delete (.*) chain on view offer page")]
+        public void CheckIfRemoveNotPossible(int position)
+        {
+            this.page.OpenChainActions(position);
+            Assert.True(this.page.DeleteChainNotAvailable(position));
         }
 
         [Then(@"View offer page should be displayed")]
@@ -201,12 +221,13 @@
                 () => Assert.Equal(expectedDetails.Vendor, vendors));
         }
 
-        [Then(@"Offer updated success message should be displayed")]
-        public void CheckIfSuccessMessageDisplayed()
+        [Then(@"Success message should be displayed on view offer page")]
+        public void CheckIfSuccessMessageDisplayed(Table table)
         {
+            string text = table.Rows[0]["Text"];
             Verify.That(this.driverContext,
                 () => Assert.True(this.page.IsSuccessMessageDisplayed()),
-                () => Assert.Equal("Offer successfully saved", this.page.SuccessMessage));
+                () => Assert.Equal(text, this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
         }
 
@@ -336,9 +357,15 @@
         }
 
         [Then(@"Add upward chain button should not be displayed on view offer page")]
-        public void CheckIfAddButtonIsNotPresent()
+        public void CheckAddUpwardChainIsNotPresent()
         {
-            Assert.True(this.page.CheckIfAddUpwardChainButtonNotPresent());
+            Assert.False(this.page.AddUpwardChainPresent(BaseConfiguration.ShortTimeout));
+        }
+
+        [Then(@"Add upward chain button should be displayed on view offer page")]
+        public void CheckAddUpwardChainIsPresent()
+        {
+            Assert.True(this.page.AddUpwardChainPresent(BaseConfiguration.MediumTimeout));
         }
     }
 }

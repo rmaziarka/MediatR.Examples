@@ -5,6 +5,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.Modals;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
@@ -59,6 +60,7 @@
         private readonly ElementLocator upwardChainStatuses = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-info span");
         private readonly ElementLocator upwardChainActions = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action");
         private readonly ElementLocator editUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'edit'] li");
+        private readonly ElementLocator deleteUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'delete'] li");
         private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "offer-chains-list address-form-view .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
@@ -70,6 +72,8 @@
         public CreateChainTransactionPage ChainTransaction => new CreateChainTransactionPage(this.DriverContext);
 
         public ChainTransactionPreviewPage ChainTransactionPreview => new ChainTransactionPreviewPage(this.DriverContext);
+
+        public DeleteChainModalPage Modal => new DeleteChainModalPage(this.DriverContext);
 
         public List<string> OfferDetails => this.Driver.GetElements(this.details).Select(el => el.Text).ToList();
 
@@ -192,9 +196,9 @@
             return this;
         }
 
-        public bool CheckIfAddUpwardChainButtonNotPresent()
+        public bool AddUpwardChainPresent(double timeout)
         {
-            return !this.Driver.IsElementPresent(this.addUpwardChain, BaseConfiguration.ShortTimeout);
+            return this.Driver.IsElementPresent(this.addUpwardChain, timeout);
         }
 
         public ViewOfferPage OpenChainPreview(string position)
@@ -224,6 +228,17 @@
         {
             this.Driver.Click(this.editUpwardChain.Format(position));
             return this;
+        }
+
+        public ViewOfferPage DeleteChain(int position)
+        {
+            this.Driver.Click(this.deleteUpwardChain.Format(position));
+            return this;
+        }
+
+        public bool DeleteChainNotAvailable(int position)
+        {
+            return !this.Driver.IsElementPresent(this.deleteUpwardChain.Format(position), BaseConfiguration.ShortTimeout);
         }
     }
 
