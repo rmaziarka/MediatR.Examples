@@ -235,58 +235,60 @@
 
                 <!-- Marketing details edit -->
                 <div class="row" ng-if="avvm.isMarketingTabInEditMode">
-                    <form ng-submit="avvm.editMarketingForm.isFormValid() && avvm.saveMarketing()" name="avvm.editMarketingForm" id="editMarketingForm" method="post" novalidate>
-                        <div class="row">
-                            <div class="col-md-3">
+                    <div class="col-md-12">
+                        <form ng-submit="avvm.editMarketingForm.isFormValid() && avvm.saveMarketing()" name="avvm.editMarketingForm" id="editMarketingForm" method="post" novalidate>
+                            <div class="row">
+                                <div class="col-md-3">
 
-                                <!-- Marketing description -->
-                                <fieldset>
-                                    <h4 class="page-header" translate="ACTIVITY.MARKETING.DESCRIPTION.DESCRIPTION"></h4>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingStrapline" config="avvm.config.update.marketingStrapline" schema="avvm.marketingStraplineSchema"></textarea-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingFullDescription" config="avvm.config.update.marketingFullDescription" schema="avvm.marketingFullDescriptionSchema"></textarea-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingLocationDescription" config="avvm.config.update.marketingLocationDescription" schema="avvm.marketingLocationDescriptionSchema"></textarea-edit-control>
-                                </fieldset>
-                                <!-- // Marketing description -->
+                                    <!-- Marketing description -->
+                                    <fieldset>
+                                        <h4 class="page-header" translate="ACTIVITY.MARKETING.DESCRIPTION.DESCRIPTION"></h4>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingStrapline" config="avvm.config.update.marketingStrapline" schema="avvm.marketingStraplineSchema"></textarea-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingFullDescription" config="avvm.config.update.marketingFullDescription" schema="avvm.marketingFullDescriptionSchema"></textarea-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingLocationDescription" config="avvm.config.update.marketingLocationDescription" schema="avvm.marketingLocationDescriptionSchema"></textarea-edit-control>
+                                    </fieldset>
+                                    <!-- // Marketing description -->
 
-                            </div>
-                            <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
 
-                                <!-- Advertising -->
-                                <fieldset>
-                                    <h4 class="page-header" translate="ACTIVITY.MARKETING.ADVERTISING.ADVERTISING"></h4>
-                                    <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPublishToWeb" config="avvm.config.update.advertisingPublishToWeb" schema="avvm.advertisingPublishToWebSchema" on-selected-item-changed="avvm.onPublishToWebChanged(value)"></radio-buttons-edit-control>
-                                    <checkbox-list-edit-control ng-model="avvm.editableActivity.advertisingPortals" config="avvm.config.update.advertisingPortals" schema="avvm.advertisingPortalsSchema"></checkbox-list-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.advertisingNote" config="avvm.config.update.advertisingNote" schema="avvm.advertisingNoteSchema"></textarea-edit-control>
-                                    <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPrPermitted" config="avvm.config.update.advertisingPrPermitted" schema="avvm.advertisingPrPermittedSchema"></radio-buttons-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.advertisingPrContent" config="avvm.config.update.advertisingPrContent" schema="avvm.advertisingPrContentSchema"></textarea-edit-control>
-                                </fieldset>
-                                <!-- // Advertising -->
-                                <!-- Sales boards -->
-                                <fieldset>
-                                    <h4 class="page-header" translate="ACTIVITY.MARKETING.SALES_BOARDS.SALES_BOARDS"></h4>
-                                    <enum-item-edit-control ng-model="avvm.editableActivity.salesBoardTypeId" config="avvm.config.update.salesBoardType" schema="avvm.salesBoardTypeSchema" hide-empty-value="true"></enum-item-edit-control>
-                                    <enum-item-edit-control ng-model="avvm.editableActivity.salesBoardStatusId" config="avvm.config.update.salesBoardStatus" schema="avvm.salesBoardStatusSchema"></enum-item-edit-control>
-                                    <radio-buttons-edit-control ng-model="avvm.editableActivity.salesBoardUpToDate" config="avvm.config.update.salesBoardUpToDate" schema="avvm.salesBoardUpToDateSchema"></radio-buttons-edit-control>
-                                    <date-edit-control ng-model="avvm.editableActivity.salesBoardRemovalDate" config="avvm.config.update.salesBoardRemovalDate" schema="avvm.salesBoardRemovalDateSchema" greater-than="avvm.activity.createdDate">
-                                        <override-errors>
-                                            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
-                                        </override-errors>
-                                    </date-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.salesBoardSpecialInstructions" config="avvm.config.update.salesBoardSpecialInstructions" schema="avvm.salesBoardSpecialInstructionsSchema"></textarea-edit-control>
-                                </fieldset>
-                                <!-- // Sales boards -->
+                                    <!-- Advertising -->
+                                    <fieldset>
+                                        <h4 class="page-header" translate="ACTIVITY.MARKETING.ADVERTISING.ADVERTISING"></h4>
+                                        <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPublishToWeb" config="avvm.config.update.advertisingPublishToWeb" schema="avvm.advertisingPublishToWebSchema" on-selected-item-changed="avvm.onPublishToWebChanged(value)"></radio-buttons-edit-control>
+                                        <checkbox-list-edit-control ng-model="avvm.editableActivity.advertisingPortals" config="avvm.config.update.advertisingPortals" schema="avvm.advertisingPortalsSchema"></checkbox-list-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.advertisingNote" config="avvm.config.update.advertisingNote" schema="avvm.advertisingNoteSchema"></textarea-edit-control>
+                                        <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPrPermitted" config="avvm.config.update.advertisingPrPermitted" schema="avvm.advertisingPrPermittedSchema"></radio-buttons-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.advertisingPrContent" config="avvm.config.update.advertisingPrContent" schema="avvm.advertisingPrContentSchema"></textarea-edit-control>
+                                    </fieldset>
+                                    <!-- // Advertising -->
+                                    <!-- Sales boards -->
+                                    <fieldset>
+                                        <h4 class="page-header" translate="ACTIVITY.MARKETING.SALES_BOARDS.SALES_BOARDS"></h4>
+                                        <enum-item-edit-control ng-model="avvm.editableActivity.salesBoardTypeId" config="avvm.config.update.salesBoardType" schema="avvm.salesBoardTypeSchema" hide-empty-value="true"></enum-item-edit-control>
+                                        <enum-item-edit-control ng-model="avvm.editableActivity.salesBoardStatusId" config="avvm.config.update.salesBoardStatus" schema="avvm.salesBoardStatusSchema"></enum-item-edit-control>
+                                        <radio-buttons-edit-control ng-model="avvm.editableActivity.salesBoardUpToDate" config="avvm.config.update.salesBoardUpToDate" schema="avvm.salesBoardUpToDateSchema"></radio-buttons-edit-control>
+                                        <date-edit-control ng-model="avvm.editableActivity.salesBoardRemovalDate" config="avvm.config.update.salesBoardRemovalDate" schema="avvm.salesBoardRemovalDateSchema" greater-than="avvm.activity.createdDate">
+                                            <override-errors>
+                                                <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
+                                            </override-errors>
+                                        </date-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.salesBoardSpecialInstructions" config="avvm.config.update.salesBoardSpecialInstructions" schema="avvm.salesBoardSpecialInstructionsSchema"></textarea-edit-control>
+                                    </fieldset>
+                                    <!-- // Sales boards -->
 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-default" ng-click="avvm.cancelMarketing()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-default" ng-click="avvm.cancelMarketing()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- // Marketing details edit -->
 
