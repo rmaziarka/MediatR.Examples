@@ -15,13 +15,20 @@
     public class CreateCompanyPage : ProjectPageBase
     {
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator addRelationshipManager = new ElementLocator(Locator.XPath, "//search[@id='user-search']//span[starts-with(., '{0}')]");
+        private readonly ElementLocator addRelationshipManagerButton = new ElementLocator(Locator.Id, "edit-btn");
+        private readonly ElementLocator addRelationshipManagerInput = new ElementLocator(Locator.CssSelector, "#user-search input");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
+        private readonly ElementLocator companyCategory = new ElementLocator(Locator.CssSelector, "#category > select");
+        private readonly ElementLocator companyDescription = new ElementLocator(Locator.Id, "description");
         private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
+        private readonly ElementLocator companyType = new ElementLocator(Locator.CssSelector, "#type > select");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
+        private readonly ElementLocator validCheckbox = new ElementLocator(Locator.Id, "comapny-is-valid");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
         private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.XPath, "//input[@id = 'website']//ancestor::div[1]//a[@name = 'url']");
 
@@ -43,7 +50,7 @@
 
         public CreateCompanyPage AddContactToCompany()
         {
-            this.Driver.GetElement(this.addContact).Click();
+            this.Driver.Click(this.addContact);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
@@ -72,9 +79,46 @@
             return this;
         }
 
+        public CreateCompanyPage SelectCategory(string category)
+        {
+            this.Driver.GetElement<Select>(this.companyCategory).SelectByText(category);
+            return this;
+        }
+
+        public CreateCompanyPage SelectCompanyType(string comType)
+        {
+            this.Driver.GetElement<Select>(this.companyType).SelectByText(comType);
+            return this;
+        }
+
+        public CreateCompanyPage SelectRelationshipManager(string realtionshipManager)
+        {
+            this.Driver.Click(this.addRelationshipManagerButton);
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.SendKeys(this.addRelationshipManagerInput, realtionshipManager);
+            this.Driver.Click(this.addRelationshipManager.Format(realtionshipManager));
+            return this;
+        }
+
+        public CreateCompanyPage SetDescription(string description)
+        {
+            this.Driver.SendKeys(this.companyDescription, description);
+            return this;
+        }
+
+        public CreateCompanyPage SetValid(bool valid)
+        {
+            if ((valid && !this.Driver.GetElement(this.validCheckbox).Selected) || (!valid && this.Driver.GetElement(this.validCheckbox).Selected))
+            {
+                this.Driver.Click(this.validCheckbox);
+            }
+
+            return this;
+        }
+
         public CreateCompanyPage SaveCompany()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 
@@ -98,7 +142,7 @@
         public CreateCompanyPage ClickOnWebsiteLink()
         {
             this.currentWindowHandler = this.Driver.CurrentWindowHandle;
-            this.Driver.GetElement(this.websiteUrlIcon).Click();
+            this.Driver.Click(this.websiteUrlIcon);
             return this;
         }
 

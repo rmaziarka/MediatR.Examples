@@ -12,6 +12,8 @@ ActivityDepartmentType
 MortgageStatus
 MortgageSurveyStatus
 ClientCareStatus
+CompanyType
+CompanyCategory
 AdditionalSurveyStatus
 SearchStatus
 Enquiries

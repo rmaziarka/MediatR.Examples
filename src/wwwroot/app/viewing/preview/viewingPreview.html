@@ -8,14 +8,14 @@
 <section class="section-details">
     <h5 translate="VIEWING.ADD.NEGOTIATOR"></h5>
     <div class="panel panel-default">
-        <div id="viewing-preview-negotiator-details" class="panel-body">{{vm.viewing.negotiator.firstName + ' ' + vm.viewing.negotiator.lastName }}</div>
+        <div id="viewing-preview-negotiator-details" class="panel-body">{{::vm.viewing.negotiator.getName()}}</div>
     </div>
 </section>
 
 <section class="section-details" id="viewing-preview-attendees">
     <h5 translate="VIEWING.ADD.ATTENDEES"></h5>
     <div class="panel panel-default" ng-repeat="attendee in vm.viewing.attendees">
-        <div id="viewing-preview-attendee-item-{{attendee.id}}" class="panel-body">{{attendee.firstName + ' ' + attendee.lastName }}</div>
+        <div id="viewing-preview-attendee-item-{{attendee.id}}" class="panel-body">{{::attendee.getName()}}</div>        
     </div>
 </section>
 
@@ -26,5 +26,5 @@
 
 <section class="section-details">
     <h5 translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></h5>
-    <p id="viewing-preview-post-viewing-comment">{{vm.viewing.postViewingComment}}</p>
+    <p id="viewing-preview-post-viewing-comment">{{vm.viewing.postViewingComment}}</p>    
 </section>

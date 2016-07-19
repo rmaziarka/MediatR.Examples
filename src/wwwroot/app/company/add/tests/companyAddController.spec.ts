@@ -24,20 +24,29 @@ module Antares {
             clientCarePageSelector : "input#clientcareurl"
         };
 
+        const enumProviderMockedValues :any = {
+            companyCategory: [{ id: "123", "code": "big" }],
+            companyType: [{ id: "1234", "code": "red" }]
+        };
+
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService,
-            $state: ng.ui.IStateService) => {
+            $state: ng.ui.IStateService,
+            enumProvider: Providers.EnumProvider) => {
 
             $http = $httpBackend;
             state = $state;
+
+            enumProvider.enums = <Dto.IEnumDictionary>enumProviderMockedValues;
+
             scope = $rootScope.$new();
             element = $compile('<company-add></company-add>')(scope);
             scope.$apply();
             controller = element.controller("companyAdd");
 
-            assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
         it('when name value is missing then required message should be displayed', () =>{
@@ -79,8 +88,8 @@ module Antares {
         });
 
         it('when contacts are not selected then only information message should be displayed', () =>{
-            assertValidator.assertShowElement(false, pageObjectSelectors.noContactsHelpBlockSelector);
-            assertValidator.assertShowElement(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(false, pageObjectSelectors.noContactsHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
         });
 
         it('when contacts are not selected and save button is clicked then only error message should be displayed', () =>{
@@ -91,8 +100,8 @@ module Antares {
             button.click();
 
             // asserts
-            assertValidator.assertShowElement(true, pageObjectSelectors.noContactsHelpBlockSelector);
-            assertValidator.assertShowElement(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(true, pageObjectSelectors.noContactsHelpBlockSelector);
+            assertValidator.assertElementHasHideClass(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
         });
 
         it('when contacts exists then should be displayed', () =>{
@@ -114,14 +123,12 @@ module Antares {
 
         it('when form filled and save then should be send data', () =>{
             // arrange
-            var button = element.find(pageObjectSelectors.companySaveBtnSelector);
             var requestData: Dto.ICreateCompanyResource;
             var company = TestHelpers.CompanyGenerator.generate();
             var expectedContactIds = company.contacts.map((contact: Dto.IContact) =>{ return contact.id });
 
             spyOn(state, 'go');
             controller.company = company;
-            controller.selectedStatus = { id : 1, code : "test" };
 
             $http.expectPOST(/\/api\/companies/, (data: string) =>{
                 requestData = JSON.parse(data);
@@ -140,6 +147,11 @@ module Antares {
             expect(requestData.websiteUrl).toEqual(company.websiteUrl);
             expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
             expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
+            expect(requestData.description).toEqual(company.description);
+            expect(requestData.companyCategoryId).toEqual(company.companyCategoryId);
+            expect(requestData.companyTypeId).toEqual(company.companyTypeId);
+            expect(requestData.relationshipManagerId).toEqual(company.relationshipManager.id);
+            expect(requestData.valid).toEqual(company.valid);
             expect(angular.equals(requestData.contactIds, expectedContactIds)).toBe(true);
         });
 

@@ -116,7 +116,9 @@
                     Hidden = this.IsHidden(entity) || field.IsHidden(entity),
                     Name = field.Expression.GetMemberName(),
                     ControlCode = this.ControlCode,
-                    AllowedCodes = (field as InnerDictionaryField)?.AllowedCodes
+                    AllowedCodes = (field as InnerDictionaryField)?.AllowedCodes,
+                    TargetContainer = field.TargetContainerExpression,
+                    TargetContainerCompiled = field.TargetContainerCompiled
                 };
 
                 fieldStates.Add(state);

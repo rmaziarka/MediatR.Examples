@@ -59,7 +59,7 @@
             <div class="panel-body">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" ng-model="attendee.selected" ng-click="vm.attendeeClicked(attendee)"> {{:: attendee.firstName + ' ' + attendee.lastName }}
+                        <input type="checkbox" ng-model="attendee.selected" ng-click="vm.attendeeClicked(attendee)"> {{::attendee.getName()}}
                     </label>
                 </div>
             </div>

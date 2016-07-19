@@ -3,12 +3,13 @@
         <h2 class="page-header" translate="COMPANY.EDIT_COMPANY"></h2>
     </div>
 
-    <form ng-submit="editCompanyForm.$valid && vm.hasCompanyContacts() && vm.updateCompany()" name="editCompanyForm" id="editCompanyForm" method="post" novalidate>
+    <form ng-submit="editCompanyForm.isFormValid() && vm.updateCompany()" name="editCompanyForm" id="editCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.name.$dirty) && editCompanyForm.name.$invalid}">
+                <!-- name -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('name')}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="editCompanyForm.name.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.name.$dirty">
@@ -16,17 +17,46 @@
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
+                <!-- category -->
+                <div class="form-group">
+                    <label for="name" translate="COMPANY.CATEGORY"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="category" ng-model="vm.company.companyCategoryId" enum-type-code="companyCategory" sort="true"></enum-select>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- type -->
+                <div class="form-group">
+                    <label for="name" translate="COMPANY.TYPE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <enum-select id="type" name="type" ng-model="vm.company.companyTypeId" enum-type-code="companyType" sort="true"></enum-select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- description -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('description')}">
+                    <label for="description" translate="COMPANY.DESCRIPTION"></label>
+                    <span class="pull-right character-limit">{{editCompanyForm.description.$viewValue.length || 0}}/{{vm.descriptionMaxLength}}</span>
+                    <textarea id="description" kf-max-count="vm.descriptionMaxLength" rows="8" class="form-control" ng-required="false"
+                              name="description" ng-model="vm.company.description"></textarea>
+                    <div ng-messages="editCompanyForm.description.$error" ng-show="editCompanyForm.$submitted ||editCompanyForm.description.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <!-- website -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('website')}">
+                    <label for="website" translate="COMPANY.WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="website" translate="COMPANY.WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
                             <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div ng-messages="editCompanyForm.website.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.website.$dirty">
@@ -34,30 +64,42 @@
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
+                <!-- clientcareurl -->
+                <div class="form-group" ng-class="{'has-error': vm.hasControlError('clientCarePageUrl')}">
+                    <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
-                        </div>
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
-                            <span class="form-control-feedback">
+                            <input type="text" class="form-control" id="clientcareurl" name="clientCarePageUrl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <div class="form-control-feedback">
                                 <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                    <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
+                    <div ng-messages="editCompanyForm.clientCarePageUrl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientCarePageUrl.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
-
+                <!-- clientCareStatusId -->
                 <div class="form-group">
+                    <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
-                            <enum-select id="client-care-status" name="status" ng-model="vm.company.clientCareStatusId" enum-type-code="{{vm.enumTypeclientCareStatus}}"></enum-select>
+                            <enum-select id="client-care-status" name="clientCareStatus" ng-model="vm.company.clientCareStatusId" enum-type-code="clientCareStatus"></enum-select>
                         </div>
+                    </div>
+                </div>
+
+                <!-- relationshipManager -->
+                <select-user-edit-control user="vm.company.relationshipManager" config="vm.config.relationshipManager" schema="vm.controlSchemas.relationshipManager">
+                </select-user-edit-control>
+
+                <!-- isValid -->
+                <div class="form-group">
+                    <label for="comapny-is-valid" translate="COMPANY.IS_VALID"></label>
+                    <div>
+                        <input id="comapny-is-valid" type="checkbox" ng-model="vm.company.valid">
+                        <span translate="COMPANY.IS_VALID_YES"></span>
                     </div>
                 </div>
             </fieldset>

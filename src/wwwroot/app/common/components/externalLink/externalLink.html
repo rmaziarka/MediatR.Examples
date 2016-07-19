@@ -1,6 +1,10 @@
-<div ng-show="vm.url.length>0">
-    <a name="url" href="{{vm.formatUrlWithProtocol()}}" target="_blank">{{vm.showText ? vm.url : ''}}
+<div ng-if="vm.url.length > 0">
+    <a name="url" href="{{vm.formatUrlWithProtocol()}}" target="_blank">
+        {{ vm.showText ? vm.url : '' }}
         <i class="fa fa-external-link" aria-hidden="true" ng-style="{display:vm.showText ? 'none':''}"></i>
     </a>
     <i class="fa fa-external-link" aria-hidden="true" ng-style="{display:vm.showText ? '':'none'}"></i>
+</div>
+<div ng-if="(!vm.url || !vm.url.length) && vm.showText">
+    <span>{{ "" | defaultValue }}</span>
 </div>

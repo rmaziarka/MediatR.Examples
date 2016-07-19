@@ -1,8 +1,8 @@
 <div class="row">
-    
+
     <div class="col-md-12">
-       <h2 class="page-header" translate="COMPANY.VIEW_COMPANY"></h2>
-       <div class="well">
+        <h2 class="page-header" translate="COMPANY.VIEW_COMPANY"></h2>
+        <div class="well">
             <button type="button" id="company-edit-btn" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
             <div id="name">{{vm.company.name}}</div>
         </div>
@@ -11,23 +11,68 @@
             <div class="col-md-4">
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
+                <!-- category -->
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.WEBSITE"></label></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-6 section-title" translate="COMPANY.CATEGORY"></div>
+                    <div class="col-xs-6" id="company-category">
+                        {{ vm.company.companyCategoryId | dynamicTranslate | defaultValue }}
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.TYPE"></div>
+                    <div class="col-xs-6" id="company-type">
+                        {{ vm.company.companyTypeId | dynamicTranslate | defaultValue }}
+                    </div>
+                </div>
+
+                <!-- descripton -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.DESCRIPTION"></div>
+                    <div class="col-xs-6" id="description">
+                        {{ vm.company.description | defaultValue }}
+                    </div>
+                </div>
+
+                <!-- websiteUrl -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.WEBSITE"></div>
+                    <div class="col-xs-6" id="website-url">
                         <external-link id="websiteUrl" url="vm.company.websiteUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
+                <!-- clientCarePageUrl -->
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_WEBSITE"></label></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_WEBSITE"></div>
+                    <div class="col-xs-6" id="client-care-page-url">
                         <external-link id="clientCarePageUrl" url="vm.company.clientCarePageUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
+                <!-- clientCareStatusId -->
                 <div class="section-row row">
-                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_STATUS"></label></div>
-                    <div class="col-xs-8" id="clientCareStatus" ng-show="vm.company.clientCareStatusId != null">{{vm.company.clientCareStatusId | dynamicTranslate}}</div>
+                    <div class="col-xs-6 section-title" translate="COMPANY.CLIENT_CARE_STATUS"></div>
+                    <div class="col-xs-6" id="client-care-status">
+                        {{vm.company.clientCareStatusId | dynamicTranslate | defaultValue }}
+                    </div>
+                </div>
+
+                <!-- relationship manager -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.RELATIONSHIP_MANAGER"></div>
+                    <div class="col-xs-6" id="relationship-manager">
+                        {{ vm.company.relationshipManager.getName() | defaultValue }}
+                    </div>
+                </div>
+
+                <!-- is valid -->
+                <div class="section-row row">
+                    <div class="col-xs-6 section-title" translate="COMPANY.IS_VALID"></div>
+                    <div class="col-xs-6" id="valid">
+                        {{ vm.company.valid | boolToString | defaultValue }}
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -36,7 +81,7 @@
                         <list-header>
                             <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
                         </list-header>
-                     
+
                         <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
                             <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
                             <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
@@ -48,7 +93,7 @@
                 </section>
 
             </div>
-           
+
         </div>
     </div>
 </div>

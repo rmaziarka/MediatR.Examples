@@ -8,8 +8,12 @@ module Antares.Company {
     export class CompanyAddController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
-        clientCareStatuses: any;
-        selectedStatus: any;
+
+        private descriptionMaxLength: number = CompanyControls.descriptionMaxLength;
+        private config = CompanyControls.config;
+        private controlSchemas = CompanyControls.controlSchemas;
+
+        private addCompanyForm: ng.IFormController | any;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -22,13 +26,15 @@ module Antares.Company {
             super(componentRegistry, $scope);
 
             this.company = new Business.Company();
-            this.companyResource = dataAccessService.getCompanyResource();
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
-        }
 
-        onEnumLoaded = (result: any) =>{
-            this.clientCareStatuses = result[Dto.EnumTypeCode.ClientCareStatus];
-         }
+            this.companyResource = dataAccessService.getCompanyResource();
+        }
+        
+        $postLink() {
+            this.addCompanyForm = this.$scope["addCompanyForm"];
+
+            this.updateContactsValidity();
+        }
 
         hasCompanyContacts = (): boolean => {
             return this.company.contacts != null && this.company.contacts.length > 0;
@@ -53,32 +59,33 @@ module Antares.Company {
             var selectedContacts = this.components.contactList().getSelected();            
             this.company.contacts = selectedContacts.map((contact: Dto.IContact) => { return new Business.Contact(contact) });
             this.components.sidePanels.contact().hide();
+
+            this.updateContactsValidity();
         }
-     
-        formatUrlWithProtocol = (url:string):string=> {
-            //regular expression for url with a protocol (case insensitive)
-            var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (url && url.length > 0) {
-                if (!r.test(url)) {
-                    return `http://${url}`;
-                }
-             }
-            return url;
+
+        updateContactsValidity = () =>{
+            let areContactsValid = this.hasCompanyContacts();
+            this.addCompanyForm.$setValidity("company.contacts.custom", areContactsValid);
         }
    
         createCompany = () => {
-            this.company.clientCareStatusId = this.selectedStatus != null? this.selectedStatus.id:"";
-            this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
-            this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
+            this.company.websiteUrl = CompanyControls.formatUrlWithProtocol(this.company.websiteUrl);
+            this.company.clientCarePageUrl = CompanyControls.formatUrlWithProtocol(this.company.clientCarePageUrl);
+
             this.companyResource
                 .save(new Business.CreateCompanyResource(this.company))
                 .$promise
-                .then((company: Dto.ICompany) => {                
+                .then((company: Dto.ICompany) => {
                    this.company = new Business.Company();
                     var form = this.$scope["addCompanyForm"];
                     form.$setPristine();
                     this.$state.go('app.company-view', company);
                 });
+        }
+
+        hasControlError = (name: string) : boolean =>{
+            return (this.addCompanyForm.$submitted || this.addCompanyForm[name].$dirty)
+                && this.addCompanyForm[name].$invalid;
         }
 
         defineComponentIds() {
