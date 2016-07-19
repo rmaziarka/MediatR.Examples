@@ -494,7 +494,7 @@
         toggleMarketingTabMode = () => {
             this.isMarketingTabInEditMode = !this.isMarketingTabInEditMode;
             if (this.isMarketingTabInEditMode) {
-                this.editableActivity = new Business.ActivityEditModel(this.activity);
+                this.editableActivity = new Business.ActivityEditModel(this.activity); 
             }
         };
 

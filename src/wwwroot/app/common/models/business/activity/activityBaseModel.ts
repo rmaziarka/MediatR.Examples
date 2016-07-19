@@ -86,6 +86,7 @@ module Antares.Common.Models.Business {
         salesBoardUpToDate: boolean;
         salesBoardRemovalDate: Date;
         salesBoardSpecialInstructions: string = null;
+        chainTransactions: Business.ChainTransaction[] = [];
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -122,6 +123,13 @@ module Antares.Common.Models.Business {
 
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Business.Offer(item));
+                }
+
+                if (activity.chainTransactions) {
+                    this.chainTransactions = activity.chainTransactions.map((chainTransaction: Dto.IChainTransaction) => { return new Business.ChainTransaction(chainTransaction) });
+                }
+                else {
+                    this.chainTransactions = [];
                 }
 
                 this.appraisalMeetingAttendees = activity.appraisalMeetingAttendees;
