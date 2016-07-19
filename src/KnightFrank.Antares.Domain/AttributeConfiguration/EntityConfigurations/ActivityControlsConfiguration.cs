@@ -389,12 +389,15 @@
                 ControlCode.AdvertisingNote,
                 ControlCode.AdvertisingPrPermitted,
                 ControlCode.AdvertisingPrContent,
-                ControlCode.AdvertisingPortals,
                 ControlCode.SalesBoardRemovalDate,
                 ControlCode.SalesBoardSpecialInstructions,
                 ControlCode.SalesBoardType,
                 ControlCode.SalesBoardUpToDate
             }, this.ForAll(PageType.Details, PageType.Update));
+
+            this.Use(ControlCode.AdvertisingPortals, this.ForAll(PageType.Details, PageType.Update))
+                .HiddenWhen<Activity>(x => !x.AdvertisingPublishToWeb)
+                .HiddenWhen<UpdateActivityCommand>(x => !x.AdvertisingPublishToWeb);
 
             this.Use(ControlCode.SalesBoardStatus, this.ForAll(PageType.Details));
             this.Use(ControlCode.SalesBoardStatus, this.When(residentialSale, PageType.Update))
