@@ -83,6 +83,7 @@ CompanyCategory;TravelAgents;en;Travel Agents
 CompanyCategory;Utilities;en;Utilities
 CompanyCategory;Wholesale;en;Wholesale
 MortgageStatus;Unknown;en;Unknown
+MortgageStatus;Agreed;en;Agreed
 MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank
 MortgageStatus;InProgress;en;In progress
