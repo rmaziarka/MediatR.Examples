@@ -1,7 +1,7 @@
 ﻿Feature: Upward chains
 
 @UpwardChains
-Scenario: Create upward chains transactions for residetial sale activity
+Scenario: Create upward chains transactions for residential sale activity
 	Given Contacts are created in database	
 		| Title | FirstName | LastName  |
 		| Sir   | Burt      | Lancaster |
@@ -103,7 +103,7 @@ Scenario: Create upward chains transactions for residetial sale activity
 		| true       | 17 Sundown Flat New Canal St B5 Birmingham West Midlands | Ulysses Grant | Abraham Lincoln | Burt Lancaster | Chain Company     | Kirk Douglas | Chain Company    | Complete | Complete | Complete | Complete  | Complete       |
 
 @UpwardChains
-Scenario: Update upward chains transactions for residetial sale activity
+Scenario: Update upward chain transaction for residential sale activity
 	Given Contacts are created in database	
 		| Title | FirstName | LastName  |
 		| Dr    | Calvin    | Coolidge  |
@@ -169,4 +169,61 @@ Scenario: Update upward chains transactions for residetial sale activity
 		| EndOfChain | Property                                             | Vendor        | OtherAgent         | OtherAgentCompany | Solicitor       | SolicitorCompany | Mortgage     | Survey   | Searches | Enquiries | ContractAgreed |
 		| true       | 3 East Villa Sayner Ln LS10 1LS Leeds West Yorkshire | Ulysses Grant | Theodore Roosevelt | Chain Company     | Calvin Coolidge | Chain Company    | Not required | Complete | Complete | Complete  | Complete       |
 		And Add upward chain button should not be displayed on view offer page
-	
+
+@UpwardChains
+Scenario: Remove upward chains transactions for residential sale activity
+	Given Contacts are created in database	
+		| Title | FirstName | LastName   |
+		| Sir   | George    | Washington |
+		| Dr    | John      | Adams      |
+		| Mr    | Thomas    | Jefferson  |
+		And Company is created in database
+			| Name        |
+			| Objectivity |
+		And Contacts are created in database
+			| FirstName | LastName | Title |
+			| James     | Madison  | Sir   |
+		And Property with Residential division and Flat type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName   | Line2        | Line3 | Postcode | City   | County          |
+			| 83             | Washington Inn | Hambleton Pl |       | YO7 1DT  | Thirsk | North Yorkshire |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-12-1975   | 1250000  |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| Type             | Description |
+			| Residential Sale | Description |
+		And Viewing for requirement is defined
+		And Offer for requirement is defined
+			| Type             | Status   |
+			| Residential Sale | Accepted |
+		And Property with Residential division and House type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2          | Line3 | Postcode | City          | County          |
+			| 3              | Adams Inn    | Beech Grove Rd |       | TS5 6RJ  | Middlesbrough | North Yorkshire |
+		And Upward chain is created in database
+			| EndOfChain | Vendor       | KnightFrankAgent |
+			| false      | Adam Sandler | false            |
+		And Property with Residential division and Flat type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2       | Line3 | Postcode | City     | County           |
+			| 7              |              | Lingwood Ct |       | TS17     | Thornaby | Stockton-on-Tees |
+		And Upward chain is created in database
+			| EndOfChain | Vendor      | KnightFrankAgent |
+			| true       | Chris Evans | false            |
+	When User navigates to view offer page with id
+	Then It should not be possible to delete 2 chain on view offer page
+		And Chain transaction cards details on view offer page are same as the following
+			| Property                    | Mortgage | Survey  | Searches    | Enquiries   | ContractAgreed |
+			| 7 Lingwood Ct               | Unknown  | Unknown | Outstanding | Outstanding | Outstanding    |
+			| Adams Inn, 3 Beech Grove Rd | Unknown  | Unknown | Outstanding | Outstanding | Outstanding    |
+	When User clicks delete chain button for 1 chain on view offer page
+		And User confirms modal dialog on view offer page
+	Then Success message should be displayed on view offer page
+		| Text                                |
+		| Chain transaction has been deleted. |
+		And Add upward chain button should be displayed on view offer page
+		And Chain transaction cards details on view offer page are same as the following
+			| Property                    | Mortgage | Survey  | Searches    | Enquiries   | ContractAgreed |
+			| Adams Inn, 3 Beech Grove Rd | Unknown  | Unknown | Outstanding | Outstanding | Outstanding    |
