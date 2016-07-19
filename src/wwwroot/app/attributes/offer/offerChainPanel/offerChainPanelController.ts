@@ -14,6 +14,7 @@ module Antares.Attributes.Offer.OfferChain {
         chainType: Enums.OfferChainsType;
 
         // properties
+        previewChain: Business.ChainTransaction;
         isAgentUserType: boolean;
         cardPristine: any;
         config: any;
@@ -107,12 +108,8 @@ module Antares.Attributes.Offer.OfferChain {
 
         protected onChanges = (changesObj: IOfferChainPanelChange) => {
             if (changesObj.chain && changesObj.chain.currentValue) {
-                var agentUserDefined = !!changesObj.chain.currentValue.agentUser;
-                var agentContactDefined = !!changesObj.chain.currentValue.agentContact;
-
-                this.isAgentUserType = agentUserDefined || !agentContactDefined;
-                this.reloadConfig(this.isAgentUserType);
-                this.cardPristine = new Object();
+                this.previewChain = angular.copy(this.chain);
+                this.setChainRelatedData();
             }
             if (changesObj.inPreviewMode) {
                 this.panelMode = this.inPreviewMode
@@ -121,6 +118,15 @@ module Antares.Attributes.Offer.OfferChain {
             }
 
             this.resetState();
+        }
+
+        private setChainRelatedData = () => {
+            var agentUserDefined = !!this.chain.agentUser;
+            var agentContactDefined = !!this.chain.agentCompanyContact;
+
+            this.isAgentUserType = agentUserDefined || !agentContactDefined;
+            this.reloadConfig(this.isAgentUserType);
+            this.cardPristine = new Object();
         }
 
         private resetState = () => {
@@ -166,6 +172,8 @@ module Antares.Attributes.Offer.OfferChain {
                 });
         }
 
+        // move configuration from panel to AddEdit and Preview card
+        // now they have shared state and they modify it each other
         private defineControlConfig = (isAgentUserType: boolean) => {
             return {
                 isEnd: { isEnd: { required: false, active: this.chain.lastElementInChainLink || this.chain.id == null } },
@@ -192,12 +200,17 @@ module Antares.Attributes.Offer.OfferChain {
                 this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
             }
             this.chain = chain;
+            this.previewChain = angular.copy(this.chain);
             this.closeAddEdit();
         }
 
         private closeAddEdit = () => {
             if (this.inPreviewMode) {
                 this.panelMode = OfferChainPanelMode.Preview;
+                
+                //remove after splitting configurations
+                this.chain = angular.copy(this.previewChain);
+                this.setChainRelatedData();
             } else {
                 this.isBusy = false;
                 this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
