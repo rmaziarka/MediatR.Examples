@@ -3,8 +3,9 @@
 module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+    
     import NegotiatorsController = Antares.Attributes.ActivityNegotiatorsEditControlController;
-	import IActivityEditConfig = Activity.IActivityEditConfig;
+    import IActivityEditConfig = Activity.IActivityEditConfig;
 
     interface IScope extends ng.IScope {
         leadNegotiator: Business.ActivityUser;
@@ -27,18 +28,19 @@ module Antares {
             componentSorveyorMainHeader: 'h3[translate*="COMMERCIAL"]',
             componentSorveyorSubHeaders: 'h4[translate*="COMMERCIAL"]',
             componentNegotiatorMainHeader: 'h3[translate*="RESIDENTIAL"]',
-            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]'
+            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]',
+            leadCallDate: '#lead-call-date'
         };
 
         var mockedComponentHtml = '<activity-negotiators-edit-control config="config" property-division-id="{{propertyDivisionId}}" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiators">'
             + '</negotiators-edit>';
-			
+            
         var divisionCodes = [
             { id: "residentialId", code: "RESIDENTIAL" },
             { id: "commmercialId", code: "COMMERCIAL" }
         ];
 
-		var configMock = { negotiators: {} } as IActivityEditConfig;
+        var configMock = { negotiators: {} } as IActivityEditConfig;
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -49,7 +51,7 @@ module Antares {
             scope = <IScope>$rootScope.$new();
             scope.leadNegotiator = new Business.ActivityUser();
             scope.secondaryNegotiators = [];
-	        scope['config'] = configMock;
+            scope['config'] = configMock;
             enumService.setEnum(Dto.EnumTypeCode.Division.toString(), divisionCodes);
 
             compile = $compile;
@@ -141,6 +143,28 @@ module Antares {
                     expect(mainHeader.text()).toContain(division.code);
                     _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
                 });
+            });
+        });
+
+        describe('when negotiator call date is in the past', () => {
+            beforeEach(() => {
+                // init
+                scope.leadNegotiator.callDate = moment().day(-7).toDate();
+                scope.$apply();
+            });
+
+            it('and not changed then when save button is clicked save action should be called', () => {
+                var form = controller.negotiatorsForm;
+                form.$setSubmitted();
+                scope.$apply();
+
+                expect(form.$valid).toBe(true);
+            });
+
+            it('and changed also to past then when save button is clicked save action should not be called', () => {
+                var newValueInThePast = moment().day(-10).format("DD-MM-YYYY");
+
+                assertValidator.assertDateGreaterThenValidator(newValueInThePast, false, pageObjectSelector.leadCallDate);
             });
         });
     });
