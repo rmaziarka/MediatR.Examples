@@ -1,5 +1,5 @@
 ﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
-    <div class="form-group">
+    <div class="form-group" id="{{vm.schema.controlId}}">
         <label ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
         <div class="checkbox" ng-repeat="checkbox in vm.schema.checkboxes">
             <label>
@@ -7,6 +7,7 @@
                        name="{{vm.schema.fieldName}}[]"
                        ng-model="checkbox.selected"
                        ng-value="checkbox.value"
+                       ng-checked="vm.isSelected(checkbox)"
                        ng-change="vm.changeSelection(checkbox)"><span translate="{{checkbox.translationKey}}"></span>
             </label>
         </div>

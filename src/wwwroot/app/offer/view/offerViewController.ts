@@ -24,6 +24,7 @@ module Antares.Component {
         // controls
         controlSchemas: OfferViewSchema = OfferViewSchema;
 
+
         constructor(
             private eventAggregator: Core.EventAggregator,
             private $state: ng.ui.IStateService,

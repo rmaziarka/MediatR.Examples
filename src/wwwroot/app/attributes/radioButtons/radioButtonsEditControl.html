@@ -1,6 +1,6 @@
 ﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
     <div class="form-group">
-        <div class="form-group">
+        <div class="form-group" id="{{vm.schema.controlId}}">
             <div class="row">
                 <div class="col-md-9">
                     <h5 ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></h5>

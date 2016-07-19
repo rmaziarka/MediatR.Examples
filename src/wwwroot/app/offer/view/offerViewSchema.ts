@@ -41,7 +41,7 @@ module Antares.Component {
             fieldName: "mortgageLoanToValue"
         };
         static contractApproved: Attributes.IRadioButtonsViewControlSchema = <Attributes.IRadioButtonsViewControlSchema>{
-            fieldName: "offerContractApproved",
+            controlId: "offerContractApproved",
             translationKey: "OFFER.VIEW.CONTRACT_APPROVED",
             templateUrl: "app/attributes/radioButtons/templates/radioButtonsViewBoolean.html"
         };

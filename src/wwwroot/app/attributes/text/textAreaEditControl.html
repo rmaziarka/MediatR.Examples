@@ -3,10 +3,10 @@
         <div class="row">
             <div class="col-md-9">
                 <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
-                <span class="pull-right character-limit">{{vm[vm.schema.formName].text.$viewValue.length || 0}}/4000</span>
+                <span class="pull-right character-limit">{{vm[vm.schema.formName].text.$viewValue.length || 0}}/{{vm.schema.maxLength || 4000}}</span>
                 <textarea ng-model="vm.ngModel"
                           rows="{{vm.rows}}"
-                          kf-max-count="4000"
+                          kf-max-count="vm.schema.maxLength || 4000"
                           id="{{vm.schema.controlId}}"
                           name="text"
                           ng-required="vm.config[vm.schema.fieldName].required"

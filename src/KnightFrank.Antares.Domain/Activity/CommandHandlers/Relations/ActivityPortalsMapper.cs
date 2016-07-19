@@ -1,6 +1,6 @@
 namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 {
-
+    using System.Collections.Generic;
     using System.Linq;
     using KnightFrank.Antares.Dal.Model.Portal;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -18,12 +18,13 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
         {
+            ICollection<UpdateActivityPortal> advertisingPortals = message.AdvertisingPortals ?? new List<UpdateActivityPortal>();
             activity.AdvertisingPortals
-                    .Where(x => message.AdvertisingPortals.Select(y => y.Id).Contains(x.Id) == false)
+                    .Where(x => advertisingPortals.Select(y => y.Id).Contains(x.Id) == false)
                     .ToList()
                     .ForEach(x => activity.AdvertisingPortals.Remove(x));
 
-            message.AdvertisingPortals
+            advertisingPortals
                    .Where(x => activity.AdvertisingPortals.Select(y => y.Id).Contains(x.Id) == false)
                    .ToList()
                    .ForEach(x =>

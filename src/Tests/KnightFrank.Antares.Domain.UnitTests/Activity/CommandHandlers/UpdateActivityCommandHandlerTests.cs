@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Model.Portal;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
@@ -51,6 +52,7 @@
             [Frozen] Mock<IActivityReferenceMapper<ActivityDepartment>> departmentsMapper,
             [Frozen] Mock<IActivityReferenceMapper<ActivityAttendee>> attendeesMapper,
             [Frozen] Mock<IActivityReferenceMapper<ChainTransaction>> chainTransactionMapper,
+            [Frozen] Mock<IActivityReferenceMapper<Portal>> portalMapper,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
             IFixture fixture)
@@ -83,6 +85,7 @@
             departmentsMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 2)).Verifiable();
             attendeesMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 3)).Verifiable();
             chainTransactionMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 4)).Verifiable();
+            portalMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Verifiable();
 
             // Act
             Guid activityId = handler.Handle(command);
@@ -107,6 +110,7 @@
             departmentsMapper.Verify();
             attendeesMapper.Verify();
             chainTransactionMapper.Verify();
+            portalMapper.Verify();
         }
     }
 }
