@@ -303,7 +303,8 @@
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
                 .Excluding(x => x.ChainTransactions)
-                .Excluding(x => x.SellingReason));
+                .Excluding(x => x.SellingReason)
+                .Excluding(x => x.SalesBoardType));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>

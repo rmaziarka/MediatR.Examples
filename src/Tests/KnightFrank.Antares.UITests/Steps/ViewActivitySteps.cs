@@ -85,6 +85,7 @@
         {
             this.page.OpenOfferDetails(position)
                 .WaitForSidePanelToShow();
+            this.page.OfferPreview.WaitForDetailsToLoad();
         }
 
         [When(@"User edits lead negotiator next call to (.*) days from current day on view activity page")]
@@ -257,11 +258,10 @@
                 () => Assert.Equal(expectedDetails.Status, actualDetails[4]));
         }
 
-        [Then(@"Offer details on view activity page are same as the following")]
-        public void CheckOfferInDetailsPanel(Table table)
+        [Then(@"Letting offer details on view activity page are same as the following")]
+        public void CheckLettingOfferInDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
-
             var offer = this.scenarioContext.Get<OfferData>("Offer");
 
             expectedDetails.OfferDate = offer.OfferDate;
@@ -269,9 +269,30 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetDetails()),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetRequirementDetails()),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
-                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", this.page.OfferPreview.OfferPerWeek),
+                () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
+                () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
+                () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
+                () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
+        }
+
+        [Then(@"Sale offer details on view activity page are same as the following")]
+        public void CheckSaleOfferInDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.GetRequirementDetails()),
+                () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
                 () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),

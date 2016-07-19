@@ -10,7 +10,10 @@ module Antares.Component {
             isVisible: '<',
             offer: '<',
             requirement: '<',
-            mode: '='
+            mode: '=',
+            canEdit: '<',
+            showActivity: '<',
+            showRequirement: '<'
         }
     });
 }

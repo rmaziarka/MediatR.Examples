@@ -16,6 +16,5 @@
             <p class="help-block" translate="ACTIVITY.VIEW.OFFERS.NO_OFFERS"></p>
         </card-list-no-items>
     </card-list>
-    <offer-preview-panel offer="vm.selectedOffer" is-visible="vm.isPanelVisible">
-    </offer-preview-panel>
+    <offer-edit-preview-panel is-visible="vm.isPanelVisible" mode="vm.panelMode" offer="vm.selectedOffer" requirement="vm.selectedOffer.requirement" can-edit="false" show-activity="false" show-requirement="true"></offer-edit-preview-panel>
 </div>
