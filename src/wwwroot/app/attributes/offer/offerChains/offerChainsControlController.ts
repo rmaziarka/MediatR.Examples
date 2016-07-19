@@ -5,6 +5,7 @@ module Antares.Attributes.Offer {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import KfModalService = Services.KfModalService;
+    import KfMessageService = Services.KfMessageService;
     import ChainTransaction = Common.Models.Business.ChainTransaction;
 
     export class OfferChainsControlController {
@@ -23,10 +24,12 @@ module Antares.Attributes.Offer {
         titleCode: string = "OFFER.VIEW.DELETE_CHAIN_TITLE";
         messageCode: string = "OFFER.VIEW.DELETE_CHAIN_MESSAGE";
         confirmCode: string = "OFFER.VIEW.DELETE_CHAIN_CONFIRM";
+        successCode: string = "OFFER.VIEW.DELETE_CHAIN_SUCCESS";
 
         constructor(private eventAggregator: Core.EventAggregator,
             private chainTransationsService: Services.ChainTransationsService,
-            private kfModalService: KfModalService) { }
+            private kfModalService: KfModalService,
+            private kfMessageService: KfMessageService) { }
 
         private $onChanges = () => {
             var tempCommand = angular.copy(this.chainCommand);
@@ -94,6 +97,8 @@ module Antares.Attributes.Offer {
                 var requirement = <Dto.IRequirement>model;
                 this.eventAggregator.publish(new RequirementUpdatedOfferChainsEvent(requirement));
             }
+
+            this.kfMessageService.showSuccessByCode(this.successCode);
         }
 
         public isAddChainButtonVisible = () => {

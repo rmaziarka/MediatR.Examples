@@ -50,6 +50,7 @@
         public void OpenActivityDetails()
         {
             this.page.OpenActivityPreview().WaitForSidePanelToShow();
+            this.page.ActivityPreview.WaitForDetailsToLoad();
         }
 
         [When(@"User clicks view activity link from activity on view offer page")]
@@ -74,6 +75,40 @@
         public void AddUpwardChain()
         {
             this.page.AddUpwardChain().WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks (.*) chain transaction details on view offer page")]
+        public void OpenChainPreview(string position)
+        {
+            this.page.OpenChainPreview(position).WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks edit chain button for (.*) chain on view offer page")]
+        public void EditChain(int position)
+        {
+            this.page.OpenChainActions(position)
+                .EditChain(position)
+                .WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks delete chain button for (.*) chain on view offer page")]
+        public void DeleteChain(int position)
+        {
+            this.page.OpenChainActions(position)
+                .DeleteChain(position);
+        }
+
+        [When(@"User confirms modal dialog on view offer page")]
+        public void ConfirmDeleteAction()
+        {
+            this.page.Modal.WaitForModalToShow().ConfirmModal().WaitForModalToHide();
+        }
+
+        [Then(@"It should not be possible to delete (.*) chain on view offer page")]
+        public void CheckIfRemoveNotPossible(int position)
+        {
+            this.page.OpenChainActions(position);
+            Assert.True(this.page.DeleteChainNotAvailable(position));
         }
 
         [Then(@"View offer page should be displayed")]
@@ -156,8 +191,23 @@
                 () => Assert.Equal(expectedDetails.Details, this.page.RequirementDetails));
         }
 
-        [Then(@"Activity details on view offer page are same as the following")]
-        public void CheckActivityDetailsPanel(Table table)
+        [Then(@"Letting activity details on view offer page are same as the following")]
+        public void CheckLettingActivityDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            expectedDetails.CreationDate = this.scenarioContext.Get<Activity>("Activity").CreatedDate.ToString("dd-MM-yyyy");
+            List<string> details = this.page.ActivityPreview.GetActivityDetails();
+            string landlords = this.page.ActivityPreview.Landlords.Aggregate((i, j) => i + ";" + j);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Status, details[0]),
+                () => Assert.Equal(expectedDetails.CreationDate, details[1]),
+                () => Assert.Equal(expectedDetails.Type, details[2]),
+                () => Assert.Equal(expectedDetails.Landlord, landlords));
+        }
+
+        [Then(@"Sale activity details on view offer page are same as the following")]
+        public void CheckSaleActivityDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<ActivityDetails>();
             expectedDetails.CreationDate = this.scenarioContext.Get<Activity>("Activity").CreatedDate.ToString("dd-MM-yyyy");
@@ -166,18 +216,18 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Status, details[0]),
-                () => Assert.Equal(expectedDetails.Negotiator, details[1]),
-                () => Assert.Equal(expectedDetails.CreationDate, details[2]),
-                () => Assert.Equal(expectedDetails.Type, details[3]),
+                () => Assert.Equal(expectedDetails.CreationDate, details[1]),
+                () => Assert.Equal(expectedDetails.Type, details[2]),
                 () => Assert.Equal(expectedDetails.Vendor, vendors));
         }
 
-        [Then(@"Offer updated success message should be displayed")]
-        public void CheckIfSuccessMessageDisplayed()
+        [Then(@"Success message should be displayed on view offer page")]
+        public void CheckIfSuccessMessageDisplayed(Table table)
         {
+            string text = table.Rows[0]["Text"];
             Verify.That(this.driverContext,
                 () => Assert.True(this.page.IsSuccessMessageDisplayed()),
-                () => Assert.Equal("Offer successfully saved", this.page.SuccessMessage));
+                () => Assert.Equal(text, this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
         }
 
@@ -235,6 +285,87 @@
                 () => Assert.Equal(details.VendorCompany, this.page.VendorSolicitor.Last()),
                 () => Assert.Equal(details.Applicant, this.page.ApplicantSolicitor.First()),
                 () => Assert.Equal(details.ApplicantCompany, this.page.ApplicantSolicitor.Last()));
+        }
+
+        [Then(@"Property details on view offer page are same as the following")]
+        public void CheckChainProperty(Table table)
+        {
+            var details = table.CreateInstance<ChainTransactionData>();
+
+            Verify.That(this.driverContext, () => Assert.Equal(details.Property, this.page.PropertyDetails));
+        }
+
+        [Then(@"Chain transaction cards details on view offer page are same as the following")]
+        public void CheckChainsDetails(Table table)
+        {
+            List<ChainTransactionData> details = table.CreateSet<ChainTransactionData>().ToList();
+            Assert.Equal(details.Count, this.page.UpwardChainNumber);
+
+            var i = 1;
+            foreach (ChainTransactionData data in details)
+            {
+                string currentData = this.page.GetUpwardChainDetails(i);
+                List<string> currentStatuses = this.page.GetUpwardChainStatuses(i).Select(el => el.Split(':')[1].Trim()).ToList();
+
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(data.Property, currentData),
+                    () => Assert.Equal(data.Mortgage, currentStatuses[0]),
+                    () => Assert.Equal(data.Survey, currentStatuses[1]),
+                    () => Assert.Equal(data.Searches, currentStatuses[2]),
+                    () => Assert.Equal(data.Enquiries, currentStatuses[3]),
+                    () => Assert.Equal(data.ContractAgreed, currentStatuses[4]));
+
+                i++;
+            }
+        }
+
+        [Then(@"Chain transaction details on view offer page are same as the following")]
+        public void CheckChainsPreviewDetails(Table table)
+        {
+            var details = table.CreateInstance<ChainTransactionData>();
+            details.SurveyDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(bool.Parse(details.EndOfChain), this.page.ChainTransactionPreview.IsEndOfChain()),
+                () => Assert.Equal(details.Property, this.page.ChainTransactionPreview.GetProperty()),
+                () => Assert.Equal(details.Vendor, this.page.ChainTransactionPreview.Vendor),
+                () => Assert.Equal(details.Solicitor, this.page.ChainTransactionPreview.Solicitor.First()),
+                () => Assert.Equal(details.SolicitorCompany, this.page.ChainTransactionPreview.Solicitor.Last()),
+                () => Assert.Equal(details.Mortgage, this.page.ChainTransactionPreview.Mortgage),
+                () => Assert.Equal(details.Survey, this.page.ChainTransactionPreview.Survey),
+                () => Assert.Equal(details.Searches, this.page.ChainTransactionPreview.Searches),
+                () => Assert.Equal(details.Enquiries, this.page.ChainTransactionPreview.Enquiries),
+                () => Assert.Equal(details.ContractAgreed, this.page.ChainTransactionPreview.ContractAgreed),
+                () => Assert.Equal(details.SurveyDate, this.page.ChainTransactionPreview.SurveyDate));
+
+            if (!string.IsNullOrEmpty(details.KnightFrankAgent))
+            {
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(details.KnightFrankAgent, this.page.ChainTransactionPreview.KnightFrankAgent));
+            }
+
+            if (!string.IsNullOrEmpty(details.OtherAgent))
+            {
+                Verify.That(this.driverContext,
+                    () => Assert.Equal(details.OtherAgent, this.page.ChainTransactionPreview.OtherAgent.First()),
+                    () => Assert.Equal(details.OtherAgentCompany, this.page.ChainTransactionPreview.OtherAgent.Last()));
+            }
+            if (!string.IsNullOrEmpty(details.Buyer))
+            {
+                Verify.That(this.driverContext, () => Assert.Equal(details.Buyer, this.page.ChainTransactionPreview.Buyer));
+            }
+        }
+
+        [Then(@"Add upward chain button should not be displayed on view offer page")]
+        public void CheckAddUpwardChainIsNotPresent()
+        {
+            Assert.False(this.page.AddUpwardChainPresent(BaseConfiguration.ShortTimeout));
+        }
+
+        [Then(@"Add upward chain button should be displayed on view offer page")]
+        public void CheckAddUpwardChainIsPresent()
+        {
+            Assert.True(this.page.AddUpwardChainPresent(BaseConfiguration.MediumTimeout));
         }
     }
 }

@@ -641,7 +641,7 @@
       "OTHER_DETAILS": "Other details",
       "COMMENT": "Comment",
       "DATE": "Date",
-      "NO_SOLICITOR": "Solicitor contact not specified"
+      "DELETE_CHAIN_CONFIRM": "Delete"
     },
     "EDIT": {
       "EDIT_OFFER": "Edit offer",

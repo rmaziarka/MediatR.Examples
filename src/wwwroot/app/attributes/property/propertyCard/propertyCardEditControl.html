@@ -1,11 +1,8 @@
 <ng-form name='vm.propertyCardEditForm' ng-if="vm.config" id="property-card-edit-section" class="form-group"  >
     <label translate="PROPERTY.CARDEDIT.PROPERTY" ng-class="{'required': vm.config.propertyId.required}"></label>
     <div class="form-group" show-errors>
-        <button ng-if="!vm.property" id="property-card-edit-add" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        </button>
-        <button ng-if="vm.property" id="property-card-edit-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+        <button id="property-card-edit-add-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
+            <i class="fa" ng-class="{'fa-plus-circle': !vm.property, 'fa-pencil': vm.property}" aria-hidden="true"></i>
         </button>
         <div ng-if="!vm.property">
             <p class="help-block" id="no-contacts-help-block" ng-show="vm.propertyCardEditForm.$submitted === false">{{'PROPERTY.CARDEDIT.PROPERTYEMPTY' | translate}}</p>

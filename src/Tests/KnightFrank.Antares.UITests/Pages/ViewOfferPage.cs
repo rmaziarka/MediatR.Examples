@@ -5,6 +5,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.Modals;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
@@ -56,6 +57,10 @@
         private readonly ElementLocator addUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-control [ng-click *= 'addChain']");
         private readonly ElementLocator upwardChains = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain'] .card");
         private readonly ElementLocator upwardChainDetails = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card .ng-binding");
+        private readonly ElementLocator upwardChainStatuses = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-info span");
+        private readonly ElementLocator upwardChainActions = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action");
+        private readonly ElementLocator editUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'edit'] li");
+        private readonly ElementLocator deleteUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'delete'] li");
         private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "offer-chains-list address-form-view .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
@@ -66,17 +71,22 @@
 
         public CreateChainTransactionPage ChainTransaction => new CreateChainTransactionPage(this.DriverContext);
 
+        public ChainTransactionPreviewPage ChainTransactionPreview => new ChainTransactionPreviewPage(this.DriverContext);
+
+        public DeleteChainModalPage Modal => new DeleteChainModalPage(this.DriverContext);
+
         public List<string> OfferDetails => this.Driver.GetElements(this.details).Select(el => el.Text).ToList();
 
         public int ActivityNumber => this.Driver.GetElements(this.activity).Count;
 
         public int RequirementNumber => this.Driver.GetElements(this.requirement).Count;
-        
+
         public string RequirementDetails => this.Driver.GetElement(this.requirementDetails).Text;
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
 
-        public List<string> OfferHeader => new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
+        public List<string> OfferHeader
+            => new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
 
         public string MortgageStatus => this.Driver.GetElement(this.mortgageStatus).Text;
 
@@ -110,9 +120,8 @@
 
         public int UpwardChainNumber => this.Driver.GetElements(this.upwardChains).Count;
 
-        public string UpwardChainDetails => this.Driver.GetElement(this.upwardChainDetails).Text;
-
-        public string PropertyDetails => this.Driver.GetElements(this.property).Select(el => el.Text).ToList().Aggregate((i, j) => i + " " + j);
+        public string PropertyDetails
+            => this.Driver.GetElements(this.property).Select(el => el.Text).ToList().Aggregate((i, j) => i + " " + j);
 
         public ViewOfferPage OpenViewOfferPageWithId(string id)
         {
@@ -157,7 +166,8 @@
 
         public ViewOfferPage WaitForSuccessMessageToHide()
         {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty), TimeSpan.FromSeconds(6).TotalSeconds);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty),
+                TimeSpan.FromSeconds(6).TotalSeconds);
             return this;
         }
 
@@ -184,6 +194,51 @@
         {
             this.Driver.Click(this.addUpwardChain);
             return this;
+        }
+
+        public bool AddUpwardChainPresent(double timeout)
+        {
+            return this.Driver.IsElementPresent(this.addUpwardChain, timeout);
+        }
+
+        public ViewOfferPage OpenChainPreview(string position)
+        {
+            this.Driver.Click(this.upwardChainDetails.Format(position));
+            return this;
+        }
+
+        public string GetUpwardChainDetails(int position)
+        {
+            return this.Driver.GetElement(this.upwardChainDetails.Format(position)).Text;
+        }
+
+        public List<string> GetUpwardChainStatuses(int position)
+        {
+            return
+                this.Driver.GetElements(this.upwardChainStatuses.Format(position)).Select(el => el.GetAttribute("title")).ToList();
+        }
+
+        public ViewOfferPage OpenChainActions(int position)
+        {
+            this.Driver.Click(this.upwardChainActions.Format(position));
+            return this;
+        }
+
+        public ViewOfferPage EditChain(int position)
+        {
+            this.Driver.Click(this.editUpwardChain.Format(position));
+            return this;
+        }
+
+        public ViewOfferPage DeleteChain(int position)
+        {
+            this.Driver.Click(this.deleteUpwardChain.Format(position));
+            return this;
+        }
+
+        public bool DeleteChainNotAvailable(int position)
+        {
+            return !this.Driver.IsElementPresent(this.deleteUpwardChain.Format(position), BaseConfiguration.ShortTimeout);
         }
     }
 

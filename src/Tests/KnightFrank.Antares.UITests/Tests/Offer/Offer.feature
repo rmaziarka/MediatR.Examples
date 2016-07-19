@@ -138,9 +138,9 @@ Scenario: View residential letting offer details page
 			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
 			| Accepted | 3500         | Special conditions | John Smith |
 	When User clicks activity details on view offer page
-	Then Activity details on view offer page are same as the following 
-		| Status        | Negotiator | Vendor                      | Type                |
-		| Pre-appraisal | John Smith | Gene Hackman;Sidney Poitier | Open Market Letting |
+	Then Letting activity details on view offer page are same as the following 
+		| Status        | Landlord                    | Type                |
+		| Pre-appraisal | Gene Hackman;Sidney Poitier | Open Market Letting |
 	When User clicks view activity link from activity on view offer page
 	Then View activity page should be displayed
 	When User goes back to previous page
@@ -174,7 +174,9 @@ Scenario: Update new residential letting offer
 			| Status   | OfferPerWeek | SpecialConditions  |
 			| Accepted | 2000         | Special conditions |
 		And User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Letting offer details on view offer page are same as the following
 			| Status   | OfferPerWeek | SpecialConditions  | Negotiator |
 			| Accepted | 2000         | Special conditions | John Smith |
@@ -328,9 +330,9 @@ Scenario: View residential sale offer details page
 			| Status    | Offer | SpecialConditions     | Negotiator |
 			| Withdrawn | 95000 | My special conditions | John Smith |
 	When User clicks activity details on view offer page
-	Then Activity details on view offer page are same as the following 
-		| Status        | Negotiator | Vendor                        | Type          |
-		| Pre-appraisal | John Smith | Judith Greciet;Julius Chaloff | Freehold Sale |
+	Then Sale activity details on view offer page are same as the following 
+		| Status        | Vendor                        | Type          |
+		| Pre-appraisal | Judith Greciet;Julius Chaloff | Freehold Sale |
 	When User clicks view activity link from activity on view offer page
 	Then View activity page should be displayed
 	When User goes back to previous page
@@ -380,7 +382,9 @@ Scenario: Update new residential sale offer
 		| Vendor     | VendorCompany | Applicant   | ApplicantCompany |
 		| John Adams | Testing       | Sarah Adams | Testing          |
 	When User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Sale offer details on view offer page are same as the following
 			| Status | Offer  | SpecialConditions     | Negotiator |
 			| New    | 450000 | My special conditions | John Smith |
@@ -456,7 +460,9 @@ Scenario: Create and update accepted residential sale offer
 		| Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany | AdditionalSurveyor | AdditionalSurveyorCompany |
 		| Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     | Bruce Dickinson    | Objectivity               |
 	When User clicks save offer on edit offer page
-	Then Offer updated success message should be displayed
+	Then Success message should be displayed on view offer page
+		| Text                     |
+		| Offer successfully saved |
 		And Sale offer details on view offer page are same as the following
 			| Status   | Offer  | SpecialConditions | Negotiator |
 			| Accepted | 120000 | Text              | John Smith |

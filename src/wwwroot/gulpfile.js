@@ -298,7 +298,7 @@ function buildTemplateCache() {
  * @returns {Stream}   The stream
  */
 function inject(src, label, order, addPrefix) {
-    var options = { read: false, addRootSlash: false };
+    var options = { read: false, addRootSlash: false, selfClosingTag : true };
     if (label) {
         options.name = 'inject:' + label;
     }
