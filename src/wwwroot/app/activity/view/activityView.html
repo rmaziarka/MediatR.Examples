@@ -21,7 +21,7 @@
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true"
                                                    config="avvm.config.property"></property-view-control>
                         </section>
-                        <hr />
+                        <hr/>
                         <section id="activity-view-vendors-summary">
                             <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
                         </section>
@@ -116,6 +116,30 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div id="activity-rent" ng-if="avvm.config.shortAskingMonthRent || avvm.config.longAskingMonthRent">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.RENT"></h3>
+
+                            <price-view-control config="avvm.config.shortAskingMonthRent" schema="avvm.shortAskingMonthRentSchema" price="avvm.activity.shortAskingMonthRent"></price-view-control>
+                            <price-view-control config="avvm.config.shortAskingWeekRent" schema="avvm.shortAskingWeekRentSchema" price="avvm.activity.shortAskingWeekRent"></price-view-control>
+                            <range-view-control min="avvm.activity.shortMatchFlexMonthValue" config="avvm.config.shortMatchFlexMonthValue" schema="avvm.shortMatchFlexMonthValueSchema"></range-view-control>
+                            <range-view-control min="avvm.activity.shortMatchFlexWeekValue" config="avvm.config.shortMatchFlexWeekValue" schema="avvm.shortMatchFlexWeekValueSchema"></range-view-control>
+                            <price-view-control config="avvm.config.shortMatchFlexPercentage" schema="avvm.shortMatchFlexPercentageSchema" price="avvm.activity.shortMatchFlexPercentage"></price-view-control>
+
+                            <hr/>
+
+                            <price-view-control config="avvm.config.longAskingMonthRent" schema="avvm.longAskingMonthRentSchema" price="avvm.activity.longAskingMonthRent"></price-view-control>
+                            <price-view-control config="avvm.config.longAskingWeekRent" schema="avvm.longAskingWeekRentSchema" price="avvm.activity.longAskingWeekRent"></price-view-control>
+                            <range-view-control min="avvm.activity.longMatchFlexMonthValue" config="avvm.config.longMatchFlexMonthValue" schema="avvm.longMatchFlexMonthValueSchema"></range-view-control>
+                            <range-view-control min="avvm.activity.longMatchFlexWeekValue" config="avvm.config.longMatchFlexWeekValue" schema="avvm.longMatchFlexWeekValueSchema"></range-view-control>
+                            <price-view-control config="avvm.config.longMatchFlexPercentage" schema="avvm.longMatchFlexPercentageSchema" price="avvm.activity.longMatchFlexPercentage"></price-view-control>
+                        </div>
+                        <div id="activity-price" ng-show="avvm.config.priceType">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.PRICE"></h3>
+                            <enum-item-view-control ng-model="avvm.activity.priceTypeId" config="avvm.config.priceType" schema="avvm.priceTypeSchema"></enum-item-view-control>
+                            <price-view-control config="avvm.config.activityPrice" schema="avvm.activityPriceSchema" price="avvm.activity.activityPrice"></price-view-control>
+                            <range-view-control min="avvm.activity.matchFlexValue" config="avvm.config.matchFlexValue" schema="avvm.matchFlexValueSchema"></range-view-control>
+                            <price-view-control config="avvm.config.matchFlexPercentage" schema="avvm.matchFlexPercentageSchema" price="avvm.activity.matchFlexPercentage"></price-view-control>
+                        </div>
                         <div id="activity-view-prices" ng-if="avvm.config.kfValuationPrice && avvm.config.vendorValuationPrice && avvm.config.agreedInitialMarketingPrice">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                             <price-view-control config="avvm.config.kfValuationPrice" schema="avvm.kfValuationPriceSchema" price="avvm.activity.kfValuationPrice"></price-view-control>

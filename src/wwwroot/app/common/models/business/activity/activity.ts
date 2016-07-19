@@ -18,8 +18,6 @@ module Antares.Common.Models.Business {
         activityUsers: ActivityUser[] = [];
         activityDepartments: ActivityDepartment[] = [];
         offers: Offer[];
-        askingPrice: number = null;
-        shortLetPricePerWeek: number = null;
         solicitor: Contact = null;
         solicitorCompany: Company = null;
         solicitorCompanyContact: CompanyContactRelation = null;
@@ -46,7 +44,25 @@ module Antares.Common.Models.Business {
         serviceChargeNote: string = '';
         groundRentAmount: number = null;
         groundRentNote: string = '';
-        otherCondition: string = '';      
+        otherCondition: string = '';  
+        priceTypeId: string = '';
+        activityPrice: number = null;
+        matchFlexibilityId: string = '';
+        matchFlexValue: number = null;
+        matchFlexPercentage: number = null;
+        rentPaymentPeriodId: string = '';
+        shortAskingWeekRent: number = null;
+        shortAskingMonthRent: number = null;
+        longAskingWeekRent: number = null;
+        longAskingMonthRent: number = null;
+        shortMatchFlexibilityId: string = '';
+        shortMatchFlexWeekValue: number = null;
+        shortMatchFlexMonthValue: number = null;
+        shortMatchFlexPercentage: number = null;
+        longMatchFlexibilityId: string = '';
+        longMatchFlexWeekValue: number = null;
+        longMatchFlexMonthValue: number = null;
+        longMatchFlexPercentage: number = null;    
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

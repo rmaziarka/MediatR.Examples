@@ -134,6 +134,78 @@
                                               {
                                                   Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityStatus.ToString()
                                               }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityStatus.ForSaleUnavailable.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityStatus.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityStatus.ToLetUnavailable.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityStatus.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityMatchFlexPrice.MinimumPrice.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityMatchFlexPrice.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityMatchFlexPrice.Percentage.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityMatchFlexPrice.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityMatchFlexRent.MinimumRent.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityMatchFlexRent.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = ActivityMatchFlexRent.Percentage.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.ActivityMatchFlexRent.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = RentPaymentPeriod.Weekly.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.RentPaymentPeriod.ToString()
+                                              }
+                                          },
+                                          new EnumTypeItem()
+                                          {
+                                              Id = new Guid(),
+                                              Code = RentPaymentPeriod.Monthly.ToString(),
+                                              EnumType = new KnightFrank.Antares.Dal.Model.Enum.EnumType
+                                              {
+                                                  Code = KnightFrank.Antares.Domain.Common.Enums.EnumType.RentPaymentPeriod.ToString()
+                                              }
                                           }
                                       }.Where(expr.Compile()));
         }

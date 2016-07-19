@@ -150,8 +150,7 @@
             //TODO improve chekcing details
             var details = table.CreateInstance<EditActivityDetails>();
             Verify.That(this.driverContext,
-                () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N0") + " GBP", this.page.AskingPrice));
+                () => Assert.Equal(details.ActivityStatus, this.page.Status));
         }
 
         [Then(@"View activity page should be displayed")]
@@ -302,16 +301,28 @@
                 () => Assert.Equal(expectedAddress.County, actualResult["county"]));
         }
 
-        [Then(@"Activity details should be displayed in overview tab on view activity page")]
-        public void CheckActivityDetailsInOverviewTab(Table table)
+        [Then(@"Sales activity details should be displayed in overview tab on view activity page")]
+        public void CheckActivityDetailsforSaleTypeInOverviewTab(Table table)
         {
             var expectedDetails = table.CreateInstance<ActivityDetails>();
-            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnOverviewTab();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsForSaleTypeOnOverviewTab();
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
                 () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
                 () => Assert.Equal(expectedDetails.Attendees, actualDetails["attendee"]));
         }
+
+        [Then(@"Letting activity details should be displayed in overview tab on view activity page")]
+        public void CheckLettingActivityDetailsInOverviewTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsForLettingTypeOnOverviewTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Landlord, actualDetails["landlord"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Attendees, actualDetails["attendee"]));
+        }
+
 
         [Then(@"Appraisal meeting date is set to tomorrow date with start time (.*) in overview tab on view activity page")]
         public void CheckDateAndTime(string time)
@@ -323,11 +334,11 @@
                 () => Assert.Equal(time, actualDateTime["time"]));
         }
 
-        [Then(@"Activity details should be displayed in details tab on view activity page")]
-        public void CheckActivityDetailsInDetailsTab(Table table)
+        [Then(@"Sales activity details should be displayed in details tab on view activity page")]
+        public void CheckSalesActivityDetailsInDetailsTab(Table table)
         {
             var expectedDetails = table.CreateInstance<ActivityDetails>();
-            Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnDetailsTab();
+            Dictionary<string, string> actualDetails = this.page.GetSalesActivityDetailsOnDetailsTab();
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Vendor, actualDetails["vendor"]),
                 () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
@@ -337,10 +348,36 @@
                 () => Assert.Equal(expectedDetails.SellingReason, actualDetails["sellingReason"]),
                 () => Assert.Equal(expectedDetails.PitchingThreats, actualDetails["pitchingThreats"]),
                 () => Assert.Equal(expectedDetails.KeyNumber, actualDetails["keyNumber"]),
-                () => Assert.Equal(expectedDetails.AccessArrangements, actualDetails["accessArangements"]),
-                () => Assert.Equal(expectedDetails.Decoration, actualDetails["decoration"]),
-                () => Assert.Equal(expectedDetails.OtherConditions, actualDetails["otherConditions"]));
+                () => Assert.Equal(expectedDetails.AccessArrangements, actualDetails["accessArangements"]));
         }
+
+        [Then(@"Letting activity details should be displayed in details tab on view activity page")]
+        public void CheckLettingActivityDetailsInDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetLettingActivityDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Landlord, actualDetails["landlord"]),
+                () => Assert.Equal(expectedDetails.Negotiator, actualDetails["negotiator"]),
+                () => Assert.Equal(expectedDetails.Department, actualDetails["department"]),
+                () => Assert.Equal(expectedDetails.Source, actualDetails["source"]),
+                () => Assert.Equal(expectedDetails.SourceDescription, actualDetails["sourceDescription"]),
+                () => Assert.Equal(expectedDetails.PitchingThreats, actualDetails["pitchingThreats"]),
+                () => Assert.Equal(expectedDetails.KeyNumber, actualDetails["keyNumber"]),
+                () => Assert.Equal(expectedDetails.AccessArrangements, actualDetails["accessArangements"]));
+        }
+
+
+        [Then(@"Other activity details are displayed in details tab on view activity page")]
+        public void CheckOtherActivityDetailsInDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<ActivityDetails>();
+            Dictionary<string, string> actualDetails = this.page.GetOtherActivityDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                 () => Assert.Equal(expectedDetails.Decoration, actualDetails["decoration"]),
+                 () => Assert.Equal(expectedDetails.OtherConditions, actualDetails["otherConditions"]));
+        }
+
 
         [Then(@"Property details should be displayed in details tab on view activity page")]
         public void CheckPropertyDetailsOnDetailsTab(Table table)
@@ -356,16 +393,80 @@
                 () => Assert.Equal(expectedAddress.County, actualResult["county"]));
         }
 
-        [Then(@"Details specific for freehold sale activity type are displayed in details tab on view activity page")]
+        [Then(@"Valuation information details are displayed in details tab on view activity page")]
         public void CheckPropertyDetailsonDetailsTabForFreeholdSaleActivity(Table table)
         {
             var expectedDetails = table.CreateInstance<ValuationInformation>();
             Dictionary<string, string> actualDetails = this.page.GetActivityDetailsOnDetailsTabForFreeholdSale();
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.DisposalType, actualDetails["disposalType"]),
-                () => Assert.Equal(expectedDetails.KfValuation, actualDetails["kfValuation"]),
-                () => Assert.Equal(expectedDetails.VendorValuation, actualDetails["vendorValuation"]),
-                () => Assert.Equal(expectedDetails.AgreedInitialMarketingPrice, actualDetails["agreedInitialMarketingPrice"]));
+                () => Assert.Equal(int.Parse(expectedDetails.KfValuation).ToString("N0") + " GBP", actualDetails["kfValuation"]),
+                () => Assert.Equal(int.Parse(expectedDetails.VendorValuation).ToString("N0") + " GBP", actualDetails["vendorValuation"]),
+                () => Assert.Equal(int.Parse(expectedDetails.AgreedInitialMarketingPrice).ToString("N0") + " GBP", actualDetails["agreedInitialMarketingPrice"]));
         }
+
+        [Then(@"Price details for match flexibility wtih minimum price are following on details tab on view activity page")]
+        public void CheckPriceDetailsForMinimumPriceOnDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<Prices>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityPriceDetailsFormMinimumPriceOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.PriceType, actualDetails["priceType"]),
+                () => Assert.Equal(int.Parse(expectedDetails.Price).ToString("N0") + " GBP", actualDetails["price"]),
+                () => Assert.Equal(int.Parse(expectedDetails.MatchFlexibilityValue).ToString("N0"), actualDetails["matchFlexibilityValue"]));
+        }
+
+        [Then(@"Price details for match flexibility with percentage are following on details tab on view activity page")]
+        public void CheckPriceDetailsForPercentageOnDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<Prices>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityPriceDetailsForPercentageOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.PriceType, actualDetails["priceType"]),
+                () => Assert.Equal(int.Parse(expectedDetails.Price).ToString("N0") + " GBP", actualDetails["price"]),
+                () => Assert.Equal(expectedDetails.MatchFlexibilityValue + " %", actualDetails["matchFlexibilityValue"]));
+        }
+
+        [Then(@"Rent details are following on details tab on view activity page")]
+        public void CheckRentDetailsOnDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<LettingRent>();
+            Dictionary<string, string> actualDetails = this.page.GetLettingActivityRentDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortLetMonth).ToString("N0") + " GBP / month", actualDetails["rentShortLetMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortLetWeek).ToString("N0") + " GBP / week", actualDetails["rentShortLetWeek"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortMatchFlexibilityMonth).ToString("N0"), actualDetails["rentShortMatchFlexibilityMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortMatchFlexibilityWeek).ToString("N0"), actualDetails["rentShortMatchFlexibilityWeek"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongLetMonth).ToString("N0") + " GBP / month", actualDetails["rentLongLetMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongtLetWeek).ToString("N0") + " GBP / week", actualDetails["rentLongtLetWeek"]),
+                () =>Assert.Equal(expectedDetails.RentLongMatchFlexibilityPercentage + " %", actualDetails["rentLongMatchFlexibilityPercentage"]));
+        }
+
+        [Then(@"Edited rent details are following on details tab on view activity page")]
+        public void CheckEditedRentDetailsOnDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<LettingRent>();
+            Dictionary<string, string> actualDetails = this.page.GetEditedLettingActivityRentDetailsOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortLetMonth).ToString("N0") + " GBP / month", actualDetails["rentShortLetMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentShortLetWeek).ToString("N0") + " GBP / week", actualDetails["rentShortLetWeek"]),
+                () => Assert.Equal(expectedDetails.RentShortMatchFlexibilityPercentage + " %", actualDetails["rentShortMatchFlexibilityPercentage"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongLetMonth).ToString("N0") + " GBP / month", actualDetails["rentLongLetMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongtLetWeek).ToString("N0") + " GBP / week", actualDetails["rentLongtLetWeek"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongMatchFlexibilityMonth).ToString("N0"), actualDetails["rentLongMatchFlexibilityMonth"]),
+                () => Assert.Equal(int.Parse(expectedDetails.RentLongMatchFlexibilityWeek).ToString("N0"), actualDetails["rentLongMatchFlexibilityWeek"]));
+        }
+
+        [Then(@"Edited price details for match flexibility with percentage are following on details tab on view activity page")]
+        public void CheckdPriceDetailsForPercentageOnDetailsTab(Table table)
+        {
+            var expectedDetails = table.CreateInstance<Prices>();
+            Dictionary<string, string> actualDetails = this.page.GetActivityPriceDetailsFormMinimumPriceOnDetailsTab();
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.PriceType, actualDetails["priceType"]),
+                () => Assert.Equal(int.Parse(expectedDetails.Price).ToString("N0") + " GBP", actualDetails["price"]),
+                () => Assert.Equal(int.Parse(expectedDetails.MatchFlexibilityValue).ToString("N0"), actualDetails["matchFlexibilityValue"]));
+        }
+
     }
 }

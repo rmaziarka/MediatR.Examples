@@ -9,10 +9,6 @@
     {
         public Guid ActivityStatusId { get; set; }
 
-        public decimal? ShortLetPricePerWeek { get; set; }
-
-        public decimal? AskingPrice { get; set; }
-
         public Guid ActivityTypeId { get; set; }
 
         public UpdateActivityUser LeadNegotiator { get; set; }
@@ -71,5 +67,41 @@
         public decimal? LongVendorValuationPrice { get; set; }
 
         public decimal? LongAgreedInitialMarketingPrice { get; set; }
+
+        public Guid? PriceTypeId { get; set; }
+
+        public decimal? ActivityPrice { get; set; }
+
+        public Guid? MatchFlexibilityId { get; set; }
+
+        public decimal? MatchFlexValue { get; set; }
+
+        public decimal? MatchFlexPercentage { get; set; }
+
+        public Guid? RentPaymentPeriodId { get; set; }
+
+        public decimal? ShortAskingWeekRent { get; set; }
+
+        public decimal? ShortAskingMonthRent { get; set; }
+
+        public decimal? LongAskingWeekRent { get; set; }
+
+        public decimal? LongAskingMonthRent { get; set; }
+
+        public Guid? ShortMatchFlexibilityId { get; set; }
+
+        public decimal? ShortMatchFlexWeekValue { get; set; }
+
+        public decimal? ShortMatchFlexMonthValue { get; set; }
+
+        public decimal? ShortMatchFlexPercentage { get; set; }
+
+        public Guid? LongMatchFlexibilityId { get; set; }
+
+        public decimal? LongMatchFlexWeekValue { get; set; }
+
+        public decimal? LongMatchFlexMonthValue { get; set; }
+
+        public decimal? LongMatchFlexPercentage { get; set; }
     }
 }

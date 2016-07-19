@@ -17,7 +17,6 @@ module Antares.Common.Models.Enums
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
 	 	ClientCareStatus,
-	 	CompanyType,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -29,6 +28,10 @@ module Antares.Common.Models.Enums
 	 	Decoration,
 	 	MailingSalutation,
 	 	EventSalutation,
+	 	ActivityPriceType,
+	 	ActivityMatchFlexPrice,
+	 	ActivityMatchFlexRent,
+	 	RentPaymentPeriod,
 	 }
 
 	
@@ -49,6 +52,8 @@ module Antares.Common.Models.Enums
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
+		ForSaleUnavailable,
+		ToLetUnavailable,
 	}
 
 	export enum Division
@@ -117,12 +122,6 @@ module Antares.Common.Models.Enums
 		MassiveActionClient,
 		PrincipalClient,
 		KeyClient,
-	}
-
-	export enum CompanyType
-	{
-		KnightFrankGroup,
-		KnightFrankAffiliates,
 	}
 
 	export enum MortgageSurveyStatus
@@ -235,5 +234,34 @@ module Antares.Common.Models.Enums
 		EventSemiformal,
 		EventInformal,
 		EventPersonal,
+	}
+
+	export enum ActivityPriceType
+	{
+		AskingPrice,
+		PriceOnApplication,
+		GuidePrice,
+		OffersInRegionOf,
+		OffersInExcessOf,
+		FixedPrice,
+		PriceReducedTo,
+	}
+
+	export enum ActivityMatchFlexPrice
+	{
+		MinimumPrice,
+		Percentage,
+	}
+
+	export enum ActivityMatchFlexRent
+	{
+		MinimumRent,
+		Percentage,
+	}
+
+	export enum RentPaymentPeriod
+	{
+		Weekly,
+		Monthly,
 	}
 }

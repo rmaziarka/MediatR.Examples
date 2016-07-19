@@ -24,3 +24,7 @@ ActivitySource
 ActivitySellingReason
 DisposalType
 Decoration
+ActivityPriceType
+ActivityMatchFlexPrice
+ActivityMatchFlexRent
+RentPaymentPeriod

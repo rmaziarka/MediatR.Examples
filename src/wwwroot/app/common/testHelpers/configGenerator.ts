@@ -255,9 +255,35 @@ module Antares.TestHelpers {
                 activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
+                vendors: ConfigGenerator.generateActivityVendorsConfig()
+            };
+
+            return config;
+        }
+
+        public static generateActivityViewConfig(): Antares.Activity.IActivityViewConfig {
+            var config: Antares.Activity.IActivityViewConfig = {
+                activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
+                activityType: ConfigGenerator.generateActivityTypeEditConfig(),
+                departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+                landlords: ConfigGenerator.generateActivityLandlordsConfig(),
+                negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
+                property: ConfigGenerator.generatePropertyViewControlConfig(),
+                shortAskingMonthRent: {},
+                shortAskingWeekRent: {},
+                shortMatchFlexMonthValue: {},
+                shortMatchFlexWeekValue: {},
+                shortMatchFlexPercentage: {},
+                longAskingMonthRent: {},
+                longAskingWeekRent: {},
+                longMatchFlexMonthValue: {},
+                longMatchFlexWeekValue: {},
+                longMatchFlexPercentage: {},
+                priceType: {},
+                activityPrice: {},
+                matchFlexValue: {},
+                matchFlexPercentage: {}
             };
 
             return config;
@@ -269,8 +295,6 @@ module Antares.TestHelpers {
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
                 departments: ConfigGenerator.generateDepartmentViewControlConfig(),
                 negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
                 property: ConfigGenerator.generatePropertyViewControlConfig(),
@@ -298,22 +322,6 @@ module Antares.TestHelpers {
                 appraisalMeetingAttendees: {},
                 appraisalMeetingInvitation: {},
                 disposalType: {}
-            };
-
-            return config;
-        }
-
-        public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
-            var config: Attributes.IActivityAskingPriceControlConfig = {
-                askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
-            };
-
-            return config;
-        }
-
-        public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
-            var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
-                shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
             return config;
