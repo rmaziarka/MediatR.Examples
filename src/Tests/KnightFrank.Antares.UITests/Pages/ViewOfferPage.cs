@@ -21,6 +21,7 @@
         private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, "#view-offer-header .offer-title");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, "#view-offer-header [ng-click *= 'goToEdit']");
         // Details
+        private readonly ElementLocator detailsStatus = new ElementLocator(Locator.Id, "offer-status");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, "#section-basic-information .ng-binding");
         // Activity
         private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, ".offer-view-activity .ng-binding");
@@ -74,8 +75,6 @@
         public ChainTransactionPreviewPage ChainTransactionPreview => new ChainTransactionPreviewPage(this.DriverContext);
 
         public DeleteChainModalPage Modal => new DeleteChainModalPage(this.DriverContext);
-
-        public List<string> OfferDetails => this.Driver.GetElements(this.details).Select(el => el.Text).ToList();
 
         public int ActivityNumber => this.Driver.GetElements(this.activity).Count;
 
@@ -239,6 +238,14 @@
         public bool DeleteChainNotAvailable(int position)
         {
             return !this.Driver.IsElementPresent(this.deleteUpwardChain.Format(position), BaseConfiguration.ShortTimeout);
+        }
+
+        public List<string> GetOfferDetails()
+        {
+            var data = new List<string> { this.Driver.GetElement(this.detailsStatus).Text };
+            data.AddRange(this.Driver.GetElements(this.details).Select(el => el.Text).ToList());
+
+            return data;
         }
     }
 
