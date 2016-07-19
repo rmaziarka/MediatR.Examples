@@ -147,7 +147,9 @@ module Antares.Common.Models.Business {
                 this.salesBoardTypeId = activity.salesBoardTypeId;
                 this.salesBoardStatusId = activity.salesBoardStatusId;
                 this.salesBoardUpToDate = activity.salesBoardUpToDate;
-                this.salesBoardRemovalDate = moment(activity.salesBoardRemovalDate).toDate();
+                if (moment(activity.salesBoardRemovalDate).isValid()) {
+                    this.salesBoardRemovalDate = moment(activity.salesBoardRemovalDate).toDate();
+                }
                 this.salesBoardSpecialInstructions = activity.salesBoardSpecialInstructions;
             }
 
