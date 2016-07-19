@@ -49,11 +49,10 @@ Scenario: Create residential letting offer on requirement
 		And Letting offer details on 1 position on overview tab on view activity page are same as the following
 			| Details                                  | OfferPerWeek | Status | Negotiator |
 			| Lori Petty, Emilia Clarke, Margot Robbie | 1000         | NEW    | -          |
-	#   -------TODO when offer preview is done-------
-	#When User clicks 1 offer details on view activity page
-	#Then Offer details on view activity page are same as the following
-	#	| Details                                  | Status | OfferPerWeek | SpecialConditions | Negotiator |
-	#	| Lori Petty, Emilia Clarke, Margot Robbie | New    | 1000         | Text              | John Smith |
+	When User clicks 1 offer details on view activity page
+	Then Letting offer details on view activity page are same as the following
+		| Details                                  | Status | OfferPerWeek | SpecialConditions | Negotiator |
+		| Lori Petty, Emilia Clarke, Margot Robbie | New    | 1000         | Text              | John Smith |
 
 @Requirement
 @Offer
@@ -238,11 +237,10 @@ Scenario: Create residential sale offer on requirement
 		And Sale offer details on 1 position on overview tab on view activity page are same as the following
 			| Details                                    | Offer  | Status | Negotiator |
 			| John Soane, Robert McAlpine, Edward Graham | 100000 | NEW    | -          |
-	#   -------TODO when offer preview is done-------
-	#When User clicks 1 offer details on view activity page
-	#Then Offer details on view activity page are same as the following
-	#	| Details                                    | Status | Offer  | SpecialConditions | Negotiator |
-	#	| John Soane, Robert McAlpine, Edward Graham | New    | 100000 | Text              | John Smith |
+	When User clicks 1 offer details on view activity page
+	Then Sale offer details on view activity page are same as the following
+		| Details                                    | Status | Offer  | SpecialConditions | Negotiator |
+		| John Soane, Robert McAlpine, Edward Graham | New    | 100000 | Text              | John Smith |
 
 @Requirement
 @Offer

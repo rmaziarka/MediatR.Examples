@@ -8,7 +8,7 @@ module Antares {
         var
             offer: Business.Offer,
             requirement: Business.Requirement,
-            createController: (mode: Component.OfferPanelMode) => Component.OfferEditPreviewPanelController;
+            createController: (mode: Enums.PanelMode) => Component.OfferEditPreviewPanelController;
 
         var timeout: any;
 
@@ -35,7 +35,7 @@ module Antares {
             offer = TestHelpers.OfferGenerator.generate();
             requirement = TestHelpers.RequirementGenerator.generate();
 
-            createController = (mode: Component.OfferPanelMode): Component.OfferEditPreviewPanelController => {
+            createController = (mode: Enums.PanelMode): Component.OfferEditPreviewPanelController => {
 
                 var parameters = {
                     'configService': { 'getOffer': getOfferMock },
@@ -61,7 +61,7 @@ module Antares {
                 resetState: jasmine.Spy;
 
             beforeEach(inject(() =>{
-                controller = createController(Component.OfferPanelMode.Preview);
+                controller = createController(Enums.PanelMode.Preview);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
                 resetState = spyOn(controller, 'resetState').and.callThrough();
                 controller.panelShown();
@@ -84,7 +84,7 @@ module Antares {
                 resetState: jasmine.Spy;
 
             beforeEach(inject(() =>{
-                controller = createController(Component.OfferPanelMode.Edit);
+                controller = createController(Enums.PanelMode.Edit);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
                 resetState = spyOn(controller, 'resetState').and.callThrough();
                 controller.panelShown();
@@ -107,7 +107,7 @@ module Antares {
             var controller: Component.OfferEditPreviewPanelController;
 
             beforeEach(inject(() =>{
-                controller = createController(Component.OfferPanelMode.Preview);
+                controller = createController(Enums.PanelMode.Preview);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
                 spyOn(controller['offerService'], 'updateOffer').and.callThrough();
                 spyOn(controller['eventAggregator'], 'publish');
@@ -123,7 +123,7 @@ module Antares {
             it('then should updated ', () => {
                 expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(jasmine.any(Business.UpdateOfferCommand));
                 expect(controller['eventAggregator'].publish).toHaveBeenCalledTimes(1);
-                expect(controller.mode).toEqual(Component.OfferPanelMode.Preview);
+                expect(controller.mode).toEqual(Enums.PanelMode.Preview);
             });
 
         });
@@ -133,7 +133,7 @@ module Antares {
             var controller: Component.OfferEditPreviewPanelController;
 
             beforeEach(inject(() =>{
-                controller = createController(Component.OfferPanelMode.Edit);
+                controller = createController(Enums.PanelMode.Edit);
                 spyOn(controller['offerService'], 'updateOffer').and.callThrough();
                 spyOn(controller['eventAggregator'], 'publish');
 
