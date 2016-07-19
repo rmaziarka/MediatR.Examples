@@ -686,6 +686,46 @@
       "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
       "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
       "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+    },
+    "CHAIN": {
+      "PREVIEW": {
+        "CHAIN_PREVIEW": "Chain transaction details",
+        "IS_END": "End of chain",
+        "PROPERTY": "Property",
+        "VENDOR": "Vendor",
+        "BUYER": "Buyer",
+        "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
+        "PROGRESS": "Progress",
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SURVEY_DATE": "Survey date",
+        "SEARCHES": "Searches",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_AGREED": "Contract agreed"
+      },
+      "EDIT": {
+        "CHAIN_TRANSACTION": "Chain transaction",
+        "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
+        "PROGRESS": "Progress",
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SURVEY_DATE": "Survey date",
+        "SEARCHES": "Searches",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_AGREED": "Contract agreed",
+        "KNIGHT_FRANK": "Knight Frank",
+        "THIRD_PARTY": "3rd party",
+        "VENDOR": "Vendor",
+        "IS_END": "End of chain",
+        "FIND_NEGOTIATOR": "Find a negotiator",
+        "NAME_AND_SURNAME": "Name and surname"
+      }
     }
   },
   "DEPARTMENTS": {
