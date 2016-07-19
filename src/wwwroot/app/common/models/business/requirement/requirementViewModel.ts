@@ -1,0 +1,69 @@
+﻿/// <reference path="../../../../typings/_all.d.ts" />
+
+module Antares.Common.Models.Business {
+    export class RequirementViewModel  {
+        [index: string]: any;
+
+        id: string = null;
+        requirementTypeId: string = null;
+        requirementType: Dto.IResourceType = null;
+        createDate: Date = null;
+        contacts: Contact[] = [];
+        address: Address = new Address();
+        description: string;
+        rentMin: number = null;
+        rentMax: number = null;
+        requirementNotes: RequirementNote[] = [];
+        viewingsByDay: ViewingGroup[];
+        viewings: Viewing[];
+        offers: Offer[];
+        attachments: Attachment[] = [];
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
+        solicitorCompanyContact: CompanyContactRelation = null;
+        tenancy: TenancyPreviewModel = null;
+
+        constructor(requirement?: Dto.IRequirement) {
+            if (requirement) {
+                angular.extend(this, requirement);
+                this.createDate = Core.DateTimeUtils.convertDateToUtc(requirement.createDate);
+                this.contacts = requirement.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
+                if (requirement.offers) {
+                    this.offers = requirement.offers.map((offer: Dto.IOffer) =>{ return new Offer(offer) });
+                }
+                this.address = new Address(requirement.address);
+                this.requirementNotes = requirement.requirementNotes.map((requirementNote: Dto.IRequirementNote) => { return new RequirementNote(requirementNote) });
+                if (requirement.viewings) {
+                    this.viewings = requirement.viewings.map((item) => new Viewing(item));
+                    this.groupViewings(this.viewings);
+                }
+                if (requirement.attachments) {
+                    this.attachments = requirement.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
+                }
+
+                if (requirement.solicitor && requirement.solicitorCompany) {
+                    this.solicitor = new Contact(requirement.solicitor);
+                    this.solicitorCompany = new Company(requirement.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
+                }
+
+                this.requirementType = requirement.requirementType;
+                this.tenancy = requirement.tenancy ? new TenancyPreviewModel(requirement.tenancy) : null;
+            }
+        }
+
+        groupViewings(viewings: Viewing[]) {
+            this.viewingsByDay = [];
+            var groupedViewings: _.Dictionary<Viewing[]> = _.groupBy(viewings, (i: Viewing) => { return i.day; });
+            this.viewingsByDay = <ViewingGroup[]>_.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });
+        }
+
+        public getContactNames() {
+            return this.contacts.map((c: Contact) => { return c.getName() }).join(", ");
+        }
+
+        public isLettingType = (): boolean => {
+            return this.requirementType.enumCode === Antares.Common.Models.Enums.RequirementType[Antares.Common.Models.Enums.RequirementType.ResidentialLetting];
+        }
+    }
+}

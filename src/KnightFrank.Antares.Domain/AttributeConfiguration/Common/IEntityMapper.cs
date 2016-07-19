@@ -1,5 +1,6 @@
 namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
 {
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
 
     public interface IEntityMapper<TEntity>

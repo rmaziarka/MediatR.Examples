@@ -17,7 +17,7 @@ module Antares.Core.Service {
             return Date.parse(toDate.toDateString()) - Date.parse(fromDate.toDateString());
         };
 
-        public isValidDateRange = (fromDate: Date, toDate: Date): boolean => {
+        public isValidDateRange = (fromDate: Date, toDate: Date, equalityAllowed: boolean): boolean => {
             if (!(fromDate && toDate)) {
                 return true;
             }
@@ -26,7 +26,7 @@ module Antares.Core.Service {
             }
             if (this.isValidDate(toDate)) {
                 var days: number = this.getDateDifference(fromDate, toDate);
-                return days >= 0;
+                return equalityAllowed ? days >= 0 : days > 0;
             }
             return true;
         };

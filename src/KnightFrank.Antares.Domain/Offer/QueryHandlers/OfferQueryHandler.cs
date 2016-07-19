@@ -41,6 +41,7 @@
                     .Include(v => v.LenderCompany)
                     .Include(v => v.SurveyorCompany)
                     .Include(v => v.AdditionalSurveyorCompany)
+                    .Include(v => v.Status)
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return offer;

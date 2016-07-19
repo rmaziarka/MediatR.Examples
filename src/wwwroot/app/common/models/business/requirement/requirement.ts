@@ -6,6 +6,7 @@ module Antares.Common.Models.Business {
 
         id: string = null;
         requirementTypeId: string = null;
+        requirementType: Dto.IResourceType;
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
@@ -20,6 +21,7 @@ module Antares.Common.Models.Business {
         solicitor: Contact = null;
         solicitorCompany: Company = null;
         solicitorCompanyContact: CompanyContactRelation = null;
+        tenancy: Dto.ITenancy;
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -44,6 +46,9 @@ module Antares.Common.Models.Business {
                     this.solicitorCompany = new Company(requirement.solicitorCompany);
                     this.solicitorCompanyContact = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
+
+                this.requirementType = requirement.requirementType;
+                this.tenancy = requirement.tenancy;
             }
         }
 

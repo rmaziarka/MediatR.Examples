@@ -74,6 +74,7 @@
     <script src="app/common/models/business/activity/activityBaseModel.js"></script>
     <script src="app/common/models/business/activity/activityDepartment.js"></script>
     <script src="app/common/models/business/activity/activityEditModel.js"></script>
+    <script src="app/common/models/business/activity/activityPreviewModel.js"></script>
     <script src="app/common/models/business/activity/activityQueryResult.js"></script>
     <script src="app/common/models/business/activity/activityUser.js"></script>
     <script src="app/common/models/business/activity/updateSingleActivityUserResource.js"></script>
@@ -119,11 +120,17 @@
     <script src="app/common/models/business/property/view/propertyView.js"></script>
     <script src="app/common/models/business/requirement/createRequirementResource.js"></script>
     <script src="app/common/models/business/requirement/requirement.js"></script>
+    <script src="app/common/models/business/requirement/requirementPreviewModel.js"></script>
+    <script src="app/common/models/business/requirement/requirementViewModel.js"></script>
     <script src="app/common/models/business/requirementNote/CreateRequirementNoteResource.js"></script>
     <script src="app/common/models/business/requirementNote/requirementNote.js"></script>
     <script src="app/common/models/business/resources/country.js"></script>
     <script src="app/common/models/business/resources/countryLocalised.js"></script>
     <script src="app/common/models/business/resources/locale.js"></script>
+    <script src="app/common/models/business/tenancy/tenancyBaseModel.js"></script>
+    <script src="app/common/models/business/tenancy/tenancyEditModel.js"></script>
+    <script src="app/common/models/business/tenancy/tenancyPreviewModel.js"></script>
+    <script src="app/common/models/business/tenancy/tenancyViewModel.js"></script>
     <script src="app/common/models/business/user/department.js"></script>
     <script src="app/common/models/business/user/user.js"></script>
     <script src="app/common/models/business/viewing/viewing.js"></script>
@@ -131,6 +138,7 @@
     <script src="app/common/models/dto/currentUser.js"></script>
     <script src="app/common/models/dto/enum/divisionEnumTypeCode.js"></script>
     <script src="app/common/models/dto/enum/enumTypeCode.js"></script>
+    <script src="app/common/models/dto/resources/resourceType.js"></script>
     <script src="app/common/components/base/kfSidePanel/baseSidePanelController.js"></script>
     <script src="app/common/components/base/kfSidePanel/busySidePanelEvent.js"></script>
     <script src="app/common/components/base/kfSidePanel/closeSidePanelEvent.js"></script>
@@ -204,7 +212,6 @@
     <script src="app/common/decorators/inputNumberDirectiveDecorator.js"></script>
     <script src="app/common/decorators/orderByFilterDecorator.js"></script>
     <script src="app/common/decorators/showErrorsDirective.js"></script>
-    <script src="app/common/decorators/showErrorsMessagesDirective.js"></script>
     <script src="app/common/decorators/trimZeroesNumberFilterDecorator.js"></script>
     <script src="app/common/directives/blurOn.js"></script>
     <script src="app/common/directives/dateGreaterThan.js"></script>
@@ -237,6 +244,9 @@
     <script src="app/common/models/commands/activity/activityEditCommand.js"></script>
     <script src="app/common/models/commands/activity/activityUserCommandPart.js"></script>
     <script src="app/common/models/commands/createLatestViewCommand.js"></script>
+    <script src="app/common/models/commands/tenancy/tenancyAddCommand.js"></script>
+    <script src="app/common/models/commands/tenancy/tenancyEditCommand.js"></script>
+    <script src="app/common/models/commands/tenancy/tenancyTermCommandPart.js"></script>
     <script src="app/common/providers/addressFormsProvider.js"></script>
     <script src="app/common/providers/enumProvider.js"></script>
     <script src="app/common/providers/latestViewsProvider.js"></script>
@@ -250,6 +260,7 @@
     <script src="app/common/services/latestViewsService.js"></script>
     <script src="app/common/services/offerService.js"></script>
     <script src="app/common/services/propertyService.js"></script>
+    <script src="app/common/services/tenancyService.js"></script>
     <script src="app/common/services/userService.js"></script>
     <script src="app/common/testHelpers/assertValidators.js"></script>
     <script src="app/common/testHelpers/configGenerator.js"></script>
@@ -322,6 +333,8 @@
     <script src="app/attributes/contactNegotiators/contactNegotiatorsViewControlController.js"></script>
     <script src="app/attributes/date/dateEditControlComponent.js"></script>
     <script src="app/attributes/date/dateViewControlComponent.js"></script>
+    <script src="app/attributes/dateRange/dateRangeEditControlComponent.js"></script>
+    <script src="app/attributes/dateRange/dateRangeEditControlController.js"></script>
     <script src="app/attributes/enumItem/enumItemEditControlComponent.js"></script>
     <script src="app/attributes/enumItem/enumItemEditControlController.js"></script>
     <script src="app/attributes/enumItem/enumItemViewControlComponent.js"></script>
@@ -468,6 +481,11 @@
     <script src="app/requirementNote/add/requirementNoteAddController.js"></script>
     <script src="app/requirementNote/list/requirementNoteListComponent.js"></script>
     <script src="app/requirementNote/list/requirementNoteListController.js"></script>
+    <script src="app/tenancy/edit/tenancyEditComponent.js"></script>
+    <script src="app/tenancy/edit/tenancyEditController.js"></script>
+    <script src="app/tenancy/tenancy.route.js"></script>
+    <script src="app/tenancy/view/tenancyViewComponent.js"></script>
+    <script src="app/tenancy/view/tenancyViewController.js"></script>
     <script src="app/viewing/add/viewingAddComponent.js"></script>
     <script src="app/viewing/add/viewingAddController.js"></script>
     <script src="app/viewing/preview/viewingPreviewComponent.js"></script>

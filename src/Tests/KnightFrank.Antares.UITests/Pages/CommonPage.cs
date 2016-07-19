@@ -94,6 +94,9 @@
                 case "view contacts":
                     this.Driver.NavigateTo(GetUrl("ViewContactPage", id));
                     break;
+                case "view tenancy":
+                    this.Driver.NavigateTo(GetUrl("ViewTenancyPage", id));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;

@@ -10,7 +10,7 @@ module Antares.Property {
     export class RequirementRouteViewController {
 
         constructor(private $scope: ng.IScope, requirement: Dto.IRequirement, config: RequirementViewConfig, private latestViewsProvider: LatestViewsProvider) {
-            var requirementViewModel = new Business.Requirement(requirement);
+            var requirementViewModel = new Business.RequirementViewModel(requirement);
 
             $scope['requirement'] = requirementViewModel;
             $scope['config'] = config;

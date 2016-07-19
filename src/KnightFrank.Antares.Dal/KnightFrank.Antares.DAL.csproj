@@ -122,6 +122,11 @@
     <Compile Include="Model\Configuration\Resource\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\Resource\CountryLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Resource\LocaleConfiguration.cs" />
+    <Compile Include="Model\Configuration\Tenancy\TenancyConfiguration.cs" />
+    <Compile Include="Model\Configuration\Tenancy\TenancyContactConfiguration.cs" />
+    <Compile Include="Model\Configuration\Tenancy\TenancyTermConfiguration.cs" />
+    <Compile Include="Model\Configuration\Tenancy\TenancyTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Tenancy\TenancyTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\User\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\User\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\MappingExtensions.cs" />
@@ -170,6 +175,11 @@
     <Compile Include="Model\Resource\Country.cs" />
     <Compile Include="Model\Resource\CountryLocalised.cs" />
     <Compile Include="Model\Resource\Locale.cs" />
+    <Compile Include="Model\Tenancy\Tenancy.cs" />
+    <Compile Include="Model\Tenancy\TenancyContact.cs" />
+    <Compile Include="Model\Tenancy\TenancyTerm.cs" />
+    <Compile Include="Model\Tenancy\TenancyType.cs" />
+    <Compile Include="Model\Tenancy\TenancyTypeLocalised.cs" />
     <Compile Include="Model\User\Business.cs" />
     <Compile Include="Model\User\Department.cs" />
     <Compile Include="Model\User\Role.cs" />
