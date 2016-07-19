@@ -235,21 +235,22 @@
 
                 <!-- Marketing details edit -->
                 <div class="row" ng-if="avvm.isMarketingTabInEditMode">
-                    <form ng-submit="avvm.editMarketingForm.isFormValid() && avvm.saveMarketing()" name="avvm.editMarketingForm" id="editMarketingForm" method="post" novalidate>
-                        <div class="row">
-                            <div class="col-md-3">
+                    <div class="col-md-12">
+                        <form ng-submit="avvm.editMarketingForm.isFormValid() && avvm.saveMarketing()" name="avvm.editMarketingForm" id="editMarketingForm" method="post" novalidate>
+                            <div class="row">
+                                <div class="col-md-3">
 
-                                <!-- Marketing description -->
-                                <fieldset>
-                                    <h4 class="page-header" translate="ACTIVITY.MARKETING.DESCRIPTION.DESCRIPTION"></h4>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingStrapline" config="avvm.config.update.marketingStrapline" schema="avvm.marketingStraplineSchema"></textarea-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingFullDescription" config="avvm.config.update.marketingFullDescription" schema="avvm.marketingFullDescriptionSchema"></textarea-edit-control>
-                                    <textarea-edit-control ng-model="avvm.editableActivity.marketingLocationDescription" config="avvm.config.update.marketingLocationDescription" schema="avvm.marketingLocationDescriptionSchema"></textarea-edit-control>
-                                </fieldset>
-                                <!-- // Marketing description -->
+                                    <!-- Marketing description -->
+                                    <fieldset>
+                                        <h4 class="page-header" translate="ACTIVITY.MARKETING.DESCRIPTION.DESCRIPTION"></h4>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingStrapline" config="avvm.config.update.marketingStrapline" schema="avvm.marketingStraplineSchema"></textarea-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingFullDescription" config="avvm.config.update.marketingFullDescription" schema="avvm.marketingFullDescriptionSchema"></textarea-edit-control>
+                                        <textarea-edit-control ng-model="avvm.editableActivity.marketingLocationDescription" config="avvm.config.update.marketingLocationDescription" schema="avvm.marketingLocationDescriptionSchema"></textarea-edit-control>
+                                    </fieldset>
+                                    <!-- // Marketing description -->
 
-                            </div>
-                            <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
 
                                 <!-- Advertising -->
                                 <fieldset>
@@ -276,17 +277,18 @@
                                 </fieldset>
                                 <!-- // Sales boards -->
 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-default" ng-click="avvm.cancelMarketing()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-default" ng-click="avvm.cancelMarketing()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- // Marketing details edit -->
 
