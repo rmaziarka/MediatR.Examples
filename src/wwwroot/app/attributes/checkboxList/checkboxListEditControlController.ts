@@ -36,6 +36,12 @@ module Antares.Attribues {
                 this.ngModel.push(checkbox.value);
             }
         }
+
+        $onChanges = (obj: any) =>{
+            if (obj.config && (!obj.config.currentValue || !obj.config.currentValue.advertisingPortals.active)) {
+                this.ngModel = [];
+            }
+        }
     }
 
     angular.module('app').controller('CheckboxListEditControlController', CheckboxListEditControlController);

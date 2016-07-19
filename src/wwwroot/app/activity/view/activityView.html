@@ -254,7 +254,7 @@
                                 <!-- Advertising -->
                                 <fieldset>
                                     <h4 class="page-header" translate="ACTIVITY.MARKETING.ADVERTISING.ADVERTISING"></h4>
-                                    <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPublishToWeb" config="avvm.config.update.advertisingPublishToWeb" schema="avvm.advertisingPublishToWebSchema"></radio-buttons-edit-control>
+                                    <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPublishToWeb" config="avvm.config.update.advertisingPublishToWeb" schema="avvm.advertisingPublishToWebSchema" on-selected-item-changed="avvm.onPublishToWebChanged(value)"></radio-buttons-edit-control>
                                     <checkbox-list-edit-control ng-model="avvm.editableActivity.advertisingPortals" config="avvm.config.update.advertisingPortals" schema="avvm.advertisingPortalsSchema"></checkbox-list-edit-control>
                                     <textarea-edit-control ng-model="avvm.editableActivity.advertisingNote" config="avvm.config.update.advertisingNote" schema="avvm.advertisingNoteSchema"></textarea-edit-control>
                                     <radio-buttons-edit-control ng-model="avvm.editableActivity.advertisingPrPermitted" config="avvm.config.update.advertisingPrPermitted" schema="avvm.advertisingPrPermittedSchema"></radio-buttons-edit-control>
