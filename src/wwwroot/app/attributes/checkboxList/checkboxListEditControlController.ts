@@ -12,8 +12,10 @@ module Antares.Attribues {
             _.each(this.schema.checkboxes, (checkbox: Attributes.ICheckboxSchema) => { checkbox.selected = this.isSelected(checkbox); });
         }
 
-        private isSelected = (checkbox: Attributes.ICheckboxSchema) => {
-            return this.getIndexOfValue(checkbox) > -1;
+        isSelected = (checkbox: Attributes.ICheckboxSchema) => {
+            var isSelected = this.getIndexOfValue(checkbox) > -1;
+            checkbox.selected = isSelected;
+            return isSelected;
         }
 
         private getIndexOfValue = (checkbox: Attributes.ICheckboxSchema): number => {

@@ -7,6 +7,7 @@
                        name="{{vm.schema.fieldName}}[]"
                        ng-model="checkbox.selected"
                        ng-value="checkbox.value"
+                       ng-checked="vm.isSelected(checkbox)"
                        ng-change="vm.changeSelection(checkbox)"><span translate="{{checkbox.translationKey}}"></span>
             </label>
         </div>

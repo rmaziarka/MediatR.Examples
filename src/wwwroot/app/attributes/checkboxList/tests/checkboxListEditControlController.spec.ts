@@ -49,9 +49,9 @@ module Antares.Attribues {
             }));
 
             it('proper checkboxes are preselected', () => {
-                expect(schema.checkboxes[0].selected).toBeFalsy();
-                expect(schema.checkboxes[1].selected).toBeTruthy();
-                expect(schema.checkboxes[2].selected).toBeFalsy();
+                expect(controller.isSelected(schema.checkboxes[0])).toBeFalsy();
+                expect(controller.isSelected(schema.checkboxes[1])).toBeTruthy();
+                expect(controller.isSelected(schema.checkboxes[2])).toBeFalsy();
             });
 
             it('when selected checkbox is clicked model is updated', () => {
@@ -89,9 +89,9 @@ module Antares.Attribues {
             }));
 
             it('proper checkboxes are preselected', () => {
-                expect(schema.checkboxes[0].selected).toBeFalsy();
-                expect(schema.checkboxes[1].selected).toBeTruthy();
-                expect(schema.checkboxes[2].selected).toBeFalsy();
+                expect(controller.isSelected(schema.checkboxes[0])).toBeFalsy();
+                expect(controller.isSelected(schema.checkboxes[1])).toBeTruthy();
+                expect(controller.isSelected(schema.checkboxes[2])).toBeFalsy();
             });
 
             it('when selected checkbox is clicked model is updated', () => {
