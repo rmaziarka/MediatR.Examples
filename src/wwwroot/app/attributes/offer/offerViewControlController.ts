@@ -13,6 +13,7 @@ module Antares.Attributes {
         
         //fields
         selectedOffer: Dto.IOffer;
+        panelMode: Enums.PanelMode = Enums.PanelMode.Preview;
 
         constructor(private eventAggregator: Core.EventAggregator,
             private $state: ng.ui.IStateService) {

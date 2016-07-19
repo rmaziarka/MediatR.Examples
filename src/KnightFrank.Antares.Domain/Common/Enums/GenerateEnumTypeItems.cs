@@ -365,8 +365,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 
 	public enum SalesBoardType
 	{
-		None ,
-		Flag ,
+		None,
+		Flag,
 		VBoard,
 	}
 

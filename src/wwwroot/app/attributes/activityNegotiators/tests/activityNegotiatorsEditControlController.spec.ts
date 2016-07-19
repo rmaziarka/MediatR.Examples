@@ -12,11 +12,13 @@ module Antares {
             $http: ng.IHttpBackendService,
             controller: ActivityNegotiatorsEditControlController;
 
+        var convertToCallDate = (moment: moment.Moment): Date => moment.startOf('day').toDate();
+
         var datesToTest: any = {
-            today: moment(),
-            inThePast: moment().day(-7),
-            inTheFuture: moment().day(7),
-            inTheFutureOther: moment().day(10)
+            today: convertToCallDate(moment()),
+            inThePast: convertToCallDate(moment().day(-7)),
+            inTheFuture: convertToCallDate(moment().day(7)),
+            inTheFutureOther: convertToCallDate(moment().day(10))
         };
 
         var departmentTypes = [

@@ -12,7 +12,8 @@
     public class OfferPreviewPage : ProjectPageBase
     {
         private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, ".slide-in side-panel-content > .section-details:first-of-type a");
-        private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in address-form-view .ng-binding");
+        private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, "#offer-preview-activity .ng-binding");
+        private readonly ElementLocator requirementDetails = new ElementLocator(Locator.CssSelector, ".slide-in .viewing-preview-requirement .ng-binding");
         private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
@@ -80,7 +81,14 @@
         public string GetDetails()
         {
             List<string> list =
-                this.Driver.GetElements(this.details, element => element.Enabled).Select(el => el.GetTextContent()).ToList();
+                this.Driver.GetElements(this.activityDetails, element => element.Enabled).Select(el => el.GetTextContent()).ToList();
+            return string.Join(" ", list).Trim();
+        }
+
+        public string GetRequirementDetails()
+        {
+            List<string> list =
+                this.Driver.GetElements(this.requirementDetails, element => element.Enabled).Select(el => el.GetTextContent()).ToList();
             return string.Join(" ", list).Trim();
         }
     }

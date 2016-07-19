@@ -5,7 +5,6 @@ module Antares.Requirement.View {
     import Business = Common.Models.Business;
     import RequirementViewConfig = Requirement.IRequirementViewConfig;
     import Enums = Common.Models.Enums;
-    import OfferPanelMode = Offer.Component.OfferPanelMode;
     import Attachment = Common.Component.Attachment;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
@@ -28,7 +27,7 @@ module Antares.Requirement.View {
 
         isOfferAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isOfferEditPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
-        offerPanelMode: OfferPanelMode = OfferPanelMode.Preview;
+        offerPanelMode: Enums.PanelMode = Enums.PanelMode.Preview;
 
         controlSchemas: any = {
             rentRange: <Attributes.IRangeControlSchema>{
@@ -261,7 +260,7 @@ module Antares.Requirement.View {
 
             this.selectedOffer = offer;
             this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Opened;
-            this.offerPanelMode = OfferPanelMode.Preview;
+            this.offerPanelMode = Enums.PanelMode.Preview;
         }
 
         showOfferEditPanel = (offer: Dto.IOffer) =>{
@@ -270,7 +269,7 @@ module Antares.Requirement.View {
             }
             this.selectedOffer = offer;
             this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Opened;
-            this.offerPanelMode = OfferPanelMode.Edit;
+            this.offerPanelMode = Enums.PanelMode.Edit;
         }
 
         onSaveNewOffer = (offerModel: Dto.IOffer) =>{

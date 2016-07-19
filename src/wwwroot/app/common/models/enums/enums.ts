@@ -365,8 +365,8 @@ module Antares.Common.Models.Enums
 
 	export enum SalesBoardType
 	{
-		None ,
-		Flag ,
+		None,
+		Flag,
 		VBoard,
 	}
 
