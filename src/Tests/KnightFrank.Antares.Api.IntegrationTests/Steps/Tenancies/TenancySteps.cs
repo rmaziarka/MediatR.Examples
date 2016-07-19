@@ -150,5 +150,14 @@
             this.UpdateTenancy(upadteTenancyCommand);
         }
 
+        [When(@"User gets tenancy for (.*) id")]
+        public void GetTenancy(string id)
+        {
+            Guid tenancyId = id.Equals("latest") ? this.scenarioContext.Get<Tenancy>("Tenancy").Id : Guid.NewGuid();
+            string requestUrl = $"{ApiUrl}/{tenancyId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
     }
 }

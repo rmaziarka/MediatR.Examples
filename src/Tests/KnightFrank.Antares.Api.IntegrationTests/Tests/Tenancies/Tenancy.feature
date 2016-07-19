@@ -52,3 +52,20 @@ Scenario: Update tenancy
 	When User updates tenancy with terms
 	Then User should get OK http status code
 		And Tenancy should be the same as added
+
+@Tenancies
+Scenario: Get tenancy
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
+		And Contacts exists in database
+		| Title  | FirstName | LastName |
+		| Mister | Tomasz    | Bien     |
+		And Requirement of type ResidentialLetting exists in database
+		And tenancy exists in database
+	When User gets tenancy for latest id
+	Then User should get OK http status code
+		And Tenancy should be the same as added
