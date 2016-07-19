@@ -17,6 +17,8 @@ module Antares.TestHelpers {
                 ownershipType: EnumDictionaryGenerator.generateEnums(Enums.OwnershipType),
                 salutationFormat: EnumDictionaryGenerator.generateEnums(Enums.SalutationFormat),
                 rentPaymentPeriod: EnumDictionaryGenerator.generateEnums(Enums.RentPaymentPeriod),
+                salesBoardStatus: EnumDictionaryGenerator.generateEnums(Enums.SalesBoardStatus),
+                salesBoardType: EnumDictionaryGenerator.generateEnums(Enums.SalesBoardType)
             }
             return enumDictionary;
         }

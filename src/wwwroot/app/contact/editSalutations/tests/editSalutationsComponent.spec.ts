@@ -37,7 +37,9 @@ module Antares {
                 { id: '1', code: 'MrJohnSmith' },
                 { id: '2', code: 'JohnSmithEsq' },
             ],
-            rentPaymentPeriod: []
+            rentPaymentPeriod: [],
+            salesBoardStatus: [],
+            salesBoardType: []
         };
 
         beforeEach(inject((
