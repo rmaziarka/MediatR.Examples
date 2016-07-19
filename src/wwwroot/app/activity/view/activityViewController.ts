@@ -292,6 +292,7 @@
         ];
 
         advertisingPublishToWebSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'advertisingPublishToWeb',
             fieldName: 'advertisingPublishToWeb',
             translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PUBLISH_TO_WEB',
             templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
@@ -307,6 +308,7 @@
         }
 
         advertisingPrPermittedSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'advertisingPrPermitted',
             fieldName: 'advertisingPrPermitted',
             translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PR_PERMITTED',
             templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
@@ -315,6 +317,7 @@
         }
 
         salesBoardUpToDateSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'salesBoardUpToDate',
             fieldName: 'salesBoardUpToDate',
             translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.UP_TO_DATE',
             templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',

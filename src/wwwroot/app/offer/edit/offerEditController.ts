@@ -197,6 +197,7 @@ module Antares.Offer {
             contractApproved: <Attributes.IRadioButtonsEditControlSchema>{
                 formName: "offerContractApprovedControlForm",
                 fieldName: "offerContractApproved",
+                controlId: "offerContractApproved",
                 translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
                 radioButtons: [
                     { value: true, translationKey: "COMMON.YES" },

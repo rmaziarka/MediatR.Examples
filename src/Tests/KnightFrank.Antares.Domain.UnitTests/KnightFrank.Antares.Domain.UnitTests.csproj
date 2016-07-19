@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityAppraisalMeetingAttendeesMapperTests.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityPortalsMapperTests.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityUsersMapperTests.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityDepartmentsMapperTests.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityContactsMapperTests.cs" />

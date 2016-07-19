@@ -12,7 +12,7 @@ module Antares {
         };
 
         var schemaMock: Attributes.IRadioButtonsViewControlSchema = {
-            fieldName: "offerContractApproved",
+            controlId: "offerContractApproved",
             translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
             templateUrl: "app/attributes/radioButtons/templates/radioButtonsViewBoolean.html"
         }

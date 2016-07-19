@@ -3,6 +3,7 @@
 declare module Antares.Attributes {
     interface IRadioButtonsEditControlSchema extends IRadioButtonsViewControlSchema {
         formName: string,
+        fieldName: string;
         radioButtons: IRadioButtonSchema[]
     }
 

@@ -1,1 +1,3 @@
-﻿<ng-include src="vm.schema.templateUrl"></ng-include>
+﻿<div class="section-row row" ng-if="vm.config" id="{{vm.schema.controlId}}">
+    <ng-include src="vm.schema.templateUrl"></ng-include>
+</div>
