@@ -362,6 +362,7 @@ module Antares.Activity.View {
             private activityService: Services.ActivityService,
             private latestViewsProvider: LatestViewsProvider,
             private eventAggregator: Core.EventAggregator,
+            private enumProvider: Providers.EnumProvider,
             private configService: Services.ConfigService) {
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
@@ -517,7 +518,15 @@ module Antares.Activity.View {
         toggleMarketingTabMode = () => {
             this.isMarketingTabInEditMode = !this.isMarketingTabInEditMode;
             if (this.isMarketingTabInEditMode) {
-                this.editableActivity = new Business.ActivityEditModel(this.activity); 
+                this.editableActivity = new Business.ActivityEditModel(this.activity);
+                if (this.editableActivity.salesBoardTypeId) {
+                    return;
+                }
+
+                var salesBoardTypeEnum = this.enumProvider.enums.salesBoardType;
+                var defaultCode : string = Enums.SalesBoardType[Enums.SalesBoardType.None];
+                var defaultStatus: Dto.IEnumItem = _.find(salesBoardTypeEnum, { 'code' : defaultCode });
+                this.editableActivity.salesBoardTypeId = defaultStatus.id;
             }
         };
 

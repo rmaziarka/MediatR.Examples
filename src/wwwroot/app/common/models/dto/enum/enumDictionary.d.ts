@@ -11,5 +11,7 @@
         ownershipType: IEnumItem[];
         salutationFormat: IEnumItem[];
         rentPaymentPeriod: IEnumItem[];
+        salesBoardStatus: IEnumItem[];
+        salesBoardType: IEnumItem[];
     }
 }

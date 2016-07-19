@@ -182,8 +182,8 @@ ActivityMatchFlexRent;MinimumRent
 ActivityMatchFlexRent;Percentage
 RentPaymentPeriod;Weekly
 RentPaymentPeriod;Monthly
-SalesBoardType;None 
-SalesBoardType;Flag 
+SalesBoardType;None
+SalesBoardType;Flag
 SalesBoardType;VBoard
 SalesBoardStatus;ForSale
 SalesBoardStatus;Sold
