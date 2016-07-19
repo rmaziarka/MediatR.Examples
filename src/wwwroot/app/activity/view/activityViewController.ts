@@ -252,7 +252,8 @@
             controlId: 'marketingStrapline',
             translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.STRAPLINE',
             fieldName: 'marketingStrapline',
-            formName: 'marketingStraplineForm'
+            formName: 'marketingStraplineForm',
+            maxLength: 250
         }
 
         marketingFullDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
