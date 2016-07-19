@@ -51,7 +51,7 @@
         public Guid Handle(CreateTenancyCommand message)
         {
             Requirement requirement =
-                this.requirementRepository.GetWithInclude(x => x.Id == message.RequirementId, x => x.RequirementType).Single();
+                this.requirementRepository.GetWithInclude(x => x.Id == message.RequirementId, x => x.RequirementType).FirstOrDefault();
 
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
             this.entityValidator.EntityExists(requirement, message.RequirementId);
