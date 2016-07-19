@@ -21,8 +21,6 @@
 
     using Xunit;
 
-    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
-
     [Binding]
     public class ViewRequirementSteps
     {
@@ -242,6 +240,25 @@
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks create tenancy link for (.*) offer on view requirement page")]
+        public void OpenCreateTenancy(int position)
+        {
+            this.page.OpenOfferActions(position)
+                .CreateTenancyOffer(position);
+        }
+
+        [When(@"User clicks details link from tenancy card on view requirement page")]
+        public void OpenTenancyView()
+        {
+            this.page.OpenViewTenancy();
+        }
+
+        [When(@"User clicks edit link from tenancy card on view requirement page")]
+        public void OpenEditTenancy()
+        {
+            this.page.OpenEditTenancy();
+        }
+
         [Then(@"Side panel should not be displayed on view requirement page")]
         public void WaitForSidePnaleToHide()
         {
@@ -438,8 +455,8 @@
         [Then(@"Attachment should be displayed on view requirement page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
-            Attachment actual = this.page.AttachmentDetails;
-            var expected = table.CreateInstance<Attachment>();
+            ViewActivityPage.Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<ViewActivityPage.Attachment>();
             expected.Date = DateTime.UtcNow.ToString(Format);
 
             actual.ShouldBeEquivalentTo(expected);
@@ -448,9 +465,9 @@
         [Then(@"Attachment details on attachment preview page are the same like on view requirement page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.AttachmentPreview.AttachmentDetails;
+            ViewActivityPage.Attachment actual = this.page.AttachmentPreview.AttachmentDetails;
             actual.Date = actual.Date.Split(',')[0];
-            Attachment expected = this.page.AttachmentDetails;
+            ViewActivityPage.Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
@@ -471,6 +488,16 @@
         {
             this.page.AttachmentPreview.CloseAttachmentPreview();
             this.page.WaitForSidePanelToHide();
+        }
+
+        [Then(@"Tenancy details are displayed on view requirement page")]
+        public void CheckTenancyDetails(Table table)
+        {
+            var expectedDetails = table.CreateInstance<TenancyDetails>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Title, this.page.GetTenancyTitle()),
+                () => Assert.Equal(expectedDetails.Date, this.page.Date));
         }
     }
 }

@@ -68,10 +68,10 @@
         private readonly ElementLocator askingRentShortWeekLet = new ElementLocator(Locator.Id, "shortAskingWeekRent");
         private readonly ElementLocator askingRentShortLetMatchFlexibility = new ElementLocator(Locator.Id, "shortMatchFlexibilityId");
         private readonly ElementLocator askingRentShortLetMatchFlexibilityWeekRentValue = new ElementLocator(Locator.Id, "shortMatchFlexWeekValue");
-        private readonly ElementLocator askingRentShortLetMatchFlexibilityRentPercentage = new ElementLocator(Locator.Id, "shortMatchFlexPercentage");
+//        private readonly ElementLocator askingRentShortLetMatchFlexibilityRentPercentage = new ElementLocator(Locator.Id, "shortMatchFlexPercentage");
         private readonly ElementLocator askingRentLongLet = new ElementLocator(Locator.Id, "longAskingWeekRent");
         private readonly ElementLocator askingRentLongLetMatchFlexibility = new ElementLocator(Locator.Id, "longMatchFlexibilityId");
-        private readonly ElementLocator askingRentLongLetMatchFlexibilityRentWeekValue = new ElementLocator(Locator.Id, "longMatchFlexWeekValue");
+//        private readonly ElementLocator askingRentLongLetMatchFlexibilityRentWeekValue = new ElementLocator(Locator.Id, "longMatchFlexWeekValue");
         private readonly ElementLocator askingRentLongLetMatchFlexibilityRentPercentage = new ElementLocator(Locator.Id, "longMatchFlexPercentage");
         //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
         private readonly ElementLocator priceType = new ElementLocator(Locator.Id, "priceTypeId");
@@ -305,9 +305,9 @@
             return this;
         }
 
-        public CreateActivityPage SetMatchFlexibilityValue(string type, string value)
+        public CreateActivityPage SetMatchFlexibilityValue(string text, string value)
         {
-            this.Driver.SendKeys(type == "Minimum price" ? this.matchFlexibilityValue : this.matchFlexibilityPercentage, value);
+            this.Driver.SendKeys(text == "Minimum price" ? this.matchFlexibilityValue : this.matchFlexibilityPercentage, value);
             return this;
         }
 
