@@ -257,13 +257,6 @@ module Antares.Common.Models.Enums
 		SurpliceToRequirement,
 	}
 
-	export enum DisposalType
-	{
-		PrivateTreaty,
-		FormalTender,
-		Auction,
-	}
-
 	export enum Decoration
 	{
 		Unmodernised,
@@ -293,36 +286,12 @@ module Antares.Common.Models.Enums
 		PrivateTreaty,
 		FormalTender,
 		Auction,
-	}
-
-	export enum Decoration
-	{
-		Unmodernised,
-		Fair,
-		Good,
-		VeryGood,
 	}
 
 	export enum TenancyContactType
 	{
 		Landlord,
 		Tenant,
-	}
-
-	export enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	export enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
 	}
 
 	export enum RequirementType
