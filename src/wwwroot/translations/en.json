@@ -606,7 +606,7 @@
     },
     "CHAIN": {
       "PREVIEW": {
-        "CHAIN_PREVIEW": "Chain preview",
+        "CHAIN_PREVIEW": "Chain transaction details",
         "IS_END": "End of chain",
         "PROPERTY": "Property",
         "VENDOR": "Vendor",
