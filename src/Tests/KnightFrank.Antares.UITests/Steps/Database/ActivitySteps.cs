@@ -106,7 +106,10 @@
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
                     },
                 AppraisalMeetingStart = this.date,
-                AppraisalMeetingEnd = this.date.AddHours(1)
+                AppraisalMeetingEnd = this.date.AddHours(1),
+                SalesBoardTypeId =
+                    this.dataContext.EnumTypeItems.First(
+                        i => i.EnumType.Code.Equals(nameof(SalesBoardType)) && i.Code.Equals(nameof(SalesBoardType.None))).Id
             };
 
             this.dataContext.Activities.Add(activity);
@@ -183,7 +186,10 @@
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
                     },
                 AppraisalMeetingStart = this.date,
-                AppraisalMeetingEnd = this.date.AddHours(1)
+                AppraisalMeetingEnd = this.date.AddHours(1),
+                SalesBoardTypeId =
+                    this.dataContext.EnumTypeItems.First(
+                        i => i.EnumType.Code.Equals(nameof(SalesBoardType)) && i.Code.Equals(nameof(SalesBoardType.None))).Id
             };
 
             this.dataContext.Activities.Add(activity);
@@ -251,7 +257,10 @@
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
                     },
                 AppraisalMeetingStart = this.date,
-                AppraisalMeetingEnd = this.date.AddHours(1)
+                AppraisalMeetingEnd = this.date.AddHours(1),
+                SalesBoardTypeId =
+                    this.dataContext.EnumTypeItems.First(
+                        i => i.EnumType.Code.Equals(nameof(SalesBoardType)) && i.Code.Equals(nameof(SalesBoardType.None))).Id
             };
 
             this.dataContext.Activities.Add(activity);
@@ -354,7 +363,10 @@
                         new ActivityAttendee { ContactId = this.scenarioContext.Get<List<Contact>>("ContactsList").First().Id }
                     },
                 AppraisalMeetingStart = this.date,
-                AppraisalMeetingEnd = this.date.AddHours(1)
+                AppraisalMeetingEnd = this.date.AddHours(1),
+                SalesBoardTypeId =
+                    this.dataContext.EnumTypeItems.First(
+                        i => i.EnumType.Code.Equals(nameof(SalesBoardType)) && i.Code.Equals(nameof(SalesBoardType.None))).Id
             };
 
             this.dataContext.Activities.Add(activity);

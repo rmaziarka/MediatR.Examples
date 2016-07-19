@@ -9,8 +9,8 @@ module Antares.Component {
         bindings: {
             contacts: '=',
             isLoading: '<',
-            onCancel: '&',
-            onSave: '<',
+            onCancel: '&?',
+            onSave: '&',
             allowMultipleSelect: '<'
         }
     });

@@ -15,5 +15,5 @@
 <p name="timeValidationError" ng-message="time" class="help-block with-errors" translate="FORM.FIELD_HAS_INVALID_FORMAT"></p>
 <p name="timeLowerThanValidationError" ng-message="timeLowerThan" class="help-block with-errors" translate="FORM.TIME_CAN_NOT_BE_GRATER_THAN"></p>
 <p name="timeGreaterThanValidationError" ng-message="timeGreaterThan" class="help-block with-errors" translate="FORM.TIME_CAN_NOT_BE_LOWER_THAN"></p>
-<p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-values="{value: {{minLength}}}"></p>
+<p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-values="{value: {{minLength || 0}}}"></p>
 <p name="numberPrecisionValidationError" ng-message="numberPrecision" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>

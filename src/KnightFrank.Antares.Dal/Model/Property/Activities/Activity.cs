@@ -5,10 +5,10 @@
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Dal.Model.Configuration.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Portal;
 
     public class Activity : BaseAuditableEntity
     {
@@ -101,6 +101,8 @@
 
         public decimal? LongAgreedInitialMarketingPrice { get; set; }
 
+        public virtual ICollection<ChainTransaction> ChainTransactions { get; set; } = new List<ChainTransaction>();
+
         public Guid? PriceTypeId { get; set; }
 
         public virtual EnumTypeItem PriceType { get; set; }
@@ -146,5 +148,35 @@
         public decimal? LongMatchFlexMonthValue { get; set; }
 
         public decimal? LongMatchFlexPercentage { get; set; }
+
+        public string MarketingStrapline { get; set; }
+
+        public string MarketingFullDescription { get; set; }
+
+        public bool AdvertisingPublishToWeb { get; set; }
+
+        public string AdvertisingNote { get; set; }
+
+        public string MarketingLocationDescription { get; set; }
+
+        public bool SalesBoardUpToDate { get; set; }
+
+        public DateTime? SalesBoardRemovalDate { get; set; }
+
+        public string SalesBoardSpecialInstructions { get; set; }
+
+        public bool AdvertisingPrPermitted { get; set; }
+
+        public string AdvertisingPrContent { get; set; }
+
+        public virtual ICollection<Portal> AdvertisingPortals { get; set; } = new List<Portal>();
+
+        public Guid? SalesBoardTypeId { get; set; }
+
+        public virtual EnumTypeItem SalesBoardType { get; set; }
+
+        public Guid? SalesBoardStatusId { get; set; }
+
+        public virtual EnumTypeItem SalesBoardStatus { get; set; }
     }
 }

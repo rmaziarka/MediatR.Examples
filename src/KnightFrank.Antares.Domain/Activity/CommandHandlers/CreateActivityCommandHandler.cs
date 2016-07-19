@@ -4,6 +4,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
@@ -13,6 +14,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
@@ -24,6 +26,7 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
         private readonly IGenericRepository<Dal.Model.Property.Activities.ActivityType> activityTypeRepository;
+        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
         private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
         private readonly IEntityValidator entityValidator;
@@ -38,6 +41,7 @@
         public CreateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
             IGenericRepository<Dal.Model.Property.Activities.ActivityType> activityTypeRepository,
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
             IGenericRepository<Property> propertyRepository,
@@ -52,6 +56,7 @@
         {
             this.activityRepository = activityRepository;
             this.activityTypeRepository = activityTypeRepository;
+            this.enumTypeItemRepository = enumTypeItemRepository;
             this.entityValidator = entityValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.propertyRepository = propertyRepository;
@@ -87,6 +92,9 @@
             this.usersMapper.ValidateAndAssign(message, activity);
             this.departmentsMapper.ValidateAndAssign(message, activity);
             this.attendeesMapper.ValidateAndAssign(message, activity);
+
+            EnumTypeItem typeItem = this.enumTypeItemRepository.FindBy(i =>i.EnumType.Code == EnumType.SalesBoardType.ToString() && i.Code == SalesBoardType.None.ToString()).First();
+            activity.SalesBoardTypeId = typeItem.Id;
 
             this.activityRepository.Add(activity);
             this.activityRepository.Save();

@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\Relations\ActivityAppraisalMeetingAttendeesMapper.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityPortalsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityContactsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityDepartmentsMapper.cs" />
     <Compile Include="Activity\CommandHandlers\Relations\ActivityUsersMapper.cs" />
@@ -92,9 +93,11 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendee.cs" />
+    <Compile Include="Common\Commands\UpdateChainTransaction.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAppraisalMeeting.cs" />
     <Compile Include="Activity\Commands\UpdateActivityAttendeeValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityPortal.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartmentValidator.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityPortalsQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivitiesFilterQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Activity\Queries\ActivityUserQuery.cs" />
     <Compile Include="Activity\Queries\ActivityUserQueryValidator.cs" />
     <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandler.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityPortalsQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityUserQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandler.cs" />
@@ -214,6 +219,7 @@
     <Compile Include="Attachment\Commands\CreateAttachment.cs" />
     <Compile Include="Attachment\Commands\CreateAttachmentProfile.cs" />
     <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
+    <Compile Include="Common\ChainTransactionProfile.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
@@ -313,6 +319,7 @@
     <Compile Include="Common\Validator\DateInPastValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
+    <Compile Include="Activity\CommandHandlers\Relations\ActivityChainMapper.cs" />
     <Compile Include="Offer\OfferHelpers\IOfferProgressStatusHelper.cs" />
     <Compile Include="Offer\OfferHelpers\OfferProgressStatusHelper.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />
@@ -323,6 +330,8 @@
     <Compile Include="Offer\QueryResults\OfferTypeQueryResult.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
+    <Compile Include="Property\Queries\PropertiesQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertiesQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
     <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
@@ -462,6 +471,7 @@
     <EmbeddedResource Include="Properties\BusinessErrorMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

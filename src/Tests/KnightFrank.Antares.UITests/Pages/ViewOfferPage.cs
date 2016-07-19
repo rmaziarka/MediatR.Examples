@@ -5,6 +5,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.Modals;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
@@ -20,15 +21,18 @@
         private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, "#view-offer-header .offer-title");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, "#view-offer-header [ng-click *= 'goToEdit']");
         // Details
+        private readonly ElementLocator detailsStatus = new ElementLocator(Locator.Id, "offer-status");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, "#section-basic-information .ng-binding");
         // Activity
         private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, ".offer-view-activity .ng-binding");
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, ".offer-view-activity .card-body");
+        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
         // Requirement
         private readonly ElementLocator requirementDetails = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .ng-binding");
         private readonly ElementLocator requirement = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .card-body");
         private readonly ElementLocator requirementActions = new ElementLocator(Locator.CssSelector, ".offer-view-requirement .card-menu-button");
         private readonly ElementLocator openRequirement = new ElementLocator(Locator.CssSelector, ".offer-view-requirement [action *= 'navigateToRequirement'] li");
+        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
         // Messages
         private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
         private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
@@ -50,9 +54,15 @@
         private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additionalSurveyor .ng-binding");
         // Other details
         private readonly ElementLocator comment = new ElementLocator(Locator.Id, "offer-progress-comment");
-        // Solicitors
-        private readonly ElementLocator vendorSolicitor = new ElementLocator(Locator.CssSelector, "#vendorSolicitor .ng-binding");
-        private readonly ElementLocator applicantSolicitor = new ElementLocator(Locator.CssSelector, "#applicantSolicitor .ng-binding");
+        // Upward chain
+        private readonly ElementLocator addUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-control [ng-click *= 'addChain']");
+        private readonly ElementLocator upwardChains = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain'] .card");
+        private readonly ElementLocator upwardChainDetails = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card .ng-binding");
+        private readonly ElementLocator upwardChainStatuses = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-info span");
+        private readonly ElementLocator upwardChainActions = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action");
+        private readonly ElementLocator editUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'edit'] li");
+        private readonly ElementLocator deleteUpwardChain = new ElementLocator(Locator.CssSelector, "offer-chains-list card[item = 'chain']:nth-of-type({0}) .card-action [type = 'delete'] li");
+        private readonly ElementLocator property = new ElementLocator(Locator.CssSelector, "offer-chains-list address-form-view .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
         {
@@ -60,7 +70,11 @@
 
         public ActivityPreviewPage ActivityPreview => new ActivityPreviewPage(this.DriverContext);
 
-        public List<string> OfferDetails => this.Driver.GetElements(this.details).Select(el => el.Text).ToList();
+        public CreateChainTransactionPage ChainTransaction => new CreateChainTransactionPage(this.DriverContext);
+
+        public ChainTransactionPreviewPage ChainTransactionPreview => new ChainTransactionPreviewPage(this.DriverContext);
+
+        public DeleteChainModalPage Modal => new DeleteChainModalPage(this.DriverContext);
 
         public int ActivityNumber => this.Driver.GetElements(this.activity).Count;
 
@@ -70,7 +84,8 @@
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
 
-        public List<string> OfferHeader => new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
+        public List<string> OfferHeader
+            => new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
 
         public string MortgageStatus => this.Driver.GetElement(this.mortgageStatus).Text;
 
@@ -101,6 +116,11 @@
         public List<string> VendorSolicitor => this.Driver.GetElements(this.vendorSolicitor).Select(el => el.Text).ToList();
 
         public List<string> ApplicantSolicitor => this.Driver.GetElements(this.applicantSolicitor).Select(el => el.Text).ToList();
+
+        public int UpwardChainNumber => this.Driver.GetElements(this.upwardChains).Count;
+
+        public string PropertyDetails
+            => this.Driver.GetElements(this.property).Select(el => el.Text).ToList().Aggregate((i, j) => i + " " + j);
 
         public ViewOfferPage OpenViewOfferPageWithId(string id)
         {
@@ -145,7 +165,8 @@
 
         public ViewOfferPage WaitForSuccessMessageToHide()
         {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty), TimeSpan.FromSeconds(6).TotalSeconds);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty),
+                TimeSpan.FromSeconds(6).TotalSeconds);
             return this;
         }
 
@@ -166,6 +187,65 @@
                     .Select(el => el.GetTextContent())
                     .ToList();
             return string.Join(" ", list).Trim();
+        }
+
+        public ViewOfferPage AddUpwardChain()
+        {
+            this.Driver.Click(this.addUpwardChain);
+            return this;
+        }
+
+        public bool AddUpwardChainPresent(double timeout)
+        {
+            return this.Driver.IsElementPresent(this.addUpwardChain, timeout);
+        }
+
+        public ViewOfferPage OpenChainPreview(string position)
+        {
+            this.Driver.Click(this.upwardChainDetails.Format(position));
+            return this;
+        }
+
+        public string GetUpwardChainDetails(int position)
+        {
+            return this.Driver.GetElement(this.upwardChainDetails.Format(position)).Text;
+        }
+
+        public List<string> GetUpwardChainStatuses(int position)
+        {
+            return
+                this.Driver.GetElements(this.upwardChainStatuses.Format(position)).Select(el => el.GetAttribute("title")).ToList();
+        }
+
+        public ViewOfferPage OpenChainActions(int position)
+        {
+            this.Driver.Click(this.upwardChainActions.Format(position));
+            return this;
+        }
+
+        public ViewOfferPage EditChain(int position)
+        {
+            this.Driver.Click(this.editUpwardChain.Format(position));
+            return this;
+        }
+
+        public ViewOfferPage DeleteChain(int position)
+        {
+            this.Driver.Click(this.deleteUpwardChain.Format(position));
+            return this;
+        }
+
+        public bool DeleteChainNotAvailable(int position)
+        {
+            return !this.Driver.IsElementPresent(this.deleteUpwardChain.Format(position), BaseConfiguration.ShortTimeout);
+        }
+
+        public List<string> GetOfferDetails()
+        {
+            var data = new List<string> { this.Driver.GetElement(this.detailsStatus).Text };
+            data.AddRange(this.Driver.GetElements(this.details).Select(el => el.Text).ToList());
+
+            return data;
         }
     }
 

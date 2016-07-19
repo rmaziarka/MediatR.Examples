@@ -85,12 +85,13 @@
         private readonly ElementLocator detailsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Details']");
         private readonly ElementLocator overviewTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Overview']");
         private readonly ElementLocator attachmentsTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Attachments']");
- //Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
+        private readonly ElementLocator marketingTab = new ElementLocator(Locator.CssSelector, "li[heading = 'Marketing']");
+        // Type: Freehold Sale & Long Leashold Sale, Status: For Sale Unavailable locators
         private readonly ElementLocator priceType = new ElementLocator(Locator.Id, "priceTypeId");
         private readonly ElementLocator price = new ElementLocator(Locator.Id, "activityPrice");
         private readonly ElementLocator matchFlexibilityValue = new ElementLocator(Locator.Id, "matchFlexValue");
         private readonly ElementLocator matchFlexibilityPercentage = new ElementLocator(Locator.Id, "matchFlexPercentage");
-        //Type: Open Market Letting, Status: To Let Unavailable
+        // Type: Open Market Letting, Status: To Let Unavailable
         private readonly ElementLocator rentShortLetMonth = new ElementLocator(Locator.Id, "shortAskingMonthRent");
         private readonly ElementLocator rentShortLetWeek = new ElementLocator(Locator.Id, "shortAskingWeekRent");
         private readonly ElementLocator rentShortMatchFlexibilityMonth = new ElementLocator(Locator.Id, "shortMatchFlexMonthValue");
@@ -109,6 +110,10 @@
         }
 
         public AttachmentsTabPage AttachmentsTab => new AttachmentsTabPage(this.DriverContext);
+
+        public ViewMarketingTabPage ViewMarketingTab => new ViewMarketingTabPage(this.DriverContext);
+
+        public EditMarketingTabPage EditMarketingTab => new EditMarketingTabPage(this.DriverContext);
 
         public PropertyPreviewPage PropertyPreview => new PropertyPreviewPage(this.DriverContext);
 
@@ -260,6 +265,12 @@
         public ViewActivityPage OpenAttachmentsTab()
         {
             this.Driver.Click(this.attachmentsTab);
+            return this;
+        }
+
+        public ViewActivityPage OpenMarketingTab()
+        {
+            this.Driver.Click(this.marketingTab);
             return this;
         }
 

@@ -4,6 +4,7 @@ module Antares.Common.Models.Business {
     import Dto = Antares.Common.Models.Dto;
     import Business = Antares.Common.Models.Business;
     import Enums = Common.Models.Enums;
+    declare var moment: any;
 
     export class ActivityBaseModel {
         id: string = null;
@@ -65,7 +66,28 @@ module Antares.Common.Models.Business {
         longMatchFlexWeekValue: number = null;
         longMatchFlexMonthValue: number = null;
         longMatchFlexPercentage: number = null;
-        
+        solicitor: Dto.IContact = null;
+        solicitorCompany: Dto.ICompany = null;
+        appraisalMeetingStart: string = null;
+        appraisalMeetingEnd: string = null;
+        appraisalMeetingInvitationText: string = null;
+        keyNumber: string = null;
+        accessArrangements: string = null;
+        marketingStrapline: string = null;
+        marketingFullDescription: string = null;
+        marketingLocationDescription: string = null;
+        advertisingPublishToWeb: boolean = false;
+        advertisingPortals: Dto.IPortal[] = [];
+        advertisingNote: string = null;
+        advertisingPrPermitted: boolean = false;
+        advertisingPrContent: string = null;
+        salesBoardTypeId: string = null;
+        salesBoardStatusId: string = null;
+        salesBoardUpToDate: boolean;
+        salesBoardRemovalDate: Date;
+        salesBoardSpecialInstructions: string = null;
+        chainTransactions: Business.ChainTransaction[] = [];
+
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
@@ -103,9 +125,31 @@ module Antares.Common.Models.Business {
                     this.offers = activity.offers.map((item) => new Business.Offer(item));
                 }
 
+                if (activity.chainTransactions) {
+                    this.chainTransactions = activity.chainTransactions.map((chainTransaction: Dto.IChainTransaction) => { return new Business.ChainTransaction(chainTransaction) });
+                }
+                else {
+                    this.chainTransactions = [];
+                }
+
                 this.appraisalMeetingAttendees = activity.appraisalMeetingAttendees;
                 this.appraisalMeeting = new Business.ActivityAppraisalMeeting(activity.appraisalMeetingStart, activity.appraisalMeetingEnd, activity.appraisalMeetingInvitationText);
                 this.accessDetails = new Business.ActivityAccessDetails(activity.keyNumber, activity.accessArrangements);
+
+                this.marketingStrapline = activity.marketingStrapline;
+                this.marketingFullDescription = activity.marketingFullDescription;
+                this.marketingLocationDescription = activity.marketingLocationDescription;
+                this.advertisingPublishToWeb = activity.advertisingPublishToWeb;
+                this.advertisingPortals = activity.advertisingPortals;
+                this.advertisingNote = activity.advertisingNote;
+                this.advertisingPrPermitted = activity.advertisingPrPermitted;
+                this.advertisingPrContent = activity.advertisingPrContent;
+                this.salesBoardTypeId = activity.salesBoardTypeId;
+                this.salesBoardStatusId = activity.salesBoardStatusId;
+                this.salesBoardUpToDate = activity.salesBoardUpToDate;
+                var momentSalesBoardRemovalDate = moment(activity.salesBoardRemovalDate);
+                this.salesBoardRemovalDate = momentSalesBoardRemovalDate.isValid() ? momentSalesBoardRemovalDate.toDate() : activity.salesBoardRemovalDate;
+                this.salesBoardSpecialInstructions = activity.salesBoardSpecialInstructions;
             }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];

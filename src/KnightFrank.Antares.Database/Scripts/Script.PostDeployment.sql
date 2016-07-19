@@ -35,6 +35,7 @@
 :r .\SQL\RequirementTypeLocalised.sql
 :r .\SQL\OfferType.sql
 :r .\SQL\OfferTypeLocalised.sql
+:r .\SQL\PortalDefinition.sql
 :r .\SQL\TenancyType.sql
 :r .\SQL\TenancyTypeLocalised.sql
 

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Portal;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using MediatR;
 
     public abstract class ActivityCommandBase : IRequest<Guid>
@@ -16,7 +18,7 @@
         public IList<UpdateActivityUser> SecondaryNegotiators { get; set; } = new List<UpdateActivityUser>();
 
         public IList<UpdateActivityDepartment> Departments { get; set; } = new List<UpdateActivityDepartment>();
-
+        
         public IList<Guid> ContactIds { get; set; } = new List<Guid>();
 
         public Guid? SourceId { get; set; }
@@ -39,9 +41,14 @@
 
         public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
 
+        public IList<UpdateChainTransaction> ChainTransactions { get; set; } = new List<UpdateChainTransaction>();
+
         public decimal? ServiceChargeAmount { get; set; }
+
         public string ServiceChargeNote { get; set; }
+
         public decimal? GroundRentAmount { get; set; }
+
         public string GroundRentNote { get; set; }
 
         public string OtherCondition { get; set; }
@@ -103,5 +110,31 @@
         public decimal? LongMatchFlexMonthValue { get; set; }
 
         public decimal? LongMatchFlexPercentage { get; set; }
+
+        public string MarketingStrapline { get; set; }
+
+        public string MarketingFullDescription { get; set; }
+
+        public bool AdvertisingPublishToWeb { get; set; }
+
+        public string AdvertisingNote { get; set; }
+
+        public string MarketingLocationDescription { get; set; }
+
+        public bool SalesBoardUpToDate { get; set; }
+
+        public DateTime? SalesBoardRemovalDate { get; set; }
+
+        public string SalesBoardSpecialInstructions { get; set; }
+
+        public bool AdvertisingPrPermitted { get; set; }
+
+        public string AdvertisingPrContent { get; set; }
+
+        public virtual ICollection<UpdateActivityPortal> AdvertisingPortals { get; set; } = new List<UpdateActivityPortal>();
+
+        public Guid? SalesBoardTypeId { get; set; }
+
+        public Guid? SalesBoardStatusId { get; set; }
     }
 }

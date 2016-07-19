@@ -107,6 +107,24 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.Property(a => a.ShortMatchFlexMonthValue).IsMoney();
             this.Property(a => a.LongMatchFlexWeekValue).IsMoney();
             this.Property(a => a.LongMatchFlexMonthValue).IsMoney();
+
+            this.Property(a => a.MarketingFullDescription).HasMaxLength(4000);
+            this.Property(a => a.MarketingStrapline).HasMaxLength(250);
+            this.Property(a => a.MarketingLocationDescription).HasMaxLength(4000);
+
+            this.Property(a => a.AdvertisingNote).HasMaxLength(4000);
+            this.Property(a => a.AdvertisingPrContent).HasMaxLength(4000);
+            this.Property(a => a.SalesBoardSpecialInstructions).HasMaxLength(4000);
+
+            this.HasMany(x => x.AdvertisingPortals).WithMany().Map(x =>
+            {
+                x.MapLeftKey("ActivityId");
+                x.MapRightKey("PortalId");
+            });
+
+            this.HasOptional(a => a.SalesBoardType).WithMany().HasForeignKey(s => s.SalesBoardTypeId).WillCascadeOnDelete(false);
+
+            this.HasOptional(a => a.SalesBoardStatus).WithMany().HasForeignKey(s => s.SalesBoardStatusId).WillCascadeOnDelete(false);
         }
     }
 }

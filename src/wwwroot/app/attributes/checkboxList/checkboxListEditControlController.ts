@@ -12,12 +12,21 @@ module Antares.Attribues {
             _.each(this.schema.checkboxes, (checkbox: Attributes.ICheckboxSchema) => { checkbox.selected = this.isSelected(checkbox); });
         }
 
-        private isSelected = (checkbox: Attributes.ICheckboxSchema) => {
-            return this.ngModel.indexOf(checkbox.value) > -1;
+        isSelected = (checkbox: Attributes.ICheckboxSchema) => {
+            var isSelected = this.getIndexOfValue(checkbox) > -1;
+            checkbox.selected = isSelected;
+            return isSelected;
+        }
+
+        private getIndexOfValue = (checkbox: Attributes.ICheckboxSchema): number => {
+            var value = this.schema.compareMember ? checkbox.value[this.schema.compareMember] : checkbox.value;
+            return _.findIndex(this.ngModel, (item: any) => {
+                return (this.schema.compareMember ? item[this.schema.compareMember] : item) === value;
+            });
         }
 
         changeSelection = (checkbox: Attributes.ICheckboxSchema) => {
-            var indexOfValue = this.ngModel.indexOf(checkbox.value);
+            var indexOfValue = this.getIndexOfValue(checkbox);
             if (indexOfValue > -1) {
                 // is currently selected
                 this.ngModel.splice(indexOfValue, 1);
@@ -25,6 +34,12 @@ module Antares.Attribues {
             else {
                 // is newly selected
                 this.ngModel.push(checkbox.value);
+            }
+        }
+
+        $onChanges = (obj: any) =>{
+            if (obj.config && (!obj.config.currentValue || !obj.config.currentValue.advertisingPortals.active)) {
+                this.ngModel = [];
             }
         }
     }

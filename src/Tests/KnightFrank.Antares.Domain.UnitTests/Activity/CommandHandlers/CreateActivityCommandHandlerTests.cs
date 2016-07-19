@@ -1,12 +1,15 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
@@ -38,6 +41,7 @@
             [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             [Frozen] Mock<IAttributeValidator<Tuple<PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
             [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
@@ -48,6 +52,7 @@
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
+            EnumTypeItem defaultType,
             IFixture fixture)
         {
             // Arrange
@@ -68,6 +73,7 @@
             activityTypeRepository.Setup(x => x.GetById(command.ActivityTypeId)).Returns(activityType);
             activityRepository.Setup(r => r.Add(It.IsAny<Activity>())).Callback((Activity a) => { activity = a; });
             activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = Guid.NewGuid(); });
+            enumTypeItemRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new List<EnumTypeItem> { defaultType});
 
             var mappedActivity = new Activity { PropertyId = property.Id, ActivityTypeId = command.ActivityTypeId };
             activityEntityMapper

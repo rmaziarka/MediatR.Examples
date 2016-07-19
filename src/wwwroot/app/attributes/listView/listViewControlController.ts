@@ -6,13 +6,12 @@ module Antares.Attribues {
         public ngModel: any[];
         public config: any;
         public schema: Attributes.IListViewControlSchema;
-        public itemTemplateUrl: string;
-
+        
         private defaultItemTemplateUrl: string = 'app/attributes/listView/templates/listItemSimpleTemplate.html';
 
         constructor() {
             this.ngModel = this.ngModel || [];
-            this.itemTemplateUrl = this.itemTemplateUrl || this.defaultItemTemplateUrl;
+            this.schema.itemTemplateUrl = this.schema.itemTemplateUrl || this.defaultItemTemplateUrl;
         }
     }
 

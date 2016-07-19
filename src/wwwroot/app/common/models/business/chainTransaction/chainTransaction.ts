@@ -1,0 +1,71 @@
+﻿/// <reference path="../../../../typings/_all.d.ts" />
+
+module Antares.Common.Models.Business {
+    export class ChainTransaction implements Dto.IChainTransaction {
+        id: string = null;
+        propertyId: string = null;
+        mortgageId: string = null;
+        surveyId: string = null;
+        searchesId: string = null;
+        enquiriesId: string = null;
+        contractAgreedId: string = null;
+        activity: Business.Activity = null;
+        requirement: Business.Requirement = null;
+        parentId: string = null;
+        parent: ChainTransaction = null;
+        isEnd: boolean = false;
+        property: Business.PreviewProperty = null;
+        vendor: string = null;
+        agentUserId: string = null;
+        agentUser: Business.User = null;
+        agentContactId: string = null;
+        agentContact: Business.Contact = null;
+        agentCompanyId: string = null;
+        agentCompany: Business.Company = null;
+        agentCompanyContact: Business.CompanyContactRelation = null;
+        solicitorContactId: string = null;
+        solicitorContact: Business.Contact = null;
+        solicitorCompanyId: string = null;
+        solicitorCompany: Business.Company = null;
+        solicitorCompanyContact: Business.CompanyContactRelation = null;
+        mortgage: Business.EnumTypeItem = null;
+        survey: Business.EnumTypeItem = null;
+        searches: Business.EnumTypeItem = null;
+        enquiries: Business.EnumTypeItem = null;
+        contractAgreed: Business.EnumTypeItem = null;
+        surveyDate: Date | string = null;
+        lastElementInChainLink: boolean = null;
+
+        constructor(chainTransaction?: Dto.IChainTransaction) {
+            angular.extend(this, chainTransaction);
+            if (chainTransaction) {
+                this.property = new Business.PreviewProperty(chainTransaction.property);
+                if (chainTransaction.activity) {
+                    this.activity = new Business.Activity(chainTransaction.activity);
+                }
+                if (chainTransaction.requirement) {
+                    this.requirement = new Business.Requirement(chainTransaction.requirement);
+                }
+                if (chainTransaction.parent) {
+                    this.parent = new ChainTransaction(chainTransaction.parent);
+                }
+                if (chainTransaction.agentUser) {
+                    this.agentUser = new User(chainTransaction.agentUser);
+                }
+                if (chainTransaction.agentContact && chainTransaction.agentCompany) {
+                    this.agentContact = new Contact(chainTransaction.agentContact);
+                    this.agentCompany = new Company(chainTransaction.agentCompany);
+                    this.agentCompanyContact = new CompanyContactRelation(this.agentContact, this.agentCompany);
+                }
+                if (chainTransaction.solicitorContact && chainTransaction.solicitorCompany) {
+                    this.solicitorContact = new Contact(chainTransaction.solicitorContact);
+                    this.solicitorCompany = new Company(chainTransaction.solicitorCompany);
+                    this.solicitorCompanyContact = new CompanyContactRelation(this.solicitorContact, this.solicitorCompany);
+                }
+                if (chainTransaction.surveyDate) {
+                    this.surveyDate = new Date(<string>chainTransaction.surveyDate);
+                }
+            }
+        }
+    }
+}

@@ -1,11 +1,14 @@
 // Statuses
 
 .status {
+  cursor: default;
+  display: inline-block;
+
   &::before {
     font-family: FontAwesome;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 1;
-    margin-right: 8px;
+    margin-right: 5px;
   }
 
   &-unknown {

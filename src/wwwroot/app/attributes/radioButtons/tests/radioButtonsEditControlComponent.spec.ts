@@ -3,8 +3,8 @@
 module Antares {
     describe('Given radio button edit control', () => {
         var scope: ng.IScope,
-            element: ng.IAugmentedJQuery,
-            assertValidator: TestHelpers.AssertValidators;
+            element: ng.IAugmentedJQuery;
+            
 
         var configMock: Common.Models.Dto.IFieldConfig = <Common.Models.Dto.IFieldConfig>{
             active: true,
@@ -14,6 +14,7 @@ module Antares {
         var schemaMock: Attributes.IRadioButtonsEditControlSchema = {
             formName: "offerContractApprovedControlForm",
             fieldName: "offerContractApproved",
+            controlId: "offerContractApproved",
             translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
             radioButtons: [
                 { value: true, translationKey: "COMMON.YES" },
@@ -30,11 +31,9 @@ module Antares {
             $compile: ng.ICompileService) => {
 
             scope = $rootScope.$new();
-            scope['vm'] = { config: configMock, schema: schemaMock, model: {} };
-            element = $compile('<radio-buttons-edit-control config="vm.config" schema="vm.schema" model=""></radio-buttons-edit-control>')(scope);
+            scope['vm'] = { config: configMock, schema: schemaMock, model: true };
+            element = $compile('<radio-buttons-edit-control config="vm.config" schema="vm.schema" ng-model="vm.model"></radio-buttons-edit-control>')(scope);
             scope.$apply();
-
-            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
         describe('when config is provided', () => {
@@ -50,7 +49,7 @@ module Antares {
         });
 
         describe('when config is not provided', () => {
-            it('then control min and max is not displayed', () => {
+            it('then control is not displayed', () => {
                 scope['vm'].config = null;
                 scope.$apply();
                 var form: ng.IAugmentedJQuery = element.find(pageObjectSelectors.form);

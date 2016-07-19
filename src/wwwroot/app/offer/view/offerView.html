@@ -78,6 +78,18 @@
                 </div>
             </div>
         </section>
+
+        <!-- Upward chain -->
+        <section>
+            <offer-chains-control is-panel-visible="vm.isUpwardChainPanelVisible"
+                                  chain-command="vm.activityEditCommand"
+                                  property="vm.offer.activity.property"
+                                  chain-type="vm.offerChainsType.Activity"
+                                  config="vm.config.offer_UpwardChain">
+            </offer-chains-control>
+        </section>
+        <!-- // Upward chain -->
+
     </div>
     <div class="col-md-4" id="offer-progress-section" ng-if="vm.isProgressAndMortgageSectionVisible()">
         <section>
@@ -114,7 +126,7 @@
 
 
             <div class="section-details">
-                <date-view-control date="vm.offer.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate"></date-view-control> 
+                <date-view-control date="vm.offer.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate"></date-view-control>
             </div>
 
             <div class="section-details">
@@ -127,7 +139,7 @@
 
         <section ng-if="vm.isAdditionalSurveySectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.ADDITIONAL_SURVEY"></h3>
-            <date-view-control date="vm.offer.additionalSurveyDate" config="vm.config.offer_AdditionalSurveyDate" schema="vm.controlSchemas.additionalSurveyDate"></date-view-control> 
+            <date-view-control date="vm.offer.additionalSurveyDate" config="vm.config.offer_AdditionalSurveyDate" schema="vm.controlSchemas.additionalSurveyDate"></date-view-control>
             <div class="section-details">
                 <company-contact-view-control schema="vm.controlSchemas.additionalSurveyor"
                                               config="vm.config.offer_AdditionalSurveyor"
@@ -143,46 +155,7 @@
     </div>
 </div>
 
-<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <div class="row section-row">
-            <div class="col-xs-6">
-                <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
-            </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-12">
-                <h4 translate="OFFER.VIEW.BASIC_INFORMATION"></h4>
-            </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.STATUS"></div>
-            <div class="col-xs-6" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
-            <div class="col-xs-6" id="activity-preview-negotiator">{{vm.offer.negotiator.getName()}} </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
-            <div class="col-xs-6" id="activity-preview-created-date">{{vm.offer.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.VENDORS"></div>
-            <div class="col-xs-6" id="activity-preview-vendors">
-                <div class="row">
-                    <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.offer.activity.contacts track by $id(contact)">
-                        {{contact.getName()}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-6 section-title" translate="ACTIVITY.PREVIEW.TYPE"></div>
-            <div class="col-xs-6" id="activity-preview-type">{{vm.offer.activity.activityTypeId | dynamicTranslate}} </div>
-        </div>
-    </side-panel-content>
-</side-panel>
+<activity-preview-panel is-visible="vm.isActivityPreviewPanelVisible"
+                        property-type-id="vm.offer.activity.property.propertyTypeId"
+                        activity='vm.offer.activity'>
+</activity-preview-panel>

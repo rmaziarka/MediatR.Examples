@@ -1,8 +1,12 @@
 // Section Styles
 
 .section-row {
-  padding: 5px 0;
+  padding: 6px 0;
   word-wrap: break-word;
+
+  p {
+    margin-top: 9px;
+  }
 }
 
 .section-title {
@@ -16,6 +20,15 @@
   p {
     word-wrap: break-word;
   }
+}
+
+.section-heading {
+  display: inline-block;
+}
+
+.section-price {
+  font-size: 33px;
+  margin: 9px 0;
 }
 
 .section-no-header {

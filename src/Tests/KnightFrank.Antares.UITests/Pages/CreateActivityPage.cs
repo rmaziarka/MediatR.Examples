@@ -359,6 +359,8 @@
     {
         public string Vendor { get; set; }
 
+        public string Landlord { get; set; }
+
         public string Status { get; set; }
 
         public string Type { get; set; }
@@ -396,8 +398,6 @@
         public string StartTime { get; set; }
 
         public string EndTime { get; set; }
-
-        public string Landlord { get; set; }
     }
 
     internal class ValuationInformation

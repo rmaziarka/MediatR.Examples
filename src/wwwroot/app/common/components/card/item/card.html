@@ -10,8 +10,8 @@
     </div>
 </div>
 
-<div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selectable': cvm.allowSelection, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl" ng-click="cvm.clicked()">
-    <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
+<div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selectable': cvm.allowSelection, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl">
+    <div class="card-body" ng-click="cvm.clicked()">
         <div ng-include src="cvm.cardTemplateUrl" ng-if="cvm.cardTemplateUrl"></div>
         <div ng-transclude="template" ng-if="!cvm.cardTemplateUrl"></div>
     </div>

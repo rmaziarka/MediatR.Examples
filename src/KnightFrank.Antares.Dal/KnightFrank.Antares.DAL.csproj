@@ -81,9 +81,12 @@
     <Compile Include="Model\Configuration\Contact\ContactUserConfiguration.cs" />
     <Compile Include="Model\Configuration\Company\CompanyContactConfiguration.cs" />
     <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
+    <Compile Include="Model\Configuration\Offer\ChainTransactionConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferConfiguration.cs" />
+    <Compile Include="Model\Configuration\Portal\PortalConfiguration.cs" />
+    <Compile Include="Model\Configuration\Portal\PortalDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityAccessDetails.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityAppraisalMeeting.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityAttendeeConfiguration.cs" />
@@ -141,9 +144,12 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
+    <Compile Include="Model\Portal\Portal.cs" />
+    <Compile Include="Model\Offer\ChainTransaction .cs" />
     <Compile Include="Model\Offer\OfferTypeLocalised.cs" />
     <Compile Include="Model\Offer\OfferType.cs" />
     <Compile Include="Model\Offer\Offer.cs" />
+    <Compile Include="Model\Portal\PortalDefinition.cs" />
     <Compile Include="Model\Property\Activities\ActivityAttendee.cs" />
     <Compile Include="Model\Property\Activities\ActivityTypeLocalised.cs" />
     <Compile Include="Model\Property\Activities\ActivityType.cs" />

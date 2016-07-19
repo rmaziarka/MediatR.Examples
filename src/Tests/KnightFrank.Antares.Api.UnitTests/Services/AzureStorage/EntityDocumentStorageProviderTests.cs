@@ -52,7 +52,7 @@
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
             storageClient.Setup(x => x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
-            parameters.cloudStorageContainerType = CloudStorageContainerType.Activity;
+            parameters.CloudStorageContainerType = CloudStorageContainerType.Activity;
 
             // Act
             entityDocumentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType);
@@ -88,7 +88,7 @@
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
             storageClient.Setup(x => x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
-            parameters.cloudStorageContainerType = CloudStorageContainerType.Activity;
+            parameters.CloudStorageContainerType = CloudStorageContainerType.Activity;
 
             // Act
             entityDocumentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType);
@@ -130,7 +130,7 @@
 
             storageClient.Setup(x => x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
-            parameters.cloudStorageContainerType = CloudStorageContainerType.Activity;
+            parameters.CloudStorageContainerType = CloudStorageContainerType.Activity;
 
             // Act
             AzureUploadUrlContainer azureUploadUrlContainer = entityDocumentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType);
@@ -163,7 +163,7 @@
 
             storageClient.Setup(x => x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
-            parameters.cloudStorageContainerType = CloudStorageContainerType.Activity;
+            parameters.CloudStorageContainerType = CloudStorageContainerType.Activity;
 
             // Act
             AzureDownloadUrlContainer container = entityDocumentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType);

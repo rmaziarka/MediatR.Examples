@@ -71,25 +71,29 @@ module Antares.Offer {
                 formName: 'brokerForm',
                 controlId: 'broker',
                 translationKey: 'OFFER.EDIT.BROKER',
-                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
+                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER',
+                fieldName: "brokerId"
             },
             lender: <ICompanyContactEditControlSchema>{
                 formName: 'lenderForm',
                 controlId: 'lender',
                 translationKey: 'OFFER.EDIT.LENDER',
-                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER'
+                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER',
+                fieldName: "lenderId"
             },
             surveyor: <ICompanyContactEditControlSchema>{
                 formName: 'surveyorForm',
                 controlId: 'surveyor',
                 translationKey: 'OFFER.EDIT.SURVEYOR',
-                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR',
+                fieldName: "surveyorId"
             },
             additionalSurveyor: <ICompanyContactEditControlSchema>{
                 formName: 'additionalSurveyorForm',
                 controlId: 'additionalSurveyor',
                 translationKey: 'OFFER.EDIT.SURVEYOR',
-                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR',
+                fieldName: "additionalSurveyorId"
             },
             status : <Attributes.IEnumItemEditControlSchema>{
                 formName : "offerStatusControlForm",
@@ -197,6 +201,7 @@ module Antares.Offer {
             contractApproved: <Attributes.IRadioButtonsEditControlSchema>{
                 formName: "offerContractApprovedControlForm",
                 fieldName: "offerContractApproved",
+                controlId: "offerContractApproved",
                 translationKey: "OFFER.EDIT.CONTRACT_APPROVED",
                 radioButtons: [
                     { value: true, translationKey: "COMMON.YES" },

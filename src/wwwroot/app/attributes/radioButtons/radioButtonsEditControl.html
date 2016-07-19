@@ -1,11 +1,11 @@
 ﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
     <div class="form-group">
-        <div class="form-group">
+        <div class="form-group" id="{{vm.schema.controlId}}">
             <div class="row">
                 <div class="col-md-9">
                     <h5 ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></h5>
                     <label class="radio-inline" ng-repeat="radio in vm.schema.radioButtons">
-                        <input type="radio" ng-model="vm.ngModel" ng-value="radio.value"><span translate="{{radio.translationKey}}"></span>
+                        <input type="radio" ng-model="vm.ngModel" ng-value="radio.value" ng-change="vm.onChange({value: vm.ngModel})"><span translate="{{radio.translationKey}}"></span>
                     </label>
                 </div>
             </div>

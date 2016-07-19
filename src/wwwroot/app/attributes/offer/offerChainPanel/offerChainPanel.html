@@ -1,0 +1,34 @@
+﻿﻿<kf-side-panel>
+    <side-panel-cards>
+        <offer-chain-preview-card chain="vm.chain"
+                                  config="vm.config"
+                                  on-edit="vm.edit()"
+                                  ng-show="vm.panelMode == vm.offerChainPanelMode.Preview">
+        </offer-chain-preview-card>
+        <offer-chain-add-edit-card is-agent-user-type = "vm.isAgentUserType"
+                                   chain="vm.chain"
+                                   config="vm.config"
+                                   on-cancel="vm.closeAddEdit()"
+                                   on-save="vm.save(chain)"
+                                   on-reload-config="vm.reloadConfig(isAgentUserType)"
+                                   on-edit-company-contact="vm.openCompanyContactEditCard(companyContact, type)"
+                                   on-add-edit-property="vm.openPropertyAddEditCard(property)"
+                                   pristine-flag="vm.cardPristine"
+                                   ng-show="vm.panelMode == vm.offerChainPanelMode.AddEdit">
+        </offer-chain-add-edit-card>
+        <company-contact-list-card contacts="vm.companyContacts"
+                                   is-loading="vm.isLoading"
+                                   ng-show="vm.panelMode == vm.offerChainPanelMode.CompanyContactList"
+                                   allow-multiple-select="false"
+                                   on-save="vm.onCompanyContactSelected(contacts)"
+                                   on-cancel="vm.onListCancel()">
+        </company-contact-list-card>
+        <property-list-card properties="vm.properties"
+                            is-loading="vm.isLoading"
+                            ng-show="vm.panelMode == vm.offerChainPanelMode.Property"
+                            allow-multiple-select="false"
+                            on-save="vm.onPropertySelected(properties)"
+                            on-cancel="vm.onListCancel()">
+        </property-list-card>
+    </side-panel-cards>
+</kf-side-panel>

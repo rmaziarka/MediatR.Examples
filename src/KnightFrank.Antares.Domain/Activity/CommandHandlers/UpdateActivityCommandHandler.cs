@@ -4,6 +4,8 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Portal;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
@@ -31,7 +33,9 @@
         private readonly IActivityReferenceMapper<Contact> contactsMapper;
         private readonly IActivityReferenceMapper<ActivityUser> usersMapper;
         private readonly IActivityReferenceMapper<ActivityDepartment> departmentsMapper;
+        private readonly IActivityReferenceMapper<Portal> portalsMapper;
         private readonly IActivityReferenceMapper<ActivityAttendee> attendeesMapper;
+        private readonly IActivityReferenceMapper<ChainTransaction> chainTransactionMapper;
 
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
@@ -44,7 +48,9 @@
             IActivityReferenceMapper<Contact> contactsMapper,
             IActivityReferenceMapper<ActivityUser> usersMapper,
             IActivityReferenceMapper<ActivityDepartment> departmentsMapper,
-            IActivityReferenceMapper<ActivityAttendee> attendeesMapper)
+            IActivityReferenceMapper<Portal> portalsMapper,
+            IActivityReferenceMapper<ActivityAttendee> attendeesMapper,
+            IActivityReferenceMapper<ChainTransaction> chainTransactionMapper)
         {
             this.activityRepository = activityRepository;
             this.entityValidator = entityValidator;
@@ -56,7 +62,9 @@
             this.usersMapper = usersMapper;
             this.departmentsMapper = departmentsMapper;
             this.attendeesMapper = attendeesMapper;
+            this.portalsMapper = portalsMapper;
             this.activityTypeRepository = activityTypeRepository;
+            this.chainTransactionMapper = chainTransactionMapper;
         }
 
         public Guid Handle(UpdateActivityCommand message)
@@ -65,11 +73,13 @@
                 this.activityRepository.GetWithInclude(
                     x => x.Id == message.Id,
                     x => x.ActivityUsers,
+                    x => x.AdvertisingPortals,
                     x => x.Contacts,
                     x => x.ActivityDepartments,
                     x => x.AppraisalMeetingAttendees,
                     x => x.Property.PropertyType,
                     x => x.Property.Address,
+                    x => x.ChainTransactions,
                     x => x.ActivityType).SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
@@ -85,6 +95,8 @@
             this.usersMapper.ValidateAndAssign(message, activity);
             this.departmentsMapper.ValidateAndAssign(message, activity);
             this.attendeesMapper.ValidateAndAssign(message, activity);
+            this.portalsMapper.ValidateAndAssign(message, activity);
+            this.chainTransactionMapper.ValidateAndAssign(message, activity);
 
             this.activityRepository.Save();
 

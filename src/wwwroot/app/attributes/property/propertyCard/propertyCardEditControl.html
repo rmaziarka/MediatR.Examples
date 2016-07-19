@@ -1,0 +1,27 @@
+<ng-form name='vm.propertyCardEditForm' ng-if="vm.config" id="property-card-edit-section" class="form-group"  >
+    <label translate="PROPERTY.CARDEDIT.PROPERTY" ng-class="{'required': vm.config.propertyId.required}"></label>
+    <div class="form-group" show-errors>
+        <button id="property-card-edit-add-edit" type="button" class="btn btn-default" ng-click="vm.showSelectPanel()">
+            <i class="fa" ng-class="{'fa-plus-circle': !vm.property, 'fa-pencil': vm.property}" aria-hidden="true"></i>
+        </button>
+        <div ng-if="!vm.property">
+            <p class="help-block" id="no-contacts-help-block" ng-show="vm.propertyCardEditForm.$submitted === false">{{'PROPERTY.CARDEDIT.PROPERTYEMPTY' | translate}}</p>
+        </div>
+        <input class="form-control" type="hidden" name="propertyId" ng-model="vm.property" ng-required="vm.config.propertyId.required"/>
+        <div ng-messages="vm.propertyCardEditForm.propertyId.$error" ng-show="vm.propertyCardEditForm.$submitted || vm.propertyCardEditForm.property.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+    <div id="property-card-edit" class="row" ng-if="vm.property">
+        <div class="col-md-12">
+            <card 
+                show-context-menu="true"
+                card-template-url="'app/attributes/property/propertyCard/propertyCard.html'" 
+                item="vm.property">
+                <card-context-menu>
+                    <context-menu-item type="details" item="vm.property" action="vm.navigateToProperty"></context-menu-item>
+                </card-context-menu>
+            </card>
+        </div>
+    </div>
+</ng-form>

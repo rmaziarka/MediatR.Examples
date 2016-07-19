@@ -10,11 +10,17 @@ module Antares {
             constructor(private eventAggregator: Core.EventAggregator) { }
             allowMultipleSelect: boolean;
             contacts: Business.CompanyContactWithSelection[];
-            onSave: (contacts: ICompanyContact[]) => void;
+            onSave: (obj: { contacts: ICompanyContact[]}) => void;
+            onCancel: (obj: {}) => void;
             onConfigure: (contacts: { contacts: IContact[]; }) => void;
 
             close = () => {
-                this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+                if (this.onCancel) {
+                    this.onCancel({});
+                }
+                else {
+                    this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+                }
             }
 
             cardSelected = (companyContact: any, selected: boolean) => {
@@ -34,7 +40,7 @@ module Antares {
                 var selectedContacts = this.contacts
                     .filter((c: any) => c.selected);
 
-                this.onSave(selectedContacts);
+                this.onSave({ contacts : selectedContacts });
             }
         }
 

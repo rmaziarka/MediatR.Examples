@@ -122,6 +122,12 @@
             this.page.OpenAttachmentsTab();
         }
 
+        [When(@"User switches to marketing tab on view activity page")]
+        public void SwitchToMarketingTab()
+        {
+            this.page.OpenMarketingTab();
+        }
+
         [Then(@"Address details on view activity page are following")]
         public void CheckViewActivityAddressDetails(Table table)
         {

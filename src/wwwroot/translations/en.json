@@ -40,7 +40,11 @@
     "CREATE_TENANCY": "Create tenancy",
     "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
-    "SETASMANAGING": "Set as managing"
+    "SETASMANAGING": "Set as managing",
+    "MODALS": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
   },
   "OWNERSHIP": {
     "ADD": {
@@ -140,102 +144,109 @@
     },
     "EDIT": {
       "CONTACT_EDIT_SUCCESS": "Contact successfully saved"
-    } 
+    }
   },
-    "FORM": {
-      "FIELD_IS_REQUIRED": "Field is required",
-      "FIELD_EXCEEDED_MAX_LENGTH": "Value is too long",
-      "FIELD_SHOULD_BE_NUMBER": "Value should be a number",
-      "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-      "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
-      "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
-      "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
-      "LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY": "Please specify at least one attendee",
-      "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
-      "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
-      "DATE_CAN_NOT_BE_FROM_FUTURE": "Can not specify date from future",
-      "DATE_CAN_NOT_BE_GRATER_THAN": "Given date can not be later than selling date",
-      "DATE_CAN_NOT_BE_LOWER_THAN": "Given date can not be earlier than purchasing date",
-      "FILE_MUST_BE_PROVIDED": "Please select file to upload",
-      "TIME_CAN_NOT_BE_GRATER_THAN": "Given time can not be later than end time",
-      "TIME_CAN_NOT_BE_LOWER_THAN": "Given time can not be earlier than start time",
-      "NUMBER_HAS_TO_BE_GREATER_THAN": "Value must be greater than {{value}}",
-      "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
-      "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
-      "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
-      "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
+  "FORM": {
+    "FIELD_IS_REQUIRED": "Field is required",
+    "FIELD_EXCEEDED_MAX_LENGTH": "Value is too long",
+    "FIELD_SHOULD_BE_NUMBER": "Value should be a number",
+    "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+    "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
+    "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
+    "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
+    "LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY": "Please specify at least one attendee",
+    "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
+    "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
+    "DATE_CAN_NOT_BE_FROM_FUTURE": "Can not specify date from future",
+    "DATE_CAN_NOT_BE_GRATER_THAN": "Given date can not be later than selling date",
+    "DATE_CAN_NOT_BE_LOWER_THAN": "Given date can not be earlier than purchasing date",
+    "FILE_MUST_BE_PROVIDED": "Please select file to upload",
+    "TIME_CAN_NOT_BE_GRATER_THAN": "Given time can not be later than end time",
+    "TIME_CAN_NOT_BE_LOWER_THAN": "Given time can not be earlier than start time",
+    "NUMBER_HAS_TO_BE_GREATER_THAN": "Value must be greater than {{value}}",
+    "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
+    "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
+    "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
+    "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
     "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater than create date",
     "DATE_CAN_NOT_BE_LOWER_THEN_START_DATE": "Start date must be earlier than end date"
+  },
+  "PROPERTY": {
+    "AREA": "Property area",
+    "BEDROOMS": "Bedrooms",
+    "BATHROOMS": "Bathrooms",
+    "LANDAREA": "Land area",
+    "GUESTROOMS": "Guest rooms",
+    "FUNCTIONROOMS": "Function rooms",
+    "CARPARKINGSPACES": "Car parking spaces",
+    "RECEPTIONS": "Receptions",
+    "COMMERCIAL_PROPERTY": "Commercial property",
+    "RESIDENTIAL_PROPERTY": "Residential property",
+    "DETAILS": "Property details",
+    "CHARACTERISTICS": "Property characteristics",
+    "ADD": {
+      "ADD_PROPERTY": "Create property",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
+      "ADDRESS": "Address",
+      "PROPERTY_ADD_SUCCESS": "New property has been created"
     },
-    "PROPERTY": {
-      "AREA": "Property area",
-      "BEDROOMS": "Bedrooms",
-      "BATHROOMS": "Bathrooms",
-      "LANDAREA": "Land area",
-      "GUESTROOMS": "Guest rooms",
-      "FUNCTIONROOMS": "Function rooms",
-      "CARPARKINGSPACES": "Car parking spaces",
-      "RECEPTIONS": "Receptions",
-      "COMMERCIAL_PROPERTY": "Commercial property",
-      "RESIDENTIAL_PROPERTY": "Residential property",
-      "DETAILS": "Property details",
-      "CHARACTERISTICS": "Property characteristics",
+    "EDIT": {
+      "EDIT_PROPERTY": "Edit property",
+      "ADDRESS": "Address"
+    },
+    "CARDEDIT": {
+      "PROPERTY": "Property",
+      "PROPERTYEMPTY": "Property not specified"
+    },
+    "VIEW": {
+      "CHARACTERISTICS": "Characteristics",
+      "VIEW_PROPERTY": "View property",
+      "DETAILS": "Details",
+      "TYPE": "Type"
+    },
+    "LIST": {
+      "OWNERSHIPS": "Ownerships",
+      "NO_ITEMS": "Ownership information not configured yet"
+    },
+    "LISTCARD": {
+      "SELECTPROPERTY": "Select property"
+    },
+    "PREVIEW": {
+      "PROPERTY_PREVIEW": "Property preview",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
+      "ADDRESS": "Address",
+      "PROPERTY_VIEW_LINK": "View property"
+    },
+    "SEARCH": {
+      "PROPERTIES": "Properties",
+      "NO_ITEMS": "Sorry, no properties matched your search. Please try again.",
+      "QUERY_PLACEHOLDER": "Search for a property",
+      "RESULTS_COUNT": "Results:",
+      "RESULTS_PER_PAGE": "results / page:"
+    }
+  },
+  "COMMERCIAL_PROPERTY": {
+    "AREA_BREAKDOWN": {
+      "LIST": {
+        "AREA_BREAKDOWN": "Area breakdown",
+        "TOTAL_AREA": "Total area",
+        "NO_ITEMS": "Area breakdown not configured"
+      },
       "ADD": {
-        "ADD_PROPERTY": "Create property",
-        "BASIC_INFORMATION": "Basic information",
-        "TYPE": "Type",
-        "ADDRESS": "Address",
-        "PROPERTY_ADD_SUCCESS": "New property has been created"
+        "CREATE_AREA": "Create area",
+        "NAME": "Name",
+        "SIZE": "Size"
       },
       "EDIT": {
-        "EDIT_PROPERTY": "Edit property",
-        "ADDRESS": "Address"
-      },
-      "VIEW": {
-        "CHARACTERISTICS": "Characteristics",
-        "VIEW_PROPERTY": "View property",
-        "DETAILS": "Details",
-        "TYPE": "Type"
-      },
-      "LIST": {
-        "OWNERSHIPS": "Ownerships",
-        "NO_ITEMS": "Ownership information not configured yet"
-      },
-      "PREVIEW": {
-        "PROPERTY_PREVIEW": "Property preview",
-        "BASIC_INFORMATION": "Basic information",
-        "TYPE": "Type",
-        "ADDRESS": "Address",
-        "PROPERTY_VIEW_LINK": "View property"
-      },
-      "SEARCH": {
-        "PROPERTIES": "Properties",
-        "NO_ITEMS": "Sorry, no properties matched your search. Please try again.",
-        "QUERY_PLACEHOLDER": "Search for a property",
-        "RESULTS_COUNT": "Results:",
-        "RESULTS_PER_PAGE": "results / page:"
+        "EDIT_AREA": "Edit area",
+        "NAME": "Name",
+        "SIZE": "Size"
       }
-    },
-    "COMMERCIAL_PROPERTY": {
-      "AREA_BREAKDOWN": {
-        "LIST": {
-          "AREA_BREAKDOWN": "Area breakdown",
-          "TOTAL_AREA": "Total area",
-          "NO_ITEMS": "Area breakdown not configured"
-        },
-        "ADD": {
-          "CREATE_AREA": "Create area",
-          "NAME": "Name",
-          "SIZE": "Size"
-        },
-        "EDIT": {
-          "EDIT_AREA": "Edit area",
-          "NAME": "Name",
-          "SIZE": "Size"
-        }
-      }
-    },
-    "ACTIVITY": {
+    }
+  },
+  "ACTIVITY": {
     "COMMON": {
       "ACCESS_ARRANGEMENTS": "Access arrangements",
       "ACCESS_DETAILS": "Access details",
@@ -272,41 +283,40 @@
       "SOURCE_DESCRIPTION": "Source - description",
       "VALUATION_INFORMATION": "Valuation information",
       "VENDOR_VALUATION": "Vendor Valuation"
-
     },
-      "LIST": {
-        "ACTIVITIES": "Activities",
-        "NO_ITEMS": "No activities yet"
+    "LIST": {
+      "ACTIVITIES": "Activities",
+      "NO_ITEMS": "No activities yet"
+    },
+    "ADD": {
+      "CREATE_ACTIVITY": "Create activity",
+      "TYPE": "Type",
+      "STATUS": "Status",
+      "VENDORS": "Vendors",
+      "LANDLORDS": "Landlords",
+      "SAVING_ACTIVITY_IN_PROGRESS": "Saving activity ..."
+    },
+    "EDIT": {
+      "ACTIVITY_TITLE": "Activity title",
+      "EDIT_ACTIVITY": "Edit activity",
+      "BASIC_INFORMATION": "Basic information",
+      "ADDITIONAL_INFORMATION": {
+        "ADDITIONAL_INFORMATION": "Additional information",
+        "ACCESS_DETAILS": "Access details"
       },
-      "ADD": {
-        "CREATE_ACTIVITY": "Create activity",
-        "TYPE": "Type",
-        "STATUS": "Status",
-        "VENDORS": "Vendors",
-        "LANDLORDS": "Landlords",
-        "SAVING_ACTIVITY_IN_PROGRESS": "Saving activity ..."
-      },
-      "EDIT": {
-        "ACTIVITY_TITLE": "Activity title",
-        "EDIT_ACTIVITY": "Edit activity",
-        "BASIC_INFORMATION": "Basic information",
-        "ADDITIONAL_INFORMATION": {
-          "ADDITIONAL_INFORMATION": "Additional information",
-          "ACCESS_DETAILS": "Access details"
-        },
       "DISPOSAL_TYPE": "Disposal type",
-        "STATUS": "Status",
-        "PROPERTY": "Property",
-        "VENDORS": "Vendors",
-        "LANDLORDS": "Landlords",
-        "NO_VENDORS": "No vendors defined",
-        "PRICES": {
-          "PRICES": "Valuation prices",
-          "MARKET_APPRAISAL_PRICE": "Market appraisal price",
-          "RECOMMENDED_PRICE": "Recommended price",
-          "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
-          "ASKING_PRICE": "Asking price",
-          "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
+      "STATUS": "Status",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "LANDLORDS": "Landlords",
+      "NO_VENDORS": "No vendors defined",
+      "PRICES": {
+        "PRICES": "Valuation prices",
+        "MARKET_APPRAISAL_PRICE": "Market appraisal price",
+        "RECOMMENDED_PRICE": "Recommended price",
+        "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
+        "ASKING_PRICE": "Asking price",
+        "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
       },
       "SOURCE": "Source",
       "SOURCE_DESCRIPTION": "Source - description",
@@ -321,41 +331,42 @@
         "APPRAISAL_MEETING": "Appraisal meeting",
         "INVITATION_TEXT": "Invitation text",
         "ATTENDEES": "Attendees"
-        }
-      },
-      "PREVIEW": {
-        "ACTIVITYPREVIEW": "Activity preview",
-        "TYPE": "Type",
-        "STATUS": "Status",
-        "CREATION_DATE": "Creation date",
-        "VENDORS": "Vendor(s)",
-        "LANDLORDS": "Landlord(s)",
-        "ACTIVITY_VIEW_LINK": "View activity",
-        "ACTIVITY_DETAILS": "Activity details"
-      },
-      "VIEW": {
+      }
+    },
+    "PREVIEW": {
+      "ACTIVITYPREVIEW": "Activity preview",
+      "TYPE": "Type",
+      "STATUS": "Status",
+      "CREATION_DATE": "Creation date",
+      "VENDORS": "Vendor(s)",
+      "LANDLORDS": "Landlord(s)",
+      "ACTIVITY_VIEW_LINK": "View activity",
+      "ACTIVITY_DETAILS": "Activity details"
+    },
+    "VIEW": {
       "BASIC_INFORMATION": "Basic information",
       "DETAILS": "Details",
-        "VIEW_ACTIVITY": "View activity",
-        "APPRAISAL_MEETING": "Appraisal meeting",
-        "PROPERTY": "Property",
-        "VENDORS": "Vendors",
-        "NO_VENDORS": "No vendors defined",
-        "LANDLORDS": "Landlords",
-        "NO_LANDLORDS": "No landlords defined",
-        "PRICES": {
-          "PRICES": "Valuation prices",
-          "MARKET_APPRAISAL_PRICE": "Market appraisal price",
-          "RECOMMENDED_PRICE": "Recommended price",
-          "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
-          "KF_ESTIMATED_PRICE": "Kf estimated price",
-          "ASKING_PRICE": "Asking price",
-          "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week",
-          "LONG_LET_PRICE": "Long let",
-          "SHORT_LET_PRICE": "Short let"
-        },
-        "VIEWING_DETAILS": "Viewing details",
+      "VIEW_ACTIVITY": "View activity",
+      "APPRAISAL_MEETING": "Appraisal meeting",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "NO_VENDORS": "No vendors defined",
+      "LANDLORDS": "Landlords",
+      "NO_LANDLORDS": "No landlords defined",
+      "PRICES": {
+        "PRICES": "Valuation prices",
+        "MARKET_APPRAISAL_PRICE": "Market appraisal price",
+        "RECOMMENDED_PRICE": "Recommended price",
+        "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
+        "KF_ESTIMATED_PRICE": "Kf estimated price",
+        "ASKING_PRICE": "Asking price",
+        "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week",
+        "LONG_LET_PRICE": "Long let",
+        "SHORT_LET_PRICE": "Short let"
+      },
+      "VIEWING_DETAILS": "Viewing details",
       "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
+      "NO_VIEWINGS": "No viewings",
       "OFFERPREVIEW": "Offer preview",
       "OVERVIEW": "Overview",
       "SUMMARY": "Summary",
@@ -378,72 +389,98 @@
           "LEAD_NEGOTIATOR": "Lead negotiator"
         }
       }
-      }
     },
-    "NEGOTIATORS": {
-      "RESIDENTIAL": {
-        "HEADER": "Negotiators",
-        "LEAD": "Lead negotiator",
-        "SECONDARY": "Secondary negotiators",
-        "EMPTY": "No negotiators added yet",
-        "ADD": "Add a negotiator",
-        "FIND": "Find a negotiator"
+    "MARKETING": {
+      "MARKETING": "Marketing",
+      "DETAILS": "Marketing details",
+      "DESCRIPTION": {
+        "DESCRIPTION": "Marketing description",
+        "FULL_DESCRIPTION": "Full description",
+        "STRAPLINE": "Strapline",
+        "LOCATION_DESCRIPTION": "Location description"
       },
-      "COMMERCIAL": {
-        "HEADER": "Surveyor",
-        "LEAD": "Lead surveyor",
-        "SECONDARY": "Secondary surveyors",
-        "EMPTY": "No surveyor added yet",
-        "ADD": "Add a surveyor",
-        "FIND": "Find a surveyor"
+      "ADVERTISING": {
+        "ADVERTISING": "Advertising",
+        "PUBLISH_TO_WEB": "Publish to web",
+        "PORTALS": "Portals to market on",
+        "NOTE": "Advertising note",
+        "PR_PERMITTED": "PR permitted",
+        "PR_CONTENT": "PR content"
       },
-      "COMMON": {
-        "NEXTCALL": "Next call"
+      "SALES_BOARDS": {
+        "SALES_BOARDS": "Sales boards",
+        "SPECIAL_INSTRUCTIONS": "Special instructions",
+        "TYPE": "Type",
+        "STATUS": "Status",
+        "UP_TO_DATE": "Board up to date",
+        "REMOVAL_DATE": "Board removal date"
       }
+    }
+  },
+  "NEGOTIATORS": {
+    "RESIDENTIAL": {
+      "HEADER": "Negotiators",
+      "LEAD": "Lead negotiator",
+      "SECONDARY": "Secondary negotiators",
+      "EMPTY": "No negotiators added yet",
+      "ADD": "Add a negotiator",
+      "FIND": "Find a negotiator"
     },
-    "REQUIREMENT": {
-      "ADD": {
-        "ADD_REQUIREMENT": "Create requirement",
-        "APPLICANT": "Applicant",
-        "ADD": "Add",
-        "FINDCONTACT": "Find contact",
-        "PRICE": "Price",
-        "BEDROOMS": "Bedrooms",
-        "RECEPTIONROOMS": "Reception rooms",
-        "BATHROOMS": "Bathrooms",
-        "PARKINGSPACES": "Parking spaces",
-        "AREA": "Area",
-        "LANDAREA": "Land area",
-        "DESCRIPTION": "Requirement description",
-        "TYPE": "Requirement type",
-        "BASIC_INFORMATION": "Basic information",
-        "RENT_REQUIREMENTS": "Rent requirements",
-        "RENT_WEEKLY":  "Rent (weekly)"
-      },
-      "VIEW": {
-        "REQUIREMENT_DETAILS": "Requirement details",
-        "EDIT": "Edit",
-        "NOTES": "Notes",
-        "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
-        "LOCATION": "Location requirements",
-        "BASIC_REQUIREMENTS": "Basic property requirements",
-        "PRICE": "Price",
-        "BEDROOMS": "Bedrooms",
-        "RECEPTIONROOMS": "Reception rooms",
-        "BATHROOMS": "Bathrooms",
-        "PARKINGSPACES": "Parking spaces",
-        "AREA": "Area",
-        "LANDAREA": "Land area",
-        "DESCRIPTION": "Requirement description",
-        "APPLICANT": "Applicant",
-        "CREATEDDATE": "Created",
-        "VIEWINGS": "Viewings",
-        "OFFERS": "Offers",
-        "VIEWINGADD": "Viewing details",
-        "NO_VIEWINGS": "No viewings",
-        "SELECTACTIVITY": "Select activity",
-        "OFFERPREVIEW": "Offer preview",
-        "OFFERDETAILS": "Offer details",
+    "COMMERCIAL": {
+      "HEADER": "Surveyor",
+      "LEAD": "Lead surveyor",
+      "SECONDARY": "Secondary surveyors",
+      "EMPTY": "No surveyor added yet",
+      "ADD": "Add a surveyor",
+      "FIND": "Find a surveyor"
+    },
+    "COMMON": {
+      "NEXTCALL": "Next call"
+    }
+  },
+  "REQUIREMENT": {
+    "ADD": {
+      "ADD_REQUIREMENT": "Create requirement",
+      "APPLICANT": "Applicant",
+      "ADD": "Add",
+      "FINDCONTACT": "Find contact",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)"
+    },
+    "VIEW": {
+      "REQUIREMENT_DETAILS": "Requirement details",
+      "EDIT": "Edit",
+      "NOTES": "Notes",
+      "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
+      "LOCATION": "Location requirements",
+      "BASIC_REQUIREMENTS": "Basic property requirements",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "APPLICANT": "Applicant",
+      "CREATEDDATE": "Created",
+      "VIEWINGS": "Viewings",
+      "OFFERS": "Offers",
+      "VIEWINGADD": "Viewing details",
+      "NO_VIEWINGS": "No viewings",
+      "SELECTACTIVITY": "Select activity",
+      "OFFERPREVIEW": "Offer preview",
+      "OFFERDETAILS": "Offer details",
       "NEWOFFER": "New offer",
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
@@ -451,80 +488,129 @@
       "RENT_WEEKLY": "Rent (weekly)",
       "OFFER_PER_WEEK": "GBP / week",
       "TENANCY": "Tenancy"
-      }
+    }
+  },
+  "NOTES": {
+    "NOTES": "Notes",
+    "ADDNOTE": "Add note",
+    "RECENTNOTES": "Recent notes"
+  },
+  "VIEWING": {
+    "ADD": {
+      "ACTIVITY": "Activity",
+      "REQUIREMENT": "Requirement",
+      "DATE": "Date",
+      "STARTTIME": "Start time",
+      "ENDTIME": "End time",
+      "ATTENDEES": "Attendees",
+      "NEGOTIATOR": "Negotiator",
+      "INVITATIONTEXT": "Invitation text",
+      "POSTVIEWINGCOMMENT": "Post-viewing comment",
+      "SAVING_VIEWING_IN_PROGRESS": "Saving viewing ..."
+    }
+  },
+  "ATTACHMENT": {
+    "ADD": {
+      "ATTACH_FILE": "Attach file",
+      "FILE": "File",
+      "TYPE": "Type",
+      "BROWSE": "Browse"
     },
-    "NOTES": {
-      "NOTES": "Notes",
-      "ADDNOTE": "Add note",
-      "RECENTNOTES": "Recent notes"
+    "PREVIEW": {
+      "ATTACHMENT_PREVIEW": "Attachment preview",
+      "NAME": "Name",
+      "TYPE": "Type",
+      "SIZE": "Size",
+      "ADDED": "Added",
+      "BY": "By"
     },
-    "VIEWING": {
-      "ADD": {
-        "ACTIVITY": "Activity",
-        "REQUIREMENT": "Requirement",
-        "DATE": "Date",
-        "STARTTIME": "Start time",
-        "ENDTIME": "End time",
-        "ATTENDEES": "Attendees",
-        "NEGOTIATOR": "Negotiator",
-        "INVITATIONTEXT": "Invitation text",
-        "POSTVIEWINGCOMMENT": "Post-viewing comment",
-        "SAVING_VIEWING_IN_PROGRESS": "Saving viewing ..."
-      }
-    },
-    "ATTACHMENT": {
-      "ADD": {
-        "ATTACH_FILE": "Attach file",
-        "FILE": "File",
-        "TYPE": "Type",
-        "BROWSE": "Browse"
-      },
+    "LIST": {
+      "ATTACHMENTS": "Attachments",
+      "NO_ATTACHMENTS": "No attachments"
+    }
+  },
+  "OFFER": {
+    "CHAIN": {
       "PREVIEW": {
-        "ATTACHMENT_PREVIEW": "Attachment preview",
-        "NAME": "Name",
-        "TYPE": "Type",
-        "SIZE": "Size",
-        "ADDED": "Added",
-        "BY": "By"
-      },
-      "LIST": {
-        "ATTACHMENTS": "Attachments",
-        "NO_ATTACHMENTS": "No attachments"
-      }
-    },
-    "OFFER": {
-      "ADD": {
-        "ACTIVITY": "Activity",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "VIEW": "View",
-        "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
-        "NEW_OFFER": "New offer",
-        "OFFER_PER_WEEK": "GBP / week"
-      },
-      "PREVIEW": {
-        "PREVIEW": "Offer preview",
-        "ACTIVITY": "Activity",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date",
-        "OFFER_PER_WEEK": "GBP / week"
+        "CHAIN_PREVIEW": "Chain transaction details",
+        "IS_END": "End of chain",
+        "PROPERTY": "Property",
+        "VENDOR": "Vendor",
+        "BUYER": "Buyer",
+        "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
+        "PROGRESS": "Progress",
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SURVEY_DATE": "Survey date",
+        "SEARCHES": "Searches",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_AGREED": "Contract agreed"
       },
       "VIEW": {
-        "VIEW_OFFER": "View offer",
+        "STATUSES": {
+          "MORTGAGE": "Mortgage",
+          "SURVEY": "Survey",
+          "SEARCHES": "Searches",
+          "ENQUERIES": "Enquiries",
+          "CONTACT_AGREED": "Contract agreed"
+        }
+      },
+      "EDIT": {
+        "CHAIN_TRANSACTION": "Chain transaction",
+        "AGENT": "Agent",
+        "NO_AGENT": "Agent contact not specified",
+        "SOLICITOR": "Solicitor",
+        "NO_SOLICITOR": "Solicitor contact not specified",
+        "PROGRESS": "Progress",
+        "MORTGAGE": "Mortgage",
+        "SURVEY": "Survey",
+        "SURVEY_DATE": "Survey date",
+        "SEARCHES": "Searches",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_AGREED": "Contract agreed",
+        "KNIGHT_FRANK": "Knight Frank",
+        "THIRD_PARTY": "3rd party",
         "VENDOR": "Vendor",
-        "LANDLORD": "Landlord",
-        "APPLICANT": "Applicant",
-        "BASIC_INFORMATION": "Basic information",
+        "IS_END": "End of chain",
+        "FIND_NEGOTIATOR": "Find a negotiator",
+        "NAME_AND_SURNAME": "Name and surname"
+      }
+    },
+    "ADD": {
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "VIEW": "View",
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+      "NEW_OFFER": "New offer",
+      "OFFER_PER_WEEK": "GBP / week"
+    },
+    "PREVIEW": {
+      "PREVIEW": "Offer preview",
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_PER_WEEK": "GBP / week"
+    },
+    "VIEW": {
+      "VIEW_OFFER": "View offer",
+      "VENDOR": "Vendor",
+      "LANDLORD": "Landlord",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
       "STATUS": "Status",
       "OFFER": "Offer",
       "OFFER_PER_WEEK": "GBP / week",
@@ -533,84 +619,84 @@
       "NEGOTIATOR": "Negotiator",
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
-        "PROGRESS_SUMMARY": "Progress summary",
-        "MORTGAGE_STATUS": "Mortgage status",
-        "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-        "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-        "SEARCH_STATUS": "Search status",
-        "ENQUIRIES": "Enquiries",
-        "CONTRACT_APPROVED": "Contract approved",
-        "MORTGAGE_DETAILS": "Mortgage details",
-        "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-        "SOLICITOR": "Solicitor",
-        "BROKER": "Broker",
-        "LENDER": "Lender",
-        "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-        "SURVEYOR": "Surveyor",
-        "ADDITIONAL_SURVEY": "Additional survey",
-        "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-        "OTHER_DETAILS": "Other details",
-        "COMMENT": "Comment",
-        "DATE": "Date",
-        "NO_SOLICITOR": "Solicitor contact not specified"
-      },
-  "EDIT": {
-    "EDIT_OFFER": "Edit offer",
-    "VENDOR": "Vendor",
-    "LANDLORD": "Landlord",
-    "APPLICANT": "Applicant",
-    "BASIC_INFORMATION": "Basic information",
-    "STATUS": "Status",
-    "OFFER": "Offer",
-    "OFFER_PER_WEEK": "GBP / week",
-    "OFFER_DATE": "Offer date",
-    "SPECIAL_CONDITIONS": "Special conditions",
-    "NEGOTIATOR": "Negotiator",
-    "EXCHANGE_DATE": "Proposed exchange date",
-    "COMPLETION_DATE": "Proposed completion date",
-    "OFFER_EDIT_SUCCESS": "Offer successfully saved",
-    "PROGRESS_SUMMARY": "Progress summary",
-    "MORTGAGE_STATUS": "Mortgage status",
-    "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
-    "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
-    "SEARCH_STATUS": "Search status",
-    "ENQUIRIES": "Enquiries",
-    "CONTRACT_APPROVED": "Contract approved",
-    "MORTGAGE_DETAILS": "Mortgage details",
-    "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
-    "SOLICITOR": "Solicitor",
-    "BROKER": "Broker",
-    "LENDER": "Lender",
-    "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
-    "SURVEYOR": "Surveyor",
-    "ADDITIONAL_SURVEY": "Additional survey",
-    "ADDITIONAL_SURVEY_DATE": "Additional survey date",
-    "OTHER_DETAILS": "Other details",
-    "COMMENT": "Comment",
-    "YES": "Yes",
-    "NO": "No",
-    "NO_BROKER": "Broker contact not specified yet",
-    "NO_LENDER": "Lender contact not specified yet",
-    "NO_SURVEYOR": "Surveyor contact not specified yet",
-    "NO_SOLICITOR": "Solicitor contact not specified yet",
-    "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-    "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
-    "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
-  }
+      "PROGRESS_SUMMARY": "Progress summary",
+      "MORTGAGE_STATUS": "Mortgage status",
+      "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+      "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+      "SEARCH_STATUS": "Search status",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_APPROVED": "Contract approved",
+      "MORTGAGE_DETAILS": "Mortgage details",
+      "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
+      "BROKER": "Broker",
+      "LENDER": "Lender",
+      "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+      "SURVEYOR": "Surveyor",
+      "ADDITIONAL_SURVEY": "Additional survey",
+      "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+      "OTHER_DETAILS": "Other details",
+      "COMMENT": "Comment",
+      "DATE": "Date",
+      "DELETE_CHAIN_CONFIRM": "Delete",
+      "DELETE_CHAIN_TITLE": "Are you sure you want to delete this chain transaction?",
+      "DELETE_CHAIN_MESSAGE": "Deleting chain transaction is permanent and can't be reversed.",
+      "DELETE_CHAIN_SUCCESS": "Chain transaction has been deleted.",
+      "NO_UPWARD_CHAIN": "No Upward chain specified",
+      "NO_SOLICITOR": "Solicitor contact not specified"
     },
-    "DEPARTMENTS": {
-      "COMMON": {
-        "HEADER": "Departments",
-        "EMPTY": "No departments added yet",
-        "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
-          "TITLE": "No negotiator assigned to new department",
-          "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
-        }
+    "EDIT": {
+      "EDIT_OFFER": "Edit offer",
+      "VENDOR": "Vendor",
+      "LANDLORD": "Landlord",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_EDIT_SUCCESS": "Offer successfully saved",
+      "PROGRESS_SUMMARY": "Progress summary",
+      "MORTGAGE_STATUS": "Mortgage status",
+      "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+      "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+      "SEARCH_STATUS": "Search status",
+      "ENQUIRIES": "Enquiries",
+      "CONTRACT_APPROVED": "Contract approved",
+      "MORTGAGE_DETAILS": "Mortgage details",
+      "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
+      "BROKER": "Broker",
+      "LENDER": "Lender",
+      "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+      "SURVEYOR": "Surveyor",
+      "ADDITIONAL_SURVEY": "Additional survey",
+      "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+      "OTHER_DETAILS": "Other details",
+      "COMMENT": "Comment",
+      "YES": "Yes",
+      "NO": "No",
+      "NO_BROKER": "Broker contact not specified yet",
+      "NO_LENDER": "Lender contact not specified yet",
+      "NO_SURVEYOR": "Surveyor contact not specified yet",
+      "NO_SOLICITOR": "Solicitor contact not specified yet",
+      "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+      "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+      "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
+    }
+  },
+  "DEPARTMENTS": {
+    "COMMON": {
+      "HEADER": "Departments",
+      "EMPTY": "No departments added yet",
+      "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
+        "TITLE": "No negotiator assigned to new department",
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
-    },
-    "PREFERENCES": {
-      "HEADER": "Preferences",
-      "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
   },
   "TENANCY": {
     "COMMON": {
@@ -626,4 +712,9 @@
     "EDIT_TENANCY": "Edit tenancy",
     "VIEW_TENANCY": "View tenancy"
     }
+  },
+  "PREFERENCES": {
+    "HEADER": "Preferences",
+    "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
+  }
 }

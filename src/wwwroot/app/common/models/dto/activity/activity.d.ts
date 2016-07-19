@@ -21,7 +21,7 @@ declare module Antares.Common.Models.Dto {
         appraisalMeetingInvitationText: string;
         keyNumber: string;
         accessArrangements: string;
-        appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        appraisalMeetingAttendees: IActivityAttendee[];
         kfValuationPrice?: number;
         agreedInitialMarketingPrice?: number;
         vendorValuationPrice?: number;
@@ -56,5 +56,19 @@ declare module Antares.Common.Models.Dto {
         longMatchFlexWeekValue: number;
         longMatchFlexMonthValue: number;
         longMatchFlexPercentage: number;
+        chainTransactions: IChainTransaction[];
+        marketingStrapline?: string;
+        marketingFullDescription?: string;
+        marketingLocationDescription?: string;
+        advertisingPublishToWeb?: boolean;
+        advertisingPortals?: Dto.IPortal[];
+        advertisingNote?: string;
+        advertisingPrPermitted?: boolean;
+        advertisingPrContent?: string;
+        salesBoardTypeId?: string;
+        salesBoardStatusId?: string;
+        salesBoardUpToDate?: boolean;
+        salesBoardRemovalDate?: Date;
+        salesBoardSpecialInstructions?: string;
     }
 }

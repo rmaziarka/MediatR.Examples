@@ -2,7 +2,8 @@
 
 declare module Antares.Attributes {
     interface IListViewControlSchema {
-        fieldName: string;
-        translationKey: string
+        controlId: string;
+        translationKey: string,
+        itemTemplateUrl?: string
     }
 }

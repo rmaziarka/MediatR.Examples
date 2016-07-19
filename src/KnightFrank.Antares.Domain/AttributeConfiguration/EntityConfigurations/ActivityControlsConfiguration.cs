@@ -74,6 +74,7 @@
             this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
             this.AddControl(PageType.Details, ControlCode.KeyNumber, Field<Activity>.Create(x => x.KeyNumber));
             this.AddControl(PageType.Details, ControlCode.AccessArrangements, Field<Activity>.Create(x => x.AccessArrangements));
+            this.AddControl(PageType.Details, ControlCode.Offer_UpwardChain, Field<Activity>.Create(x => x.ChainTransactions));
             this.AddControl(PageType.Details, ControlCode.AppraisalMeeting,
                 new List<IField>
                 {
@@ -116,6 +117,20 @@
             this.AddControl(PageType.Details, ControlCode.LongMatchFlexWeekValue, Field<Activity>.Create(x => x.LongMatchFlexWeekValue));
             this.AddControl(PageType.Details, ControlCode.LongMatchFlexMonthValue, Field<Activity>.Create(x => x.LongMatchFlexMonthValue));
             this.AddControl(PageType.Details, ControlCode.LongMatchFlexPercentage, Field<Activity>.Create(x => x.LongMatchFlexPercentage));
+
+            this.AddControl(PageType.Details, ControlCode.MarketingStrapline, Field<Activity>.Create(x => x.MarketingStrapline));
+            this.AddControl(PageType.Details, ControlCode.MarketingFullDescription, Field<Activity>.Create(x => x.MarketingFullDescription));
+            this.AddControl(PageType.Details, ControlCode.MarketingLocationDescription, Field<Activity>.Create(x => x.MarketingLocationDescription));
+            this.AddControl(PageType.Details, ControlCode.AdvertisingPublishToWeb, Field<Activity>.Create(x => x.AdvertisingPublishToWeb));
+            this.AddControl(PageType.Details, ControlCode.AdvertisingPortals, Field<Activity>.Create(x => x.AdvertisingPortals));
+            this.AddControl(PageType.Details, ControlCode.AdvertisingNote, Field<Activity>.Create(x => x.AdvertisingNote));
+            this.AddControl(PageType.Details, ControlCode.AdvertisingPrPermitted, Field<Activity>.Create(x => x.AdvertisingPrPermitted));
+            this.AddControl(PageType.Details, ControlCode.AdvertisingPrContent, Field<Activity>.Create(x => x.AdvertisingPrContent));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardRemovalDate, Field<Activity>.Create(x => x.SalesBoardRemovalDate));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardSpecialInstructions, Field<Activity>.Create(x => x.SalesBoardSpecialInstructions));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardStatus, Field<Activity>.Create(x => x.SalesBoardStatus, x => x.SalesBoardStatusId));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardType, Field<Activity>.Create(x => x.SalesBoardType, x => x.SalesBoardTypeId));
+            this.AddControl(PageType.Details, ControlCode.SalesBoardUpToDate, Field<Activity>.Create(x => x.SalesBoardUpToDate));
         }
 
         private void DefineControlsForCreateAndEdit()
@@ -164,6 +179,7 @@
                 this.AddControl(pageType, ControlCode.LongVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.LongAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.LongAgreedInitialMarketingPrice));
                 this.AddControl(pageType, ControlCode.PriceType, Field<ActivityCommandBase>.Create(x => x.PriceTypeId));
+                this.AddControl(pageType, ControlCode.Offer_UpwardChain, Field<ActivityCommandBase>.Create(x => x.ChainTransactions));
                 this.AddControl(pageType, ControlCode.ActivityPrice, Field<ActivityCommandBase>.Create(x => x.ActivityPrice).Required());
                 this.AddControl(pageType, ControlCode.MatchFlexibility, Field<ActivityCommandBase>.Create(x => x.MatchFlexibilityId));
                 this.AddControl(pageType, ControlCode.MatchFlexValue, Field<ActivityCommandBase>.Create(x => x.MatchFlexValue));
@@ -182,6 +198,20 @@
                 this.AddControl(pageType, ControlCode.LongMatchFlexMonthValue, Field<ActivityCommandBase>.Create(x => x.LongMatchFlexMonthValue));
                 this.AddControl(pageType, ControlCode.LongMatchFlexPercentage, Field<ActivityCommandBase>.Create(x => x.LongMatchFlexPercentage));
             }
+
+            this.AddControl(PageType.Update, ControlCode.MarketingStrapline, Field<UpdateActivityCommand>.Create(x => x.MarketingStrapline));
+            this.AddControl(PageType.Update, ControlCode.MarketingFullDescription, Field<UpdateActivityCommand>.Create(x => x.MarketingFullDescription));
+            this.AddControl(PageType.Update, ControlCode.MarketingLocationDescription, Field<UpdateActivityCommand>.Create(x => x.MarketingLocationDescription));
+            this.AddControl(PageType.Update, ControlCode.AdvertisingPublishToWeb, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPublishToWeb));
+            this.AddControl(PageType.Update, ControlCode.AdvertisingPortals, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPortals));
+            this.AddControl(PageType.Update, ControlCode.AdvertisingNote, Field<UpdateActivityCommand>.Create(x => x.AdvertisingNote));
+            this.AddControl(PageType.Update, ControlCode.AdvertisingPrPermitted, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPrPermitted));
+            this.AddControl(PageType.Update, ControlCode.AdvertisingPrContent, Field<UpdateActivityCommand>.Create(x => x.AdvertisingPrContent));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardRemovalDate, Field<UpdateActivityCommand>.Create(x => x.SalesBoardRemovalDate));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardSpecialInstructions, Field<UpdateActivityCommand>.Create(x => x.SalesBoardSpecialInstructions));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardStatus, Field<UpdateActivityCommand>.CreateDictionary(x => x.SalesBoardStatusId, nameof(SalesBoardStatus)));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardType, Field<UpdateActivityCommand>.CreateDictionary(x => x.SalesBoardTypeId, nameof(SalesBoardType)));
+            this.AddControl(PageType.Update, ControlCode.SalesBoardUpToDate, Field<UpdateActivityCommand>.Create(x => x.SalesBoardUpToDate));
         }
 
         public override void DefineMappings()
@@ -239,7 +269,8 @@
             this.Use(
                 new[]
                 {
-                    ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats, ControlCode.KeyNumber, ControlCode.AccessArrangements
+                    ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats, ControlCode.KeyNumber,
+                    ControlCode.AccessArrangements
                 },
                 this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
 
@@ -256,8 +287,8 @@
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
 
             this.Use(new List<ControlCode> { ControlCode.DisposalType },
-               this.When(residentialSale, PageType.Details))
-               .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
+                this.When(residentialSale, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
 
             this.Use(
                 new List<ControlCode>
@@ -350,6 +381,43 @@
                 .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisalId);
 
             this.DefineMappingsForPrices(openMarketLetting, residentialSale);
+
+            this.Use(new List<ControlCode>
+            {
+                ControlCode.MarketingFullDescription,
+                ControlCode.MarketingStrapline,
+                ControlCode.MarketingLocationDescription,
+                ControlCode.AdvertisingPublishToWeb,
+                ControlCode.AdvertisingNote,
+                ControlCode.AdvertisingPrPermitted,
+                ControlCode.AdvertisingPrContent,
+                ControlCode.SalesBoardRemovalDate,
+                ControlCode.SalesBoardSpecialInstructions,
+                ControlCode.SalesBoardType,
+                ControlCode.SalesBoardUpToDate
+            }, this.ForAll(PageType.Details, PageType.Update));
+
+            this.Use(ControlCode.AdvertisingPortals, this.ForAll(PageType.Details, PageType.Update))
+                .HiddenWhen<Activity>(x => !x.AdvertisingPublishToWeb)
+                .HiddenWhen<UpdateActivityCommand>(x => !x.AdvertisingPublishToWeb);
+
+            this.Use(ControlCode.SalesBoardStatus, this.ForAll(PageType.Details));
+            this.Use(ControlCode.SalesBoardStatus, this.When(residentialSale, PageType.Update))
+                .WithAllowedValues<UpdateActivityCommand, Guid?, SalesBoardStatus>(
+                    x => x.SalesBoardStatusId,
+                    new[] { SalesBoardStatus.ForSale, SalesBoardStatus.Sold, SalesBoardStatus.SoldSTC, SalesBoardStatus.UnderOffer });
+
+            this.Use(ControlCode.SalesBoardStatus, this.When(openMarketLetting, PageType.Update))
+                .WithAllowedValues<UpdateActivityCommand, Guid?, SalesBoardStatus>(
+                    x => x.SalesBoardStatusId,
+                    new[] { SalesBoardStatus.ToLet, SalesBoardStatus.UnderOffer, SalesBoardStatus.Let });
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.Offer_UpwardChain
+                },
+                this.When(residentialSale, PageType.Details, PageType.Update));
         }
 
         private void DefineMappingsForPrices(List<Tuple<PropertyType, ActivityType>> openMarketLetting, List<Tuple<PropertyType, ActivityType>> residentialSale)

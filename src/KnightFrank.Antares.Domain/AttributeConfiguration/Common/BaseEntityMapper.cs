@@ -7,6 +7,8 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
+    using AutoMapper.Internal;
+
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
@@ -71,7 +73,7 @@
             if (tokens.Count == 1)
             {
                 PropertyInfo targetProperty = entity.GetType().GetProperty(propertyFullName);
-                if (targetProperty?.PropertyType.IsInstanceOfType(value) == true)
+                if (targetProperty?.PropertyType.IsInstanceOfType(value) == true || (targetProperty?.PropertyType.IsNullableType() == true && value == null))
                 {
                     targetProperty.SetValue(entity, value);
                 }

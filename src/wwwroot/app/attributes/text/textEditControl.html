@@ -7,8 +7,9 @@
                        id="{{vm.schema.controlId}}"
                        ng-required="vm.config[vm.schema.fieldName].required"
                        ng-maxlength="vm.schema.maxLength"
+                       placeholder="{{vm.schema.placeholder | translate}}"
                        name="text"
-                       class="form-control" 
+                       class="form-control"
                        type="text"/>
                     <div ng-messages="vm[vm.schema.formName].text.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].text.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>

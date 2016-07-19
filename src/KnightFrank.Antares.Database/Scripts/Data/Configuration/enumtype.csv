@@ -29,3 +29,10 @@ ActivityPriceType
 ActivityMatchFlexPrice
 ActivityMatchFlexRent
 RentPaymentPeriod
+SalesBoardType
+SalesBoardStatus
+ChainMortgageStatus
+ChainMortgageSurveyStatus
+ChainSearchStatus
+ChainEnquiries
+ChainContractAgreedStatus

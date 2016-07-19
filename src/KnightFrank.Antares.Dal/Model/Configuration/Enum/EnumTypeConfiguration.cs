@@ -7,7 +7,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Enum
     {
         public EnumTypeConfiguration()
         {
-            this.Property(r => r.Code).HasMaxLength(25).IsRequired().IsUnique();
+            this.Property(r => r.Code).HasMaxLength(50).IsRequired().IsUnique();
         }
     }
 }

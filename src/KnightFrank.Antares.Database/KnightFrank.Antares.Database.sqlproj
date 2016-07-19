@@ -194,10 +194,16 @@
     <None Include="Scripts\Data\Configuration\contactTitle.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Data\Configuration\portaldefinition.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\SQL\PortalDefinition.sql" />
     <None Include="Scripts\Data\Configuration\companyCategory.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv" />
+    <None Include="Scripts\Data\Configuration\companyCategoryLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\SQL\TenancyType.sql" />
     <None Include="Scripts\SQL\TenancyTypeLocalised.sql" />
     <None Include="Scripts\Data\Configuration\tenancytype.csv">

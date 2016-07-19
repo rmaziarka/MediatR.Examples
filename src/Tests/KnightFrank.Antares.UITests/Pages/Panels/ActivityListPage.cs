@@ -10,7 +10,7 @@
 
     public class ActivityListPage : ProjectPageBase
     {
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading'][class = '']");
         private readonly ElementLocator activities = new ElementLocator(Locator.CssSelector, "activities-list label.ng-binding");
         private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showViewingAddPanel']");
 

@@ -8,7 +8,9 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.UITests.Extensions;
 
@@ -19,6 +21,7 @@
     public class PropertySteps
     {
         private readonly KnightFrankContext dataContext;
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         public PropertySteps(ScenarioContext scenarioContext)
@@ -143,6 +146,9 @@
             this.dataContext.SaveChanges();
         }
 
+   
+
+        
         [Given(@"Property area breakdown is defined")]
         public void CreateAreaBreakdown()
         {

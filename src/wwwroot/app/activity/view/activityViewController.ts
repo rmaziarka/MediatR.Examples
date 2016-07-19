@@ -1,12 +1,12 @@
 /// <reference path="../../typings/_all.d.ts" />
 
-    module Antares.Activity.View {
+module Antares.Activity.View {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
     import LatestViewsProvider = Providers.LatestViewsProvider;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Attachment = Common.Component.Attachment;
+    import Commands = Common.Models.Commands;
 
     export class ActivityViewController {
         // bindings
@@ -28,6 +28,9 @@
 
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
+
+        isMarketingTabInEditMode: boolean = false;
+        editableActivity: Business.ActivityEditModel;
 
         activitySourceSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'sourceId',
@@ -66,7 +69,7 @@
 
         activityDisposalTypeSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'disposalTypeId',
-            translationKey: 'ACTIVITY.COMMON.DISPOSAL_TYPE'            
+            translationKey: 'ACTIVITY.COMMON.DISPOSAL_TYPE'
         }
 
         shortKfValuationPriceSchema: Antares.Attributes.IPriceControlSchema = {
@@ -147,7 +150,7 @@
 
         activityDecorationSchema: Antares.Attributes.IEnumItemControlSchema = {
             controlId: 'decorationId',
-            translationKey: 'ACTIVITY.COMMON.DECORATION'        
+            translationKey: 'ACTIVITY.COMMON.DECORATION'
         }
 
         priceTypeSchema: Antares.Attributes.IEnumItemControlSchema = {
@@ -204,9 +207,9 @@
         }
 
         shortMatchFlexPercentageSchema = {
-            controlId : 'shortMatchFlexPercentage',
-            translationKey : 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
-            fieldName : 'shortMatchFlexPercentage',
+            controlId: 'shortMatchFlexPercentage',
+            translationKey: 'ACTIVITY.COMMON.MATCH_FLEXIBILITY',
+            fieldName: 'shortMatchFlexPercentage',
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
 
@@ -245,11 +248,121 @@
             suffix: 'ACTIVITY.COMMON.PERCENT'
         }
 
+        marketingStraplineSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingStrapline',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.STRAPLINE',
+            fieldName: 'marketingStrapline',
+            formName: 'marketingStraplineForm',
+            maxLength: 250
+        }
+
+        marketingFullDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingFullDescription',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.FULL_DESCRIPTION',
+            fieldName: 'marketingFullDescription',
+            formName: 'marketingFullDescriptionForm'
+        }
+
+        marketingLocationDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'marketingLocationDescription',
+            translationKey: 'ACTIVITY.MARKETING.DESCRIPTION.LOCATION_DESCRIPTION',
+            fieldName: 'marketingLocationDescription',
+            formName: 'marketingLocationDescriptionForm'
+        }
+
+        advertisingNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'advertisingNote',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.NOTE',
+            fieldName: 'advertisingNote',
+            formName: 'advertisingNoteForm'
+        }
+
+        advertisingPortalsSchema: Antares.Attributes.ICheckboxListEditControlSchema = {
+            controlId: 'advertisingPortals',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PORTALS',
+            formName: 'advertisingPortalsForm',
+            fieldName: 'advertisingPortals',
+            itemTemplateUrl: 'app/attributes/listView/templates/listItemPortalTemplate.html',
+            compareMember: 'id',
+            checkboxes: []
+        }
+
+        private yesNoRadioButtons: Antares.Attributes.IRadioButtonSchema[] = [
+            { value: true, translationKey: "COMMON.YES" },
+            { value: false, translationKey: "COMMON.NO" }
+        ];
+
+        advertisingPublishToWebSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'advertisingPublishToWeb',
+            fieldName: 'advertisingPublishToWeb',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PUBLISH_TO_WEB',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'advertisingPublishToWebForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        advertisingPrContentSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'advertisingPrContent',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PR_CONTENT',
+            fieldName: 'advertisingPrContent',
+            formName: 'advertisingPrContentForm'
+        }
+
+        advertisingPrPermittedSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'advertisingPrPermitted',
+            fieldName: 'advertisingPrPermitted',
+            translationKey: 'ACTIVITY.MARKETING.ADVERTISING.PR_PERMITTED',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'advertisingPrPermittedForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        salesBoardUpToDateSchema: Antares.Attributes.IRadioButtonsEditControlSchema = {
+            controlId: 'salesBoardUpToDate',
+            fieldName: 'salesBoardUpToDate',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.UP_TO_DATE',
+            templateUrl: 'app/attributes/radioButtons/templates/radioButtonsViewYesNo.html',
+            formName: 'salesBoardUpToDateForm',
+            radioButtons: this.yesNoRadioButtons
+        }
+
+        salesBoardSpecialInstructionsSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'salesBoardSpecialInstructions',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.SPECIAL_INSTRUCTIONS',
+            fieldName: 'salesBoardSpecialInstructions',
+            formName: 'salesBoardSpecialInstructionsForm'
+        }
+
+        salesBoardTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'salesBoardType',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.TYPE',
+            fieldName: 'salesBoardTypeId',
+            formName: 'salesBoardTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.SalesBoardType
+        }
+
+        salesBoardStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'salesBoardStatus',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.STATUS',
+            fieldName: 'salesBoardStatusId',
+            formName: 'salesBoardStatusForm',
+            enumTypeCode: Dto.EnumTypeCode.SalesBoardStatus
+        }
+
+        salesBoardRemovalDateSchema: Attributes.IDateEditControlSchema = {
+            formName: 'salesBoardRemovalDateForm',
+            controlId: 'salesBoardRemovalDate',
+            translationKey: 'ACTIVITY.MARKETING.SALES_BOARDS.REMOVAL_DATE',
+            fieldName: 'salesBoardRemovalDate'
+        }
+
         constructor(
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
+            private activityService: Services.ActivityService,
             private latestViewsProvider: LatestViewsProvider,
-            private eventAggregator: Core.EventAggregator) {
+            private eventAggregator: Core.EventAggregator,
+            private configService: Services.ConfigService) {
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
 
@@ -284,6 +397,37 @@
                 });
 
             this.recreateAttachmentsData();
+            this.reloadPortals();
+        }
+
+        private reloadPortals = () => {
+            this.activityService.getPortals().then((portals: Dto.IPortal[]) => {
+                this.advertisingPortalsSchema.checkboxes =
+                    _.map(portals, (portal: Dto.IPortal): any => {
+                        return {
+                            translationKey: portal.name,
+                            value: portal
+                        }
+                    });
+            });
+        }
+
+        reloadDetailsConfig = () => {
+            this.configService
+                .getActivity(Enums.PageTypeEnum.Details, this.activity.property.propertyTypeId, this.activity.activityTypeId, this.activity)
+                .then((config: IActivityViewConfig) => {
+                    var updateConfig = (<any>this.config).update;
+                    this.config = config;
+                    (<any>this.config).update = updateConfig;
+                });
+        }
+
+        reloadUpdateConfig = () => {
+            this.configService
+                .getActivity(Enums.PageTypeEnum.Update, this.editableActivity.property.propertyTypeId, this.editableActivity.activityTypeId, this.editableActivity)
+                .then((config: IActivityEditConfig) => {
+                    (<any>this.config).update = config;
+                });
         }
 
         public setActiveTabIndex = (tabIndex: number) => {
@@ -369,6 +513,31 @@
         goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         };
+
+        toggleMarketingTabMode = () => {
+            this.isMarketingTabInEditMode = !this.isMarketingTabInEditMode;
+            if (this.isMarketingTabInEditMode) {
+                this.editableActivity = new Business.ActivityEditModel(this.activity);
+            }
+        };
+
+        saveMarketing = () => {
+            var editCommand = new Commands.Activity.ActivityEditCommand(this.editableActivity);
+            this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) => {
+                this.activity = new Business.ActivityViewModel(activityDto);
+                this.reloadDetailsConfig();
+                this.toggleMarketingTabMode();
+            });
+        }
+
+        cancelMarketing = () => {
+            this.toggleMarketingTabMode();
+        }
+
+        onPublishToWebChanged = (publishToWeb: boolean) => {
+            this.editableActivity.advertisingPublishToWeb = publishToWeb;
+            this.reloadUpdateConfig();
+        }
     }
 
     angular.module('app').controller('activityViewController', ActivityViewController);

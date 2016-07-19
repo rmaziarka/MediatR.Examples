@@ -35,9 +35,9 @@
             var validator = new AttachmentUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            parameters.cloudStorageContainerType = entity;
+            parameters.CloudStorageContainerType = entity;
 
-            return this.documentStorageProvider.GetUploadUrlMethod(parameters.cloudStorageContainerType)(parameters);
+            return this.documentStorageProvider.GetUploadUrlMethod(parameters.CloudStorageContainerType)(parameters);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@
             var validator = new AttachmentDownloadUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            parameters.cloudStorageContainerType = entity;
+            parameters.CloudStorageContainerType = entity;
 
-            return this.documentStorageProvider.GetDownloadUrlMethod(parameters.cloudStorageContainerType)(parameters);
+            return this.documentStorageProvider.GetDownloadUrlMethod(parameters.CloudStorageContainerType)(parameters);
         }
     }
 }

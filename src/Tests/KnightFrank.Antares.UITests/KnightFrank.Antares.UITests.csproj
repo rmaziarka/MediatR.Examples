@@ -113,6 +113,8 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\ActivityTabs\DetailsTabPage.cs" />
+    <Compile Include="Pages\ActivityTabs\EditMarketingTabPage.cs" />
+    <Compile Include="Pages\ActivityTabs\ViewMarketingTabPage.cs" />
     <Compile Include="Pages\ActivityTabs\OverviewTabPage.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
@@ -120,6 +122,10 @@
     <Compile Include="Pages\EditContactPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
     <Compile Include="Pages\EditCompanyPage.cs" />
+    <Compile Include="Pages\Modals\DeleteChainModalPage.cs" />
+    <Compile Include="Pages\Panels\ChainTransactionPreviewPage.cs" />
+    <Compile Include="Pages\Panels\CreateChainTransactionPage.cs" />
+    <Compile Include="Pages\Panels\PropertiesListPage.cs" />
     <Compile Include="Pages\EditTenancyPage.cs" />
     <Compile Include="Pages\ViewCompanyPage.cs" />
     <Compile Include="Pages\NavigationDrawerPage.cs" />
@@ -155,9 +161,12 @@
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\ActivityTabs\AttachmentsTabSteps.cs" />
+    <Compile Include="Steps\ActivityTabs\MarketingTabSteps.cs" />
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\Database\ActivitySteps.cs" />
+    <Compile Include="Steps\CreateChainTransactionSteps.cs" />
+    <Compile Include="Steps\Database\ChainTransactionSteps.cs" />
     <Compile Include="Steps\CreateTenancySteps.cs" />
     <Compile Include="Steps\Database\TenancySteps.cs" />
     <Compile Include="Steps\EditCompanySteps.cs" />
@@ -194,6 +203,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Attachments.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Activities\Marketing.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Marketing.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Company\Company.feature.cs">
       <AutoGen>True</AutoGen>
@@ -250,6 +264,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tenancies.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\UpwardChains\UpwardChains.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UpwardChains.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Viewing\Viewing.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -281,6 +300,10 @@
     <None Include="Tests\Activities\Attachments.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Activities\Marketing.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Marketing.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Company\Company.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -321,6 +344,10 @@
     <None Include="Tests\Search\Search.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Search.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\UpwardChains\UpwardChains.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UpwardChains.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Tenancy\Tenancies.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

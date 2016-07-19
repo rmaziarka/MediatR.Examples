@@ -48,6 +48,17 @@
         }
 
         /// <summary>
+        /// Get properties
+        /// </summary>
+        /// <returns>List of properties</returns>
+        [HttpGet]
+        [Route("")]
+        public IEnumerable<Property> GetProperties()
+        {
+            return this.mediator.Send(new PropertiesQuery());
+        }
+
+        /// <summary>
         /// Search property by query
         /// </summary>
         /// <param name="pageableQuery">Query</param>

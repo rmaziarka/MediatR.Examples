@@ -75,11 +75,23 @@ module Antares.Activity {
                             return new Business.ActivityViewModel(activity);
                         });
                     },
-                    config: (activity: IActivity, configService: Services.ConfigService) => {
+                    viewConfig: (activity: IActivity, configService: Services.ConfigService) => {
                         return configService.getActivity(PageTypeEnum.Details,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
                             activity);
+                    },
+                    editConfig: (activity: Business.ActivityEditModel, configService: Services.ConfigService) => {
+                        var entity = new Commands.Activity.ActivityEditCommand(activity);
+                        return configService.getActivity(PageTypeEnum.Update,
+                            activity.property.propertyTypeId,
+                            activity.activityTypeId,
+                            entity);
+                    },
+                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig, activityConfigUtils: ActivityConfigUtils) =>{
+                        var config: any = viewConfig;
+                        config.update = editConfig;
+                        return config;
                     }
                 }
             });

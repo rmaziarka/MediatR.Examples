@@ -10,7 +10,7 @@
   top: $header-height;
   transform: translateZ(0) translateX(-100%);
   width: 100%;
-  z-index: 1070;
+  z-index: 1040;
 
   @media (min-width: $screen-sm-min) {
     width: $drawer-width;

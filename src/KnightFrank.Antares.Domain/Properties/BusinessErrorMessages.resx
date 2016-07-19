@@ -219,6 +219,9 @@
   <data name="Missing_Activity_Departments_Id" xml:space="preserve">
     <value>One or more departments do not exist.</value>
   </data>
+  <data name="Missing_Activity_ChainTransaction_Id" xml:space="preserve">
+    <value>One or more chain transactions do not exist.</value>
+  </data>
   <data name="Missing_Activity_Negotiators_Id" xml:space="preserve">
     <value>One or more negotiators do not exist.</value>
   </data>
@@ -230,5 +233,35 @@
   </data>
   <data name="Missing_Tenancy_Contacts_Id" xml:space="preserve">
     <value>One or more contacts do not exist.</value>
+  </data>
+  <data name="Activity_ChainTransactions_IsEndCountMoreThenOne" xml:space="preserve">
+    <value>More then one chain transaction is marked as last chain transaction.</value>
+  </data>
+  <data name="ActivityChainTransactionEnd_InvalidValue" xml:space="preserve">
+    <value>Only last chain transaction can be marked as end transaction.</value>
+  </data>
+  <data name="ActivityVendor_ValueToLong" xml:space="preserve">
+    <value>Vendor value is longer than 128 characters.</value>
+  </data>
+  <data name="ActivityChainTransactionAgentContact_InvalidValue" xml:space="preserve">
+    <value>3rd party Agent has been selected, cannot use Knight Frank Agent.</value>
+  </data>
+  <data name="ActivityChainTransactionAgentUser_InvalidValue" xml:space="preserve">
+    <value>Knight Frank Agent has been selected, cannot use 3rd party Agent.</value>
+  </data>
+  <data name="ActivityChainTransactionAdd_MoreThanOne" xml:space="preserve">
+    <value>You cannot add more than one transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionAdd_InvalidParentId" xml:space="preserve">
+    <value>Parent of added transaction chain must be last transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionRemove_MoreThanOne" xml:space="preserve">
+    <value>You cannot remove more than one transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionRemove_InvalidId" xml:space="preserve">
+    <value>Removed transaction chain must be last transaction chain.</value>
+  </data>
+  <data name="ActivityChainTransactionAddRemove_AtSameTime" xml:space="preserve">
+    <value>You cannot add and remove chain and the same time.</value>
   </data>
 </root>
